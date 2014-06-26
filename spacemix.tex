@@ -1,5 +1,21 @@
 \documentclass[12pt]{article}
 \usepackage{geometry} 
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{url}
+\usepackage{mathtools}
+\usepackage{color}
+\usepackage{natbib}
+\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bigints}
+%
+\newcommand{\e}[1]{{\mathbb E}\left[ #1 \right]}
+\newcommand{\gb}[1]{{\em \color{magenta} #1}}
+\newcommand{\plr}[1]{{\em \color{green} #1}}
+\newcommand{\gc}[1]{{\em \color{blue} #1}}
 %
 \geometry{a4paper}
 %
@@ -69,14 +85,80 @@ To accommodate these heterogeneous processes, and to have a useful data visualiz
 \\\\
 Our likelihood function is now XXXXX.   (Spatial priors?)
 \\\\
-We can initiate from random locations to remove any influence of the observed map on the output via the prior.
+We can initiate from random locations to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference.
 %
 \subsection*{Spatial Admixture Statistic}
 Given a model of isolation by distance and allele frequencies sampled at different points on a map, we can calculate (1) whether a population's genetic makeup is well predicted by that of its neighbors, and (2) whether a focal population has excess covariance with another sampled population.
 %
 \subsection*{Inference of Spatial Admixture}
-This signal of excess covariance over greater distances can be incorporated into out inference framework.  
+We can interpret this excess covariance over anomalously long distances as genetic admixture, and we can incorporate it into out inference framework.  We define the allele frequency at locus $\ell$ in admixed population $k$ to be
+\begin{equation}
+f_{\ell,k} = pf_{\ell,i} + (1-p)f_{\ell,j},
+\end{equation}
+where $f_{\ell,i}$ is the allele frequency in population $i$, $f_{\ell,j}$ is the allele frequency in population $j$, and $p$ is the admixture proportion, which varies between 0 and 1 and describes the extent to which populations $i$ and $j$ are contributing to the genetic make-up of population $k$.
+\\\\
+To infer the spatial context of this admixture, we allow each population a point in space (\gb{can I use the phrase `ghost population,' or is that to goofy?}) from which it draws its admixture, as well as the extent (proportion) of that admixture.  The observed allele frequencies in sampled populations are therefore a weighted average of the model-estimated allele frequencies at the geographic location of the sampled population and those at the coordinates from which the observed population draws admixture.  That is, the observed allele frequencies in population $k$ are modeled as follows:
+\begin{equation}
+f_{k} = pf_{k'} + (1-p)f_{j},
+\end{equation}
+where $f_{k'}$ are the model-estimated allele frequencies across loci at the spatial location of population $k$ and $f_{j}$ are the model-estimated allele frequencies at the spatial location $j$ from which population $k$ is drawing admixture in proportion $p$.  Something about how and why we constrain $p$ to be between 0 and 0.5.
+\\\\
+The covariance between sampled populations $i$ and $j$ can be modeled as
+\begin{equation}
+\Omega_{i,j} = 
+\end{equation}
 
+%
+\begin{alignat}{3}
+\label{eq:admixed_covariance}
+\Omega_{i,j} = (1-p_i)(1-p_j) \omega_{i\;,\;j\;} \; \times&\\
+(p_i)(1-p_j) \omega_{i',\;j\;} \; \times   \notag&\\
+(p_j)(1-p_i) \omega_{i\;,\;j'} \; \times   \notag&\\
+(p_i)(p_j) \omega_{i',\;j'} \; \phantom{\times}   \notag&\\
+\end{alignat}
+where $i'$ and $j'$ are the locations from which populations $i$ and $j$ are drawing their admixture with proportions $p_i$ and $p_j$, and $\omega$ is the spatial covariance function parameterized by the pairwise geographic distances between each pair of populations.
+\\\\
+The likelihood function for this model in which each population is allowed to draw admixture from a point in space is therefore XXXX.
+\\\\
+For details on our Bayesian inference framework and Markov chain Monte Carlo inference procedure, please see the Section: How I spent the past year,
+\\\\
+\section*{Empirical Applications}
+To demonstrate the applications of this novel method, we employed it in two canonical empirical systems: the greenish warbler ring species complex, and, to our knowledge, the most complete geographic sampling of human populations to date (\gb{is this true?}).
+\\\\
+\subsection*{Greenish Warblers}
+Description of the data
+\\\\
+Description of the research questions we use SpaceMix to address
+\\\\
+Details of analyses run
+\subsection*{Human Populations}
+Description of the data
+\\\\
+Description of the research questions we use SpaceMix to address
+\\\\
+Details of analyses run
+%
+\section*{Results}
+\gb{should we just merge the results section in with the empirical applications section?  not sure what else would go here.}
+%
+\section*{Discussion}
+In this paper we have presented blah blah blah.  We believe this represents an advance over previous methods because blah blah blah.  This method can be used to answer a variety of empirical questions, including blah, blah, and blah, and also serves as an intuitive data visualization tool.
+%
+\subsection*{Empirical Results}
+%
+\subsubsection*{Greenish Warblers}
+%
+\gb{not sure how much to include here}
+%
+\subsubsection*{Humans}
+%
+\gb{not sure how much to include here}
+%
+\section*{Future Directions}
+%
+spatiotemporal model
+\\\\
+spatialSTRUCTURE
 %%%%%%%%%
 
 

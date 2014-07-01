@@ -71,7 +71,11 @@ note, using the sample mean frequency to mean-center can induce negative covaria
 \subsection*{Spatial Covariance Model}
 we can model the sample covariance in mean-centered normalized allele frequencies as Wishart with degrees of freedom equal to the number of loci across which the covariance is calculated.
 \\\\
-The form of our parametric covariance matrix is XXX, which fits a model of exponential decay to allele frequency covariance with distance.  The parameters XXXX do XXXXX.
+The form of our parametric covariance matrix fits a model of exponential decay to allele frequency covariance with geographic distance.  The covariance between populations $i$ and $j$ is 
+\begin{equation}
+\omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right)\text{,}
+\end{equation}
+where $D_{i,j}$ is the geographic distance between population $i$ and $j$, $\alpha_0$ controls the sill of the covariance (the within-population variance, or the covariance when distance between points is 0),  $\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay.
 The likelihood function is therefore XXXX.
 %
 \subsection*{Accommodating non-equilibrium processes}
@@ -104,10 +108,6 @@ f_{k} = pf_{k'} + (1-p)f_{j},
 where $f_{k'}$ are the model-estimated allele frequencies across loci at the spatial location of population $k$ and $f_{j}$ are the model-estimated allele frequencies at the spatial location $j$ from which population $k$ is drawing admixture in proportion $p$.  Something about how and why we constrain $p$ to be between 0 and 0.5.
 \\\\
 The covariance between sampled populations $i$ and $j$ can be modeled as
-\begin{equation}
-\Omega_{i,j} = 
-\end{equation}
-
 %
 \begin{alignat}{3}
 \label{eq:admixed_covariance}
@@ -120,7 +120,7 @@ where $i'$ and $j'$ are the locations from which populations $i$ and $j$ are dra
 \\\\
 The likelihood function for this model in which each population is allowed to draw admixture from a point in space is therefore XXXX.
 \\\\
-For details on our Bayesian inference framework and Markov chain Monte Carlo inference procedure, please see the Section: How I spent the past year,
+For details on our Bayesian inference framework and Markov chain Monte Carlo inference procedure, please see the Section: How I spent the past year!
 \\\\
 \section*{Empirical Applications}
 To demonstrate the applications of this novel method, we employed it in two canonical empirical systems: the greenish warbler ring species complex, and, to our knowledge, the most complete geographic sampling of human populations to date (\gb{is this true?}).

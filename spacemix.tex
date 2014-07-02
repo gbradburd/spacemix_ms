@@ -28,7 +28,7 @@
 \maketitle
 %%%
 \hspace{-0.25in}\textsuperscript{1}Center for Population Biology, Department of Evolution and Ecology, University of California, Davis, CA 95616\\\\
-\textsuperscript{3}Department of Molecular and Computational Biology, University of Southern California, Los Angeles, CA 90089\\\\
+\textsuperscript{3}Department of Molecular and Computational Biology, University of Southern California, Los Angeles, CA 90089\\
 \textsuperscript{a}gbradburd@ucdavis.edu; 
 \textsuperscript{b}pralph@usc.edu;
 \textsuperscript{c}gmcoop@ucdavis.edu\\\\\
@@ -62,7 +62,7 @@ Therefore, shared drift can be interpreted as covariance in allele frequencies a
 \subsection*{Mean-centering and normalizing variance}
 a natural framework for modeling this covariance is the multivariate normal distribution.
 \\\\
-however, allele frequencies are constrained to vary between 0 and 1, and may have heterogeneous variance across loci.  therefore, we mean-center and normalize, and all the mean-centered, normalized allele frequencies X.
+however, allele frequencies are constrained to vary between 0 and 1, and may have heterogeneous variance across loci.  therefore, we mean-center and normalize, and call the mean-centered, normalized allele frequencies X.
 \\\\
 this is how we get sample mean frequencies, and this is how we get X from frequency data
 \\\\
@@ -85,7 +85,7 @@ Non-equilibrium processes like recent migration/colonization, or long distance d
 \\\\
 Alternatively, if there are strong barriers to dispersal on the landscape, they will bias the estimation of the contribution of a unit distance to decay in covariance.
 \\\\
-To accommodate these heterogeneous processes, and to have a useful data visualization tool, we can estimate treat population's locations on the landscape as a random variable, and estimate them as part of our inference procedure.  Rich history of this type of data visualization, especially w/r/t PCA.
+To accommodate these heterogeneous processes, and to have a useful data visualization tool, we can estimate treat population's locations on the landscape as a random variable, and estimate them as part of our inference procedure.  Rich history of this type of data visualization, especially w/r/t PCA (but see also SpA).
 \\\\
 Our likelihood function is now XXXXX.   (Spatial priors?)
 \\\\
@@ -110,14 +110,24 @@ where $f_{k'}$ are the model-estimated allele frequencies across loci at the spa
 The covariance between sampled populations $i$ and $j$ can be modeled as
 %
 \begin{alignat}{3}
-\label{eq:admixed_covariance}
+\label{eq:admixed_covariance_1}
 \Omega_{i,j} = (1-p_i)(1-p_j) \omega_{i\;,\;j\;} \; \times&\\
 (p_i)(1-p_j) \omega_{i',\;j\;} \; \times   \notag&\\
 (p_j)(1-p_i) \omega_{i\;,\;j'} \; \times   \notag&\\
-(p_i)(p_j) \omega_{i',\;j'} \; \phantom{\times}   \notag&\\
+(p_i)(p_j) \omega_{i',\;j'} \; \phantom{\times}   \notag&
 \end{alignat}
 where $i'$ and $j'$ are the locations from which populations $i$ and $j$ are drawing their admixture with proportions $p_i$ and $p_j$, and $\omega$ is the spatial covariance function parameterized by the pairwise geographic distances between each pair of populations.
+In addition, we introduce a population-specific variance term on each diagonal element of the covariance matrix.  This term accommodates both the binomial sampling noise introduced by finite chromosome sample size in each population and also population-specific drift.  The full expression for our admixed covariance function is below.
+\begin{alignat}{3}
+\label{eq:admixed_covariance_2}
+\Omega_{i,j} = (1-p_i)(1-p_j) \omega_{i\;,\;j\;} \; \times&\\
+(p_i)(1-p_j) \omega_{i',\;j\;} \; \times   \notag&\\
+(p_j)(1-p_i) \omega_{i\;,\;j'} \; \times   \notag&\\
+(p_i)(p_j) \omega_{i',\;j'} \; +   \notag&\\
+I\bar{S_k}^{-1} + \eta_k \phantom{+} \notag&
+\end{alignat}
 \\\\
+where $I$ is the identity matrix, $\bar{S_k}$ is the mean sample size in population $k$ across all loci, and $\eta_k$ is the nugget estimated in population $k$.
 The likelihood function for this model in which each population is allowed to draw admixture from a point in space is therefore XXXX.
 \\\\
 For details on our Bayesian inference framework and Markov chain Monte Carlo inference procedure, please see the Section: How I spent the past year!
@@ -157,7 +167,7 @@ In this paper we have presented blah blah blah.  We believe this represents an a
 \section*{Future Directions}
 %
 spatiotemporal model
-\\\\
+
 spatialSTRUCTURE
 %%%%%%%%%
 

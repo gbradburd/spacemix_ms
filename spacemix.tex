@@ -70,7 +70,7 @@ Therefore, shared drift can be interpreted as covariance in allele frequencies a
 \subsection*{Mean-centering and normalizing variance}
 a natural framework for modeling this covariance is the multivariate normal distribution.
 
-however, allele frequencies are constrained to vary between 0 and 1, and may have heterogeneous variance across loci.  therefore, we mean-center and normalize, and all the mean-centered, normalized allele frequencies X.
+however, allele frequencies are constrained to vary between 0 and 1, and may have heterogeneous variance across loci.  therefore, we mean-center and normalize, and call the mean-centered, normalized allele frequencies X.
 
 this is how we get sample mean frequencies, and this is how we get X from frequency data
 
@@ -91,11 +91,11 @@ The likelihood function is therefore XXXX.
 \subsection*{Accommodating non-equilibrium processes}
 This model assumes that the system is in migration-drift equilibrium and that every unit of pairwise geographic distance is equivalent in its contribution to decay of allelic covariance, but in many cases those assumptions will not be met.
 
-Non-equilibrium processes like recent migration/colonization, or long distance dispersal events, will distort the shape of the decay of covariance with distance, and may bias parameter estimation. (MS simulations showing what SpaceMix does with space that has been distorted by a recent expansion/colonization, or that has a big barrier in it -> figures).
+Non-equilibrium processes like recent migration/colonization, or long distance dispersal events, will distort the shape of the decay of covariance with distance, and may bias parameter estimation. (MS simulations showing what SpacewMix does with space that has been distorted by a recent expansion/colonization, or that has a big barrier in it -> figures).
 
 Alternatively, if there are strong barriers to dispersal on the landscape, they will bias the estimation of the contribution of a unit distance to decay in covariance.
 
-To accommodate these heterogeneous processes, and to have a useful data visualization tool, we can estimate treat population's locations on the landscape as a random variable, and estimate them as part of our inference procedure.  Rich history of this type of data visualization, especially w/r/t PCA.
+To accommodate these heterogeneous processes, and to have a useful data visualization tool, we can estimate treat population's locations on the landscape as a random variable, and estimate them as part of our inference procedure.  Rich history of this type of data visualization, especially w/r/t PCA (but see also SpA).
 
 Our likelihood function is now XXXXX.   (Spatial priors?)
 
@@ -121,13 +121,22 @@ where $f_{k'}$ are the model-estimated allele frequencies across loci at the spa
 
 The covariance between sampled populations $i$ and $j$ can be modeled as
 \begin{alignat}{3}
-\label{eq:admixed_covariance}
+\label{eq:admixed_covariance_1}
 \Omega_{i,j} = (1-p_i)(1-p_j) \omega_{i\;,\;j\;} \; \times&\\
 (p_i)(1-p_j) \omega_{i',\;j\;} \; \times   \notag&\\
 (p_j)(1-p_i) \omega_{i\;,\;j'} \; \times   \notag&\\
-(p_i)(p_j) \omega_{i',\;j'} \; \phantom{\times}   \notag&\\
+(p_i)(p_j) \omega_{i',\;j'} \; \phantom{\times}   \notag&
 \end{alignat}
 where $i'$ and $j'$ are the locations from which populations $i$ and $j$ are drawing their admixture with proportions $p_i$ and $p_j$, and $\omega$ is the spatial covariance function parameterized by the pairwise geographic distances between each pair of populations.
+In addition, we introduce a population-specific variance term on each diagonal element of the covariance matrix.  This term accommodates both the binomial sampling noise introduced by finite chromosome sample size in each population and also population-specific drift.  The full expression for our admixed covariance function is below.
+\begin{alignat}{3}
+\label{eq:admixed_covariance_2}
+\Omega_{i,j} = (1-p_i)(1-p_j) \omega_{i\;,\;j\;} \; \times&\\
+(p_i)(1-p_j) \omega_{i',\;j\;} \; \times   \notag&\\
+(p_j)(1-p_i) \omega_{i\;,\;j'} \; \times   \notag&\\
+(p_i)(p_j) \omega_{i',\;j'} \; +   \notag&\\
+I\bar{S_k}^{-1} + \eta_k \phantom{+} \notag&
+\end{alignat}
 
 The likelihood function for this model in which each population is allowed to draw admixture from a point in space is therefore XXXX.
 

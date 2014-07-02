@@ -11,104 +11,115 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{bigints}
-%
+
+% Make paragraphs not indented and leave a line between pararaphs
+\setlength{\parskip}{\baselineskip}%
+\setlength{\parindent}{0pt}%
+
 \newcommand{\e}[1]{{\mathbb E}\left[ #1 \right]}
 \newcommand{\gb}[1]{{\em \color{magenta} #1}}
 \newcommand{\plr}[1]{{\em \color{green} #1}}
 \newcommand{\gc}[1]{{\em \color{blue} #1}}
-%
+
 \geometry{a4paper}
-%
+
 \title{A Novel Spatial Framework for Understanding Genetic Admixture}
 \date{\vspace{-5ex}}
 \author{Gideon S. Bradburd$^{1,a}$, Peter L. Ralph$^{3,b}$, Graham M. Coop$^{1,c}$}
-%
+
 \begin{document}
-%%%
+
 \maketitle
-%%%
+
 \hspace{-0.25in}\textsuperscript{1}Center for Population Biology, Department of Evolution and Ecology, University of California, Davis, CA 95616\\\\
 \textsuperscript{3}Department of Molecular and Computational Biology, University of Southern California, Los Angeles, CA 90089\\\\
 \textsuperscript{a}gbradburd@ucdavis.edu; 
 \textsuperscript{b}pralph@usc.edu;
 \textsuperscript{c}gmcoop@ucdavis.edu\\\\\
-%%%
+
 \newpage
-%%%%%%%%%
+
 \begin{abstract}
 The patterns of genetic variation observed in modern populations are the product of a complex demographic and evolutionary history.  Genetic data can be used to illuminate that history, providing information about when and how populations have diverged, how migration connects populations, and how population sizes have fluctuated over time.  Work in this area has largely focused on estimating a population phylogeny, in which shared branch length on a tree represents shared evolutionary history between a pair of populations sampled in the modern day.  However, patterns of population differentiation are rarely tree-like, as migration and colonization will continuously re-shape patterns of relatedness between populations.  Isolation by distance (IBD), in which population differentiation increases with the distance between them, may offer a more natural null hypothesis.  Here, we present a novel analytical framework, SpaceMix, for the study of spatial genetic variation and genetic admixture, and a simple statistic to describe a populationÕs admixture status.
 \end{abstract}
-%%%%%%%%%
+
 \newpage
+%%%%%%%%% %%%%%%%%% %%%%%%%%%
 \section*{Introduction}
+
 population processes leave a stamp on extant patterns of genetic variation, and we can learn about them by studying those patterns.
-\\\\
+
 most of this work has focused on building population phylogenies (rich history).  in acknowledgement of prevalence of departures from tree-structure, recent work has allowed reticulations, defined as admixture, very good stuff
-\\\\
+
 however, we feel a more natural framework for studying this is IBD. (prevalence in nature, rich history there too).
-\\\\
+
 here, we present an analytical framework for studying the spatial distribution of genetic variation, develop an inference algorithm for parameter estimation within this framework, and introduce a simple statistic for quantifying a population's admixture status.
-\\\\
-%%%%%%%%%
+
+%%%%%%%%% %%%%%%%%% %%%%%%%%%
 \section*{Methods}
 \subsection*{Data}
 basically copy bedassle here, but include info on lat/long
-%
+
+%%%%%%%%% %%%%%%%%% 
 \subsection*{The Normal Approximation to Drift}
 If time scales are sufficiently short and the extent of drift sufficiently limited, the approximation of inter-generational binomial sampling to Brownian motion is actually pretty good (figure comparing fit of binomial sampling to fit of normal approx?).  
-\\\\
+
 Therefore, shared drift can be interpreted as covariance in allele frequencies across loci.
-%
+
+%%%%%%%%% %%%%%%%%% 
 \subsection*{Mean-centering and normalizing variance}
 a natural framework for modeling this covariance is the multivariate normal distribution.
-\\\\
+
 however, allele frequencies are constrained to vary between 0 and 1, and may have heterogeneous variance across loci.  therefore, we mean-center and normalize, and all the mean-centered, normalized allele frequencies X.
-\\\\
+
 this is how we get sample mean frequencies, and this is how we get X from frequency data
-\\\\
+
 note, using the sample mean frequency to mean-center can induce negative covariance, and also we lose a degree of freedom.  we discuss this further below.
-%
+
+%%%%%%%%% %%%%%%%%% 
 \subsection*{Spatial Covariance Model}
 we can model the sample covariance in mean-centered normalized allele frequencies as Wishart with degrees of freedom equal to the number of loci across which the covariance is calculated.
-\\\\
+
 The form of our parametric covariance matrix fits a model of exponential decay to allele frequency covariance with geographic distance.  The covariance between populations $i$ and $j$ is 
 \begin{equation}
 \omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right)\text{,}
 \end{equation}
 where $D_{i,j}$ is the geographic distance between population $i$ and $j$, $\alpha_0$ controls the sill of the covariance (the within-population variance, or the covariance when distance between points is 0),  $\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay.
 The likelihood function is therefore XXXX.
-%
+
+%%%%%%%%% %%%%%%%%% 
 \subsection*{Accommodating non-equilibrium processes}
 This model assumes that the system is in migration-drift equilibrium and that every unit of pairwise geographic distance is equivalent in its contribution to decay of allelic covariance, but in many cases those assumptions will not be met.
-\\\\
+
 Non-equilibrium processes like recent migration/colonization, or long distance dispersal events, will distort the shape of the decay of covariance with distance, and may bias parameter estimation. (MS simulations showing what SpaceMix does with space that has been distorted by a recent expansion/colonization, or that has a big barrier in it -> figures).
-\\\\
+
 Alternatively, if there are strong barriers to dispersal on the landscape, they will bias the estimation of the contribution of a unit distance to decay in covariance.
-\\\\
+
 To accommodate these heterogeneous processes, and to have a useful data visualization tool, we can estimate treat population's locations on the landscape as a random variable, and estimate them as part of our inference procedure.  Rich history of this type of data visualization, especially w/r/t PCA.
-\\\\
+
 Our likelihood function is now XXXXX.   (Spatial priors?)
-\\\\
+
 We can initiate from random locations to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference.
-%
+
+%%%%%%%%% %%%%%%%%% 
 \subsection*{Spatial Admixture Statistic}
 Given a model of isolation by distance and allele frequencies sampled at different points on a map, we can calculate (1) whether a population's genetic makeup is well predicted by that of its neighbors, and (2) whether a focal population has excess covariance with another sampled population.
-%
+
+%%%%%%%%% %%%%%%%%% 
 \subsection*{Inference of Spatial Admixture}
 We can interpret this excess covariance over anomalously long distances as genetic admixture, and we can incorporate it into out inference framework.  We define the allele frequency at locus $\ell$ in admixed population $k$ to be
 \begin{equation}
 f_{\ell,k} = pf_{\ell,i} + (1-p)f_{\ell,j},
 \end{equation}
 where $f_{\ell,i}$ is the allele frequency in population $i$, $f_{\ell,j}$ is the allele frequency in population $j$, and $p$ is the admixture proportion, which varies between 0 and 1 and describes the extent to which populations $i$ and $j$ are contributing to the genetic make-up of population $k$.
-\\\\
+
 To infer the spatial context of this admixture, we allow each population a point in space (\gb{can I use the phrase `ghost population,' or is that to goofy?}) from which it draws its admixture, as well as the extent (proportion) of that admixture.  The observed allele frequencies in sampled populations are therefore a weighted average of the model-estimated allele frequencies at the geographic location of the sampled population and those at the coordinates from which the observed population draws admixture.  That is, the observed allele frequencies in population $k$ are modeled as follows:
 \begin{equation}
 f_{k} = pf_{k'} + (1-p)f_{j},
 \end{equation}
 where $f_{k'}$ are the model-estimated allele frequencies across loci at the spatial location of population $k$ and $f_{j}$ are the model-estimated allele frequencies at the spatial location $j$ from which population $k$ is drawing admixture in proportion $p$.  Something about how and why we constrain $p$ to be between 0 and 0.5.
-\\\\
+
 The covariance between sampled populations $i$ and $j$ can be modeled as
-%
 \begin{alignat}{3}
 \label{eq:admixed_covariance}
 \Omega_{i,j} = (1-p_i)(1-p_j) \omega_{i\;,\;j\;} \; \times&\\
@@ -117,47 +128,53 @@ The covariance between sampled populations $i$ and $j$ can be modeled as
 (p_i)(p_j) \omega_{i',\;j'} \; \phantom{\times}   \notag&\\
 \end{alignat}
 where $i'$ and $j'$ are the locations from which populations $i$ and $j$ are drawing their admixture with proportions $p_i$ and $p_j$, and $\omega$ is the spatial covariance function parameterized by the pairwise geographic distances between each pair of populations.
-\\\\
+
 The likelihood function for this model in which each population is allowed to draw admixture from a point in space is therefore XXXX.
-\\\\
+
 For details on our Bayesian inference framework and Markov chain Monte Carlo inference procedure, please see the Section: How I spent the past year!
-\\\\
+
 \section*{Empirical Applications}
 To demonstrate the applications of this novel method, we employed it in two canonical empirical systems: the greenish warbler ring species complex, and, to our knowledge, the most complete geographic sampling of human populations to date (\gb{is this true?}).
-\\\\
+
 \subsection*{Greenish Warblers}
 Description of the data
-\\\\
+
 Description of the research questions we use SpaceMix to address
-\\\\
+
 Details of analyses run
 \subsection*{Human Populations}
 Description of the data
-\\\\
+
 Description of the research questions we use SpaceMix to address
-\\\\
+
 Details of analyses run
-%
+
+%%%%%%%%% %%%%%%%%% 
 \section*{Results}
 \gb{should we just merge the results section in with the empirical applications section?  not sure what else would go here.}
-%
+
+%%%%%%%%% %%%%%%%%% 
 \section*{Discussion}
 In this paper we have presented blah blah blah.  We believe this represents an advance over previous methods because blah blah blah.  This method can be used to answer a variety of empirical questions, including blah, blah, and blah, and also serves as an intuitive data visualization tool.
-%
+
+%%%%%%%%% %%%%%%%%% 
 \subsection*{Empirical Results}
-%
+
+%%%%%%%%% %%%%%%%%% 
 \subsubsection*{Greenish Warblers}
-%
+
 \gb{not sure how much to include here}
-%
+
+%%%%%%%%% %%%%%%%%% 
 \subsubsection*{Humans}
-%
+
 \gb{not sure how much to include here}
-%
+
+%%%%%%%%% %%%%%%%%% 
 \section*{Future Directions}
-%
+
 spatiotemporal model
-\\\\
+
 spatialSTRUCTURE
 %%%%%%%%%
 

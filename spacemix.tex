@@ -53,17 +53,15 @@ Population-level demographic processes leave their mark on patterns of genetic v
 
 Further work has focused on joint inference and visualization of whole-genome patterns of relatedness, specifically on estimating a population phylogeny describing the evolutionary history shared between sampled individuals or populations (e.g. Pickrell \& Pritchard, Patterson \& Moorjani, Reich?).  The approach of modeling relatedness between populations within species as a tree-like structure was pioneered by Cavalli-Sforza (\&Thompson?) in the 1960s \gb{?}, when genetic character data (blood types) were first becoming available in humans.  
 
-Their work has been greatly extended by Pickrell and Pritchard (2012), whose method, TreeMix, models covariance in allele frequencies across loci as a population directed acyclic graph.  TreeMix then accommodates reticulate population structure by allowing branches on the population tree tree to be connected by arrows of admixture that explain excess residual covariance between populations or population 'clades.' 
+Their work has been greatly extended by Pickrell and Pritchard (2012), whose method, TreeMix, models covariance in allele frequencies across loci as a directed acyclic graph between populations.  TreeMix then accommodates reticulate population structure by allowing branches on the population tree tree to be connected by arrows of admixture that explain excess residual covariance between populations or population 'clades.' 
 
-In parallel, Patterson and Reich and Moorjani and Other Folks have developed a suite of tests for genetic admixture between a set of populations assuming a tree-like structure to their evolutionary history.
+In parallel, Patterson and Reich and Moorjani and Other Folks have developed a suite of tests for genetic admixture between a set of populations assuming a tree-like structure to their evolutionary history.  These tests model shared genetic drift as shared branch length on a hypothesized population tree, and take covariance in excess of that stipulated by the tree to be evidence for admixture.
 
-%Further work has focused on joint inference and visualization approaches, which are designed to visually summarize whole genome patterns of relatedness between sampled populations or individuals while simultaneously making inference on their shared evolutionary history.  Many of these visualization approaches have been largely model-free, relying 
+These tree-based methods are both valuable as genetic inference and visualization tools.  However, a more natural framework for modeling genetic differentiation between sampled populations or individuals may be that of isolation by distance (IBD) (Wright).  The pattern of IBD, in which genetic differentiation increases with the geographic distance between populations, is ubiquitous in nature (Meirmans 2012, Ralph \& Coop 2012), and relies only on the weak assumption that individual's mating opportunities are geographically limited by dispersal.  
 
-most of this work has focused on building population phylogenies (rich history).  in acknowledgement of prevalence of departures from tree-structure, recent work has allowed reticulations, defined as admixture, very good stuff
+%Isolation by distance is, in many ways, a more reasonable null hypothesis of population relatedness than a population phylogeny;  \gb{too compare-y?  should I ditch this?} population structure will only rarely be truly tree-like, and a strictly bifurcating graph is unable to accommodate many geographic scenarios, such as multiple equidistant populations in migration-drift equilibrium.
 
-however, we feel a more natural framework for studying this is IBD. (prevalence in nature, rich history there too).
-
-Here, we present an analytical framework and develop an inference algorithm for studying the spatial distribution of genetic variation based on a reasonable model of isolation by distance.  We also introduce a simple statistic for quantifying a population's admixture status, and demonstrate the utility of this approach with two high profile empirical applications.
+Here, we present an analytical framework and develop an inference algorithm for studying the spatial distribution of genetic variation based on a model of isolation by distance.  We also introduce a simple statistic for quantifying a population's admixture status, and demonstrate the utility of this approach with two high profile empirical applications.
 
 %%%%%%%%% %%%%%%%%% %%%%%%%%%
 \section*{Methods}

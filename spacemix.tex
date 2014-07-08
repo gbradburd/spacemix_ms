@@ -66,10 +66,16 @@ Here, we present an analytical framework and develop an inference algorithm for 
 %%%%%%%%% %%%%%%%%% %%%%%%%%%
 \section*{Methods}
 \subsection*{Data}
-basically copy bedassle here, but include info on lat/long
+Our data consist of $L$ unlinked variable loci sampled across $K$ populations, as well as the geographic coordinates, denoted $G_k$, (latitude and longitude) at which those populations were sampled.  For convenience, we use bi-allelic single nucleotide polymorphisms (SNPs) as the genetic data in our descriptions below, but we note that this method could be applied equally well to other types of data, including microsatellites.  We refer to the $K$ accessions as populations, but the method can also be applied to individuals.  We summarize these genetic data as a set of allelic count data and sample size data, arbitrarily choosing an allele to count at each locus, and denoting the number of the counted allele at locus $\ell$ in population $k$ as $C_{\ell,k}$ out of a total sample size of $S_{\ell,k}$ alleles.  The sample frequency of the counted allele at locus $\ell$ in population $k$ is therefore $\hat{f}_{\ell,k} = C_{\ell,k}/S_{\ell,k}$.  Our method models the covariance in these allele frequencies between populations across loci.
+
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{The Normal Approximation to Drift}
+In order to model this covariance, we draw on previous work (Cavalli-Sforza \& Edwards, Nicholson et al, Coop et al, Pickrell \& Pritchard), and model the process of genetic drift as approximately Gaussian.  Briefly, if the frequency of allele $A$ in an ancestral population is $\epsilon_A$, then we model the frequency of that allele in a daughter population as follows:
+\begin*{equation}
+\label{eq:normal_drift}
+\
+\end*{equation}
 If time scales are sufficiently short and the extent of drift sufficiently limited, the approximation of inter-generational binomial sampling to Brownian motion is actually pretty good (figure comparing fit of binomial sampling to fit of normal approx?).  
 
 Therefore, shared drift can be interpreted as covariance in allele frequencies across loci.

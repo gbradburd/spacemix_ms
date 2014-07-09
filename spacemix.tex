@@ -82,7 +82,7 @@ Between populations, the differentiating process of drift is counteracted by the
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Mean-centering and normalizing variance}
-We wish to model this covariance between populations as the result of a spatial process, in which there are higher migration rates between nearby populations than distant ones, so that nearby population pairs have higher covariance.  The multivariate normal distribution offers a natural statistical framework for describing this covariance, which may be straightforwardly modeled as a parametric function of any pairwise variable (see, e.g., Bradburd, Ralph, and Coop 2013).  Unlike multivariate normal observations however, allele frequencies at variable loci are constrained to have a mean between 0 and 1, and may have heterogeneous variance across loci.  To more closely meet the assumptions of our statistical inference model, we mean-center and normalize our observations by the following procedure.
+The multivariate normal distribution offers a natural statistical framework for describing this covariance, which may be straightforwardly modeled as a parametric function of any pairwise variable (see, e.g., Bradburd, Ralph, and Coop 2013).  Unlike multivariate normal observations however, allele frequencies at variable loci are constrained to have a mean between 0 and 1, and may have heterogeneous variance across loci.  To more closely meet the assumptions of our statistical inference model, we mean-center and normalize our observations by the following procedure.
 
 Recall that the sample allele frequency at locus $\ell$ in population $k$ is given by $\hat{f}_{\ell,k} = C_{\ell,k}/S_{\ell,k}$.  We wish to calculate a sample mean frequency at each locus weighted by the sample size in each population.  As sample size may vary across loci, we first calculate $\bar{S}_k$, the mean population sample size in population $k$, as $\bar{S}_k = \frac{1}{\ell}\sum_\ell S_{\ell,k}$.  We then calculate the weighted sample mean frequency at locus $\ell$ as follows:
 \begin{equation}
@@ -98,15 +98,28 @@ We then model these transformed data as multivariate normal, as described in the
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Spatial Covariance Model}
-we can model the sample covariance in mean-centered normalized allele frequencies as Wishart with degrees of freedom equal to the number of loci across which the covariance is calculated.
-
-The form of our parametric covariance matrix fits a model of exponential decay to allele frequency covariance with geographic distance.  The covariance between populations $i$ and $j$ is 
+We wish to model the covariance between populations as the result of a spatial process, in which migration rates between nearby populations are higher than between distant ones, so that a population has higher covariance with a close neighbor than with a more distant population.  The form of our parametric covariance matrix fits a model of exponential decay to allele frequency covariance with geographic distance (Wasser et al 2004, Bradburd, Ralph, and Coop 2013).  The covariance between populations $i$ and $j$ is 
 \begin{equation}
 \label{eq:spatial_covariance}
 \omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right)\text{,}
 \end{equation}
 where $D_{i,j}$ is the geographic distance between population $i$ and $j$, $\alpha_0$ controls the sill of the covariance (the within-population variance, or the covariance when distance between points is 0),  $\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay.
-The likelihood function is therefore XXXX.
+We model the sample covariance of mean-centered normalized allele frequencies ($Y$) as Wishart with degrees of freedom equal to the number of loci ($L$) across which the covariance is calculated.
+That is, 
+\begin{equation}
+\label{eq:wishart_dist}
+Y \sim \mathcal{W}\left( L^{-1} \omega, L	\right)
+\end{equation}
+
+
+The likelihood of the data $X_{\ell,k}$, given the observed distance matrix $D$ between all $K$ populations and the values of the three $\alpha$ parameters ($\vec{\alpha}$), which together parameterize the spatial covariance matrix $\omega$, is given by
+\begin{equation}
+\label{eq:wishart_lnl}
+\mathcal{P}(X_{\ell,k} \; | \; D, \vec{\alpha}) = \frac{|Y|^{ \frac{L - K - 1}{2} } \text{exp} \left(  \frac{-\text{tr}(\omega^{-1}Y)}{2}	\right) }	
+									{2^{\frac{LK}{2}}  |\frac{\omega}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}{2} \right)	},
+\end{equation}
+where $\text{tr}$ denotes the trace function and $\Gamma_p$ denotes a multivariate gamma function.
+
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Accommodating non-equilibrium processes}

@@ -82,16 +82,19 @@ Between populations, the differentiating process of drift is counteracted by the
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Mean-centering and normalizing variance}
-We wish to model this covariance between populations as the result of a spatial process governing the 
-a natural framework for modeling this covariance is the multivariate normal distribution.
+We wish to model this covariance between populations as the result of a spatial process, in which there are higher migration rates between nearby populations than distant ones, so that nearby population pairs have higher covariance.  The multivariate normal distribution offers a natural statistical framework for describing this covariance, which may be straightforwardly modeled as a parametric function of any pairwise variable (see, e.g., Bradburd, Ralph, and Coop 2013).  Unlike multivariate normal observations however, allele frequencies at variable loci are constrained to have a mean between 0 and 1, and may have heterogeneous variance across loci.  To more closely meet the assumptions of our statistical inference model, we mean-center and normalize our observations by the following procedure.
 
-however, allele frequencies are constrained to vary between 0 and 1, and may have heterogeneous variance across loci.  therefore, we mean-center and normalize, and call the mean-centered, normalized allele frequencies X.
-
-however, allele frequencies are constrained to vary between 0 and 1, and may have heterogeneous variance across loci.  therefore, we mean-center and normalize, and call the mean-centered, normalized allele frequencies X.
-
-this is how we get sample mean frequencies, and this is how we get X from frequency data
-
-note, using the sample mean frequency to mean-center can induce negative covariance, and also we lose a degree of freedom.  we discuss this further below.
+Recall that the sample allele frequency at locus $\ell$ in population $k$ is given by $\hat{f}_{\ell,k} = C_{\ell,k}/S_{\ell,k}$.  We wish to calculate a sample mean frequency at each locus weighted by the sample size in each population.  As sample size may vary across loci, we first calculate $\bar{S}_k$, the mean population sample size in population $k$, as $\bar{S}_k = \frac{1}{\ell}\sum_\ell S_{\ell,k}$.  We then calculate the weighted sample mean frequency at locus $\ell$ as follows:
+\begin{equation}
+\label{eq:sample_mean_freq}
+\bar{f}_{\ell} = \frac{1}{\sum_k S_{\ell,k}} \sum_k \hat{f}_{\ell,k} S_{\ell,k}
+\end{equation}
+The binomial variance at each locus varies as a function of the global allele frequency, and, at locus $\ell$, is given by $\bar{f}_{\ell}(1-\bar{f}_{\ell})$.  To avoid modeling the heterogeneous effect of this variance across loci, we standardize by the binomial variance.  We call the mean-centered normalized allele frequencies $X_{\ell,k}$, and calculate them as follows:
+\begin{equation}
+\label{eq:MCN_freqs}
+X_{\ell,k} = \frac{ \hat{f}_{\ell,k} - \bar{f}_{\ell} } {\bar{f}_{\ell}(1-\bar{f}_{\ell})}
+\end{equation}
+We then model these transformed data as multivariate normal, as described in the next section.  Note, by using the sample mean frequency to mean-center our observations, we lose a degree of freedom, and can also induce negative covariance across loci between populations.  We discuss this further in Appendix A.
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Spatial Covariance Model}

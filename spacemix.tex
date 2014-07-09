@@ -71,17 +71,18 @@ Our data consist of $L$ unlinked variable loci sampled across $K$ populations, a
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{The Normal Approximation to Drift}
-In order to model this covariance, we draw on previous work (Cavalli-Sforza \& Edwards, Nicholson et al, Coop et al, Pickrell \& Pritchard), and model the process of genetic drift as approximately Gaussian.  Briefly, if the frequency of allele $A$ in an ancestral population is $\epsilon_A$, then we model the frequency of that allele in a daughter population as follows:
-\begin*{equation}
+In order to model this covariance, we draw on previous work (Cavalli-Sforza \& Edwards, Nicholson et al 2002, Coop et al 2010, Pickrell \& Pritchard 2012), and model the process of genetic drift as approximately Gaussian.  Briefly, if the frequency of allele $\epsilon$ in an ancestral population, $A$ is $\epsilon_A$, then we model the frequency of that allele in a daughter population,  $B$, as follows:
+\begin{equation}
 \label{eq:normal_drift}
-\
-\end*{equation}
-If time scales are sufficiently short and the extent of drift sufficiently limited, the approximation of inter-generational binomial sampling to Brownian motion is actually pretty good (figure comparing fit of binomial sampling to fit of normal approx?).  
+\epsilon_B \sim N(\epsilon_A,\delta_B(\epsilon_A)(1-\epsilon_A))
+\end{equation}
+The parameter $\delta_B$, the amount of drift that has occurred in $B$ since it split off from $A$, is approximately equal to $\frac{t}{2N_e}$, where $t$ is time in generations, and $N_e$ is the effective population size.  Note that the binomial variance term in the normal variance in \eqref{eq:normal_drift} ignores the fact that the drift variance will change from generation to generation due to changes in the frequency of $\epsilon$ within a population over time.  Note also that this approximation works best for alleles at intermediate frequency, which are less likely to be lost or fixed during the interval separating $A$ and $B$.  However, if the extent of drift sufficiently limited (time scales are short or population sizes are large), the approximation of inter-generational binomial sampling to Brownian motion is good (\gb{see figure comparing fit of binomial sampling to fit of normal approx?}).  
 
-Therefore, shared drift can be interpreted as covariance in allele frequencies across loci.
+Between populations, the differentiating process of drift is counteracted by the homogenizing force of migration, so that populations with higher levels of historical or ongoing migration can be thought of as having more shared drift.  Across loci, populations with highly shared drift will tend to covary more strongly in the deviations their allele frequencies take from some ancestral (or global) mean.
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Mean-centering and normalizing variance}
+We wish to model this covariance between populations as the result of a spatial process governing the 
 a natural framework for modeling this covariance is the multivariate normal distribution.
 
 however, allele frequencies are constrained to vary between 0 and 1, and may have heterogeneous variance across loci.  therefore, we mean-center and normalize, and call the mean-centered, normalized allele frequencies X.

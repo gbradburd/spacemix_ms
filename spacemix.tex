@@ -103,7 +103,7 @@ We wish to model the covariance between populations as the result of a spatial p
 \label{eq:spatial_covariance}
 \omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right)\text{,}
 \end{equation}
-where $D_{i,j}$ is the geographic distance between population $i$ and $j$, $\alpha_0$ controls the sill of the covariance (the within-population variance, or the covariance when distance between points is 0),  $\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay.
+where $D_{i,j}$ is the geographic distance between population $i$ and $j$ (and therefore a function of their locations, $G_i$ and $G_j$), $\alpha_0$ controls the sill of the covariance (the within-population variance, or the covariance when distance between points is 0),  $\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay.
 We model the sample covariance of mean-centered normalized allele frequencies ($Y$) as Wishart with degrees of freedom equal to the number of loci ($L$) across which the covariance is calculated.
 That is, 
 \begin{equation}
@@ -115,10 +115,10 @@ Y \sim \mathcal{W}\left( L^{-1} \omega, L	\right)
 The likelihood of the data $X_{\ell,k}$, given the observed distance matrix $D$ between all $K$ populations and the values of the three $\alpha$ parameters ($\vec{\alpha}$), which together parameterize the spatial covariance matrix $\omega$, is given by
 \begin{equation}
 \label{eq:wishart_lnl}
-\mathcal{P}(X_{\ell,k} \; | \; D, \vec{\alpha}) = \frac{|Y|^{ \frac{L - K - 1}{2} } \text{exp} \left(  \frac{-\text{tr}(\omega^{-1}Y)}{2}	\right) }	
-									{2^{\frac{LK}{2}}  |\frac{\omega}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}{2} \right)	},
+\mathcal{P}(X_{\ell,k} \; | \; D(G), \pmb{\vec{\alpha}}) = \frac{|Y|^{ \frac{L - K - 1}{2} } \text{exp} \left(  \frac{-\text{tr}(\pmb{\omega}^{-1}Y)}{2}	\right) }	
+									{2^{\frac{LK}{2}}  |\frac{\pmb{\omega}}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}{2} \right)	},
 \end{equation}
-where $\text{tr}$ denotes the trace function and $\Gamma_p$ denotes a multivariate gamma function.
+where $\text{tr}$ denotes the trace function and $\Gamma_p$ denotes a multivariate gamma function, and all boldface variables are parameters estimated as part of our inference procedure.
 
 
 %%%%%%%%% %%%%%%%%% 
@@ -130,9 +130,15 @@ Non-equilibrium processes like long distance dispersal, recent migration, coloni
 To accommodate these heterogeneous processes, we can treat population's locations on the landscape as a random variable, and estimate them as part of our inference procedure.  Two populations that are sampled at distant locations but that are genetically similar (perhaps one was recently founded by a colonization event from the other) may choose estimated locations that are nearby, while two populations that are sampled close together, but that are genetically dissimilar (e.g, the recently founded population and its neighbor), may choose locations that are farther apart.
 The result is a map \gb{how do we feel about the word "geogenetic?"} in which the distances between populations are indicative of the way that populations perceive the distances between themselves.  There is a rich history of this type of data visualization, especially using reduced dimensionality representations of the data such as Principal Components Analysis (e.g. Menozzi, Piazza, and Cavalli-Sforza 1978, Novembre et al 2008, Novembre and Stephens 2008).  Our method offers an improvement over PCA-based visualization methods in that it offers an explicit model of spatial genetic variation, and can therefore be used as a robust framework for inference and hypothesis testing (see also Yang et al 2012, Yang et al 2014).
 
-Our likelihood function is now XXXXX.   (Spatial priors?)
+Our likelihood function is now given by,
+\begin{equation}
+\label{eq:choose_location_wishart_lnl}
+\mathcal{P}(X_{\ell,k} \; | \; \pmb{D}(\pmb{G'}), \pmb{\vec{\alpha}}) = \frac{|Y|^{ \frac{L - K - 1}{2} } \text{exp} \left(  \frac{-\text{tr}(\pmb{\omega}^{-1}Y)}{2}	\right) }	
+									{2^{\frac{LK}{2}}  |\frac{\pmb{\omega}}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}{2} \right)	},
+\end{equation}
+where $\text{tr}$ denotes the trace function and $\Gamma_p$ denotes a multivariate gamma function, and all boldface variables are parameters estimated as part of our inference procedure.  Notice that this equation has the same form as \eqref{eq:wishart_lnl}, save that the pairwise geographic distance matrix $D$ is now a parameter to be estimated rather than an observed value.
 
-We can initiate from random locations to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference.
+We use the observed location for population $k$, $G_k$, to parameterize a bivariate normal spatial prior on the location $k$ chooses for itself, $G'_k$ (for more details on our Bayesian inference procedure, see Appendix B).  However, we can use random locations as the ``observed locations" ($G_k$) can remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference.
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Spatial Admixture Statistic}
@@ -160,7 +166,7 @@ The covariance between sampled populations $i$ and $j$ can be modeled as
 (p_j)(1-p_i) \omega_{i\;,\;j'} \; \times   \notag&\\
 (p_i)(p_j) \omega_{i',\;j'} \; \phantom{\times}   \notag&
 \end{alignat}
-where $i'$ and $j'$ are the locations from which populations $i$ and $j$ are drawing their admixture with proportions $p_i$ and $p_j$, and $\omega$ is the spatial covariance function parameterized by the pairwise geographic distances between each pair of populations.
+where $i'$ and $j'$ are the points from which populations $i$ and $j$ are drawing their admixture with proportions $p_i$ and $p_j$, and $\omega$ is the spatial covariance function parameterized by the pairwise geographic distances between each pair of populations.
 In addition, we introduce a population-specific variance term on each diagonal element of the covariance matrix.  This term accommodates both the binomial sampling noise introduced by finite chromosome sample size in each population and also population-specific drift.  The full expression for our admixed covariance function is below.
 \begin{alignat}{3}
 \label{eq:admixed_covariance_2}
@@ -173,14 +179,27 @@ I\bar{S_k}^{-1} + \eta_k \phantom{+} \notag&
 
 where $I$ is the identity matrix, $\bar{S_k}$ is the mean sample size in population $k$ across all loci, and $\eta_k$ is the nugget estimated in population $k$.
 
-The locations of the set of $k$ points from which the $k$ sampled populations draw admixture, and the vector of length $k$ of each population's admixture proportion, $p_k$, are treated as random variables and jointly estimated as part of our inference procedure.
+The location from which sampled population $k$ draws its admixture, $G_{k'}$, and the population's admixture proportion, $p_k$, are treated as random variables and jointly estimated as part of our inference procedure.  The admixed covariance between populations $i$ and $j$, $\Omega_{i,j}$ is then a function of all the pairwise spatial covariances between populations $i$ and $j$ and the points from which they draw admixture, $i'$ and $j'$.  Those spatial covariances in turn are a function of all combinations of pairwise distances between their locations: $G_i$, $G_i$, $G_{i'}$, and $G_{j'}$.
 
-The likelihood function for this model in which each population is allowed to draw admixture from a point in space is therefore XXXX.
+The likelihood function for this model in which each population is allowed to draw admixture from a point in space is 
+\begin{equation}
+\label{eq:choose_admixture_wishart_lnl}
+\mathcal{P}\left(X_{\ell,k} \; | \; \pmb{D}\left(G,\pmb{G_{'}}\right), \pmb{\vec{\alpha}}, \pmb{p}, S, \pmb{\eta}\right) = \frac{|Y|^{ \frac{L - K - 1}{2} } \text{exp} \left(  \frac{-\text{tr}(\pmb{\Omega}^{-1}Y)}{2}	\right) }	
+									{2^{\frac{LK}{2}}  |\frac{\pmb{\Omega}}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}{2} \right)	},
+\end{equation}
+where $\text{tr}$ denotes the trace function and $\Gamma_p$ denotes a multivariate gamma function, and all boldface variables are parameters estimated as part of our inference procedure.
+
 
 For details on our Bayesian inference framework and Markov chain Monte Carlo inference procedure, please see the Section: How I spent the past year!
 
 \subsection*{Models}
-The models described above may be used in various combinations.  In the simplest model, populations may not choose their own locations, nor are they allowed to draw admixture, and the only parameters to be estimated are those of the spatial covariance function given in Eqn \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_k$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of that admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  %The other combinations involve keeping population locations fixed, but allowing them to draw admixture, and allowing populations to move, but not allowing them to draw admixture.
+The models described above may be used in various combinations.  In the simplest model, populations may not choose their own locations, nor are they allowed to draw admixture, and the only parameters to be estimated are those of the spatial covariance function given in Eqn \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_k$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of that admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  The full likelihood of this most complex parameterization is given by,
+\begin{equation}
+\label{eq:source_and_target_wishart_lnl}
+\mathcal{P}\left(X_{\ell,k} \; | \; \pmb{D}\left(\pmb{G'},\pmb{G_{'}}\right), \pmb{\vec{\alpha}}, \pmb{p}, S, \pmb{\eta}\right) = \frac{|Y|^{ \frac{L - K - 1}{2} } \text{exp} \left(  \frac{-\text{tr}(\pmb{\Omega}^{-1}Y)}{2}	\right) }	
+									{2^{\frac{LK}{2}}  |\frac{\pmb{\Omega}}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}{2} \right)	},
+\end{equation}
+
 
 \gb{A note about here how this complex model is still identifiable}
 

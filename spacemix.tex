@@ -98,6 +98,8 @@ We then model these transformed data as multivariate normal, as described in the
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Spatial Covariance Model}
+\gb{MS simulation of pops on a grid, figure to show that we recover the grid}
+
 We wish to model the covariance between populations as the result of a spatial process, in which migration rates between nearby populations are higher than between distant ones, so that a population has higher covariance with a close neighbor than with a more distant population.  The form of our parametric covariance matrix fits a model of exponential decay to allele frequency covariance with geographic distance (Wasser et al 2004, Bradburd, Ralph, and Coop 2013).  The covariance between populations $i$ and $j$ is 
 \begin{equation}
 \label{eq:spatial_covariance}
@@ -123,6 +125,10 @@ where $\text{tr}$ denotes the trace function and $\Gamma_p$ denotes a multivaria
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Accommodating non-equilibrium processes}
+\gb{MS simulation of pops on a grid with a recent expansion, figure to show how those pops all clump toward source of expansion}
+
+\gb{MS simulation of pops on a grid with a barrier in the middle, figure to show how pops on either side of barrier clump together (or how pops scuttle away from each other)}
+
 This model assumes that the system is in migration-drift equilibrium and that every unit of pairwise geographic distance is equivalent in its contribution to decay of allelic covariance, but in many cases those assumptions will not be met.
 
 Non-equilibrium processes like long distance dispersal, recent migration, colonization, or population expansion events will distort the shape of the decay of covariance with distance, and may bias parameter estimation.  Depending on the distribution and history of these events over the landscape, they may also result in heterogeneous patterns of the decay of covariance over space.  Strong barriers to dispersal on the landscape can also bias the estimation of the contribution of a unit distance to decay in covariance.
@@ -142,10 +148,52 @@ We use the observed location for population $k$, $G_k$, to parameterize a bivari
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Spatial Admixture Statistic}
-Given a model of isolation by distance and allele frequencies sampled at different points on a map, we can calculate (1) whether a population's genetic makeup is well predicted by that of its neighbors, and (2) whether a focal population has excess covariance with another sampled population.
+\gb{MS simulation of pops on a grid with 1 admixture event from a pop on one side to a pop on the other}
+
+\gb{figure to show the pairwise f-stat between all pops and the admixed pop}
+
+\gb{figure to show landscape of admixture to the admixed pop}
+
+Given a model of isolation by distance and allele frequencies sampled at different points on a map, we can calculate (1) whether a population's genetic makeup is well predicted by that of its neighbors, and (2) whether a focal population has excess covariance with another sampled population or unsampled region of the map.  These statistics, which we call spatial $f$-statistics \gb{should we give these a real name?}, are in the spirit of both the $f_n$ statistics introduced by Reich et al (2009) and the admixture arrows in a TreeMix graph (Pickrell and Pritchard 2012), and are designed to pick up the signal of covariance between populations in excess of that predicted by the model.  Where both those approaches use a model of a population phylogeny, ours uses a spatial model of allelic covariance, in which one population's covariance with another is expected to decay at a fixed manner across the landscape, as determined by the estimated parametric form of the spatial covariance.  The details of this procedure are given below.
+
+Given a focal population $i$, the parametric spatial covariance matrix $\omega$, and the mean-centered, normalized allele frequencies $X$ at all sampled geographic locations $G$, we calculate the conditional mean observations $X$ at locus $\ell$ at location $G_i$ as
+\begin{equation}
+\label{eq:conditional_mean}
+\bar{X}_i = \left(	\omega_{i,-i} \right) \left( \omega^{-1}_{-i,-i} \right) \left( X_{-i} \right),
+\end{equation}
+where we denote dropping the focal population $i$ from the covariance matrix or the observations $X$ at locus $\ell$ with a ``$-i$'' in the subscript.
+
+Then, given the conditional mean observations in focal population $i$, $\bar{X}_i$, and a population $j$ with which we wish to test for admixture with $i$, we calculate our spatial admixture statistic over all $L$ loci as follows:
+\begin{equation}
+\label{eq:spatial_fstat_pop}
+f_{i,j} = \frac{	\mathbb E_L\left[(\vec{X}_i- \bar{X}_i) ~ (\vec{X}_{j})\right]		}
+			{\sqrt{	\text{Var}( \vec{X}_i- \bar{X}_i )  \text{Var}( \vec{X}_{j} )  }  }
+\end{equation}
+
+This statistic calculates whether a focal population's deviations from its spatial predictions have excess covariance with another sampled population.  It's significance can be assessed via a 
+non-parametric bootstrap \gb{or jackknife???} across loci in the dataset.
+
+This statistic may also be calculated between a focal population $i$ and an arbitrary location $j'$ on the map.  First, we calculate the spatial covariance between all the arbitrary location $j'$ and the sampled populations, \emph{excluding} the focal population $i$.  This spatial covariance matrix, which we denote $\omega'$, therefore has rank $k$, as we have excluded the focal population $i$ and included the putative source of admixture location $j'$.  Next, we calculate the conditional mean observations $X_{j'}$ at locus $\ell$ at location $G_{j'}$ as follows:
+\begin{equation}
+\label{eq:conditional_mean}
+\bar{X}_{j'} = \left(	\omega'_{-j',-j'} \right) \left( \omega'^{-1}_{-j',-j'} \right) \left( X_{-i} \right)
+\end{equation}
+
+Finally, we can calculate a spatial $f$-statistic between the focal population and the putative location from which it receives admixture as follows,
+\begin{equation}
+\label{eq:spatial_fstat_location}
+f_{i,j'} = \frac{	\mathbb E_L\left[(\vec{X}_i- \bar{X}_i) ~ (\vec{\bar{X}}_{j'})\right]	}
+			{\sqrt{	\text{Var}( \vec{X}_i- \bar{X}_i )  \text{Var}( \vec{\bar{X}}_{j'} )  }  }
+\end{equation}
+
+This procedure allows us to visualize the signature of excess covariance across the entire map (see, e.g. Figure XXXX).
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Inference of Spatial Admixture}
+\gb{same MS simulation as above, w/ 1 admixture event from one pop to another}
+
+\gb{figure to show inference of admixture arrows}
+
 We can interpret this excess covariance over anomalously long distances as genetic admixture, and we can incorporate it into out inference framework.  We define the allele frequency at locus $\ell$ in admixed population $k$ to be
 \begin{equation}
 f_{\ell,k} = pf_{\ell,i} + (1-p)f_{\ell,j},

@@ -2,7 +2,7 @@
 \usepackage{geometry} 
 \usepackage{graphicx}
 \usepackage{float}
-\usepackage{subfig}
+\usepackage{subcaption}
 \usepackage{url}
 \usepackage{mathtools}
 \usepackage{color}
@@ -65,6 +65,8 @@ Here, we present an analytical framework and develop an inference algorithm for 
 
 %%%%%%%%% %%%%%%%%% %%%%%%%%%
 \section*{Methods}
+Throughout these Methods, we will introduce example scenarios, simulated under a neutral, spatially structured coalescent process.  We will also present the results of SpaceMix analyses run on those data, both to illustrate its utility and clarify our presentation.  For all details of simulation procedure and analyses, please see Appendix X.
+
 \subsection*{Data}
 Our data consist of $L$ unlinked variable loci sampled across $K$ populations, as well as the geographic coordinates, denoted $G_k$, (latitude and longitude) at which those populations were sampled.  For convenience, we use bi-allelic single nucleotide polymorphisms (SNPs) as the genetic data in our descriptions below, but we note that this method could be applied equally well to other types of data, including microsatellites.  We refer to the $K$ accessions as populations, but the method can also be applied to individuals.  We summarize these genetic data as a set of allelic count data and sample size data, arbitrarily choosing an allele to count at each locus, and denoting the number of the counted allele at locus $\ell$ in population $k$ as $C_{\ell,k}$ out of a total sample size of $S_{\ell,k}$ alleles.  The sample frequency of the counted allele at locus $\ell$ in population $k$ is therefore $\hat{f}_{\ell,k} = C_{\ell,k}/S_{\ell,k}$.  Our method models the covariance in these allele frequencies between populations across loci.
 
@@ -98,7 +100,6 @@ We then model these transformed data as multivariate normal, as described in the
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Spatial Covariance Model}
-\gb{MS simulation of pops on a grid, figure to show that we recover the grid}
 
 We wish to model the covariance between populations as the result of a spatial process, in which migration rates between nearby populations are higher than between distant ones, so that a population has higher covariance with a close neighbor than with a more distant population.  The form of our parametric covariance matrix fits a model of exponential decay to allele frequency covariance with geographic distance (Wasser et al 2004, Bradburd, Ralph, and Coop 2013).  The covariance between populations $i$ and $j$ is 
 \begin{equation}
@@ -125,6 +126,8 @@ where $\text{tr}$ denotes the trace function and $\Gamma_p$ denotes a multivaria
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Accommodating non-equilibrium processes}
+\gb{MS simulation of pops on a grid, figure to show that we recover the grid}
+
 \gb{MS simulation of pops on a grid with a recent expansion, figure to show how those pops all clump toward source of expansion}
 
 \gb{MS simulation of pops on a grid with a barrier in the middle, figure to show how pops on either side of barrier clump together (or how pops scuttle away from each other)}
@@ -143,6 +146,21 @@ Our likelihood function is now given by,
 									{2^{\frac{LK}{2}}  |\frac{\pmb{\omega}}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}{2} \right)	},
 \end{equation}
 where $\text{tr}$ denotes the trace function and $\Gamma_p$ denotes a multivariate gamma function, and all boldface variables are parameters estimated as part of our inference procedure.  Notice that this equation has the same form as \eqref{eq:wishart_lnl}, save that the pairwise geographic distance matrix $D$ is now a parameter to be estimated rather than an observed value.
+
+To illustrate this inference procedure, we present the following simulated scenarios, featured in figure , populations on a lattice in 
+
+\begin{figure} 
+	\centering
+		\subcaptionbox{Populations on a lattice \label{lattice_pops}}
+			{\includegraphics[width=2.4in,height=2in]{stationary_pops_map.png}}
+		\subcaptionbox{SpaceMix map \label{lattice_pops}}
+			{\includegraphics[width=2.4in,height=2in]{stationary_pops_1_inference_map.png}}
+		\subcaptionbox{A lattice with a barrier \label{barrier_pops}}
+			{\includegraphics[width=2.4in,height=2in]{barrier_map.png}}
+		\subcaptionbox{SpaceMix map \label{lattice_pops}}
+			{\includegraphics[width=2.4in,height=2in]{barrier_1_inference_map.png}}
+
+\end{figure}
 
 We use the observed location for population $k$, $G_k$, to parameterize a bivariate normal spatial prior on the location $k$ chooses for itself, $G'_k$ (for more details on our Bayesian inference procedure, see Appendix B).  However, we can use random locations as the ``observed locations" ($G_k$) can remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference.
 

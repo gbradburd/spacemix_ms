@@ -161,8 +161,11 @@ where $\text{tr}$ denotes the trace function and $\Gamma_p$ denotes a multivaria
 
 \gb{MS simulation of pops on a grid with a recent expansion, figure to show how those pops all clump toward source of expansion}
 
-This model assumes that the system is in homogeneous and isotropic, so that every unit of pairwise geographic distance is equivalent in its contribution to decay of allelic covariance, but in many cases those assumptions will not be met. Non-equilibrium processes like long distance dispersal, recent migration, colonization, or population expansion events will distort the shape of the decay of covariance with distance, and may bias parameter estimation.  Depending on the distribution and history of these events over the landscape, they may also result in heterogeneous patterns of the decay of covariance over space.  Strong barriers to dispersal on the landscape can also bias the estimation of the contribution of a unit distance to decay in covariance.
+This model assumes that the variance in allele frequencies is the same in all locations and that the covariance between pairs of populations decays in the same way with geographic distance in all portions of the sampled range (i.e. that the process is homogeneous and isotropic). However, in many cases those assumptions will not be met. Non-equilibrium processes like long distance admixture, colonization, or population expansion events will distort the relationship between covariance and distance across the range.  Barriers to dispersal on the landscape can also change the relationship between allele frequency covariance and distance.
 
+bias the estimation of the contribution of a unit distance to decay in covariance.
+
+%\gc{got rid of bias parameter estimates bits, as it's not clear what these parameters are anyway, esp. if model is very wrong}
 \gc{Or could intro. nugget here, as part of non-equilibrium}
 
 To accommodate these heterogeneous processes, we can treat population's locations on the landscape as a random variable, and estimate them as part of our inference procedure.  Two populations that are sampled at distant locations but that are genetically similar (perhaps one was recently founded by a colonization event from the other) may choose estimated locations that are nearby, while two populations that are sampled close together, but that are genetically dissimilar (e.g, the recently founded population and its neighbor), may choose locations that are farther apart.

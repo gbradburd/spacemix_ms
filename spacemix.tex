@@ -307,9 +307,9 @@ This signal of excess covariance over anomalously long distances can be difficul
 
 We can incorporate recent admixture directly into out inference framework.  We imagine that population $k$ draws the majority of its ancestry from $G_k$, but a proportion $p_k$ of its ancestry comes from another location $G_{k*}$, which we refer to as its source of admixture. The mean standardized population allele frequency at locus $\ell$ in population $k$ is a weighted average of the allele frequencies at the geographic location of the sampled population and those at the coordinates of the source from which the observed population draws admixture
 \begin{equation}
-p_k f_{\ell,k} + (1-p)f_{\ell,k*}. \label{eqn-admixedfreq}
+p_k f_{\ell,k} + (1-p)f_{\ell,k*} \label{eqn-admixedfreq}
 \end{equation}
-where $f_{\ell,k}$ are the model-estimated allele frequencies across loci at the spatial location of population $G_k$ and $f_{\ell,k*}$ are the model-estimated allele frequencies at the spatial location of the source of admixture $G_{k*}$. We can allow each of our populations to have this setup, each with an independent spatial source of admixture. 
+where $f_{\ell,k}$ are the model-estimated allele frequencies at locus $\ell$ at the spatial location of population $G_k$ and $f_{\ell,k*}$ are the model-estimated allele frequencies at the spatial location of the source of admixture $G_{k*}$. We can allow each of our populations to have this setup, each with an independent spatial source of admixture. 
 
 
 Following from the form  of eqn. \eqref{eqn-admixedfreq} the covariance between the standardized allele frequencies of population $i$ and $j$ can be modeled as
@@ -356,17 +356,16 @@ As we only get to observe the sample frequencies and we standardize our allele f
 	\centering
 	\includegraphics[width=2in,height=2in]{admix_cov_fig.pdf}
 	\caption{An illustration of the form of the admixed covariance given in Eqns. \ref{eq:admixed_covariance_1} and \ref{eq:admixed_covariance_2}.  Populations $i$ and $j$ are drawing admixture in proportions $p_i$ and $p_j$ from their respective sources of admixture, $i'$ and $j'$, and all pairwise spatial covariances (the $\omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $j'$ than $i$ is from its source $i'$ (i.e., $p_j > p_i$).}\label{sfig:admixed_cov_diagram}
-\end{figure
-
+\end{figure}
 
 
 % The likelihood function for this model in which each population is allowed to draw admixture from a point in space is 
 % \begin{equation}
 % \label{eq:choose_admixture_wishart_lnl}
-% \mathcal{P}\left(X_{\ell,k} \; | \; \pmb{D}\left(G,\pmb{G_{'}}\right), \pmb{\vec{\alpha}}, \pmb{p}, S, \pmb{\eta}\right) = \frac{|Y|^{ \frac{L - K - 1}{2} } \text{exp} \left(  \frac{-\text{tr}(\pmb{\Omega}^{-1}Y)}{2}	\right) }	
-% 									{2^{\frac{LK}{2}}  |\frac{\pmb{\Omega}}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}{2} \right)	},
+% \mathcal{P}\left(X_{\ell,k} \; | \; \pmb{D}\left(G,\pmb{G_{'}}\right), \pmb{\vec{\alpha}}, \pmb{p}, S, \pmb{\eta}\right) = \frac{|Y|%^{ \frac{L - K - 1}{2} } \text{exp} \left(  \frac{-\text{tr}(\pmb{\Omega}^{-1}Y)}{2}	\right) }	
+% 									{2^{\frac{LK}{2}}  |\frac{\pmb{\Omega}}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}%{2} \right)	},
 % \end{equation}
-% where $\text{tr}$ denotes the trace function and $\Gamma_p$ denotes a multivariate gamma function, and all boldface variables are parameters estimated as part of our inference procedure.
+% where $\text{tr}$ denotes the trace function and $\Gamma_p$ denotes a multivariate gamma function, and all boldface %variables are parameters estimated as part of our inference procedure.
 
 \gc{GRAHAM GOT TO HERE.}
 
@@ -404,9 +403,8 @@ Integral to the question of whether it constitutes a ring species in the purest 
 
 %At stake is whether the species offers an example of sympatric speciation (i.e. speciation with continuous gene flow).
 
-For these analyses, we used the dataset from Alcaide et al (2014), which consisted of 95 individuals sampled at 22 distinct locations and sequenced at XXX SNPs.  
+For these analyses, we used the dataset from Alcaide et al (2014), which consisted of 95 individuals sampled at 22 distinct locations and sequenced at 2,334 SNPs, of which 2,247 were bi-allelic and retained for SpaceMix analyses.  We ran analyses in which we (a) allowed populations to choose their own locations, and (b) allowed populations to draw admixture \emph{and} choose their own locations.  For each of these analyses, we used random points on a line as the `observed' population locations.  We then repeated these analyses, but treated each sequenced individual as a population.  All analyses were run for $1 \times 10^{8}$ MCMC generations, sampled at intervals of $1 \times 10^{5}$ generations to minimize the autocorrelation in the MCMC samples.  For clarity and ease of interpretation, we present a full Procrustes superimposition of the inferred population locations ($G'$) (and, for analyses in which they were included, their sources of admixture ($G^{*}$)), using the observed latitude and longitude of the populations/individuals to give a reference position and orientation.
 
-Details of analyses run
 \subsection*{Human Populations}
 Description of the data
 

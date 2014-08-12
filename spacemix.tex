@@ -17,6 +17,9 @@
 \setlength{\parindent}{0pt}%
 
 \newcommand{\e}[1]{{\mathbb E}\left[ #1 \right]}
+\newcommand{\admixsource}[1]{{$G^*$}}
+\newcommand{\kadmixsource}[1]{{$G^{*}_{#1}$}}
+\newcommand{\identifyadmixsource}[1]{{#1^{*}}}
 \newcommand{\gb}[1]{{\em \color{magenta} #1}}
 \newcommand{\plr}[1]{{\em \color{green} #1}}
 \newcommand{\gc}[1]{{\em \color{blue} #1}}
@@ -302,27 +305,24 @@ This signal of excess covariance over anomalously long distances can be difficul
 	\caption{Inference of population locations in the scenario depicted in Figure \ref{sfig:admixture_scenario}.  Population 30 has received half of its lineages from population 1, to simulate a long distance admixture event in the very recent past.}\label{sfig:admixture_inference_target_loc}
 \end{figure}
 
-\gc{maybe don't want to call inferred locations $G'$ as we use ' for ghost location, perhaps can use * for  instead admixture?}
-
-
-We can incorporate recent admixture directly into out inference framework.  We imagine that population $k$ draws the majority of its ancestry from $G_k$, but a proportion $p_k$ of its ancestry comes from another location $G_{k*}$, which we refer to as its source of admixture. The mean standardized population allele frequency at locus $\ell$ in population $k$ is a weighted average of the allele frequencies at the geographic location of the sampled population and those at the coordinates of the source from which the observed population draws admixture
+We can incorporate recent admixture directly into out inference framework.  We imagine that population $k$ draws the majority of its ancestry from $G_k$, but a proportion $p_k$ of its ancestry comes from another location \kadmixsource{k}, which we refer to as its source of admixture. The mean standardized population allele frequency at locus $\ell$ in population $k$ is a weighted average of the allele frequencies at the geographic location of the sampled population and those at the coordinates of the source from which the observed population draws admixture
 \begin{equation}
 p_k f_{\ell,k} + (1-p)f_{\ell,k*} \label{eqn-admixedfreq}
 \end{equation}
-where $f_{\ell,k}$ are the model-estimated allele frequencies at locus $\ell$ at the spatial location of population $G_k$ and $f_{\ell,k*}$ are the model-estimated allele frequencies at the spatial location of the source of admixture $G_{k*}$. We can allow each of our populations to have this setup, each with an independent spatial source of admixture. 
+where $f_{\ell,k}$ are the model-estimated allele frequencies at locus $\ell$ at the spatial location of population $G_k$ and $f_{\ell,k*}$ are the model-estimated allele frequencies at the spatial location of the source of admixture \kadmixsource{k}. We can allow each of our populations to have this setup, each with an independent spatial source of admixture. 
 
 
-Following from the form  of eqn. \eqref{eqn-admixedfreq} the covariance between the standardized allele frequencies of population $i$ and $j$ can be modeled as
+Following from the form  of eqn. \eqref{eqn-admixedfreq} the covariance between the standardized allele frequencies of population $i$ and $j$ can be modeled as 
 \begin{alignat}{3}
 \label{eq:admixed_covariance_1}
 \Omega_{i,j}^{(A)} = (1-p_i)(1-p_j) \Omega_{i\;,\;j\;} \; \times&\\
-(p_i)(1-p_j) \Omega_{i',\;j\;} \; \times   \notag&\\
-(p_j)(1-p_i) \Omega_{i\;,\;j'} \; \times   \notag&\\
-(p_i)(p_j) \Omega_{i',\;j'} \; \phantom{\times}   \notag&\\
+(p_i)(1-p_j) \Omega_{\identifyadmixsource{i},\;j\;} \; \times   \notag&\\
+(p_j)(1-p_i) \Omega_{i\;,\;\identifyadmixsource{j}} \; \times   \notag&\\
+(p_i)(p_j) \Omega_{\identifyadmixsource{i},\;\identifyadmixsource{j}} \; +   \notag&\\
 \delta_{i,j} \eta_i \notag&
 \end{alignat}
-where $i'$ and $j'$ are the sources from which populations $i$ and $j$ are drawing their admixture with proportions $p_i$ and $p_j$. $\Omega$ is the spatial covariance function parameterized by the pairwise geographic distances between each pair of populations, \emph{without} the population-specific variance terms on the diagonal (i.e., in Eqn. \ref{eq:admixed_covariance_1}, i.e. $\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right)$). Note that we then reintroduce the nugget for each population $\eta_i$, to model drift or excess variance in population $i$ ontop of that predicted by our mixture of frequencies predicted by our spatial model.
-  The admixed covariance between populations $i$ and $j$, $\Omega_{i,j}^{(A)}$ is then a function of all the pairwise spatial covariances between populations $i$ and $j$ and the points from which they draw admixture, $i'$ and $j'$.  Those spatial covariances in turn are a function of all combinations of pairwise distances between their locations: $G_i$, $G_i$, $G_{i'}$, and $G_{j'}$.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}.
+where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources from which populations $i$ and $j$ are drawing their admixture with proportions $p_i$ and $p_j$. $\Omega$ is the spatial covariance function parameterized by the pairwise geographic distances between each pair of populations, \emph{without} the population-specific variance terms on the diagonal (i.e., in Eqn. \ref{eq:admixed_covariance_1}, i.e. $\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right)$). Note that we then reintroduce the nugget for each population $\eta_i$, to model drift or excess variance in population $i$ on top of that predicted by our mixture of frequencies predicted by our spatial model.
+  The admixed covariance between populations $i$ and $j$, $\Omega_{i,j}^{(A)}$ is then a function of all the pairwise spatial covariances between populations $i$ and $j$ and the points from which they draw admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$.  Those spatial covariances in turn are a function of all combinations of pairwise distances between their locations: $G_i$, $G_i$, \kadmixsource{i}, and \kadmixsource{j}.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}.
 
 \gc{ $\delta_{i,j} $ is the indicator function $1$ if $i=j$ $0$ otherwise. }
 
@@ -349,7 +349,7 @@ where $i'$ and $j'$ are the sources from which populations $i$ and $j$ are drawi
 % where $I$ is the identity matrix, $\bar{S_k}$ is the mean sample size in population $k$ across all loci, and $\eta_k$ is the nugget estimated in population $k$.
 
 
-As we only get to observe the sample frequencies and we standardize our allele frequencies using the sample mean our predicted admixture covariance matrix needs to be transformed to accomodate these sampling considerations. We can do this as before see methods XXXX. We again treat the likelihood of our sample covariance matrix as Wishart now given the parameteric covariance matrix $\Omega^{(A)}$ as specified by the parameters $\vec{p}$, $G_*$, $G$,$\vec{\alpha}$, and $\vec{\eta}$. We treat the location of the source of admixture for population $k$, $G_{k'}$, and the population's admixture proportion, $p_k$, as random variables and jointly estimated as part of our inference procedure. \gc{state form of priors.}
+As we only get to observe the sample frequencies and we standardize our allele frequencies using the sample mean our predicted admixture covariance matrix needs to be transformed to accomodate these sampling considerations. We can do this as before see methods XXXX. We again treat the likelihood of our sample covariance matrix as Wishart now given the parameteric covariance matrix $\Omega^{(A)}$ as specified by the parameters $\vec{p}$, \admixsource, $G$,$\vec{\alpha}$, and $\vec{\eta}$. We treat the location of the source of admixture for population $k$, \kadmixsource{k}, and the population's admixture proportion, $p_k$, as random variables and jointly estimated as part of our inference procedure. \gc{state form of priors.}
 
 
 \begin{figure}[ht!]
@@ -403,10 +403,11 @@ Integral to the question of whether it constitutes a ring species in the purest 
 
 %At stake is whether the species offers an example of sympatric speciation (i.e. speciation with continuous gene flow).
 
-For these analyses, we used the dataset from Alcaide et al (2014), which consisted of 95 individuals sampled at 22 distinct locations and sequenced at 2,334 SNPs, of which 2,247 were bi-allelic and retained for SpaceMix analyses.  We ran analyses in which we (a) allowed populations to choose their own locations, and (b) allowed populations to draw admixture \emph{and} choose their own locations.  For each of these analyses, we used random points on a line as the `observed' population locations.  We then repeated these analyses, but treated each sequenced individual as a population.  All analyses were run for $1 \times 10^{8}$ MCMC generations, sampled at intervals of $1 \times 10^{5}$ generations to minimize the autocorrelation in the MCMC samples.  For clarity and ease of interpretation, we present a full Procrustes superimposition of the inferred population locations ($G'$) (and, for analyses in which they were included, their sources of admixture ($G^{*}$)), using the observed latitude and longitude of the populations/individuals to give a reference position and orientation.
+For these analyses, we used the dataset from Alcaide et al (2014), which consisted of 95 individuals sampled at 22 distinct locations and sequenced at 2,334 SNPs, of which 2,247 were bi-allelic and retained for SpaceMix analyses.  We ran analyses in which we (a) allowed populations to choose their own locations, and (b) allowed populations to draw admixture \emph{and} choose their own locations.  For each of these analyses, we used random points on a line as the `observed' population locations.  We then repeated these analyses, but treated each sequenced individual as a population.  All analyses were run for $1 \times 10^{8}$ MCMC generations, sampled at intervals of $1 \times 10^{5}$ generations to minimize the autocorrelation in the MCMC samples.  For clarity and ease of interpretation, we present a full Procrustes superimposition of the inferred population locations ($G'$) (and, for analyses in which they were included, their sources of admixture (\admixsource)), using the observed latitude and longitude of the populations/individuals to give a reference position and orientation.
 
 \subsection*{Human Populations}
-Description of the data
+Human population 
+For our analysis of spatial patterns of human population structure, 
 
 Description of the research questions we use SpaceMix to address
 

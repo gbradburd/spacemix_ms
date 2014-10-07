@@ -2,4 +2,7 @@
 *.log
 *.pdf
 *.synctex.gz
-DS*
+*.mp
+*.top
+*.tui
+.DS*

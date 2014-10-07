@@ -388,13 +388,13 @@ The models described above may be used in various combinations.  In the simplest
 \end{equation}
 
 
-\gb{A note about here how this complex model is still identifiable}
+\gb{A note here about how this complex model is still identifiable}
 
 \section*{Inference}
 For details on our Bayesian inference framework and Markov chain Monte Carlo inference procedure, please see the Section: How I spent the past year!
 
 \section*{Empirical Applications}
-To demonstrate the applications of this novel method, we employed it in two canonical empirical systems: the greenish warbler ring species complex, and, to our knowledge, the most complete geographic sampling of human populations to date (\gb{is this true?}).
+To demonstrate the applications of this novel method, we employed it in two canonical empirical systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.
 
 \subsection*{Greenish Warblers}
 The greenish warbler (\emph{Phylloscopus trochiloides}) species complex is a canonical proposed examples of a ring species (Irwin et al 2001).  The complex is broadly distributed around the Tibetan plateau, and exhibits gradients in both phenotype and call, as well as in genetic makeup (Irwin et al 2001, Irwin et al 2005, Irwin et al 2008).  At the northern end of the ring in central Siberia, where the eastern and western arms of population expansion meet, there are discontinuities in call and phenotype, and also reproductive isolation (Irwin et al 2001, Irwin et al 2008).  
@@ -403,7 +403,59 @@ Integral to the question of whether it constitutes a ring species in the purest 
 
 %At stake is whether the species offers an example of sympatric speciation (i.e. speciation with continuous gene flow).
 
-For these analyses, we used the dataset from Alcaide et al (2014), which consisted of 95 individuals sampled at 22 distinct locations and sequenced at 2,334 SNPs, of which 2,247 were bi-allelic and retained for SpaceMix analyses.  We ran analyses in which we (a) allowed populations to choose their own locations, and (b) allowed populations to draw admixture \emph{and} choose their own locations.  For each of these analyses, we used random points on a line as the `observed' population locations.  We then repeated these analyses, but treated each sequenced individual as a population.  All analyses were run for $1 \times 10^{8}$ MCMC generations, sampled at intervals of $1 \times 10^{5}$ generations to minimize the autocorrelation in the MCMC samples.  For clarity and ease of interpretation, we present a full Procrustes superimposition of the inferred population locations ($G'$) (and, for analyses in which they were included, their sources of admixture (\admixsource)), using the observed latitude and longitude of the populations/individuals to give a reference position and orientation.
+For these analyses, we used the dataset from Alcaide et al (2014), which consisted of 95 individuals sampled at 22 distinct locations and sequenced at 2,334 SNPs, of which 2,247 were bi-allelic and retained for SpaceMix runs.  The analysis procedure is detailed in Appendix XXX.  We ran two analyses using the observed population locations as the prior on $G'$.  Then, to assess the potential influence of the spatial prior on population locations, we ran one analysis in which random, uniformly distributed locations between, for longitude, the minimum and maximum observed longitude, and, for latitude, the minimum and maximum observed latitude were used as the prior on population locations.  We then repeated these analyses, but treated each sequenced individual as its own population.  For clarity and ease of interpretation, we present a full Procrustes superimposition of the inferred population locations ($G'$) and their sources of admixture (\admixsource{}), using the observed latitude and longitude of the populations/individuals ($G$) to give a reference position and orientation.  As results were generally consistent across multiple runs for each dataset regardless of the prior employed we (unless stated otherwise) present only the results from the `random' prior analyses.
+
+\begin{figure}
+	\centering
+		\subcaptionbox{Warbler subspecies distribution map \label{irwin_map}}
+			{\includegraphics[width=2.4in,height=2in]{Irwin_warbler_map_figure.png}}
+		\subcaptionbox{Inferred admixture proportions and population nuggets \label{warb_pop_adnug}}			
+			{\includegraphics[width=2.4in,height=2in]{population_warbler_admix_values_nugget.png}}
+		\subcaptionbox{Map inferred using SpaceMix \label{warb_pop_no_arrows}}
+			{\includegraphics[width=2.4in,height=2in]{population_warbler_map_no_arrows.png}}
+		\subcaptionbox{Map inferred using SpaceMix with admixture arrows shown \label{warb_pop_arrows}}
+			{\includegraphics[width=2.4in,height=2in]{population_warbler_map_randpr1.png}}
+	\caption{Greenish warbler subspecies distributions contrasted with maps of all 22 sampled populations inferred using SpaceMix.  For clarity of presentation, the inferred coordinates and parameter values are taken from the single draw of the MCMC with the highest posterior probability and have have been Procrustes transformed around the coordinates of the lattice used to simulate the data. (a) Greenish warbler subspecies distribution map (from Irwin et al NNN).  (b) Inferred population admixture proportions and nugget parameters. (c) Inferred population map without admixture arrows shown, with population labels colored as in (a). (d) Inferred population map with admixture arrows (with thickness proportional to inferred admixture proportion) shown, with population labels colored as in (a). }\label{sfig:warbler_pops}
+\end{figure}
+
+The inferred map (Figure \ref{sfig:warbler_pops}) largely recapitulates the geography of the sampled populations.  Populations choose locations around a large ring, with ordering similar to that of their true geographic locations.  The Turkish population (\textit{Phylloscopus trochiloides} ssp. \textit{nitidus}) clustered with the populations in the subspecies \textit{ludlowi}, but also chose a relatively high nugget parameter, reflecting the independent drift it does not share with its \textit{ludlowi} neighbors.
+
+In the north, where the twin waves of expansion around the Tibetan Plateau are hypothesized to meet, the inferred distance between populations identified as \textit{Phylloscopus trochiloides} ssp. \textit{plumbeitarsus} and ssp. \textit{viridanus} was significantly greater than their observed geographic separation, reflecting the reproductive isolation between these adjacent forms.  A notable exception is the ST population, which consists of 6 individuals sampled in Stolby, Russia, and which chooses a location intermediate between the \textit{plumbeitarsus} and \textit{viridanus} groups.  The Stolby population also chooses the highest admixture proportion, with a mean of 0.19.  
+
+Across the three independent analyses (two with the observed population locations as spatial priors on the locations, $G'$, that they choose for themselves, one with random locations as spatial priors), the inferred values of admixture proportion are consistent (95\% credible intervals:  0.146-0.233, 0.154-0.242, 0.146-0.238).  However, both the position that the Stolby population chooses for itself and the region from which it draws admixture varies between runs (Figure \ref{sfig:warbler_pop_compare}).  In two of the analyses, the Stolby population moves to a position proximate to the \textit{viridanus} cluster and chooses admixture from a point beyond the \textit{plumbeitarsus} cluster, and in one analysis, this pattern is reversed.  
+
+\begin{figure}
+	\centering
+		\subcaptionbox{\label{warb_pop_realpr1}}
+			{\includegraphics[width=1.85in,height=1.54in]{population_warbler_map_realpr1.png}}
+		\subcaptionbox{\label{warb_pop_realpr2}}			
+			{\includegraphics[width=1.85in,height=1.54in]{population_warbler_map_realpr2.png}}
+		\subcaptionbox{\label{warb_pop_randpr1}}
+			{\includegraphics[width=1.85in,height=1.54in]{population_warbler_map_randpr1.png}}
+	\caption{Comparison of inferred maps from three independent analyses.  (a,b) Results from analysis using observed locations as priors on population locations.  (c) Results from analysis using random, uniformly distributed locations within the observed range of latitude and longitude as priors on population locations.}\label{sfig:warbler_pop_compare}
+\end{figure}
+
+Because \textit{a priori} assigned population membership may be artificial (individuals from more than one population may be sampled at a single site), we repeated these analyses using individuals as populations.  In these analyses, the sample size in each `population' was 2 (one for each allele copy that a diploid individual has), and each individual chose its own location as well as the location of its source of admixture, the proportion of that admixture, and its nugget.  
+
+
+
+
+%
+make pop figures
+highlight the nugget
+explain diff parts of cov plot
+talk through the biology
+are those 2 guys sibs?
+show populations
+	-then add in admixture, highlighting the role of ST
+show individuals
+	make comparison w/ PCA, and note that PCA gets it right but for the wrong reasons
+	 	show the linesim example
+close w/ discussion of the "brokenness"
+	-comparison of observed against parametric diet
+	-try procrustes transfo w/out turkey, to see if distances are closer to observed.
+	-highlight what falls off the line.
+	
 
 \subsection*{Human Populations}
 Human population 
@@ -442,6 +494,15 @@ spatiotemporal model
 spatialSTRUCTURE
 %%%%%%%%%
 
+\section*{Appendix}
+The analysis procedure went as follows: 
+\begin{itemize}
+\item[1.] five independent chains were run for 5e6 generations each in which populations were allowed to choose their own locations (but no admixture).  Population locations were initiated at the origin (i.e. - at generation 1 of the MCMC, $G'_i = (0,0)$), and all other parameters were drawn randomly from their priors at the start of each chain.  
+%
+\item[2.]The chain with the highest posterior probability at the end of the analysis was selected and identified as the``Best Short Run".
+%
+\item[3.] A chain was initiated from the parameter values in the last generation of the Best Short Run.  Because inference of admixture proportion and location was not allowed in the five initial runs, admixture proportions were initiated at 0 and admixture locations, \admixsource{G} were initiated at the origin.  This  chain (the ``Long Run") was run for 1e8 generations, and sampled every 1e5 generations for a total of 1e3 draws from the posterior.
+\end{itemize}
 
 
 

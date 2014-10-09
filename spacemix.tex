@@ -205,13 +205,13 @@ To illustrate this inference procedure, we present several scenarios simulated u
 \begin{figure}
 	\centering
 		\subcaptionbox{Populations on a lattice \label{lattice_pops}}
-			{\includegraphics[width=2.4in,height=2in]{stationary_pops_map.png}}
+			{\includegraphics[width=2.4in,height=2in]{figs/stationary_pops_map.png}}
 		\subcaptionbox{SpaceMix map \label{lattice_pops_inference}}
-			{\includegraphics[width=2.4in,height=2in]{stationary_pops_1_inference_map.png}}
+			{\includegraphics[width=2.4in,height=2in]{figs/stationary_pops_1_inference_map.png}}
 		\subcaptionbox{A lattice with a barrier \label{barrier_pops}}
-			{\includegraphics[width=2.4in,height=2in]{barrier_map.png}}
+			{\includegraphics[width=2.4in,height=2in]{figs/barrier_map.png}}
 		\subcaptionbox{SpaceMix map \label{barrier_pops_inference}}
-			{\includegraphics[width=2.4in,height=2in]{barrier_1_inference_map.png}}
+			{\includegraphics[width=2.4in,height=2in]{figs/barrier_1_inference_map.png}}
 	\caption{Simulated scenarios and the corresponding population maps inferred using SpaceMix.  For clarity of presentation, the inferred coordinates have have been Procrustes transformed around the coordinates of the lattice used to simulate the data.}\label{sfig:lattice_scenarios}
 \end{figure}
 
@@ -241,7 +241,7 @@ The details of this procedure are given below, and illustrated with a simulated 
 
 \begin{figure}
 	\centering
-	\includegraphics[width=2.4in,height=2in]{admixture_map.png}
+	\includegraphics[width=2.4in,height=2in]{figs/admixture_map.png}
 	\caption{In this simulated scenario, one population sampled in the modern day (Population 30) has had half of its population replaced with lineages from a distant population (Population 1), simulating an admixture event.}\label{sfig:admixture_scenario}
 \end{figure}
 
@@ -301,7 +301,7 @@ This signal of excess covariance over anomalously long distances can be difficul
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=2.4in,height=2in]{admixture_1_inference_map.png}
+	\includegraphics[width=2.4in,height=2in]{figs/admixture_1_inference_map.png}
 	\caption{Inference of population locations in the scenario depicted in Figure \ref{sfig:admixture_scenario}.  Population 30 has received half of its lineages from population 1, to simulate a long distance admixture event in the very recent past.}\label{sfig:admixture_inference_target_loc}
 \end{figure}
 
@@ -354,7 +354,7 @@ As we only get to observe the sample frequencies and we standardize our allele f
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=2in,height=2in]{admix_cov_fig.pdf}
+	\includegraphics[width=2in,height=2in]{figs/admix_cov_fig.pdf}
 	\caption{An illustration of the form of the admixed covariance given in Eqns. \ref{eq:admixed_covariance_1} and \ref{eq:admixed_covariance_2}.  Populations $i$ and $j$ are drawing admixture in proportions $p_i$ and $p_j$ from their respective sources of admixture, $i'$ and $j'$, and all pairwise spatial covariances (the $\omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $j'$ than $i$ is from its source $i'$ (i.e., $p_j > p_i$).}\label{sfig:admixed_cov_diagram}
 \end{figure}
 
@@ -375,7 +375,7 @@ Using the example scenario described above and diagrammed in Figure \ref{sfig:ad
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=2.4in,height=2in]{admixture_2_inference_map.png}
+	\includegraphics[width=2.4in,height=2in]{figs/admixture_2_inference_map.png}
 	\caption{Posterior distribution of inference of the sources and strengths of admixture for the sampled populations.  The admixed population (Population 30) is drawing admixture from the location of its source of admixture that was used to simulate the data (the location of Population 1).}\label{sfig:admixture_inference_source_loc}
 \end{figure}
 
@@ -408,17 +408,17 @@ For these analyses, we used the dataset from Alcaide et al (2014), which consist
 \begin{figure}
 	\centering
 		\subcaptionbox{Warbler subspecies distribution map \label{irwin_map}}
-			{\includegraphics[width=2.4in,height=2in]{Irwin_warbler_map_figure.png}}
+			{\includegraphics[width=2.4in,height=2in]{figs/Irwin_warbler_map_figure.png}}
 		\subcaptionbox{Inferred admixture proportions and population nuggets \label{warb_pop_adnug}}			
-			{\includegraphics[width=2.4in,height=2in]{population_warbler_admix_values_nugget.png}}
+			{\includegraphics[width=2.4in,height=2in]{figs/population_warbler_admix_values_nugget.png}}
 		\subcaptionbox{Map inferred using SpaceMix \label{warb_pop_no_arrows}}
-			{\includegraphics[width=2.4in,height=2in]{population_warbler_map_no_arrows.png}}
+			{\includegraphics[width=2.4in,height=2in]{figs/population_warbler_map_no_arrows.png}}
 		\subcaptionbox{Map inferred using SpaceMix with admixture arrows shown \label{warb_pop_arrows}}
-			{\includegraphics[width=2.4in,height=2in]{population_warbler_map_randpr1.png}}
+			{\includegraphics[width=2.4in,height=2in]{figs/population_warbler_map_randpr1.png}}
 	\caption{Greenish warbler subspecies distributions contrasted with maps of all 22 sampled populations inferred using SpaceMix.  For clarity of presentation, the inferred coordinates and parameter values are taken from the single draw of the MCMC with the highest posterior probability and have have been Procrustes transformed around the coordinates of the lattice used to simulate the data. (a) Greenish warbler subspecies distribution map (from Irwin et al NNN).  (b) Inferred population admixture proportions and nugget parameters. (c) Inferred population map without admixture arrows shown, with population labels colored as in (a). (d) Inferred population map with admixture arrows (with thickness proportional to inferred admixture proportion) shown, with population labels colored as in (a). }\label{sfig:warbler_pops}
 \end{figure}
 
-The inferred map (Figure \ref{sfig:warbler_pops}) largely recapitulates the geography of the sampled populations.  Populations choose locations around a large ring, with ordering similar to that of their true geographic locations.  The Turkish population (\textit{Phylloscopus trochiloides} ssp. \textit{nitidus}) clustered with the populations in the subspecies \textit{ludlowi}, but also chose a relatively high nugget parameter, reflecting the independent drift it does not share with its \textit{ludlowi} neighbors.
+The inferred map (Figure \ref{sfig:warbler_pops}) largely recapitulates the geography of the sampled populations.  Populations choose locations around a large ring, with ordering similar to that of their true geographic locations.  The Turkish population (\textit{Phylloscopus trochiloides} ssp. \textit{nitidus}) clustered with the populations in the subspecies \textit{ludlowi}, but also chose a relatively high nugget parameter, reflecting the independent drift it does not share with its \textit{ludlowi} neighbors.  The Yekat population of \textit{viridanus} individuals clusters closely with the other, less far-flung \textit{viridanus} individuals, indicating that differentiation within that subspecies is not commensurate with the amount of IBD expected for samples separated by that much distance.
 
 In the north, where the twin waves of expansion around the Tibetan Plateau are hypothesized to meet, the inferred distance between populations identified as \textit{Phylloscopus trochiloides} ssp. \textit{plumbeitarsus} and ssp. \textit{viridanus} was significantly greater than their observed geographic separation, reflecting the reproductive isolation between these adjacent forms.  A notable exception is the ST population, which consists of 6 individuals sampled in Stolby, Russia, and which chooses a location intermediate between the \textit{plumbeitarsus} and \textit{viridanus} groups.  The Stolby population also chooses the highest admixture proportion, with a mean of 0.19.  
 
@@ -427,35 +427,40 @@ Across the three independent analyses (two with the observed population location
 \begin{figure}
 	\centering
 		\subcaptionbox{\label{warb_pop_realpr1}}
-			{\includegraphics[width=1.85in,height=1.54in]{population_warbler_map_realpr1.png}}
+			{\includegraphics[width=1.85in,height=1.54in]{figs/population_warbler_map_realpr1.png}}
 		\subcaptionbox{\label{warb_pop_realpr2}}			
-			{\includegraphics[width=1.85in,height=1.54in]{population_warbler_map_realpr2.png}}
+			{\includegraphics[width=1.85in,height=1.54in]{figs/population_warbler_map_realpr2.png}}
 		\subcaptionbox{\label{warb_pop_randpr1}}
-			{\includegraphics[width=1.85in,height=1.54in]{population_warbler_map_randpr1.png}}
+			{\includegraphics[width=1.85in,height=1.54in]{figs/population_warbler_map_randpr1.png}}
 	\caption{Comparison of inferred maps from three independent analyses.  (a,b) Results from analysis using observed locations as priors on population locations.  (c) Results from analysis using random, uniformly distributed locations within the observed range of latitude and longitude as priors on population locations.}\label{sfig:warbler_pop_compare}
 \end{figure}
 
-Because \textit{a priori} assigned population membership may be artificial (individuals from more than one population may be sampled at a single site), we repeated these analyses using individuals as populations.  In these analyses, the sample size in each `population' was 2 (one for each allele copy that a diploid individual has), and each individual chose its own location as well as the location of its source of admixture, the proportion of that admixture, and its nugget.  
+Because \textit{a priori} assigned population membership may be artificial (individuals from more than one population may be sampled at a single site), we repeated these analyses using individuals as populations.  In these analyses, the sample size in each `population' was 2 (one for each allele copy that a diploid individual has), and each individual chose its own location as well as the location of its source of admixture, the proportion of that admixture, and its nugget.  As with the analysis on multi-sample populations, the results generally mirror the geography of the individuals.  The order of individuals' estimated locations around the Plateau is largely concordant with their true locations, and, in most cases, individuals sampled from the same population cluster closely together, as would be expected if samples collected at a single site are draws from a population that is locally panmictic.  
 
+\begin{figure}
+	\centering
+		\subcaptionbox{Inferred map of warbler individuals \label{warb_ind_map}}
+			{\includegraphics[width=2.8in,height=2.3in]{figs/individual_warbler_map_noarrows_randpr1.png}}
+		\subcaptionbox{Closeup of non-\textit{nitidus} samples \label{warb_ind_map_closeup}}
+			{\includegraphics[width=2.8in,height=2.3in]{figs/individual_warbler_map_noarrows_closeup_randpr1.png}}
+	\caption{Inferred maps for individual warbler individuals, colored by subspecies. (a) complete map including Turkish \textit{nitidus} samples.  (b) close up of all non-\textit{nitidus} samples.}\label{sfig:warbler_inds}
+\end{figure}
 
+There are a number of obvious departures in the inferred map from the observed map.  The first is that, as with the analysis described above in which individuals sampled at a location were clustered as a single population, the individual-level analysis showed a clear split between \textit{viridanus} and \textit{plumbeitarsus} individuals in the north at the contact zone of the two waves of expansion.  However, where the population-level analysis shows the Stolby population intermediate between the \textit{viridanus} and \textit{plumbeitarsus} clusters, the individual-level analysis reveals that the Stolby population (n=6) was composed of three individuals that belong to the eastern \textit{plumbeitarsus} cluster and three individuals that belong to the western \textit{viridanus} cluster.  The removal of the Stolby population further highlights the inferred split, incommensurate with their observed geographic separation, between \textit{viridanus} and \textit{plumbeitarsus} in the North.
 
+A second difference between the observed and inferred maps is a pair of individuals, one identified as \textit{P. t. ludlowi} (Lud-MN3), one as \textit{P. t. trochiloides} (Tro-LN11), that choose locations very close to one another and also away from the other individuals sampled at their locations.  To investigate the potential reason for this behavior, we calculated average pairwise sequence divergence at the 2,247 polymorphic loci in the dataset between all 95 individuals and plotted it against the pairwise geographic distance between the individuals (see SuppMat Figure NNN).  The pairwise sequence divergence (0.103) at polymorphic loci between Lud-MN3 and Tro-LN11 is significantly lower than that between any other pair of individuals separated by a comparable distance - lower, in fact, than any comparison between individuals that were not co-located, and lower than any pairwise divergence between any pair of individuals save that between the two Turkish \textit{nitidus} samples.  These individuals may share ancestry in the recent past, and are therefore expressing their shared drift (unshared with other \textit{ludlowi} and \textit{trochiloides} individuals) by choosing locations that are close to each other and far from their respective clusters of individuals that were sampled at the same sites.
+
+The SpaceMix map also diverges from the observed map in the distribution of individuals from the subspecies \textit{ludlowi}.  These samples were taken from seven sampling locations along the southwest margin of the Tibetan Plateau, but, in the SpaceMix analysis, partition into two main clusters, one near the \textit{trochiloides} cluster, and one near the \textit{viridanus} cluster.  This break between samples from the same subspecies, which is concordant with the findings of Alcaide et al (2014), makes the \textit{ludlowi} cluster unusual compared to the estimated spatial distributions of the other subspecies (see SuppMat Figure NNN).
+
+Finally, we compared the SpaceMix map to a map derived from a Principal Components Analysis (Patterson and Reich 2006).  For this analysis, we calculated the eigendecomposition of the mean-centered allelic covariance matrix, then plotted individual's coordinates on the first two eigenvectors (e.g. Novembre et al 2008).  For clarity of presentation, we show the full Procrustes superimposition of the PC coordinate space around the geographic sampling locations of the warbler individuals (Figure NNN).  The concordance between the PC map and the SpaceMix map is generally quite good, and we discuss the interpretation of the geography implied by this map further below.
+\gb{or should I discuss it here and include the simulation figs showing how PC gets it right for the wrong reasons?}
+\begin{figure}
+	\centering
+	\includegraphics[width=2.4in,height=2in]{figs/warb_ind_PC_map.png}
+	\caption{The map of warbler individuals derived from a Principal Components analysis.}\label{warb_ind_PC_map}
+\end{figure}
 
 %
-make pop figures
-highlight the nugget
-explain diff parts of cov plot
-talk through the biology
-are those 2 guys sibs?
-show populations
-	-then add in admixture, highlighting the role of ST
-show individuals
-	make comparison w/ PCA, and note that PCA gets it right but for the wrong reasons
-	 	show the linesim example
-close w/ discussion of the "brokenness"
-	-comparison of observed against parametric diet
-	-try procrustes transfo w/out turkey, to see if distances are closer to observed.
-	-highlight what falls off the line.
-	
 
 \subsection*{Human Populations}
 Human population 

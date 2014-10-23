@@ -62,6 +62,8 @@ In parallel, Patterson and Reich and Moorjani and Other Folks have developed a s
 
 These tree-based methods are both valuable as genetic inference and visualization tools.  However, a more natural framework for modeling genetic differentiation between sampled populations or individuals may be that of isolation by distance (IBD) (Wright).  The pattern of IBD, in which genetic differentiation increases with the geographic distance between populations, is ubiquitous in nature (Meirmans 2012, Ralph \& Coop 2012), and relies only on the weak assumption that individual's mating opportunities are geographically limited by dispersal.  
 
+\gb{transition section on visualization of population structure and patterns of relatedness}
+
 There is a rich history of this type of data visualization, especially using reduced dimensionality representations of the data such as Principal Components Analysis (e.g. Menozzi, Piazza, and Cavalli-Sforza 1978, Novembre et al 2008, Novembre and Stephens 2008).  Our method offers an improvement over PCA-based visualization methods in that it offers an explicit model of spatial genetic variation, and can therefore be used as a robust framework for inference and hypothesis testing (see also Yang et al 2012, Yang et al 2014).
 
 %Isolation by distance is, in many ways, a more reasonable null hypothesis of population relatedness than a population phylogeny;  \gb{too compare-y?  should I ditch this?} population structure will only rarely be truly tree-like, and a strictly bifurcating graph is unable to accommodate many geographic scenarios, such as multiple equidistant populations in migration-drift equilibrium.
@@ -83,7 +85,7 @@ In order to model this covariance, we draw on previous work (Cavalli-Sforza \& E
 \label{eq:normal_drift}
 \epsilon_B \sim N(\epsilon_A,\delta_B(\epsilon_A)(1-\epsilon_A))
 \end{equation}
-where the parameter  $\delta_B$ is the amount of drift separating $A$ and $B$, a parameter shared by all neutral loci in the entire genome.  The binomial variance term in the normal variance in \eqref{eq:normal_drift} ignores the fact that the drift variance will change from generation to generation due to changes in the frequency of $\epsilon$ within a population over time.  This approximation will work best for alleles at intermediate frequency, and in situations where the extent of drift is sufficiently limited  (short time-scales or large population sizes). 
+where the parameter  $\delta_B$ is the amount of drift separating $A$ and $B$, a parameter shared by all neutral loci in the entire genome.  The binomial variance term in the normal variance in \eqref{eq:normal_drift} ignores the fact that the drift variance will change from generation to generation due to changes in the frequency of $\epsilon$ within a population over time.  This approximation will work best for alleles at intermediate frequency, and in situations where the extent of drift is sufficiently limited (short time-scales or large population sizes). 
 
 Among populations, the differentiating process of drift is counteracted by the homogenizing force of migration, so that populations with higher levels of historical or ongoing migration can be thought of as having more shared drift, i.e. stronger covariance in their allele frequency deviation around the ancestral (or global) mean. We model the population frequencies at a locus as multivariate normal (MVN) with mean $\epsilon$ and covariance matrix $\epsilon (1-\epsilon)\Omega$. The multivariate normal distribution offers a natural statistical framework for describing this covariance, which may be straightforwardly modeled as a parametric function of any pairwise distance variable (see, e.g., Bradburd, Ralph, and Coop 2013). 
 
@@ -166,10 +168,6 @@ where $\text{tr}$ denotes the trace function and $\Gamma_p$ denotes a multivaria
 
 %%%%%%%%% %%%%%%%%% 
 \paragraph{Accommodating non-equilibrium processes}
-%\gb{MS simulation of pops on a grid, figure to show that we recover the grid}
-%\gb{MS simulation of pops on a grid with a barrier in the middle, figure to show how pops on either side of barrier clump together (or how pops scuttle away from each other)}
-
-\gb{MS simulation of pops on a grid with a recent expansion, figure to show how those pops all clump toward source of expansion}
 
 This model assumes that the variance in allele frequencies is the same in all locations and that the covariance between pairs of populations decays in the same way with geographic distance in all portions of the sampled range (i.e. that the process is homogeneous and isotropic). However, in many cases those assumptions will not be met. Non-equilibrium processes like long distance admixture, colonization, or population expansion events will distort the relationship between covariance and distance across the range.  Barriers to dispersal on the landscape can also change the relationship between allele frequency covariance and distance.
 
@@ -198,114 +196,51 @@ The sampled locations are a natural prior on where the populations are positione
 % \end{equation}
 % where $\text{tr}$ denotes the trace function and $\Gamma_p$ denotes a multivariate gamma function, and all boldface variables are parameters estimated as part of our inference procedure.  Notice that this equation has the same form as \eqref{eq:wishart_lnl}, save that the pairwise geographic distance matrix $D$ is now a parameter to be estimated rather than an observed value.
 
-To illustrate this inference procedure, we present several scenarios simulated under the coalescent (using \textrm{ms}, (Hudson)), featured in Figure \ref{sfig:lattice_scenarios}, as well as the output of SpaceMix analyses run on them.  In the first scenario (Fig. \ref{sfig:lattice_scenarios}\subref{lattice_pops}), we simulate a stepping stone model, with symmetric nearest neighbor migration.  In our second scenario (Fig. \ref{sfig:lattice_scenarios}\subref{barrier_pops}), we simulate under the same stepping stone model, but introduce a barrier to dispersal, across which migration rates are attenuated by a factor of 5.  On both scenarios, we perform SpaceMix analyses in which we treat population locations as random variables to be estimated as part of the model, and randomly place the `observed' location of each population on a line so as to remove the influence of the prior.
+To illustrate this inference procedure, we present several scenarios simulated under the coalescent (using \textrm{ms}, (Hudson)), as well as the output of SpaceMix analyses run on them.  In all scenarios, we simulate variations of a stepping stone model, with populations  arranged on a grid and symmetric nearest neighbor migration (\ref{sfig:simple_lattice}), logging data from every other population.
+
+In the first scenario (output illustrated in Fig. \ref{sfig:lattice_scenarios}\subref{lattice_inference}), we simulate a stepping stone model at migration-drift equilibrium and homogeneous migration rates across the grid.  In our second scenario (Fig. \ref{sfig:lattice_scenarios}\subref{barrier_inference}), we simulate under the same stepping stone model, but introduce a longitudinal barrier to dispersal (between populations 11:15 and 16:20, at \textit{x} = 6.01), across which migration rates are attenuated by a factor of 5.  In the third scenario (Fig. \ref{sfig:lattice_scenarios}\subref{expansion_inference}), we simulate an expansion event, in which, all populations in the last five columns of the grid have expanded in the recent past from the nearest population in their row (referring to Fig. \ref{sfig:simple_lattice}, populations 25 and 30, as well as the three unsampled populations that bracket them, have all expanded at the same point in the recent past from population 20).
+
+On all simulated datasets, we perform SpaceMix analyses in which we treat population locations as random variables to be estimated as part of the model, and randomly place the `observed' location of each population so as to remove the influence of the prior.  For clarity, we present the full Procrustes superimposition of the inferred locations around the coordinates used to simulate the data.
 
 %% Perhaps just say this in the methods section (attenuated by $\sqrt{2}$ on the diagonals) and include file of ms command lines. 
+\begin{figure}
+	\centering
+		{\includegraphics[width=2.4in,height=2in]{figs/stationary_pops_map.png}}
+	\caption{Simulation scenario: populations on a lattice with symmetric nearest-neighbor migration, sampling every second population.}
+\label{sfig:simple_lattice}
+\end{figure}
 
 \begin{figure}
 	\centering
-		\subcaptionbox{Populations on a lattice \label{lattice_pops}}
-			{\includegraphics[width=2.4in,height=2in]{figs/stationary_pops_map.png}}
-		\subcaptionbox{SpaceMix map \label{lattice_pops_inference}}
-			{\includegraphics[width=2.4in,height=2in]{figs/stationary_pops_1_inference_map.png}}
-		\subcaptionbox{A lattice with a barrier \label{barrier_pops}}
-			{\includegraphics[width=2.4in,height=2in]{figs/barrier_map.png}}
-		\subcaptionbox{SpaceMix map \label{barrier_pops_inference}}
-			{\includegraphics[width=2.4in,height=2in]{figs/barrier_1_inference_map.png}}
-	\caption{Simulated scenarios and the corresponding population maps inferred using SpaceMix.  For clarity of presentation, the inferred coordinates have have been Procrustes transformed around the coordinates of the lattice used to simulate the data.}\label{sfig:lattice_scenarios}
+		\subcaptionbox{Lattice \label{lattice_inference}}
+			{\includegraphics[width=1.85in,height=1.54in]{figs/GeoGenMap_lattice.pdf}}
+		\subcaptionbox{Barrier \label{barrier_inference}}
+			{\includegraphics[width=1.85in,height=1.54in]{figs/GeoGenMap_barrier.pdf}}
+		\subcaptionbox{Expansion  \label{expansion_inference}}
+			{\includegraphics[width=1.85in,height=1.54in]{figs/GeoGenMap_expansion.pdf}}
+	\caption{Population maps inferred using SpaceMix under three different scenarios: a) simple lattice at equilibrium; b) a lattice with a barrier across the center line of longitude; c) a lattice with recent expansion on the eastern margin.}\label{sfig:lattice_scenarios}
 \end{figure}
 
-In Figure \ref{sfig:lattice_scenarios}\subref{lattice_pops_inference}, the reader can see that the configuration estimated for the populations by SpaceMix matches the lattice structure used to simulate the data, and that populations are correctly choosing their nearest neighbors.  Similarly, in Figure \ref{sfig:lattice_scenarios}\subref{barrier_pops_inference}, the population configuration matches that of the lattice used to simulate the data, but the reader can see that, due to the influence of the barrier, the two halves of the map have pushed farther away from one another.  This gap between populations on either side of the barrier reflects the way those populations perceive the increased effective distance between them. \gc{Perhaps give the covariance vs distance plots in supplement.}
+In Figure \ref{sfig:lattice_scenarios}\subref{lattice_inference}, the reader can see that the configuration estimated for the populations by SpaceMix matches the lattice structure used to simulate the data, and that populations are correctly choosing their nearest neighbors.  Similarly, in Figure \ref{sfig:lattice_scenarios}\subref{barrier_inference}, the population configuration matches that of the lattice used to simulate the data, but due to the influence of the barrier, the two halves of the map have pushed farther away from one another.  This gap between populations on either side of the barrier reflects the way those populations perceive the increased effective distance between them.  In the scenario of recent expansion (Fig. \ref{sfig:lattice_scenarios}\subref{expansion_inference}), the daughter populations of the expansion event cluster with their parent populations, reflecting the higher relatedness (per unit geographic separation) between them.
 
-\gc{I'd perhaps introduce the spatial admixture simulations here. That would motivate the admixture stats}
+\gc{Perhaps give the covariance vs distance plots in supplement.}
 
-%%%%%%%%% %%%%%%%%% 
-\subsection*{Spatial Admixture Statistic}
+If our data are well fit by a model of isolation by distance then (1) a population's genetic makeup should be well predicted by that of its neighbors, and (2) populations should not show excess covariance with distant populations. Violation of either of these two points will result in a poor fit of a simple isolation by distance model, and particularly a violation of point (2) may indicate that long distance admixture has taken place.  
 
-\gc{Do we also want to describe comparison of observed to expected covariance matrix?? Guess we could do it above, to show that our model has successfully improved the fit to the data.}
-
- 
-\gb{Figure 2: MS simulation of pops on a grid with 1 admixture event from a pop on one side to a pop on the other}
-
-\gb{3a figure to show the pairwise f-stat between all pops and the admixed pop}
-
-\gb{3b figure to show landscape of admixture to the admixed pop}
-
-If our data are well fit by a model of isolation by distance then (1) a population's genetic makeup should be well predicted by that of its neighbors, and (2) populations should not show excess covariance with distant populations. Violation of either of these two points will result in a poor fit of a simple isolation by distance model, and particularly a violation of point (2) may indicate that long distance admixture has taken place. We develop simple statistics, which we call spatial $f$-statistics \gb{should we give these a real name?}, to test these points \gc{do we actually test 1?}.
-
-These statistics are in the spirit of both the $f_n$ statistics introduced by Reich et al (2009) and the admixture arrows in a TreeMix graph (Pickrell and Pritchard 2012), and are designed to pick up a signal of covariance between populations in excess of that predicted by our model.  These previous approaches use a null model of a branching population phylogeny and develop tests to diagnose covariance between populations greater than that predicted by the population tree.  Specifically, the tests identify violations of conditional independence of allele frequencies among populations that indicate that there has been admixture (gene flow) between disparate parts of the tree.  In place of a phylogeny, our tests use a spatial model of allelic covariance to look for population pairs whose sample covariance exceeds that predicted by their observed distance and the inferred parameters of the spatial model. %excess covariance between distant populations, indicative of excess gene flow.
-
-%in which one population's covariance with another is expected to decay at a fixed manner across the landscape, as determined by the estimated parametric form of the spatial covariance.  
-
-The details of this procedure are given below, and illustrated with a simulated example scenario (see Figure \ref{sfig:admixture_scenario}), featuring an admixture event.
+To examine the behavior of SpaceMix when there is long distance covariance between populations, we simulated an admixture event on the stepping-stone model we had used previously.  Specifically, (using Fig. \ref{sfig:simple_lattice} as a reference) we allowed population 30, in the northeast corner of the grid, to draw half of its ancestry from population 1, in the southwest corner.  The result of a SpaceMix analysis in which the locations of these populations were estimated is shown in Figure \ref{sfig:admixture_inference_CYOL}.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=2.4in,height=2in]{figs/admixture_map.png}
-	\caption{In this simulated scenario, one population sampled in the modern day (Population 30) has had half of its population replaced with lineages from a distant population (Population 1), simulating an admixture event.}\label{sfig:admixture_scenario}
+	\includegraphics[width=2.4in,height=2in]{figs/GeoGenMap_corner_admixture_CYOL.png}
+	\caption{Inference of population locations in the scenario depicted in Figure \ref{sfig:admixture_scenario}.  Population 30 has received half of its lineages from population 1, to simulate a long distance admixture event in the very recent past.}\label{sfig:admixture_inference_CYOL}
 \end{figure}
 
-\gc{What do we want to say about the values of alpha used in matrix, I suspect we might want to average the frequencies over a number of draws of alpha from the posterior.} \gb{yeah good call.  right now I just use the last.params values, but I suppose we could either (a) use the MAP estimate, or (b), sample values of alpha from the joint posterior, calculate the f-stat for each draw, and average f-stats across all draws.}
-
-We choose a focal population ($i$) that we wish to test. We remove this focal population from the dataset, and denote the dataset and covariance matrix where the $i^{th}$ population has been dropped with a ``$-i$'' in the subscript. We then predict the standardized allele frequencies at the geographic location ($G_i$) occupied by population $i$. To predict the standardized frequencies at  $G_i$, we use the mean frequency at $G_i$ under the conditional normal model. Given the parametric spatial covariance matrix $\Omega_{-i,-i}$, and the standardized allele frequencies $X_{-i}$ at all sampled geographic locations $G_{K-i}$, we calculate the conditional standardized observations at locus $\ell$ at location $G_i$ as
-\begin{equation}
-\label{eq:conditional_mean}
-\bar{X}_{i,\ell} = \left(	\omega_{i,-i} \right) \left( \omega^{-1}_{-i,-i} \right) \left( X_{-i,\ell} \right),
-%\bar{X}_i = \left(	\omega_{i,-i} \right) \left( \omega^{-1}_{-i,-i} \right) \left( X_{-i} \right),
-\end{equation}
-Note that we have described this in terms of the observed locations $G$ but we can equally well compute it using our inferred set of locations $G'$. 
-
-%where we denote dropping the focal population $i$ from the covariance matrix or the observations $X$ at locus $\ell$ with a ``$-i$'' in the subscript.
-
-\gc{Please use caps for matrices}
-
-Then, given the conditional mean observations in focal population $i$, $\bar{X}_i$, and a population $j$ with which we wish to test for admixture with $i$, we calculate our spatial admixture statistic over all $L$ loci as follows:
-\begin{equation}
-\label{eq:spatial_fstat_pop}
-f_{i,j}   = \frac{1}{C_{i,j}}	\mathbb E_L\left[(\vec{X}_{i,\ell}- \bar{X}_{i,\ell}) ~ (\vec{X}_{j,\ell})\right]	\\
-\end{equation}
-where $C_{i,j}$ is a normalization constant
-\begin{equation}
-C_{i,j}  = 	\sqrt{	\text{Var}( \vec{X}_i- \bar{X}_i )  \text{Var}( \vec{X}_{j} )  }  
-\end{equation}
-such that $0 \leq f_{i,j} \leq 1$ and can be interpreted as a correlation coefficient between $i$ and $j$, having regressed out our predicted frequencies at $i$.
-\gc{Is this correct? maybe should be using mean here instead of expectation. I don't think you want these to be vectors }
-This statistic calculates whether a focal population's deviations from its spatial predictions have excess covariance with another sampled population. The statistic $f_{i,j}$ is expected to be zero if the model has fully accounted for the covariance in allele frequencies between population $i$ and $j$. To identify significant departures from this expectation we can calculate a confidence interval for $f_{i,j}$ to see if it includes zero by using a non-parametric bootstrap \gb{or jackknife???} across loci in the dataset (or block bootstrap for linked data).  \gb{Figure 3a shows the spatial \emph{f}-stat calculated between the admixed population and each other population.}
-
-This statistic may also be calculated between a focal population $i$ and any arbitrary location $j'$ in space.  First, we calculate the spatial covariance between the arbitrary location $j'$ and all the sampled populations, \emph{excluding} the focal population $i$.  This spatial covariance matrix, which we denote $\Omega'$ , therefore has rank $k$, as we have excluded the focal population $i$ and included the putative source of admixture location $j'$.  Next, we calculate the conditional mean observations $X_{j'}$ at locus $\ell$ at location $G_{j'}$ as follows:
-\begin{equation}
-\label{eq:conditional_mean}
-\bar{X}_{j',\ell} = \left(	\omega'_{-j',-j'} \right) \left( \omega'^{-1}_{-j',-j'} \right) \left( X_{-i,\ell} \right)
-\end{equation}
-where can use this in place of $X_{j,\ell}$ in equation \ref{eq:spatial_fstat_pop} to compute $f_{i,j'}$. 
-By calculating $f_{i,j'}$ at points on a spatial grid, we can visualize the signature of excess covariance across the entire map. \gb{Figure 3b shows the spatial \emph{f}-stat calculated between the admixed population and each other population.}
-
-\gc{Comment on negative fs and intepretation?}
-
-%We can compute $f_{i,j'}$ across a spatial grid to visualize where our 
-
-% Finally, we can calculate a spatial $f$-statistic between the focal population and the putative location from which it receives admixture as follows,
-% \begin{equation}
-% \label{eq:spatial_fstat_location}
-% f_{i,j'} = \frac{	\mathbb E_L\left[(\vec{X}_i- \bar{X}_i) ~ (\vec{\bar{X}}_{j'})\right]	}
-% 			{\sqrt{	\text{Var}( \vec{X}_i- \bar{X}_i )  \text{Var}( \vec{\bar{X}}_{j'} )  }  }
-% \end{equation}
-
-
-This procedure allows us to visualize the signature of excess covariance across the entire map. \gb{Figure 3b shows the spatial \emph{f}-stat calculated between the admixed population and each other population.}
+This signal of excess covariance over anomalously long distances is clearly difficult to accommodate within the ``choose-your-own-location" framework described above.  In Figure \ref{sfig:admixture_inference_CYOL}, the reader can see the torturous lengths to which the method goes to come up with a configuration of populations that accommodates their genetic relationships.  The admixed population 30 is estimated to have a location intermediate between population 1, the source of its admixture, and populations 24, 25, and 29, the nearest neighbors to the location of its non-admixed lineages.  However, this warping of space is difficult to interpret, especially in the visualization of genetic relationships in empirical data for which a researcher does not know the true demographic history.  It would therefore be of great utility to directly model the action of admixture on spatial patterns of genetic variation.
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Inference of Spatial Admixture}
-\gc{Graham is holiding off rewriting this paragraph till we have the new simulations.}
-This signal of excess covariance over anomalously long distances can be difficult to accommodate within the framework described above, in which we estimate the 2-dimensional configuration of populations that, along with a model of the decay of covariance in allele frequencies with distance, best describes their empirical patterns of genetic differentiation.  In Figure \ref{sfig:admixture_inference_target_loc}, the reader can see the torturous lengths to which the method goes to come up with a configuration of populations that accommodates their genetic relationships.  The admixed population 30 is estimated to have a location intermediate between population 1, the source of its admixture, and populations 24, 25, and 29, the nearest neighbors to the location of its non-admixed lineages.  However, this warping of space is difficult to interpret, and does not have great utility for the visualization of genetic relationships.
 
-\begin{figure}[ht!]
-	\centering
-	\includegraphics[width=2.4in,height=2in]{figs/admixture_1_inference_map.png}
-	\caption{Inference of population locations in the scenario depicted in Figure \ref{sfig:admixture_scenario}.  Population 30 has received half of its lineages from population 1, to simulate a long distance admixture event in the very recent past.}\label{sfig:admixture_inference_target_loc}
-\end{figure}
-
-We can incorporate recent admixture directly into out inference framework.  We imagine that population $k$ draws the majority of its ancestry from $G_k$, but a proportion $p_k$ of its ancestry comes from another location \kadmixsource{k}, which we refer to as its source of admixture. The mean standardized population allele frequency at locus $\ell$ in population $k$ is a weighted average of the allele frequencies at the geographic location of the sampled population and those at the coordinates of the source from which the observed population draws admixture
+We can incorporate recent admixture directly into out inference framework.  We imagine that population $k$ draws the majority of its ancestry from $G_k$, but a proportion $p_k$ of its ancestry comes from another location \kadmixsource{k}, which we refer to as its source of admixture. The mean standardized population allele frequency at locus $\ell$ in population $k$ is a weighted average of the allele frequencies at the geographic location of the sampled population and those at the coordinates of the source from which the observed population draws admixture:
 \begin{equation}
 p_k f_{\ell,k} + (1-p)f_{\ell,k*} \label{eqn-admixedfreq}
 \end{equation}
@@ -349,7 +284,7 @@ where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources fr
 % where $I$ is the identity matrix, $\bar{S_k}$ is the mean sample size in population $k$ across all loci, and $\eta_k$ is the nugget estimated in population $k$.
 
 
-As we only get to observe the sample frequencies and we standardize our allele frequencies using the sample mean our predicted admixture covariance matrix needs to be transformed to accomodate these sampling considerations. We can do this as before see methods XXXX. We again treat the likelihood of our sample covariance matrix as Wishart now given the parameteric covariance matrix $\Omega^{(A)}$ as specified by the parameters $\vec{p}$, \admixsource, $G$,$\vec{\alpha}$, and $\vec{\eta}$. We treat the location of the source of admixture for population $k$, \kadmixsource{k}, and the population's admixture proportion, $p_k$, as random variables and jointly estimated as part of our inference procedure. \gc{state form of priors.}
+As we only get to observe the sample frequencies and we standardize our allele frequencies using the sample mean our predicted admixture covariance matrix needs to be transformed to accommodate these sampling considerations. We can do this as before see methods XXXX. We again treat the likelihood of our sample covariance matrix as Wishart now given the parametric covariance matrix $\Omega^{(A)}$ as specified by the parameters $\vec{p}$, \admixsource, $G$,$\vec{\alpha}$, and $\vec{\eta}$. We treat the location of the source of admixture for population $k$, \kadmixsource{k}, and the population's admixture proportion, $p_k$, as random variables and jointly estimated as part of our inference procedure. \gc{state form of priors.}
 
 
 \begin{figure}[ht!]
@@ -367,16 +302,12 @@ As we only get to observe the sample frequencies and we standardize our allele f
 % \end{equation}
 % where $\text{tr}$ denotes the trace function and $\Gamma_p$ denotes a multivariate gamma function, and all boldface %variables are parameters estimated as part of our inference procedure.
 
-\gc{GRAHAM GOT TO HERE.}
-
-
-Using the example scenario described above and diagrammed in Figure \ref{sfig:admixture_scenario}, we demonstrate the inference of populations' sources and strengths of admixture and illustrate the results in Figure \ref{sfig:admixture_inference_source_loc}.  The reader can see that the only admixed population (Population 30) is drawing admixture from the location of the source of admixture that was used to simulate the data, and that all other populations, which are not admixed, are not choosing to draw admixture in non-negligible amounts.
-
+Using the example admixture scenario described above and used in the analysis depicted in Figure \ref{sfig:admixture_inference_CYOL}, we demonstrate the inference of populations' sources and strengths of admixture and illustrate the results in Figure \ref{sfig:corner_admixture_just_adinf}.  The reader can see that only the admixed population (population 30) is drawing admixture from the location of the source of admixture that was used to simulate the data, and that all other populations, which are not admixed, are choosing to draw admixture in only negligible amounts.
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=2.4in,height=2in]{figs/admixture_2_inference_map.png}
-	\caption{Posterior distribution of inference of the sources and strengths of admixture for the sampled populations.  The admixed population (Population 30) is drawing admixture from the location of its source of admixture that was used to simulate the data (the location of Population 1).}\label{sfig:admixture_inference_source_loc}
+	\includegraphics[width=2.4in,height=2in]{figs/GeoGenMap_corner_admixture_adinf.png}
+	\caption{Posterior distribution of inference of the sources and strengths of admixture for the sampled populations.  The admixed population (Population 30) is drawing admixture from the location of its source of admixture that was used to simulate the data (the location of Population 1).}\label{sfig:corner_admixture_just_adinf}
 \end{figure}
 
 \subsection*{Models}
@@ -387,9 +318,20 @@ The models described above may be used in various combinations.  In the simplest
 									{2^{\frac{LK}{2}}  |\frac{\pmb{\Omega}}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}{2} \right)	},
 \end{equation}
 
-
 \gb{A note here about how this complex model is still identifiable}
 
+To demonstrate the use of the model in which the location of each population as well as the location of its source of admixture are estimated jointly, we used the spatial stepping-stone coalescent simulation procedure described above to generate a dataset of populations on a lattice in which there is both a barrier to dispersal and a more subtle admixture event (admixture proportion = 10\%, see Fig. \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_scenario}).  In the SpaceMix analysis (Fig. \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_inference}), the separation of the east and west sides of the grid accommodates the effect of the barrier to migration, and the admixed population (population 23) chooses admixture from very close to its true source (population 13), and in close to the correct amount ($\bar{p} = 0.05; 95\% \text{ credible interval} = 0.02-0.08$). \gb{discuss how prior forces amount down, so it's cheaper to choose more westward pop as source}.
+
+\begin{figure}[ht!]
+	\centering
+		\subcaptionbox{Lattice \label{barr_inland_ad_scenario}}
+			{\includegraphics[width=2in,height=1.66in]{figs/bar_inland_ad_scenario.pdf}}
+		\subcaptionbox{Barrier \label{barr_inland_ad_inference}}
+			{\includegraphics[width=2in,height=1.66in]{figs/GeoGenMap_barr_inland_admixture_1.png}}
+	\caption{Population maps inferred using SpaceMix under three different scenarios: a) simple lattice at equilibrium; b) a lattice with a barrier across the center line of longitude; c) a lattice with recent expansion on the eastern margin.}\label{sfig:barr_inland_ad}
+\end{figure}
+%This most complex model is, in many cases, nonetheless identifiable.  Although in certain scenarios, a population may choose a location nearer to its source of admixture, rather than 
+\newpage
 \section*{Inference}
 For details on our Bayesian inference framework and Markov chain Monte Carlo inference procedure, please see the Section: How I spent the past year!
 
@@ -397,11 +339,8 @@ For details on our Bayesian inference framework and Markov chain Monte Carlo inf
 To demonstrate the applications of this novel method, we employed it in two canonical empirical systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.
 
 \subsection*{Greenish Warblers}  %a canonical proposed examples of a ring species (Irwin et al 2001).  The complex 
-\gc{The greenish warbler (\emph{Phylloscopus trochiloides}) species complex is broadly distributed around the Tibetan plateau, and exhibits gradients around the ring in a range of phenotypes including song, as well allele frequencies (Ticehurst (1938),Irwin et al 2001, Irwin et al 2005, Irwin et al 2008).  At the northern end of the ring in central Siberia, where the eastern and western arms of population expansion meet, there are discontinuities in call and other phenotypes, as well as a genetic discontinuity and reproductive isolation (Irwin et al 2001, Irwin et al 2008). It is proposed that the species complex represents a ring species, where selection and/or drift as the populations spread northward on either side of the Tibetan plateau has led to the evolution of reproductive isolation REFs.  The question of whether it constitutes a ring species, in purest form, focuses whether gene flow along the margins of the plateau has truly been continuous throughout the history of the expansion or if, alternatively, discontinuities in migration around the species complex's range have facilitated periods of differentiation in genotype or phenotype without gene flow (Mayr 1942, Mayr 1970, Coyne and Orr 2004).  However, we note that many would still classify this as a ring species even if that condition is not met, just not as a case of speciation-by-distance \citep[see][ for discussion]{}.  }
+The greenish warbler (\emph{Phylloscopus trochiloides}) species complex is broadly distributed around the Tibetan plateau, and exhibits gradients around the ring in a range of phenotypes including song, as well allele frequencies (Ticehurst (1938),Irwin et al 2001, Irwin et al 2005, Irwin et al 2008).  At the northern end of the ring in central Siberia, where the eastern and western arms of population expansion meet, there are discontinuities in call and morphology, as well as a genetic discontinuity and reproductive isolation (Irwin et al 2001, Irwin et al 2008). It is proposed that the species complex represents a ring species, in which selection and/or drift, acting in the populations as they spread northward on either side of the Tibetan plateau, have led to the evolution of reproductive isolation (REFs).  The question of whether it constitutes a ring species, in purest form, focuses on whether gene flow along the margins of the plateau has truly been continuous throughout the history of the expansion or if, alternatively, discontinuities in migration around the species complex's range have facilitated periods of differentiation in genotype or phenotype without gene flow (Mayr 1942, Mayr 1970, Coyne and Orr 2004).  However, we note that many would still classify this as a ring species even if that condition were not met, just not as a case of speciation-by-distance \citep[see][ for discussion]{}.
 
-
-%The greenish warbler is thought to have spread northwards around the Tibetan plateau. 
-\gc{Graham thinks that call is a phenotype.}
 
 \gc{Based on a larger SNP dataset Alcaide et al (2014),} have suggested that the greenish warbler species complex constitutes a `broken' ring species, in which there have been historical discontinuities in gene flow that facilitated the evolution of reproductive isolation between adjacent forms.  Because the questions in this system are fundamentally both geographic and genetic in nature, it is eminently SpaceMix-able, and, within this spatial framework, we performed a number of analyses to investigate the geographic context of population differentiation in the greenish warbler species complex. For these analyses, we used the dataset from Alcaide et al (2014), which consisted of 95 individuals sampled at 22 distinct locations and sequenced at 2,334 SNPs, of which 2,247 were bi-allelic and retained for SpaceMix runs. 
 
@@ -554,3 +493,83 @@ The analysis procedure went as follows:
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	TEXT GRAVEYARD
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%% %%%%%%%%% 
+
+ in which we estimate the 2-dimensional configuration of populations that, along with a model of the decay of covariance in allele frequencies with distance, best describes their empirical patterns of genetic differentiation
+ 
+\subsection*{Spatial Admixture Statistic}
+
+\gc{Do we also want to describe comparison of observed to expected covariance matrix?? Guess we could do it above, to show that our model has successfully improved the fit to the data.}
+
+ 
+\gb{Figure 2: MS simulation of pops on a grid with 1 admixture event from a pop on one side to a pop on the other}
+
+\gb{3a figure to show the pairwise f-stat between all pops and the admixed pop}
+
+\gb{3b figure to show landscape of admixture to the admixed pop}
+
+If our data are well fit by a model of isolation by distance then (1) a population's genetic makeup should be well predicted by that of its neighbors, and (2) populations should not show excess covariance with distant populations. Violation of either of these two points will result in a poor fit of a simple isolation by distance model, and particularly a violation of point (2) may indicate that long distance admixture has taken place.  We develop simple statistics, which we call spatial $f$-statistics \gb{should we give these a real name?}, to test these points \gc{do we actually test 1?}.
+
+These statistics are in the spirit of both the $f_n$ statistics introduced by Reich et al (2009) and the admixture arrows in a TreeMix graph (Pickrell and Pritchard 2012), and are designed to pick up a signal of covariance between populations in excess of that predicted by our model.  These previous approaches use a null model of a branching population phylogeny and develop tests to diagnose covariance between populations greater than that predicted by the population tree.  Specifically, the tests identify violations of conditional independence of allele frequencies among populations that indicate that there has been admixture (gene flow) between disparate parts of the tree.  In place of a phylogeny, our tests use a spatial model of allelic covariance to look for population pairs whose sample covariance exceeds that predicted by their observed distance and the inferred parameters of the spatial model. %excess covariance between distant populations, indicative of excess gene flow.
+
+%in which one population's covariance with another is expected to decay at a fixed manner across the landscape, as determined by the estimated parametric form of the spatial covariance.  
+
+The details of this procedure are given below, and illustrated with a simulated example scenario (see Figure \ref{sfig:admixture_scenario}), featuring an admixture event.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=2.4in,height=2in]{figs/admixture_map.png}
+	\caption{In this simulated scenario, one population sampled in the modern day (Population 30) has had half of its population replaced with lineages from a distant population (Population 1), simulating an admixture event.}\label{sfig:admixture_scenario}
+\end{figure}
+
+\gc{What do we want to say about the values of alpha used in matrix, I suspect we might want to average the frequencies over a number of draws of alpha from the posterior.} \gb{yeah good call.  right now I just use the last.params values, but I suppose we could either (a) use the MAP estimate, or (b), sample values of alpha from the joint posterior, calculate the f-stat for each draw, and average f-stats across all draws.}
+
+We choose a focal population ($i$) that we wish to test. We remove this focal population from the dataset, and denote the dataset and covariance matrix where the $i^{th}$ population has been dropped with a ``$-i$'' in the subscript. We then predict the standardized allele frequencies at the geographic location ($G_i$) occupied by population $i$. To predict the standardized frequencies at  $G_i$, we use the mean frequency at $G_i$ under the conditional normal model. Given the parametric spatial covariance matrix $\Omega_{-i,-i}$, and the standardized allele frequencies $X_{-i}$ at all sampled geographic locations $G_{K-i}$, we calculate the conditional standardized observations at locus $\ell$ at location $G_i$ as
+\begin{equation}
+\label{eq:conditional_mean}
+\bar{X}_{i,\ell} = \left(	\omega_{i,-i} \right) \left( \omega^{-1}_{-i,-i} \right) \left( X_{-i,\ell} \right),
+%\bar{X}_i = \left(	\omega_{i,-i} \right) \left( \omega^{-1}_{-i,-i} \right) \left( X_{-i} \right),
+\end{equation}
+Note that we have described this in terms of the observed locations $G$ but we can equally well compute it using our inferred set of locations $G'$. 
+
+%where we denote dropping the focal population $i$ from the covariance matrix or the observations $X$ at locus $\ell$ with a ``$-i$'' in the subscript.
+
+\gc{Please use caps for matrices}
+
+Then, given the conditional mean observations in focal population $i$, $\bar{X}_i$, and a population $j$ with which we wish to test for admixture with $i$, we calculate our spatial admixture statistic over all $L$ loci as follows:
+\begin{equation}
+\label{eq:spatial_fstat_pop}
+f_{i,j}   = \frac{1}{C_{i,j}}	\mathbb E_L\left[(\vec{X}_{i,\ell}- \bar{X}_{i,\ell}) ~ (\vec{X}_{j,\ell})\right]	\\
+\end{equation}
+where $C_{i,j}$ is a normalization constant
+\begin{equation}
+C_{i,j}  = 	\sqrt{	\text{Var}( \vec{X}_i- \bar{X}_i )  \text{Var}( \vec{X}_{j} )  }  
+\end{equation}
+such that $0 \leq f_{i,j} \leq 1$ and can be interpreted as a correlation coefficient between $i$ and $j$, having regressed out our predicted frequencies at $i$.
+\gc{Is this correct? maybe should be using mean here instead of expectation. I don't think you want these to be vectors }
+This statistic calculates whether a focal population's deviations from its spatial predictions have excess covariance with another sampled population. The statistic $f_{i,j}$ is expected to be zero if the model has fully accounted for the covariance in allele frequencies between population $i$ and $j$. To identify significant departures from this expectation we can calculate a confidence interval for $f_{i,j}$ to see if it includes zero by using a non-parametric bootstrap \gb{or jackknife???} across loci in the dataset (or block bootstrap for linked data).  \gb{Figure 3a shows the spatial \emph{f}-stat calculated between the admixed population and each other population.}
+
+This statistic may also be calculated between a focal population $i$ and any arbitrary location $j'$ in space.  First, we calculate the spatial covariance between the arbitrary location $j'$ and all the sampled populations, \emph{excluding} the focal population $i$.  This spatial covariance matrix, which we denote $\Omega'$ , therefore has rank $k$, as we have excluded the focal population $i$ and included the putative source of admixture location $j'$.  Next, we calculate the conditional mean observations $X_{j'}$ at locus $\ell$ at location $G_{j'}$ as follows:
+\begin{equation}
+\label{eq:conditional_mean}
+\bar{X}_{j',\ell} = \left(	\omega'_{-j',-j'} \right) \left( \omega'^{-1}_{-j',-j'} \right) \left( X_{-i,\ell} \right)
+\end{equation}
+where can use this in place of $X_{j,\ell}$ in equation \ref{eq:spatial_fstat_pop} to compute $f_{i,j'}$. 
+By calculating $f_{i,j'}$ at points on a spatial grid, we can visualize the signature of excess covariance across the entire map. \gb{Figure 3b shows the spatial \emph{f}-stat calculated between the admixed population and each other population.}
+
+\gc{Comment on negative fs and intepretation?}
+
+%We can compute $f_{i,j'}$ across a spatial grid to visualize where our 
+
+% Finally, we can calculate a spatial $f$-statistic between the focal population and the putative location from which it receives admixture as follows,
+% \begin{equation}
+% \label{eq:spatial_fstat_location}
+% f_{i,j'} = \frac{	\mathbb E_L\left[(\vec{X}_i- \bar{X}_i) ~ (\vec{\bar{X}}_{j'})\right]	}
+% 			{\sqrt{	\text{Var}( \vec{X}_i- \bar{X}_i )  \text{Var}( \vec{\bar{X}}_{j'} )  }  }
+% \end{equation}
+
+
+This procedure allows us to visualize the signature of excess covariance across the entire map. \gb{Figure 3b shows the spatial \emph{f}-stat calculated between the admixed population and each other population.}

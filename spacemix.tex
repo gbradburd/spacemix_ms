@@ -373,7 +373,7 @@ In the north, where the twin waves of expansion around the Tibetan Plateau are h
 
 %However, where the population-level analysis shows the Stolby population intermediate between the \textit{viridanus} and \textit{plumbeitarsus} clusters, the individual-level analysis reveals that the Stolby population (n=6)
 
-We then ran the method allowing admixture, and again discuss the random priors results. The Stolby population chooses the highest admixture proportion, with a mean of 0.19 \bf{95\% credible intervals}.  Multiple runs agreed well on the level of admixture of the Stolby (see caption of Supplementary Figure \ref{sfig:warbler_pop_compare}). What does vary across runs, is whether the Stolby population chooses to locate itself by the \textit{viridanus} cluster and draw admixture from near the \textit{plumbeitarsus}  cluster or vise versa, however, this is to be expected given the 50/50 nature of the sample (Supplementary Figure \ref{sfig:warbler_pop_compare}). 
+We then ran the method allowing admixture, and again discuss the random priors results. The Stolby population chooses the highest admixture proportion, with a mean of 0.19 \textbf{95\% credible intervals}.  Multiple runs agreed well on the level of admixture of the Stolby (see caption of Supplementary Figure \ref{sfig:warbler_pop_compare}). What does vary across runs, is whether the Stolby population chooses to locate itself by the \textit{viridanus} cluster and draw admixture from near the \textit{plumbeitarsus}  cluster or vise versa, however, this is to be expected given the 50/50 nature of the sample (Supplementary Figure \ref{sfig:warbler_pop_compare}). 
 
 %\gc{Graham: dont feel like we need the three analyses in main text.} Across the three independent analyses (two with the observed population locations as spatial priors on the locations, $G'$, that they choose for themselves, one with random locations as spatial priors), the inferred values of admixture proportion are consistent (95\% credible intervals:  0.146-0.233, 0.154-0.242, 0.146-0.238).  However, both the position that the Stolby population chooses for itself and the region from which it draws admixture varies between runs (Figure \ref{sfig:warbler_pop_compare}).  In two of the analyses, the Stolby population moves to a position proximate to the \textit{viridanus} cluster and chooses admixture from a point beyond the \textit{plumbeitarsus} cluster, and in one analysis, this pattern is reversed.  
 
@@ -428,18 +428,46 @@ The SpaceMix map also diverges from the observed map in the distribution of indi
 \end{figure}
 
 %
-
+\newpage
 \subsection*{Human Populations}
-Human population 
-For our analysis of spatial patterns of human population structure, 
+The geography of human population structure is a complex product of the forces of migration, drift, and selection acting on both local and global scales.  Recent work in this area has demonstrated that the signature of these forces can be read in the genomes of modern humans (e.g. Novembre et al 2008, Ralph \& Coop 2013, Moorjani, Reich, ARG folks, Hellenthal et al 2014).  This research has revealed that patterns of spatial genetic differentiation across human populations are byzantine in their complexity, varying across both space (Ralph \& Coop 2013) and time (Skoglund et al 2012, 2014), and shaped by culture (Reich et al 2009, Atzmon et al 2010, Moorjani et al 2011), landscape (Bradburd, Ralph, Coop 2013), and environment (Beall et al 2010, Bigham et al 2010).  To visualize the patterns these processes have induced, we set out to create a geogenetic map for a worldwide sample of modern human populations.  
 
-Description of the research questions we use SpaceMix to address
+Specifically, our research questions were: 
+\begin{enumerate}
+\item What is the geography of human population structure?  Which populations cluster with which, and how does the geogenetic map contrast with the observed geography?
+\item Can the map we estimate reconstruct the many of the important expansion events in human pre-history, including the out-of-Africa expansion, the colonizations of Oceania, and the colonization of the Americas via Beringia?
+\item Which human populations are most greatly admixed, and from where?  Will the SpaceMix results confirm the admixture findings of previous studies?
+\end{enumerate}
 
-Details of analyses run
+\begin{figure}
+	\centering
+	\includegraphics[width=4in,height=2.4in]{figs/globe_world_map_text.png}
+	\caption{The map of sampled human populations}\label{globe_world_map}
+\end{figure}
 
-%%%%%%%%% %%%%%%%%% 
-\section*{Results}
-\gb{should we just merge the results section in with the empirical applications section?  not sure what else would go here.}
+To answer these questions, we used a subset of 10,000 SNPs from the SNP dataset of Hellenthal et al (2014), which is comprised of 1490 sampled in 95 populations (see Fig. \ref{globe_world_map} for map of sampling), as well as the latitude and longitude attributed to each population.  We ran two sets of SpaceMix analyses: in the first, we estimated population locations, and in the second, we estimated population locations, the position of their sources of admixture, and the proportion of admixture they draw.
+
+In the analysis in which populations choose their own locations, the map roughly recapitulates the geography of the samples (Fig. \ref{sfig:globe_noad_maps}).  Populations generally cluster with populations sampled on their continent, and the relative placement of populations is similar to that of their observed geography.  Sub-Saharan African populations are distributed in a manner consistent with their sampled latitude, with the San populations in the south and the Ethiopian populations closest to the Eurasian populations.  North African populations, such as the Moroccan, Tunisian, and Egyptian populations, cluster with Middle Eastern populations such as the Yemeni and the UAE, and are quite close to both the Ethiopian populations and the western European populations, such as the Sicilians, the Cypriots, the Tuscans, and the Sardinians.  Within Eurasia, we see populations grouping roughly in the order of their longitude on the continent, with British, continental European, and Russian populations at the western margin, and Han, Japanese, and Southeast Asian populations such as the Cambodians, the Lahu, and Myanmar on the eastern margin.  Interspersed between are populations of the Sub-continent, such as the Indian, Indian Jewish, and Sindhi populations, as well as populations from farther north in Eurasia that choose intermediate locations between European and East Asian populations, such as the Uygur, the Hazara, the Uzbekistani, and the Chuvash.  Populations from the Americas cluster together and choose a location close to the East Asian populations, as do populations from Oceania.
+
+We also recover evidence for several major population expansions and colonization routes in human pre-history.  First, the scale of inferred inter-population distance within sub-Saharan Africa is much greater than that between any other group (see Fig NNN), a pattern indicative of a bottleneck (or series of bottlenecks) during an out-of-Africa event.  In addition, we see that both the populations in the Americas and in Oceania cluster close to the East Asian populations, but that the two clusters are on opposite sides.  The proximity of these groups to the East Asians represents the fact that both groups were ancestrally East Asian (REF?), but that the expansion events induced independent drift trajectories in both waves of colonization.  We also see intriguing evidence for potential admixture in the placement of the Chuvash, Uzbekistani, Hazara, and Uygur populations, which choose locations intermediate between Europe and East Asia, as well as in the placement of the Moroccan, Mozabite, and Ethiopian populations, which are choosing locations between the western Eurasian cluster and the sub-Saharan Africans.  To investigate possible patterns of admixture further, we ran a SpaceMix analysis in which we estimated, for each population, a location, a source of admixture, and the magnitude of that admixture.
+
+
+
+
+\begin{figure}
+	\centering
+		\subcaptionbox{Inferred map of human populations \label{globe_all_noad_map}}
+			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_NoAd_map.png}}
+		\subcaptionbox{Closeup of African populations \label{globe_africa_noad_map}}
+			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Africa_NoAd_map.png}}
+		\subcaptionbox{Closeup of non-Africa populations \label{globe_notafrica_noad_map}}
+			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Eurasia_Americas_Oceania_NoAd_map.png}}
+		\subcaptionbox{Closeup of Eurasian populations \label{globe_eurasia_noad_map}}
+			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Eurasia_NoAd_map.png}}
+
+	\caption{Map of human populations, inferred without admixture, colored by continent. (a) complete map;  (b) close up African populations; (c) close up of all non-African populations; (d) close up of Eurasian populations.}\label{sfig:globe_noad_maps}
+\end{figure}
+
 
 %%%%%%%%% %%%%%%%%% 
 \section*{Discussion}

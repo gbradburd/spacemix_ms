@@ -1,0 +1,142 @@
+\gc{Do we also want to describe comparison of observed to expected covariance matrix??
+Guess we could do it above, to show that our model has successfully improved the fit to
+the data.}
+
+
+\gb{Figure 2: MS simulation of pops on a grid with 1 admixture event from a pop on one
+side to a pop on the other}
+
+\gb{3a figure to show the pairwise f-stat between all pops and the admixed pop}
+
+\gb{3b figure to show landscape of admixture to the admixed pop}
+
+If our data are well fit by a model of isolation by distance then (1) a population's
+genetic makeup should be well predicted by that of its neighbors, and (2) populations
+should not show excess covariance with distant populations. Violation of either of
+these two points will result in a poor fit of a simple isolation by distance model, and
+particularly a violation of point (2) may indicate that long distance admixture has
+taken place.  We develop simple statistics, which we call spatial $f$-statistics
+\gb{should we give these a real name?}, to test these points \gc{do we actually test
+1?}.
+
+These statistics are in the spirit of both the $f_n$ statistics introduced by Reich et
+al (2009) and the admixture arrows in a TreeMix graph (Pickrell and Pritchard 2012),
+and are designed to pick up a signal of covariance between populations in excess of
+that predicted by our model.  These previous approaches use a null model of a branching
+population phylogeny and develop tests to diagnose covariance between populations
+greater than that predicted by the population tree.  Specifically, the tests identify
+violations of conditional independence of allele frequencies among populations that
+indicate that there has been admixture (gene flow) between disparate parts of the tree.
+ In place of a phylogeny, our tests use a spatial model of allelic covariance to look
+for population pairs whose sample covariance exceeds that predicted by their observed
+distance and the inferred parameters of the spatial model. %excess covariance between
+distant populations, indicative of excess gene flow.
+
+%in which one population's covariance with another is expected to decay at a fixed
+%manner across the landscape, as determined by the estimated parametric form of the
+%spatial covariance.  
+%
+The details of this procedure are given below, and illustrated with a simulated example
+scenario (see Figure \ref{sfig:admixture_scenario}), featuring an admixture event.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=2.4in,height=2in]{figs/admixture_map.png}
+	\caption{In this simulated scenario, one population sampled in the modern day
+(Population 30) has had half of its population replaced with lineages from a distant
+population (Population 1), simulating an admixture
+event.}\label{sfig:admixture_scenario}
+\end{figure}
+
+\gc{What do we want to say about the values of alpha used in matrix, I suspect we might
+want to average the frequencies over a number of draws of alpha from the posterior.}
+\gb{yeah good call.  right now I just use the last.params values, but I suppose we
+could either (a) use the MAP estimate, or (b), sample values of alpha from the joint
+posterior, calculate the f-stat for each draw, and average f-stats across all draws.}
+
+We choose a focal population ($i$) that we wish to test. We remove this focal
+population from the dataset, and denote the dataset and covariance matrix where the
+$i^{th}$ population has been dropped with a ``$-i$'' in the subscript. We then predict
+the standardized allele frequencies at the geographic location ($G_i$) occupied by
+population $i$. To predict the standardized frequencies at  $G_i$, we use the mean
+frequency at $G_i$ under the conditional normal model. Given the parametric spatial
+covariance matrix $\Omega_{-i,-i}$, and the standardized allele frequencies $X_{-i}$ at
+all sampled geographic locations $G_{K-i}$, we calculate the conditional standardized
+observations at locus $\ell$ at location $G_i$ as
+\begin{equation}
+\label{eq:conditional_mean}
+\bar{X}_{i,\ell} = \left(	\omega_{i,-i} \right) \left( \omega^{-1}_{-i,-i} \right)
+\left( X_{-i,\ell} \right),
+%\bar{X}_i = \left(	\omega_{i,-i} \right) \left( \omega^{-1}_{-i,-i} \right) \left(
+%X_{-i} \right),
+\end{equation}
+Note that we have described this in terms of the observed locations $G$ but we can
+equally well compute it using our inferred set of locations $G'$. 
+
+%where we denote dropping the focal population $i$ from the covariance matrix or the
+%observations $X$ at locus $\ell$ with a ``$-i$'' in the subscript.
+%
+\gc{Please use caps for matrices}
+
+Then, given the conditional mean observations in focal population $i$, $\bar{X}_i$, and
+a population $j$ with which we wish to test for admixture with $i$, we calculate our
+spatial admixture statistic over all $L$ loci as follows:
+\begin{equation}
+\label{eq:spatial_fstat_pop}
+f_{i,j}   = \frac{1}{C_{i,j}}	\mathbb E_L\left[(\vec{X}_{i,\ell}- \bar{X}_{i,\ell})
+~ (\vec{X}_{j,\ell})\right]	\\
+\end{equation}
+where $C_{i,j}$ is a normalization constant
+\begin{equation}
+C_{i,j}  = 	\sqrt{	\text{Var}( \vec{X}_i- \bar{X}_i )  \text{Var}( \vec{X}_{j} ) 
+}  
+\end{equation}
+such that $0 \leq f_{i,j} \leq 1$ and can be interpreted as a correlation coefficient
+between $i$ and $j$, having regressed out our predicted frequencies at $i$.
+\gc{Is this correct? maybe should be using mean here instead of expectation. I don't
+think you want these to be vectors }
+This statistic calculates whether a focal population's deviations from its spatial
+predictions have excess covariance with another sampled population. The statistic
+$f_{i,j}$ is expected to be zero if the model has fully accounted for the covariance in
+allele frequencies between population $i$ and $j$. To identify significant departures
+from this expectation we can calculate a confidence interval for $f_{i,j}$ to see if it
+includes zero by using a non-parametric bootstrap \gb{or jackknife???} across loci in
+the dataset (or block bootstrap for linked data).  \gb{Figure 3a shows the spatial
+\emph{f}-stat calculated between the admixed population and each other population.}
+
+This statistic may also be calculated between a focal population $i$ and any arbitrary
+location $j'$ in space.  First, we calculate the spatial covariance between the
+arbitrary location $j'$ and all the sampled populations, \emph{excluding} the focal
+population $i$.  This spatial covariance matrix, which we denote $\Omega'$ , therefore
+has rank $k$, as we have excluded the focal population $i$ and included the putative
+source of admixture location $j'$.  Next, we calculate the conditional mean
+observations $X_{j'}$ at locus $\ell$ at location $G_{j'}$ as follows:
+\begin{equation}
+\label{eq:conditional_mean}
+\bar{X}_{j',\ell} = \left(	\omega'_{-j',-j'} \right) \left( \omega'^{-1}_{-j',-j'}
+\right) \left( X_{-i,\ell} \right)
+\end{equation}
+where can use this in place of $X_{j,\ell}$ in equation \ref{eq:spatial_fstat_pop} to
+compute $f_{i,j'}$. 
+By calculating $f_{i,j'}$ at points on a spatial grid, we can visualize the signature
+of excess covariance across the entire map. \gb{Figure 3b shows the spatial
+\emph{f}-stat calculated between the admixed population and each other population.}
+
+\gc{Comment on negative fs and intepretation?}
+
+%We can compute $f_{i,j'}$ across a spatial grid to visualize where our 
+%
+% Finally, we can calculate a spatial $f$-statistic between the focal population and
+% the putative location from which it receives admixture as follows,
+% \begin{equation}
+% \label{eq:spatial_fstat_location}
+% f_{i,j'} = \frac{	\mathbb E_L\left[(\vec{X}_i- \bar{X}_i) ~
+% (\vec{\bar{X}}_{j'})\right]	}
+%             {\sqrt{	\text{Var}( \vec{X}_i- \bar{X}_i )  \text{Var}(
+% \vec{\bar{X}}_{j'} )  }  }
+% \end{equation}
+% 
+% 
+This procedure allows us to visualize the signature of excess covariance across the
+entire map. \gb{Figure 3b shows the spatial \emph{f}-stat calculated between the
+admixed population and each other population.}

@@ -1,0 +1,47 @@
+write human section
+	-admixed pops are who we expect
+		-Handwavy Indian section
+
+start suppmat (to get all figs in tex)
+
+make CYOL 3-panel into 4 panel w/ setup
+
+color sim pops by longitude
+
+drop human CYOL to 2panel
+
+re-color continental african pops
+
+read pickrell&reich
+
+get D vs. D_hat for easy groupings (suppmat)
+
+add bit for graham to fill in on IBD w/in diff clusters
+
+make names of admix sources diff
+	-make a gazillion pics
+	-experiment w/ dots in lieu of names for non-focal pops
+	
+make f-stats doc
+
+G^(A) is where we get admixture from
+
+re-work Fig4 w/ arrows
+
+main text:
+	prior on admix proportions
+		capped at a half
+	prior on pop locations
+	
+keep Pedro in the loop (don't need him now, but heads-up)
+	
+Inference:
+	Methods section at the end:
+		MCMC:
+			description of each proposal mechanism
+			simplifications to the likelihood (impt. speedups)
+			
+			details of procrustes (R func)
+			
+Prioritize:
+	taking bits of methods out of main text

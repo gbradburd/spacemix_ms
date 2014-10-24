@@ -812,7 +812,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 #	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_NoAd_dist_compare.png",res=200,height=5*200,width=6*200)
 	quartz(height=5,width=6)
 	plot(obs.D,par.D,col="gray",pch=20,
-		xlim=c(0,7000),ylim=c(0,4000),
+		# xlim=c(0,7000),ylim=c(0,4000),
 		ylab="estimated distance",
 		xlab="observed distance",cex=0.7)
 		for(i in 1:length(clusters)){

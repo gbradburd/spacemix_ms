@@ -17,9 +17,9 @@
 \setlength{\parindent}{0pt}%
 
 \newcommand{\e}[1]{{\mathbb E}\left[ #1 \right]}
-\newcommand{\admixsource}[1]{{$G^*$}}
-\newcommand{\kadmixsource}[1]{{$G^{*}_{#1}$}}
-\newcommand{\identifyadmixsource}[1]{{#1^{*}}}
+\newcommand{\admixsource}[1]{{$G^{(A)}$}}
+\newcommand{\kadmixsource}[1]{{$G^{(A)}_{#1}$}}
+\newcommand{\identifyadmixsource}[1]{{#1^{(A)}}}
 \newcommand{\gb}[1]{{\em \color{magenta} #1}}
 \newcommand{\plr}[1]{{\em \color{green} #1}}
 \newcommand{\gc}[1]{{\em \color{blue} #1}}
@@ -121,7 +121,7 @@ The sampled locations are a natural prior on where the populations are positione
 
 \gb{equation here}\\
 
-To illustrate this inference procedure, we present several scenarios simulated under the coalescent (using \textrm{ms}, (Hudson)), as well as the output of SpaceMix analyses run on them.  In all scenarios, we simulate variations of a stepping stone model, with populations arranged on a grid and symmetric nearest neighbor migration (\ref{sfig:simple_lattice}), logging data from every other population (for details on all simulations, see Appendix NNN).
+To illustrate this inference procedure, we present several scenarios simulated under the coalescent (using \textrm{ms}, (Hudson)), as well as the output of SpaceMix analyses run on them.  In all scenarios, we simulate variations of a stepping stone model, with populations arranged on a grid and symmetric nearest neighbor migration (\ref{sfig:slattice_scenarios}\subref{simple_lattice}), logging data from every other population (for details on all simulations, see Appendix NNN).
 
 In the first scenario (output illustrated in Fig. \ref{sfig:lattice_scenarios}\subref{lattice_inference}), we simulate a stepping stone model at migration-drift equilibrium and homogeneous migration rates across the grid.  In our second scenario (Fig. \ref{sfig:lattice_scenarios}\subref{barrier_inference}), we simulate under the same stepping stone model, but introduce a longitudinal barrier to dispersal (between populations 11:15 and 16:20, at \textit{x} = 6.01), across which migration rates are attenuated by a factor of 5.  In the third scenario (Fig. \ref{sfig:lattice_scenarios}\subref{expansion_inference}), we simulate an expansion event, in which, all populations in the last five columns of the grid have expanded in the recent past from the nearest population in their row (referring to Fig. \ref{sfig:simple_lattice}, populations 25 and 30, as well as the three unsampled populations that bracket them, have all expanded at the same point in the recent past from population 20).
 
@@ -129,20 +129,15 @@ On all simulated datasets, we perform SpaceMix analyses in which we treat popula
 
 \begin{figure}
 	\centering
-		{\includegraphics[width=2.4in,height=2in]{figs/stationary_pops_map.png}}
-	\caption{Simulation scenario: populations on a lattice with symmetric nearest-neighbor migration, sampling every second population.}
-\label{sfig:simple_lattice}
-\end{figure}
-
-\begin{figure}
-	\centering
+		\subcaptionbox{Simulated Lattice \label{simple_lattice}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/stationary_pops_map.png}}
 		\subcaptionbox{Lattice \label{lattice_inference}}
-			{\includegraphics[width=1.85in,height=1.54in]{figs/GeoGenMap_lattice.pdf}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/GeoGenMap_lattice.pdf}}
 		\subcaptionbox{Barrier \label{barrier_inference}}
-			{\includegraphics[width=1.85in,height=1.54in]{figs/GeoGenMap_barrier.pdf}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/GeoGenMap_barrier.pdf}}
 		\subcaptionbox{Expansion  \label{expansion_inference}}
-			{\includegraphics[width=1.85in,height=1.54in]{figs/GeoGenMap_expansion.pdf}}
-	\caption{Population maps inferred using SpaceMix under three different scenarios: a) simple lattice at equilibrium; b) a lattice with a barrier across the center line of longitude; c) a lattice with recent expansion on the eastern margin.}\label{sfig:lattice_scenarios}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/GeoGenMap_expansion.pdf}}
+	\caption{Population maps inferred using SpaceMix under three different scenarios: a) configuration of simulated populations; (c) simple lattice at equilibrium; c) a lattice with a barrier across the center line of longitude; d) a lattice with recent expansion on the eastern margin.}\label{sfig:lattice_scenarios}
 \end{figure}
 
 In Figure \ref{sfig:lattice_scenarios}\subref{lattice_inference}, the reader can see that the configuration estimated for the populations by SpaceMix matches the lattice structure used to simulate the data, and that populations are correctly choosing their nearest neighbors.  Similarly, in Figure \ref{sfig:lattice_scenarios}\subref{barrier_inference}, the population configuration matches that of the lattice used to simulate the data, but due to the influence of the barrier, the two halves of the map have pushed farther away from one another.  This gap between populations on either side of the barrier reflects the way those populations perceive the increased effective distance between them.  In the scenario of recent expansion (Fig. \ref{sfig:lattice_scenarios}\subref{expansion_inference}), the daughter populations of the expansion event cluster with their parent populations, reflecting the higher relatedness (per unit geographic separation) between them.
@@ -191,7 +186,7 @@ As we only get to observe the sample frequencies and we standardize our allele f
 \begin{figure}[ht!]
 	\centering
 	\includegraphics[width=2in,height=2in]{figs/admix_cov_fig.pdf}
-	\caption{An illustration of the form of the admixed covariance given in Eqns. \ref{eq:admixed_covariance_1} and \ref{eq:admixed_covariance_2}.  Populations $i$ and $j$ are drawing admixture in proportions $p_i$ and $p_j$ from their respective sources of admixture, $i'$ and $j'$, and all pairwise spatial covariances (the $\omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $j'$ than $i$ is from its source $i'$ (i.e., $p_j > p_i$).}\label{sfig:admixed_cov_diagram}
+	\caption{An illustration of the form of the admixed covariance given in Eqns. \ref{eq:admixed_covariance_1} and \ref{eq:admixed_covariance_2}.  Populations $i$ and $j$ are drawing admixture in proportions $p_i$ and $p_j$ from their respective sources of admixture, $i^{(A)}$ and $j^{(A)}$, and all pairwise spatial covariances (the $\Omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $j^{(A)}$ than $i$ is from its source $i^{(A)}$ (i.e., $p_j > p_i$).}\label{sfig:admixed_cov_diagram}
 \end{figure}
 
 
@@ -329,10 +324,10 @@ We also recover evidence for several major population expansions and colonizatio
 	\centering
 		\subcaptionbox{Inferred map of human populations \label{globe_all_noad_map}}
 			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_NoAd_map.png}}
-		\subcaptionbox{Closeup of African populations \label{globe_africa_noad_map}}
-			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Africa_NoAd_map.png}}
-		\subcaptionbox{Closeup of non-Africa populations \label{globe_notafrica_noad_map}}
-			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Eurasia_Americas_Oceania_NoAd_map.png}}
+%		\subcaptionbox{Closeup of African populations \label{globe_africa_noad_map}}
+%			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Africa_NoAd_map.png}}
+%		\subcaptionbox{Closeup of non-Africa populations \label{globe_notafrica_noad_map}}
+%			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Eurasia_Americas_Oceania_NoAd_map.png}}
 		\subcaptionbox{Closeup of Eurasian populations \label{globe_eurasia_noad_map}}
 			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Eurasia_NoAd_map.png}}
 
@@ -388,10 +383,10 @@ where $f_{\ell,i}$ is the allele frequency in population $i$, $f_{\ell,j}$ is th
  We re-introduce the population-specific variance terms on each diagonal element of this admixed covariance matrix.  The full expression for our admixed covariance function is below.
  \begin{alignat}{3}
  \label{eq:admixed_covariance_2}
- \Omega_{i,j} = (1-p_i)(1-p_j) \omega_{i\;,\;j\;} \; \times&\\
- (p_i)(1-p_j) \omega_{i',\;j\;} \; \times   \notag&\\
- (p_j)(1-p_i) \omega_{i\;,\;j'} \; \times   \notag&\\
- (p_i)(p_j) \omega_{i',\;j'} \; +   \notag&\\
+ \Omega^{(A)}_{i,j} = (1-p_i)(1-p_j) \Omega_{i\;,\;j\;} \; \times&\\
+ (p_i)(1-p_j) \Omega_{i^{(A)},\;j\;} \; \times   \notag&\\
+ (p_j)(1-p_i) \Omega_{i\;,\;j^{(A)}} \; \times   \notag&\\
+ (p_i)(p_j) \Omega_{i^{(A)},\;j^{(A)}} \; +   \notag&\\
  \delta_{i,j} \bar{S_k}^{-1} + \delta_{i,j} \eta_k \phantom{+} \notag&
  \end{alignat}
 
@@ -422,8 +417,53 @@ The analysis procedure went as follows:
 \item[3.] A chain was initiated from the parameter values in the last generation of the Best Short Run.  Because inference of admixture proportion and location was not allowed in the five initial runs, admixture proportions were initiated at 0 and admixture locations, \admixsource{G} were initiated at the origin.  This  chain (the ``Long Run") was run for 1e8 generations, and sampled every 1e5 generations for a total of 1e3 draws from the posterior.
 \end{itemize}
 
+\newpage
 
 
+\section*{Supplementary Materials}
+
+\begin{figure}
+	\centering
+		\subcaptionbox{Likelihood \label{basic_lattice}}
+			{\includegraphics[width=3in,height=2.5in]{figs/basic_lattice.png}}
+		\subcaptionbox{Posterior probability \label{barrier_lattice}}
+			{\includegraphics[width=3in,height=2.5in]{figs/barrier_lattice.png}}
+		\subcaptionbox{Posterior probability \label{barrier_lattice}}
+			{\includegraphics[width=3in,height=2.5in]{figs/expansion_lattice.png}}
+	\caption{Different simulation scenarios: (a) basic lattice; (b) lattice with a longitudinal barrier; (c) lattice with expansion event.}\label{sfig:sim_scenarios}
+\end{figure}
+
+\begin{figure}[ht!]
+	\centering
+		{\includegraphics[width=2.4in,height=2in]{figs/GeoGenMap_barr_inland_admixture_2.png}}
+	\caption{credible interval of where population 23 draws admixture from.}
+\label{sfig:barr_inland_ad_credset}
+\end{figure}
+
+\begin{figure}
+	\centering
+		\subcaptionbox{Likelihood \label{admix_prop_func_loc_lnl}}
+			{\includegraphics[width=6in,height=2in]{figs/admix_prop_func_loc_lnl.png}}
+		\subcaptionbox{Posterior probability \label{admix_prop_func_loc_prob}}
+			{\includegraphics[width=6in,height=2in]{figs/admix_prop_func_loc_prob.png}}
+	\caption{Likelihood surfaces for different placements of population ST between \textit{plumbeitarsus} and \textit{viridanus} clusters: (a) log likelihood surface; (b) posterior probability surface, incorporating the priors.}\label{sfig:admix_prop_func_loc}
+\end{figure}
+
+\begin{figure}
+	\centering
+		\subcaptionbox{All population pairs \label{warb_ind_dist_compare_allpairs}}
+			{\includegraphics[width=6in,height=3in]{figs/warb_ind_dist_compare_allpairs.png}}
+		\subcaptionbox{Just within population comparisons \label{warb_ind_dist_compare}}
+			{\includegraphics[width=6in,height=3in]{figs/warb_ind_dist_compare.png}}
+	\caption{Comparing observed to estimated pairwise distance between warbler individuals, (a) between and (b) within subspecies populations.}\label{sfig:warb_ind_distcomp}
+\end{figure}
+
+\begin{figure}
+	\centering
+		{\includegraphics[width=6in,height=3in]{figs/globe_NoAd_dist_compare.png}}
+	\caption{Comparison of observed distance to estimated distance between human populations, colored by continent from which populations were sampled (i.e. - two populations sampled from Africa are green).  Eurasia is divided into Western Eurasia and East Asia.}
+\label{sfig:globe_noad_distcomp}
+\end{figure}
 
 \end{document}
 

@@ -671,9 +671,10 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 	k <- last.params$k
 	continent.col <- numeric(k)
 		continent.col[which(globetrotter.long < -50)] <- "orange"
-		continent.col[which(globetrotter.long < 50 & 
-							globetrotter.long > -50 &
-							globetrotter.lat < 15)] <- "forestgreen"
+		continent.col[match(c("BantuKenya","BantuSouthAfrica","BiakaPygmy",
+								"Egyptian","Ethiopian","EthiopianJew","Hadza","Mandenka",
+								"MbutiPygmy","Moroccan","Mozabite","Sandawe","SanNamibia",
+								"SanKhomani","Tunisian","Yoruba"),pops)] <- "forestgreen"
 	continent.col[which(globetrotter.long > 100 &
 						globetrotter.lat < 5)] <- "brown"
 	continent.col[which(continent.col==0)] <- rainbow(length(continent.col[which(continent.col==0)]),
@@ -681,11 +682,9 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 	americas <- which(continent.col=="orange")
 	africa <- which(continent.col=="forestgreen")
 	oceania <- which(continent.col=="brown")
-	europe <- which(globetrotter.long < 25.7 & 
-						globetrotter.lat > 31.5)
 	east.asia <- which(globetrotter.long > 95 & 
 							globetrotter.lat > 11.5)
-	middle.muddle <- c(1:k)[-c(americas,africa,oceania,europe,east.asia)]
+	western.eurasia <- c(1:k)[-c(americas,africa,oceania,east.asia)]
 	
 	best <- which.max(Prob)
 	target.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,option=1)
@@ -796,31 +795,52 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			box(lwd=2)
 	dev.off()
 	
-	
-	
-	clusters <- list(americas = americas,
+
+	clusters <- list(	western.eurasia = western.eurasia,
+						americas = americas,
 						africa = africa,
 						oceania = oceania,
-						europe = europe,
-						east.asia = east.asia,
-						middle.muddle = middle.muddle)
-	clusters <- list(eurasia=c(europe,east.asia,middle.muddle),americas = americas,oceania = oceania,africa = africa)
-	cluster.cols <- c("purple","orange","brown","forestgreen")
+						east.asia = east.asia)
+	cluster.cols <- c("purple4","orange","forestgreen","brown","red")
 	obs.D <- fields::rdist.earth(globe.coords)
 	par.D <- fields::rdist.earth(target.coords)
 
-#	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_NoAd_dist_compare.png",res=200,height=5*200,width=6*200)
-	quartz(height=5,width=6)
-	plot(obs.D,par.D,col="gray",pch=20,
-		# xlim=c(0,7000),ylim=c(0,4000),
-		ylab="estimated distance",
-		xlab="observed distance",cex=0.7)
-		for(i in 1:length(clusters)){
-			use.these <- clusters[[i]]
-			points(obs.D[use.these,use.these],par.D[use.these,use.these],col=cluster.cols[i],pch=20)
-			#lines(lowess(par.D[1:k,1:k][use.these,use.these] ~ obs.D[use.these,use.these]),col=cluster.cols[i],lwd=2)
-		}
-#	dev.off()
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_NoAd_dist_compare.png",res=200,height=5*200,width=12*200)
+		#quartz(height=5,width=12)
+		par(mfrow=c(1,2),mar=c(4,4,2,2))
+		plot(obs.D,par.D,col="gray",pch=20,
+#			xlim=c(0,5500),ylim=c(0,4500),
+			ylab="estimated distance",
+			xlab="observed distance",cex=0.7)
+			for(i in 1:length(clusters)){
+				use.these <- clusters[[i]]
+				#points(obs.D[use.these,use.these],par.D[use.these,use.these],col=1,pch=20,cex=0.73)
+				#points(obs.D[use.these,use.these],par.D[use.these,use.these],col=cluster.cols[i],pch=20,cex=0.7)
+				lines(lowess(par.D[1:k,1:k][use.these,use.these] ~ obs.D[use.these,use.these]),col=cluster.cols[i],lwd=2)
+			}
+			rect(xleft = 0,
+				 ybottom = 0,
+				 xright = 5500,
+				 ytop = 4500,
+				 lty = 2)
+			legend(x = "topleft",pch=NA,
+					legend = c("Africa","Western Eurasia","East Asia","Oceania","Americas"),
+					text.col = c("forestgreen","purple4","red","brown","orange"),
+					title="Continent plotting colors",title.col=1,
+					cex=0.8)
+		box(lwd=2)
+		plot(obs.D,par.D,col="gray",pch=20,
+			xlim=c(0,5500),ylim=c(0,4500),
+			ylab="",
+			xlab="observed distance",cex=0.7)
+			for(i in 1:length(clusters)){
+				use.these <- clusters[[i]]
+				points(obs.D[use.these,use.these],par.D[use.these,use.these],col=1,pch=20,cex=0.73)
+				points(obs.D[use.these,use.these],par.D[use.these,use.these],col=cluster.cols[i],pch=20,cex=0.7)
+				lines(lowess(par.D[1:k,1:k][use.these,use.these] ~ obs.D[use.these,use.these]),col=cluster.cols[i],lwd=2)
+			}
+		box(lwd=2)
+	dev.off()
 
 
 
@@ -1098,12 +1118,38 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 ################################
 
 ################
+#	Simulation scenarios
+################
+source("~/Desktop/Dropbox/space.mix/sims/spacemix_ms_sims.R")
+png(file="~/Desktop/Dropbox/space.mix/ms/figs/basic_lattice.png",res=200,width=6*200,height=5*200)
+	migration.rate.graphic(x.pops = 5,y.pops = 6,migration.rate=1,jitter=0.25,labels=TRUE,colors=TRUE)
+dev.off()
+
+png(file="~/Desktop/Dropbox/space.mix/ms/figs/barrier_lattice.png",res=200,width=6*200,height=5*200)
+	migration.rate.graphic(x.pops = 5,y.pops = 6,migration.rate=1,jitter=0.25,barrier.effect=5,labels=TRUE,colors=TRUE)
+dev.off()
+
+parents <- c(78:88)
+time.points <- rep(0.07,11)
+expansion.list <- vector(mode="list")
+	for(i in 1:length(parents)){
+		expansion.list[[i]] <- list(parent=parents[i],
+									daughters = parents[i]+c(11,22,33,44,55),
+									time.point = time.points[i])
+	}
+	
+png(file="~/Desktop/Dropbox/space.mix/ms/figs/expansion_lattice.png",res=200,width=6*200,height=5*200)
+	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,jitter = 0.25,expansion.list=expansion.list,labels=TRUE,colors=TRUE)
+dev.off()
+
+################
 #	Grid
 ################
 load("~/Desktop/Dropbox/space.mix/sims/stationary_pops/spacemix/stationary_pops_1/spacemix_ms_sim_stationary_pops_1space_MCMC_output1.Robj")
 load("~/Desktop/Dropbox/space.mix/sims/stationary_pops/spacemix/stationary_pops_1/spacemix.ms.dataset_stationary_pops.Robj")
 k <- last.params$k
 best <- which.max(Prob)
+pop.cols <- rainbow(k,start=4/6,end=6/6)[as.numeric(cut(spacemix.dataset$population.coordinates[,1],k))]
 target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 							target.locs = population.coordinates[[best]][1:k,],
 							k = k,
@@ -1111,7 +1157,10 @@ target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 pdf("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_lattice.pdf",width=6,height=5,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
-plot(target.coords,pch=1,xlim=c(0,12),ylim=c(-0.4,10),cex=3.5,xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Simple Lattice")
+plot(target.coords,pch=1,xlim=c(0,12),ylim=c(-0.4,10),cex=3.5,
+		xlab="Eastings",ylab="Northings",
+		main="Inferred Population Map:\n Simple Lattice",
+		col=pop.cols,lwd=2)
 	box(lwd=2)
 	text(target.coords,labels=paste(1:k))
 dev.off()
@@ -1129,7 +1178,10 @@ target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 pdf("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_barrier.pdf",width=6,height=5,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
-plot(target.coords,pch=1,xlim=c(0,12),ylim=c(-0.4,10),cex=3.5,xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Barrier")
+plot(target.coords,pch=1,xlim=c(0,12),ylim=c(-0.4,10),cex=3.5,
+		xlab="Eastings",ylab="Northings",
+		main="Inferred Population Map:\n Lattice with Barrier",
+		col=pop.cols,lwd=2)
 	box(lwd=2)
 	text(target.coords,labels=paste(1:k))
 dev.off()
@@ -1150,27 +1202,15 @@ target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 pdf("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_expansion.pdf",width=6,height=5,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
-plot(target.coords,pch=1,xlim=c(1.2,9.5),ylim=c(-2,12),cex=3.5,xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Expansion")
+plot(target.coords,pch=1,xlim=c(1.2,9.5),ylim=c(-2,12),cex=3.5,
+		xlab="Eastings",ylab="Northings",
+		main="Inferred Population Map:\n Lattice with Expansion",
+		col=pop.cols,lwd=2)
 	box(lwd=2)
 	text(target.coords,labels=paste(1:k))
 dev.off()
 
-source("~/Desktop/Dropbox/space.mix/sims/spacemix_ms_sims.R")
-load("~/Desktop/Dropbox/space.mix/sims/expansion/spacemix/noad/rand_prior1/sim_expansion_dataset.Robj")
-load("~/Desktop/Dropbox/space.mix/sims/expansion/spacemix/noad/rand_prior1/expansion_randpr_noad_1_LongRun/expansion_randpr_noad_1space_MCMC_output1.Robj")
 
-parents <- c(78:88)
-time.points <- rep(0.07,11)
-expansion.list <- vector(mode="list")
-	for(i in 1:length(parents)){
-		expansion.list[[i]] <- list(parent=parents[i],
-									daughters = parents[i]+c(11,22,33,44,55),
-									time.point = time.points[i])
-	}
-
-png(file="~/desktop/test.png",res=200,width=6*200,height=5*200,pointsize=9)
-	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,jitter = 0.2,expansion.list=expansion.list,labels=TRUE)
-dev.off()	
 ################
 #	Corner Admixture
 ################
@@ -1192,11 +1232,13 @@ x.min <- min(target.coords[,1]) - 0.5
 x.max <- max(target.coords[,1]) + 0.5
 y.min <- min(target.coords[,2]) - 0.5
 y.max <- max(target.coords[,2]) + 1
-source.coord.cols <- fade.admixture.source.points(rep(1,k),admix.proportions[,best])
+source.coord.cols <- fade.admixture.source.points(pop.cols,admix.proportions[,best])
 png("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_corner_admixture.png",res=300,width=6*300,height=5*300,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
-plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Admixture")
+plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
+		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Admixture",
+		col=pop.cols,lwd=2)
 		points(source.coords,pch=20,col=source.coord.cols)
 	box(lwd=2)
 	text(target.coords,labels=paste(1:k))
@@ -1236,7 +1278,9 @@ y.max <- max(target.coords[,2]) + 1
 png("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_corner_admixture_CYOL.png",res=300,width=6*300,height=5*300,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
-plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Admixture")
+plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
+		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Admixture",
+		col=pop.cols,lwd=2)
 	box(lwd=2)
 	text(target.coords,labels=paste(1:k))
 dev.off()
@@ -1263,11 +1307,13 @@ x.min <- min(target.coords[,1]) - 0.5
 x.max <- max(target.coords[,1]) + 0.5
 y.min <- min(target.coords[,2]) - 0.5
 y.max <- max(target.coords[,2]) + 1
-source.coord.cols <- fade.admixture.source.points(rep(1,k),admix.proportions[,best])
+source.coord.cols <- fade.admixture.source.points(pop.cols,admix.proportions[,best])
 png("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_corner_admixture_adinf.png",res=300,width=6*300,height=5*300,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
-plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Admixture")
+plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
+		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Admixture",
+		col=pop.cols,lwd=2)
 		points(source.coords,pch=20,col=source.coord.cols)
 	box(lwd=2)
 	text(target.coords,labels=paste(1:k))
@@ -1315,11 +1361,13 @@ x.max <- max(target.coords[,1]) + 0.5
 y.min <- min(target.coords[,2]) - 0.5
 y.max <- max(target.coords[,2]) + 2
 scalar <- 4
-source.coord.cols <- fade.admixture.source.points(rep(1,k),scalar*admix.proportions[,best])
+source.coord.cols <- fade.admixture.source.points(pop.cols,scalar*admix.proportions[,best])
 png("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_barr_inland_admixture_1.png",res=300,width=6*300,height=5*300,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
-plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Barrier and Admixture")
+plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
+		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Barrier and Admixture",
+		col=pop.cols,lwd=2)
 		points(source.coords,pch=20,col=source.coord.cols)
 	box(lwd=2)
 	text(target.coords,labels=paste(1:k))
@@ -1361,11 +1409,11 @@ source.coord.hdr2$mode <- c(100,100)
 png("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_barr_inland_admixture_2.png",res=300,width=6*300,height=5*300,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
-plot(source.coord.hdr2,shadecols=adjustcolor(1,0.2),show.points=FALSE,outside.points=FALSE,
+plot(source.coord.hdr2,shadecols=adjustcolor(pop.cols[k],0.2),show.points=FALSE,outside.points=FALSE,
 		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Barrier and Admixture",
 		xlim=c(x.min,x.max),
 		ylim=c(y.min,y.max))
-points(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5)
+points(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,col=pop.cols,lwd=2)
 	# points(ad.pop.source.coords.mat,col=adjustcolor("blue",0.2))
 	box(lwd=2)
 		points(source.coords,pch=20,col=source.coord.cols)
@@ -1398,7 +1446,7 @@ points(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5)
 								paste("w = ",round(0.4/scalar,2),sep=""),
 								paste("w = ",round(0.5/scalar,2),sep="")),
 			cex=0.9)
-dev.off()	
+dev.off()
 
 
 

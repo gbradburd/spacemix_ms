@@ -94,88 +94,90 @@ We wish to model the covariance between populations as the result of a spatial p
 \label{eq:spatial_covariance}
 \Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right) \text{,}
 \end{equation}
-where $D_{i,j}$ is the geographic distance between population $i$ and $j$ (and therefore a function of their locations, $G_i$ and $G_j$), $\alpha_0$ controls the within-population variance, or the covariance when distance between points is 0 (the sill of the covariance matrix),  $\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay. While previous we and others have then used a logit link function combined with binomial sampling to represent the sample frequencies \citep{Wasser, Bradburd} here we chose to treat out sample frequencies $\hat{f}_{\ell}$ across populations as mutivariate normal \citep[]{Treemix}. To accomodate the effect of finite sample size 
- we introduce \gc{``nuggets'' of population-specific variance terms, on the diagonal,} to accommodate sampling and unshared genetic drift  
+where $D_{i,j}$ is the geographic distance between population $i$ and $j$ (and therefore a function of their locations, $G_i$ and $G_j$), $\alpha_0$ controls the within-population variance, or the covariance when distance between points is 0 (the sill of the covariance matrix),  $\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay. While previously we and others have used a logit link function combined with binomial sampling to model the sample frequencies \citep{Wasser, Bradburd}, here we chose to treat these standardized frequencies $\hat{f}_{\ell}$, as multivariate normal across populations \citep[]{Treemix}. To accommodate the effect of finite sample size we introduce ``nuggets'' of population-specific variance terms, on the diagonal of allelic covariance matrix,which accommodate the effects of both sampling and unshared genetic drift.
+%While previously we and others have used a logit link function combined with binomial sampling to model the sample frequencies \citep{Wasser, Bradburd}, here we chose to \gb{mean-center the sample frequencies and normalize them by their standard deviation, and to treat these standardized frequencies}, $\hat{f}_{\ell}$, as multivariate normal across populations \citep[]{Treemix}.
 \begin{equation}
 \label{eq:spatial_covariance2}
-\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right) + I\bar{S}^{-1} + I\eta \text{,}
+\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right) + \delta(\bar{S}^{-1} + \eta) \text{,}
 \end{equation}
-where $I$ is the identity matrix. Our $\eta$ is vector of population specific variances, where $\eta_k$ is the nugget estimated in population $k$ representing genetic drift (or more generally excess allele frequency variance) not captured by our spatial model. Finally $\bar{S}$ is a vector of the mean sample sizes in each population, where $\bar{S}_k$, is the mean sample across all loci in population $k$.  We then assume that
+where $\delta_{i,j}$ is the indicator function $1$ if $i=j$, and $0$ otherwise. Our $\eta$ is a vector of population-specific variances, where $\eta_k$, the nugget estimated in population $k$, represents any genetic drift (or more generally excess allele frequency variance) not captured by our spatial model. Finally $\bar{S}$ is a vector of the mean sample sizes in each population, where $\bar{S}_k$, is the mean sample size across all loci in population $k$.  We then assume that
 \begin{equation}
 \hat{f}_{\ell} \sim MVN(\epsilon, \epsilon (1-\epsilon)\Omega)
 \end{equation}
-with $\Omega$ given by \ref{eq:spatial_covariance2},  where the $\epsilon(1-\epsilon)  \bar{S}^{-1}$ on the diagonal of the covariance matrix to first approximation capturing the effects of sampling. 
+with $\Omega$ given by Eqn. \eqref{eq:spatial_covariance2},  where the $\epsilon(1-\epsilon)  \bar{S}^{-1}$ on the diagonal of the covariance matrix captures, to first approximation, the effects of sampling.
 
-<<<<<<< HEAD
 Given the assumption of multivariate normality for our sample frequencies, it follows that the sample covariance of our standardized sample frequencies calculated across loci ($\widehat{\Omega} = f f^T$)  is Wishart distributed with degrees of freedom equal to the number of loci ($L$) across which the covariance is calculated.
 That is, 
 \begin{equation}
 \label{eq:wishart_dist}
 \widehat{\Omega} \sim \mathcal{W}\left( L^{-1} \Omega, L	\right)
 \end{equation}
-\gc{should the $L^{-1}$ be there? Need to work a bit to get this right in terms of transform, but I think this is the right way to go.} So we can estimate the parameters of our simple isolation by distance model, $\alpha_0,~\cdots, \alpha_2$, by treating \ref{eq:wishart_dist} as the likelihood of our standardized sample frequencies across loci, as this contains all of the information about our parameters of interest. \gc{Mention prior on params make this posterior?} Handily it also means that once the sample covariance matrix has been calculated all other computations do not scale linearly with number of loci, making the method scalable to genome size datasets. \gc{Have some link to an appendix describing what to do with linked loci?}.  For more details on our inference procedure, please see Appendix NNN.
-=======
-We can calculate an estimate of the covariance matrix ($\Omega$) across our loci as 
+\gc{should the $L^{-1}$ be there?} \gb{I'm pretty sure it goes there, b/c the mean of the Wishart is $n\textbf{V}$, where $n$ is the degrees of freedom and $\textbf{V}$ is the scale matrix.  This seems fairly important, so maybe \plr{P} or \gc{G} could take a look at the wiki page and confirm this?} 
+
+\gb{this section was repeated below so I took this one out and just kept it below}
+%We can estimate the parameters of our simple isolation by distance model, $\alpha_0,\alpha_1, \alpha_2$, by treating Eqn. \eqref{eq:wishart_dist} as the likelihood of our standardized sample frequencies across loci, as this contains all of the information about our parameters of interest.  Handily, it also means that once the sample covariance matrix has been calculated, all other computations do not scale with the number of loci, making the method scalable to genome size datasets.  \gb{We use a Bayesian approach to estimating parameter values, and we place priors on the $\vec{\alpha}$ parameters: $\alpha_0 \sim Exp(0.01)$;  $\alpha_1 \sim Exp(1)$;  $\alpha_0 \sim U(0.1,2)$.}  For more details on our inference procedure, please see Appendix NNN.  \gc{Have some link to an appendix describing what to do with linked loci?}
+
+We can calculate an estimate of the covariance matrix ($\Omega$) across loci as 
+
 \begin{equation}
-\widehat{\Omega} = \frac{1}{L} \sum_{\ell=1}^{L} \frac{(\hat{f}_{\ell}  - \epsilon) (\hat{f}_{\ell}  - \epsilon)^T}{\epsilon(1-\epsilon)} \text{,}
+\label{eq:sample_cov}
+\widehat{\Omega} = \frac{1}{L} \sum_{\ell=1}^{L} \frac{(\hat{f}_{\ell}  - \epsilon) (\hat{f}_{\ell}  - \epsilon)^T}{\epsilon(1-\epsilon)} \text{.}
 \end{equation}
-which, if we call $(\hat{f}_{\ell}  - \epsilon)/\sqrt{\epsilon(1-\epsilon)}$ our standardized sample allele frequencies is the sample covariance matrix of our  standardized sample allele frequencies.
+
+Then, if we define our standardized sample allele frequencies, $X_\ell$, as
+
+\begin{equation}
+\label{eq:standardized_sample_freqs}
+X_\ell = (\hat{f}_{\ell}  - \epsilon)/\sqrt{\epsilon(1-\epsilon)}\text{,}
+\end{equation}
+
+the expression given in Eqn. \eqref{eq:sample_cov} gives the sample covariance matrix of our standardized sample allele frequencies.
 Given the assumption of multivariate normality for our sample frequencies, it follows that this sample covariance of our standardized sample frequencies calculated across loci ($\widehat{\Omega} = X X^T$)  is Wishart distributed with degrees of freedom equal to the number of loci ($L$) across which the covariance is calculated.
 That is, 
 \begin{equation}
 \label{eq:wishart_dist}
-P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left( L^{-1} \Omega, \right)
+P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left(\widehat{\Omega} \mid L^{-1} \Omega,L \right)
 \end{equation}
-Now in practice we obviously do not get to observe $\epsilon$ and so we replace $\epsilon$ with $\bar{f}_{\ell}$, the mean sample allele frequency at locus  $\ell$. We discuss this in the Methods XXX.
-
+Now, in practice, we do not get to observe $\epsilon$ and so we replace $\epsilon$ with $\bar{f}_{\ell}$, the mean sample allele frequency at locus  $\ell$. We discuss the implications of this move in the Methods XXX.
 % These are given by $I\bar{S_k}^{-1} + I\eta_k$, where $I$ is the identity matrix, $I\bar{S_k}$ is the mean sample size in population $k$ across all loci, and.  
 
 %Given the assumption of multivariate normality for our sample frequencies, it follows that the sample covariance of our standardized sample frequencies calculated across loci ($\widehat{\Omega} = X X^T$)  is Wishart distributed with degrees of freedom equal to the number of loci ($L$) across which the covariance is calculated.
-So we can estimate the parameters of our simple isolation by distance model, $\alpha_0,~\cdots, \alpha_2$, by treating \ref{eq:wishart_dist} as the likelihood of our standardized sample frequencies across loci, as this contains all of the information about our parameters of interest. To do so we place priors on $\alpha_0,~\cdots, \alpha_2$ and $\eta$s, and explore the posterior of these parameters using an MCMC (see Methods XXXX). Handily it also means that once the sample covariance matrix has been calculated all other computations do not scale linearly with number of loci, making the method scalable to genome size datasets (we discuss an approximation to handle linked loci in Methods XXXXXX). 
-
-%\gc{Have some link to an appendix describing what to do with linked loci?}
+We can estimate the parameters of our simple isolation by distance model, $\alpha_0,\alpha_1, \alpha_2$, by treating Eqn. \eqref{eq:wishart_dist} as the likelihood of our standardized sample frequencies across loci, as this contains all of the information about our parameters of interest.  Handily, it also means that once the sample covariance matrix has been calculated, all other computations do not scale with the number of loci, making the method scalable to genome size datasets.  \gb{We use a Bayesian approach to estimating parameter values, and we place priors on the $\vec{\alpha}$ parameters: $\alpha_0 \sim Exp(0.01)$;  $\alpha_1 \sim Exp(1)$;  $\alpha_0 \sim U(0.1,2)$, as well as independent priors on the nugget in each population: $\eta_k \sim Exp(1)$.}  For more details on our inference procedure, please see Appendix NNN.  \gc{Have some link to an appendix describing what to do with linked loci?}
 
 %%%%%%%%% %%%%%%%%% 
 \paragraph{Accommodating non-equilibrium processes}
 
-This model assumes that the variance in allele frequencies is the same in all locations and that the covariance between pairs of populations decays in the same way with geographic distance in all portions of the sampled range (i.e. that the process is homogeneous and isotropic). However, in many cases those assumptions will not be met. Non-equilibrium processes like long distance admixture, colonization, or population expansion events will distort the relationship between covariance and distance across the range.  Barriers to dispersal on the landscape can also change the relationship between allele frequency covariance and distance.
+This model assumes that the variance in allele frequencies is the same in all locations and that the covariance between pairs of populations decays in the same way with geographic distance in all portions of the sampled range (i.e. that the process is homogeneous and isotropic). However, in many cases these assumptions will not be met. Non-equilibrium processes like long distance admixture, colonization, or population expansion events will distort the relationship between covariance and distance across the range.  Barriers to dispersal on the landscape can also change the relationship between allele frequency covariance and distance.
 
 One way that we can accommodate these heterogeneous processes is to allow populations to choose their own locations with respect to each other in order to maximize the resemblance to isolation by distance. Two populations that are sampled at distant locations but that are genetically similar (perhaps one was recently founded by a colonization event from the other) may choose estimated locations that are nearby, while two populations that are sampled close together, but that are genetically dissimilar (e.g., are separated by a barrier), may choose locations that are farther apart. The result is a ``geogenetic" map in which the distances between populations are indicative of the way that populations perceive the distances between themselves.  
 
-<<<<<<< HEAD
-To do this we can treat population's geographic locations as a random variable, and estimate them as part of our Bayesian inference procedure.  We write our posterior as 
-=======
-To do this we can treat population's geographic locations as a random variable, and estimate them as part of our bayesian inference procedure. Our set of co-ordinates where are populations were sampled is $G$, and we denote the set of location parameters (i.e. co-ordinates) for our populations by $G'$. Our parametric covariance matrix $\Omega$, as given by equation \eqref{leq:spatial_covariance2}, is a function of the pairwise matrix of distances between these inferred locations $D(G')$ and our $\alpha$ and $\eta$ parameters. We acknowledge this dependence by writing $\Omega(\alpha,{D}(G'))$.  We write our posterior as 
+To generate this map, we can treat populations' geographic locations as a random variable, and estimate them as part of our Bayesian inference procedure.  The set of coordinates where the populations were sampled is $G$, and we designate the set of location parameters (i.e. coordinates) for our populations as $G'$. Our parametric covariance matrix $\Omega$, as given by equation \eqref{eq:spatial_covariance2}, is a function of the pairwise matrix of distances between these inferred locations, $D(G')$, and our $\vec{\alpha}$ and $\eta$ parameters.  We acknowledge this dependence by writing $\Omega(\vec{\alpha},{D}(G'))$.  We write the  posterior probability as 
 \begin{equation}
-P(G', \alpha \eta| ) \propto  P(\widehat{\Omega} |\Omega(\alpha,{D}(G') ) P(\alpha) P(G') P(\eta) 
+P(G', \vec{\alpha}, \eta \mid \widehat{\Omega}, L,G) \propto  P(\widehat{\Omega}  \mid \Omega(\vec{\alpha},{D}(G') ) P(\vec{\alpha}) P(G') P(\eta) 
 \end{equation}
-where the constant of proportionality is the normalization constant of the posterior. Here $P(G') $ are the priors for the spatial locations, which we assume are independent across populations. For the prior on population $k$'s location parameters, $G'_k$, we use a bivariate normal spatial prior centered on the observed location $G_k$ and with variance \gc{XXXX}. We perform MCMC on all of the random variables; for more details on our Bayesian inference procedure see Appendix B. This method is implemented in a program called Spacemix.
+where the constant of proportionality is the normalization constant of the posterior. Here $P(G') $ are the priors for the spatial locations, which we assume are independent across populations. For the prior on population $k$'s location parameter, $G'_k$, we use a bivariate normal spatial prior centered on the observed location $G_k$ and with a variance \gb{of half the mean pairwise distance between the observed population locations, $D(G)$: $G'_k \sim \mathcal{N}(\mu = G_k,\sigma = \frac{1}{2}\bar{D}(G))$.} We perform MCMC on all of the random variables; for more details on our Bayesian inference procedure see Appendix B. This method is implemented in a program called SpaceMix.
 
 %The probability of the sample covariance matrix, $P(\widehat{\Omega} |\Omega (\vec{\alpha}\pmb{D}(\pmb{G'}) )$, is as before the Wishart likelihood of the sample covariance matrix of our standardized frequencies, and our priors on $\pmb{\vec{\alpha}}$ are as before. 
 
-The sampled locations are a natural prior on where the populations are positioned under the null of isolation by distance (as well as a natural starting position for the MCMC). This prior also encourages the resulting inferred geogenetic map to be anchored in the observed locations and to represent (informally) the minimum distortion to space necessary to satisfy constraints placed by genetic similarities of populations. However, one concern is that if the method returns a spatial configuration that strongly resembles a map, this could reflect the possibility that there is insufficient information in the data to overcome the influence of the prior, or that the MCMC having not been run long enough.  To address this concern we can also use random locations as the ``observed locations" ($G_k$) to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference.
+The sampled locations are a natural prior on where the populations are positioned under the null of isolation by distance (as well as a natural starting position for the MCMC). This prior also encourages the resulting inferred geogenetic map to be anchored in the observed locations and to represent (informally) the minimum distortion to space necessary to satisfy the constraints placed by genetic similarities of populations. However, one concern is that if the method returns a spatial configuration that strongly resembles the observed population map, this could reflect the possibility that there is insufficient information in the data to overcome the influence of the prior, or that the MCMC has not been run long enough.  To address this concern, we can also use random locations as the ``observed locations" ($G_k$) to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference.
 
 %\gb{equation here}\\
 
-To illustrate this inference procedure, we present several scenarios simulated under the coalescent (using \textrm{ms}, (Hudson)), and ran SpaceMix on them.  In all scenarios, we simulate variations of a stepping stone model, with populations arranged on a grid and symmetric nearest neighbor migration (\ref{sfig:slattice_scenarios}\subref{simple_lattice}), and sampled \gc{XX} alleles 
-from every other population at \gc{XXX} unlinked loci (for details on all simulations, see Appendix NNN). On all simulated datasets, we perform SpaceMix analyses in which we treat population locations as random variables to be estimated as part of the model, and randomly place the `observed' location of each population so as to remove the influence of the prior.  For clarity, we present the full Procrustes superimposition of the inferred locations around the coordinates used to simulate the data.
+To illustrate this inference procedure, we present several scenarios simulated under the coalescent (using \textrm{ms}, (Hudson)), as well as the results of SpaceMix analyses run on them.  In all scenarios, we simulate variations of a stepping stone model in which populations are arranged on a grid with symmetric nearest neighbor migration (\ref{sfig:lattice_scenarios}\subref{simple_lattice}), with 10 haploid individuals sampled from every other population at 10,000 unlinked loci (for details on all simulations, see Appendix NNN). On all simulated datasets, we perform SpaceMix analyses in which we treat population locations as random variables to be estimated as part of the model, and randomly place the `observed' location of each population so as to remove the influence of the prior.  For clarity, we present the full Procrustes superimposition of the inferred locations around the coordinates used to simulate the data.
 
+In the first scenario (output illustrated in Fig. \ref{sfig:lattice_scenarios}\subref{lattice_inference}), we simulate a stepping stone model at migration-drift equilibrium with homogeneous migration rates across the grid. In Figure \ref{sfig:lattice_scenarios}\subref{lattice_inference}, the reader can see that the configuration estimated for the populations by SpaceMix matches the lattice structure used to simulate the data, and that populations are correctly choosing their nearest neighbors.  Populations at the edge of the lattice have the least amount of data informing their exact placement, and are therefore pulled in somewhat.
 
-In the first scenario (output illustrated in Fig. \ref{sfig:lattice_scenarios}\subref{lattice_inference}), we simulates a stepping stone model at migration-drift equilibrium and homogeneous migration rates across the grid. In Figure \ref{sfig:lattice_scenarios}\subref{lattice_inference}, the reader can see that the configuration estimated for the populations by SpaceMix matches the lattice structure used to simulate the data, and that populations are correctly choosing their nearest neighbors. Populations near the edge of our 
+In our second scenario (Fig. \ref{sfig:lattice_scenarios}\subref{barrier_inference}), we simulate under the same stepping stone model, but introduce a longitudinal barrier to dispersal (between populations 11:15 and 16:20), across which migration rates are attenuated by a factor of 5.  In Figure \ref{sfig:lattice_scenarios}\subref{barrier_inference}, the population configuration matches that of the lattice used to simulate the data, but due to the influence of the barrier, the two halves of the map have pushed farther away from one another.  This gap between populations on either side of the barrier reflects the way those populations perceive the increased effective distance between them.
 
- In our second scenario (Fig. \ref{sfig:lattice_scenarios}\subref{barrier_inference}), we simulate under the same stepping stone model, but introduce a longitudinal barrier to dispersal (between populations 11:15 and 16:20), across which migration rates are attenuated by a factor of 5.  In Figure \ref{sfig:lattice_scenarios}\subref{barrier_inference}, the population configuration matches that of the lattice used to simulate the data, but due to the influence of the barrier, the two halves of the map have pushed farther away from one another.  This gap between populations on either side of the barrier reflects the way those populations perceive the increased effective geogenetic distance between them. 
+In the third scenario (Fig. \ref{sfig:lattice_scenarios}\subref{expansion_inference}), we simulate an expansion event, in which, all populations in the last five columns of the grid have expanded in the recent past from the nearest population in their row (referring to Fig. \ref{sfig:lattice_scenarios}\subref{simple_lattice}, populations 25 and 30, as well as the three unsampled populations that bracket them, have all expanded at the same point in the recent past from population 20). In the scenario of recent expansion (Fig. \ref{sfig:lattice_scenarios}\subref{expansion_inference}), the daughter populations of the expansion event cluster with their parent populations, reflecting the higher relatedness (per unit geographic separation) between them.  \gc{In Supp. Figs XXX. we show the relationship between covariance in allele frequencies and geographic distance and inferred geogenetic distance for these simulations}.
 
- In the third scenario (Fig. \ref{sfig:lattice_scenarios}\subref{expansion_inference}), we simulate an expansion event, in which, all populations in the last five columns of the grid have expanded in the recent past from the nearest population in their row (referring to Fig. \ref{sfig:simple_lattice}, populations 25 and 30, as well as the three unsampled populations that bracket them, have all expanded at the same point in the recent past from population 20). In the scenario of recent expansion (Fig. \ref{sfig:lattice_scenarios}\subref{expansion_inference}), the daughter populations of the expansion event cluster with their parent populations, reflecting the higher relatedness (per unit geographic separation) between them.
-
-%at \textit{x} = 6.01
-
-If our data are well fit by a model of isolation by distance then (1) a population's genetic makeup should be well predicted by that of its neighbors, and (2) populations should not show excess covariance with distant populations. Violation of either of these two points will result in a poor fit of a simple isolation by distance model, and particularly a violation of point (2) may indicate that long distance admixture has taken place. \gc{In Supp. Figs XXX. we show the relationship between covariance in allele frequencies and geographic distance and inferred geogenetic distance for these simulations}  
+If our data are well fit by a model of isolation by distance then (1) a population's genetic makeup should be well predicted by that of its neighbors, and (2) populations should not show excess covariance with distant populations. Violation of either of these two points will result in a poor fit of a simple isolation by distance model, and particularly a violation of point (2) may indicate that long distance admixture has taken place.
 
 
 \begin{figure}
 	\centering
 		\subcaptionbox{Simulated Lattice \label{simple_lattice}}
-			{\includegraphics[width=2.8in,height=2.33in]{figs/stationary_pops_map.png}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/basic_lattice.png}}
 		\subcaptionbox{Lattice \label{lattice_inference}}
 			{\includegraphics[width=2.8in,height=2.33in]{figs/GeoGenMap_lattice.pdf}}
 		\subcaptionbox{Barrier \label{barrier_inference}}
@@ -193,7 +195,7 @@ If our data are well fit by a model of isolation by distance then (1) a populati
 \end{figure}
 
 
-Finally, to examine the behavior of SpaceMix when there is long distance covariance between populations, we simulated an admixture event on the stepping-stone model we had used previously.  Specifically, (using Fig. \ref{sfig:simple_lattice} as a reference) we allowed population 30, in the northeast corner of the grid, to draw half of its ancestry from population 1, in the southwest corner.  The result of a SpaceMix analysis in which the locations of these populations were estimated is shown in Figure \ref{sfig:admixture_inference_CYOL}.
+To examine the behavior of SpaceMix when there is long distance covariance between populations, we simulated an admixture event on the stepping-stone model we had used previously.  Specifically, (using Fig. \ref{sfig:lattice_scenarios}\subref{simple_lattice} as a reference) we allowed population 30, in the northeast corner of the grid, to draw half of its ancestry from population 1, in the southwest corner.  The result of a SpaceMix analysis in which the locations of these populations were estimated is shown in Figure \ref{sfig:admixture_inference_CYOL}.
 This signal of excess covariance over anomalously long distances is clearly difficult to accommodate within the ``choose-your-own-location" framework described above.  In Figure \ref{sfig:admixture_inference_CYOL}, the reader can see the torturous lengths to which the method goes to come up with a configuration of populations that accommodates their genetic relationships.  The admixed population 30 is estimated to have a location intermediate between population 1, the source of its admixture, and populations 24, 25, and 29, the nearest neighbors to the location of its non-admixed lineages.  However, this warping of space is difficult to interpret, especially in the visualization of genetic relationships in empirical data for which a researcher does not know the true demographic history.  It would therefore be of great utility to directly model the action of admixture on spatial patterns of genetic variation.
 
 %%%%%%%%% %%%%%%%%% 
@@ -213,30 +215,36 @@ Following from the form  of eqn. \eqref{eqn-admixedfreq} the covariance between 
 (p_i)(1-p_j) \Omega_{\identifyadmixsource{i},\;j\;} \; \times   \notag&\\
 (p_j)(1-p_i) \Omega_{i\;,\;\identifyadmixsource{j}} \; \times   \notag&\\
 (p_i)(p_j) \Omega_{\identifyadmixsource{i},\;\identifyadmixsource{j}} \; +   \notag&\\
-\delta_{i,j} \eta_i \notag&
+\delta_{i,j} (\eta_i + \bar{S}^{-1}) \notag&
 \end{alignat}
-where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources from which populations $i$ and $j$ are drawing their admixture with proportions $p_i$ and $p_j$. $\Omega$ is the spatial covariance function parameterized by the pairwise geographic distances between each pair of populations, \emph{without} the population-specific variance terms on the diagonal (i.e., in Eqn. \ref{eq:admixed_covariance_1}, i.e. $\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right)$). Note that we then reintroduce the nugget for each population $\eta_i$, to model drift or excess variance in population $i$ on top of that predicted by our mixture of frequencies predicted by our spatial model.
-  The admixed covariance between populations $i$ and $j$, $\Omega_{i,j}^{(A)}$ is then a function of all the pairwise spatial covariances between populations $i$ and $j$ and the points from which they draw admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$.  Those spatial covariances in turn are a function of all combinations of pairwise distances between their locations: $G_i$, $G_i$, \kadmixsource{i}, and \kadmixsource{j}.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}.
+where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources from which populations $i$ and $j$ are drawing their admixture with proportions $p_i$ and $p_j$, and the spatial covariance function, $\Omega$, is parameterized by the pairwise geographic distances between each pair of populations, \emph{without} the population-specific variance terms on the diagonal (i.e., in Eqn. \eqref{eq:admixed_covariance_1}, i.e. $\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right)$).  Note that we then reintroduce the nugget, $\eta_i$, and the sample size effect, $\bar{S}^{-1}$, for each population, to model drift or excess variance in population $i$ on top of that predicted by the mixture of frequencies predicted by our spatial model.  As in Eqn. \eqref{eq:spatial_covariance2}, $\delta_{i,j} $ is the indicator function $1$ if $i=j$, and $0$ otherwise.
 
-\gc{ $\delta_{i,j} $ is the indicator function $1$ if $i=j$ $0$ otherwise. }
+The admixed covariance between populations $i$ and $j$, $\Omega_{i,j}^{(A)}$ is then a function of all the pairwise spatial covariances between populations $i$ and $j$ and the points from which they draw admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$.  Those spatial covariances in turn are a function of all combinations of pairwise distances between their locations: $G_i$, $G_i$, \kadmixsource{i}, and \kadmixsource{j}.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}.
 
-As we only get to observe the sample frequencies and we standardize our allele frequencies using the sample mean our predicted admixture covariance matrix needs to be transformed to accommodate these sampling considerations. We can do this as before see methods XXXX. We again treat the likelihood of our sample covariance matrix as Wishart now given the parametric covariance matrix $\Omega^{(A)}$ as specified by the parameters $\vec{p}$, \admixsource, $G$,$\vec{\alpha}$, and $\vec{\eta}$. We treat the location of the source of admixture for population $k$, \kadmixsource{k}, and the population's admixture proportion, $p_k$, as random variables and jointly estimated as part of our inference procedure. \gc{state form of priors.}
+As we only get to observe the sample frequencies and we standardize our allele frequencies using the sample mean, our predicted admixture covariance matrix needs to be transformed to accommodate these sampling considerations. We can do this as before (see methods XXXX), and we again treat the likelihood of our sample covariance matrix as Wishart:
+\begin{equation}
+\label{eq:wishart_dist_admixed}
+P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}) = 
+	\mathcal{W}\left(\widehat{\Omega} \mid L^{-1} \identifyadmixsource{\Omega} \left( \identifyadmixsource{G}, \vec{p},\vec{\alpha}\right),L \right)	\text{.}
+\end{equation}
 
+Now, the posterior probability can be expressed as a function of this parametric admixed covariance, $\identifyadmixsource{\Omega}$,
+\begin{equation}
+\label{admixed_post_prob}
+P(\identifyadmixsource{G}, \vec{p},\vec{\alpha}, \eta \mid \widehat{\Omega}, L,G) 
+	\propto  
+		P(\widehat{\Omega}  \mid \identifyadmixsource{\Omega}) P(\vec{\alpha}) P(\identifyadmixsource{G}) P(\vec{p}) P(\eta) 
+\end{equation}
+%
+as specified by the parameters $p$, $\identifyadmixsource{G}$, $\vec{\alpha}$, and $\eta$, and the observed locations, $G$. We treat the location of the source of admixture for population $k$, $\identifyadmixsource{G_k}$, and the population's admixture proportion, $p_k$, as random variables and jointly estimate them as part of our inference procedure. 
+
+\gb{We place the same priors as stated above on $\vec{\alpha}$, $\eta$, and we now specify priors on $p$ and $\identifyadmixsource{G}$.  The admixture proportions, $p$, are capped at 0.5, to prevent populations from swapping identities with their source of admixture, and are heavily weighted at small values to be conservative with respect to admixture inference.  They are independently beta-distributed: $2 p_k \sim \beta(\alpha = 1,\beta = 100)$.  The priors on the sources of admixture, $\identifyadmixsource{G}$ are taken independently as bivariate normal spatial distributions, all with the same mean at the centroid of the observed population locations, $G$, and variance equal to twice the mean pairwise observed distance:  $\identifyadmixsource{G_k} \sim \mathcal{N}(\mu = \bar{G},\sigma = 2 \bar{D}(G))$.}
 
 \begin{figure}[ht!]
 	\centering
 	\includegraphics[width=2in,height=2in]{figs/admix_cov_fig.pdf}
-	\caption{An illustration of the form of the admixed covariance given in Eqns. \ref{eq:admixed_covariance_1} and \ref{eq:admixed_covariance_2}.  Populations $i$ and $j$ are drawing admixture in proportions $p_i$ and $p_j$ from their respective sources of admixture, $i^{(A)}$ and $j^{(A)}$, and all pairwise spatial covariances (the $\Omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $j^{(A)}$ than $i$ is from its source $i^{(A)}$ (i.e., $p_j > p_i$).}\label{sfig:admixed_cov_diagram}
+	\caption{An illustration of the form of the admixed covariance given in Eqns. \eqref{eq:admixed_covariance_1} and \eqref{eq:admixed_covariance_2}.  Populations $i$ and $j$ are drawing admixture in proportions $p_i$ and $p_j$ from their respective sources of admixture, $i^{(A)}$ and $j^{(A)}$, and all pairwise spatial covariances (the $\Omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $j^{(A)}$ than $i$ is from its source $i^{(A)}$ (i.e., $p_j > p_i$).}\label{sfig:admixed_cov_diagram}
 \end{figure}
-
-
-% The likelihood function for this model in which each population is allowed to draw admixture from a point in space is 
-% \begin{equation}
-% \label{eq:choose_admixture_wishart_lnl}
-% \mathcal{P}\left(X_{\ell,k} \; | \; \pmb{D}\left(G,\pmb{G_{'}}\right), \pmb{\vec{\alpha}}, \pmb{p}, S, \pmb{\eta}\right) = \frac{|Y|%^{ \frac{L - K - 1}{2} } \text{exp} \left(  \frac{-\text{tr}(\pmb{\Omega}^{-1}Y)}{2}	\right) }	
-% 									{2^{\frac{LK}{2}}  |\frac{\pmb{\Omega}}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}%{2} \right)	},
-% \end{equation}
-% where $\text{tr}$ denotes the trace function and $\Gamma_p$ denotes a multivariate gamma function, and all boldface %variables are parameters estimated as part of our inference procedure.
 
 Using the example admixture scenario described above and used in the analysis depicted in Figure \ref{sfig:admixture_inference_CYOL}, we demonstrate the inference of populations' sources and strengths of admixture and illustrate the results in Figure \ref{sfig:corner_admixture_just_adinf}.  The reader can see that only the admixed population (population 30) is drawing admixture from the location of the source of admixture that was used to simulate the data, and that all other populations, which are not admixed, are choosing to draw admixture in only negligible amounts.
 
@@ -249,7 +257,19 @@ Using the example admixture scenario described above and used in the analysis de
 \subsection*{Models}
 The models described above may be used in various combinations.  In the simplest model, populations may not choose their own locations, nor are they allowed to draw admixture, and the only parameters to be estimated are those of the spatial covariance function given in Eqn \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_k$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of that admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  The full likelihood of this most complex parameterization is given by,
 
-\gb{equation here}
+\begin{equation}
+\label{eq:wishart_dist_admixed}
+P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}) = 
+	\mathcal{W}\left(\widehat{\Omega} \mid L^{-1} \identifyadmixsource{\Omega} \left( G',\identifyadmixsource{G}, \vec{p},\vec{\alpha}\right),L \right)	\text{.}
+\end{equation}
+
+Now, the posterior probability can be expressed as a function of this parametric admixed covariance, $\identifyadmixsource{\Omega}$,
+\begin{equation}
+\label{admixed_post_prob}
+P(G',\identifyadmixsource{G}, \vec{p},\vec{\alpha}, \eta \mid \widehat{\Omega}, L,G) 
+	\propto  
+		P(\widehat{\Omega}  \mid \identifyadmixsource{\Omega}) P(\vec{\alpha}) P(G') P(\identifyadmixsource{G}) P(\vec{p}) P(\eta) 
+\end{equation}
 \gb{A note here about how this complex model is still identifiable}
 
 To demonstrate the use of the model in which the location of each population as well as the location of its source of admixture are estimated jointly, we used the spatial stepping-stone coalescent simulation procedure described above to generate a dataset of populations on a lattice in which there is both a barrier to dispersal and a more subtle admixture event (admixture proportion = 10\%, see Fig. \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_scenario}).  In the SpaceMix analysis (Fig. \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_inference}), the separation of the east and west sides of the grid accommodates the effect of the barrier to migration, and the admixed population (population 23) chooses admixture from very close to its true source (population 13), and in close to the correct amount ($\bar{p} = 0.05; 95\% \text{ credible interval} = 0.02-0.08$). \gb{discuss how prior forces amount down, so it's cheaper to choose more westward pop as source}.

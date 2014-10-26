@@ -89,20 +89,42 @@ Among populations, the differentiating process of drift is counteracted by the h
 
 %%%%%%%%% %%%%%%%%% 
 \paragraph{Spatial Covariance Model}
-We wish to model the covariance between populations as the result of a spatial process, in which migration rates between nearby populations are higher than between distant ones, so that a population has higher covariance with a close neighbor than with a more distant population.  We choose as the form of our parametric covariance matrix a simple and flexible model, with an exponential decay of allele frequency covariance with geographic distance (Wasser et al 2004, Bradburd, Ralph, and Coop 2013).  The covariance between populations $i$ and $j$ is proportional to 
+We wish to model the covariance between populations as the result of a spatial process, in which migration rates between nearby populations are higher than between distant ones, so that a population has higher covariance with a close neighbor than with a more distant population.  We choose as the form of our parametric covariance matrix a simple and flexible model, with an exponential decay of allele frequency covariance with geographic distance (Wasser et al 2004, Bradburd, Ralph, and Coop 2013).  \gc{The covariance between population allele frequencies} in populations $i$ and $j$ is 
 \begin{equation}
 \label{eq:spatial_covariance}
-\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right) + I\bar{S_k}^{-1} + I\eta_k \text{,}
+\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right) \text{,}
 \end{equation}
-where $D_{i,j}$ is the geographic distance between population $i$ and $j$ (and therefore a function of their locations, $G_i$ and $G_j$), $\alpha_0$ controls the within-population variance, or the covariance when distance between points is 0 (the sill of the covariance matrix),  $\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay.  In addition, we introduce population-specific variance terms to accommodate unshared drift and sample size effects.  These are given by $I\bar{S_k}^{-1} + I\eta_k$, where $I$ is the identity matrix, $I\bar{S_k}$ is the mean sample size in population $k$ across all loci, and $\eta_k$ is the nugget estimated in population $k$.  
+where $D_{i,j}$ is the geographic distance between population $i$ and $j$ (and therefore a function of their locations, $G_i$ and $G_j$), $\alpha_0$ controls the within-population variance, or the covariance when distance between points is 0 (the sill of the covariance matrix),  $\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay. While previous we and others have then used a logit link function combined with binomial sampling to represent the sample frequencies \citep{Wasser, Bradburd} here we chose to treat out sample frequencies $\hat{f}_{\ell}$ across populations as mutivariate normal \citep[]{Treemix}. To accomodate the effect of finite sample size 
+ we introduce \gc{``nuggets'' of population-specific variance terms, on the diagonal,} to accommodate sampling and unshared genetic drift  
+\begin{equation}
+\label{eq:spatial_covariance2}
+\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right) + I\bar{S}^{-1} + I\eta \text{,}
+\end{equation}
+where $I$ is the identity matrix. Our $\eta$ is vector of population specific variances, where $\eta_k$ is the nugget estimated in population $k$ representing genetic drift (or more generally excess allele frequency variance) not captured by our spatial model. Finally $\bar{S}$ is a vector of the mean sample sizes in each population, where $\bar{S}_k$, is the mean sample across all loci in population $k$.  We then assume that
+\begin{equation}
+\hat{f}_{\ell} \sim MVN(\epsilon, \epsilon (1-\epsilon)\Omega)
+\end{equation}
+with $\Omega$ given by \ref{eq:spatial_covariance2},  where the $\epsilon(1-\epsilon)  \bar{S}^{-1}$ on the diagonal of the covariance matrix to first approximation capturing the effects of sampling. 
 
-Given the assumption of multivariate normality for our sample frequencies, it follows that the sample covariance of our standardized sample frequencies calculated across loci ($\widehat{\Omega} = X X^T$)  is Wishart distributed with degrees of freedom equal to the number of loci ($L$) across which the covariance is calculated.
+We can calculate an estimate of the covariance matrix ($\Omega$) across our loci as 
+\begin{equation}
+\widehat{\Omega} = \frac{1}{L} \sum_{\ell=1}^{L} \frac{(\hat{f}_{\ell}  - \epsilon) (\hat{f}_{\ell}  - \epsilon)^T}{\epsilon(1-\epsilon)} \text{,}
+\end{equation}
+which, if we call $(\hat{f}_{\ell}  - \epsilon)/\sqrt{\epsilon(1-\epsilon)}$ our standardized sample allele frequencies is the sample covariance matrix of our  standardized sample allele frequencies.
+Given the assumption of multivariate normality for our sample frequencies, it follows that this sample covariance of our standardized sample frequencies calculated across loci ($\widehat{\Omega} = X X^T$)  is Wishart distributed with degrees of freedom equal to the number of loci ($L$) across which the covariance is calculated.
 That is, 
 \begin{equation}
 \label{eq:wishart_dist}
-\widehat{\Omega} \sim \mathcal{W}\left( L^{-1} \Omega^{\prime}, L	\right)
+P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left( L^{-1} \Omega, \right)
 \end{equation}
-\gc{should the $L^{-1}$ be there? Need to work a bit to get this right in terms of transform, but I think this is the right way to go.} So we can estimate the parameters of our simple isolation by distance model, $\alpha_0,~\cdots, \alpha_2$, by treating \ref{eq:wishart_dist} as the likelihood of our standardized sample frequencies across loci, as this contains all of the information about our parameters of interest. \gc{Mention prior on params make this posterior?} Handily it also means that once the sample covariance matrix has been calculated all other computations do not scale linearly with number of loci, making the method scalable to genome size datasets. \gc{Have some link to an appendix describing what to do with linked loci?}
+Now in practice we obviously do not get to observe $\epsilon$ and so we replace $\epsilon$ with $\bar{f}_{\ell}$, the mean sample allele frequency at locus  $\ell$. We discuss this in the Methods XXX.
+
+% These are given by $I\bar{S_k}^{-1} + I\eta_k$, where $I$ is the identity matrix, $I\bar{S_k}$ is the mean sample size in population $k$ across all loci, and.  
+
+%Given the assumption of multivariate normality for our sample frequencies, it follows that the sample covariance of our standardized sample frequencies calculated across loci ($\widehat{\Omega} = X X^T$)  is Wishart distributed with degrees of freedom equal to the number of loci ($L$) across which the covariance is calculated.
+So we can estimate the parameters of our simple isolation by distance model, $\alpha_0,~\cdots, \alpha_2$, by treating \ref{eq:wishart_dist} as the likelihood of our standardized sample frequencies across loci, as this contains all of the information about our parameters of interest. To do so we place priors on $\alpha_0,~\cdots, \alpha_2$ and $\eta$, and explore the posterior of these parameters using an MCMC (see Methods XXXX). Handily it also means that once the sample covariance matrix has been calculated all other computations do not scale linearly with number of loci, making the method scalable to genome size datasets (we discuss an approximation to handle linked loci in Methods XXXXXX). 
+
+%\gc{Have some link to an appendix describing what to do with linked loci?}
 
 %%%%%%%%% %%%%%%%%% 
 \paragraph{Accommodating non-equilibrium processes}

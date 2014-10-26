@@ -27,7 +27,7 @@ Inference:
 COMPLETED:
 
 	Prioritize:
-		taking bits of methods out of main text
+	taking bits of methods out of main text
 	keep Pedro in the loop (don't need him now, but heads-up)
 	make f-stats doc
 	start suppmat (to get all figs in tex)

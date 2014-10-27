@@ -201,17 +201,16 @@ This signal of excess covariance over anomalously long distances is clearly diff
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Inference of Spatial Admixture}
 \gc{Graham is switching admixture prop. to w}
-We can incorporate recent admixture directly into out inference framework.  We imagine that population $k$ draws the majority of its ancestry from $G_k^'$, but a proportion $0 \geq w_k<0.5$ of its ancestry comes from another location \kadmixsource{k}, which we refer to as its source of admixture. The mean standardized population allele frequency at locus $\ell$ in population $k$ is a weighted average of the allele frequencies at the geographic location of the sampled population chooses for itself ($p_{\ell,k'}$) and those at the coordinates of the source ($p_{\ell,k*}$) from which the observed population draws admixture:
+We can incorporate recent admixture directly into out inference framework.  We imagine that population $k$ draws the majority of its ancestry from $G_{k'}$, but a proportion $0 \geq w_k<0.5$ of its ancestry comes from another location \kadmixsource{k}, which we refer to as its source of admixture. The mean standardized population allele frequency at locus $\ell$ in population $k$ is a weighted average of the allele frequencies at the geographic location of the sampled population chooses for itself ($p_{\ell,k'}$) and those at the coordinates of the source ($p_{\ell,\identifyadmixsource{j}}$) from which the observed population draws admixture:
 \begin{equation}
-w_k p_{\ell,k} + (1-w_k) p_{\ell,k*} \label{eqn-admixedfreq}
+w_k p_{\ell,k'} + (1-w_k) p_{\ell,\identifyadmixsource{k}} \label{eqn-admixedfreq}
 \end{equation}
-We can allow each of our populations to have this setup, each with an independent spatial source of admixture. 
+We can allow each of our populations to have this setup, each with an independent spatial source of admixture. Our $p_{\ell,k'}$ and $p_{\ell,\identifyadmixsource{k}} $ are well defined as given our population allele frequency covariance matrix, equation \ref{eq:spatial_covariance}, we can get the distribution of allele frequencies at any point in space simply by its co-ordinates into our $\Omega(D(G))$.
 
  
-where $p_{\ell,k}$ are the model-estimated allele frequencies at locus $\ell$ at the spatial location of population $G_k$ and $p_{\ell,k*}$ are the model-estimated allele frequencies at the spatial location of the source of admixture \kadmixsource{k}. 
+%where $p_{\ell,k}$ are the model-estimated allele frequencies at locus $\ell$ at the spatial location of population $G_k$ and $p_{\ell,k*}$ are the model-estimated allele frequencies at the spatial location of the source of admixture \kadmixsource{k}. 
 
-
-Following from the form  of eqn. \eqref{eqn-admixedfreq} the covariance between the standardized allele frequencies of population $i$ and $j$ can be modeled as 
+We can then consider the resulting parametric covariance matrix that follows from the form of the population frequencies in eqn. \eqref{eqn-admixedfreq}. The covariance between the standardized allele frequencies of population $i$ and $j$ can be modeled as 
 \begin{alignat}{3}
 \label{eq:admixed_covariance_1}
 \Omega_{i,j}^{(A)} = (1-w_i)(1-w_j) \Omega_{i\;,\;j\;} \; \times&\\
@@ -220,28 +219,35 @@ Following from the form  of eqn. \eqref{eqn-admixedfreq} the covariance between 
 (w_i)(w_j) \Omega_{\identifyadmixsource{i},\;\identifyadmixsource{j}} \; +   \notag&\\
 \delta_{i,j} (\eta_i + \bar{S}^{-1}) \notag&
 \end{alignat}
-where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources from which populations $i$ and $j$ are drawing their admixture with proportions $p_i$ and $p_j$, and the spatial covariance function, $\Omega$, is parameterized by the pairwise geographic distances between each pair of populations, \emph{without} the population-specific variance terms on the diagonal (i.e., in Eqn. \eqref{eq:admixed_covariance_1}, i.e. $\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right)$).  Note that we then reintroduce the nugget, $\eta_i$, and the sample size effect, $\bar{S}^{-1}$, for each population, to model drift or excess variance in population $i$ on top of that predicted by the mixture of frequencies predicted by our spatial model.  As in Eqn. \eqref{eq:spatial_covariance2}, $\delta_{i,j} $ is the indicator function $1$ if $i=j$, and $0$ otherwise.
+where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources from which populations $i$ and $j$ are drawing their admixture with proportions $p_i$ and $p_j$, and the spatial covariance function of population frequencies, $\Omega$, is given by \eqref{eq:spatial_covariance} (this lacks the sample-specific variance terms on the diagonal). Note that we then reintroduce the nugget, $\eta_i$, and the sample size effect, $\bar{S}^{-1}$, for each population, to model drift or excess variance in population $i$ on top of that predicted by the mixture of frequencies predicted by our spatial model.  As in Eqn. \eqref{eq:spatial_covariance2}, $\delta_{i,j} $ is the indicator function $1$ if $i=j$, and $0$ otherwise. 
 
-The admixed covariance between populations $i$ and $j$, $\Omega_{i,j}^{(A)}$ is then a function of all the pairwise spatial covariances between populations $i$ and $j$ and the points from which they draw admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$.  Those spatial covariances in turn are a function of all combinations of pairwise distances between their locations: $G_i$, $G_i$, \kadmixsource{i}, and \kadmixsource{j}.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}.
+%parameterized by the pairwise geographic distances between each pair of populations, \emph{without} the population-specific variance terms on the diagonal (i.e., in Eqn. \eqref{eq:admixed_covariance_1}, i.e. $\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right)$).  
+
+The admixed covariance between samples $i$ and $j$, $\Omega_{i,j}^{(A)}$ is then a function of all the pairwise spatial covariances between populations $i$ and $j$ and the points from which they draw admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$.  Those spatial covariances in turn are a function of all combinations of pairwise distances between their locations: $G_i$, $G_i$, \kadmixsource{i}, and \kadmixsource{j}.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}.
 
 As we only get to observe the sample frequencies and we standardize our allele frequencies using the sample mean, our predicted admixture covariance matrix needs to be transformed to accommodate these sampling considerations. We can do this as before (see methods XXXX), and we again treat the likelihood of our sample covariance matrix as Wishart:
 \begin{equation}
 \label{eq:wishart_dist_admixed}
 P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}) = 
-	\mathcal{W}\left(\widehat{\Omega} \mid L^{-1} \identifyadmixsource{\Omega} \left( \identifyadmixsource{G}, \vec{p},\vec{\alpha}\right),L \right)	\text{.}
+	\mathcal{W}\left(\widehat{\Omega} \mid L^{-1} \identifyadmixsource{\Omega} \left( G',\identifyadmixsource{G}, \vec{w},\vec{\alpha}\right),L \right)	\text{.}
 \end{equation}
-
-Now, the posterior probability can be expressed as a function of this parametric admixed covariance, $\identifyadmixsource{\Omega}$,
+As before $G'$, $\vec{\alpha}$, $\vec{\eta}$ are treated as random variables to be estimated. Now the set of $K$ admixture sources $\identifyadmixsource{G}$ are also parameters to be estimated, along with the vector of $K$ admixture proportions $\vec{w}$. The posterior probability of these parameters can be expressed as a function of this parametric admixed covariance, $\identifyadmixsource{\Omega}$,
 \begin{equation}
 \label{admixed_post_prob}
-P(\identifyadmixsource{G}, \vec{p},\vec{\alpha}, \eta \mid \widehat{\Omega}, L,G) 
+P(G',\identifyadmixsource{G}, \vec{p},\vec{\alpha}, \eta \mid \widehat{\Omega}, L,G) 
 	\propto  
-		P(\widehat{\Omega}  \mid \identifyadmixsource{\Omega}) P(\vec{\alpha}) P(\identifyadmixsource{G}) P(\vec{p}) P(\eta) 
+		P(\widehat{\Omega}  \mid \identifyadmixsource{\Omega}) P(\vec{\alpha}) P(G') P(\identifyadmixsource{G}) P(\vec{w}) P(\eta) 
 \end{equation}
 %
-as specified by the parameters $p$, $\identifyadmixsource{G}$, $\vec{\alpha}$, and $\eta$, and the observed locations, $G$. We treat the location of the source of admixture for population $k$, $\identifyadmixsource{G_k}$, and the population's admixture proportion, $p_k$, as random variables and jointly estimate them as part of our inference procedure. 
+as specified by the parameters $w$, $\identifyadmixsource{G}$, $\vec{\alpha}$, and $\eta$, and the observed locations, $G$.  We place the same priors as stated above on $\vec{\alpha}$, $\eta$, and we now specify priors on $q$ and $\identifyadmixsource{G}$.  The admixture proportions, $w$, are capped at 0.5, to prevent populations from swapping identities with their source of admixture, and are heavily weighted towards small values to be conservative with respect to admixture inference.  Our admixture proportions are independently beta-distributed: $2 w_k \sim \beta(\alpha = 1,\beta = 100)$.  The priors on the sources of admixture, $\identifyadmixsource{G}$ are taken independently as bivariate normal spatial distributions, all with the same mean at the centroid of the observed population locations, $G$, and variance equal to twice the mean pairwise observed distance:  $\identifyadmixsource{G_k} \sim \mathcal{N}(\mu = \bar{G},\sigma = 2 \bar{D}(G))$.
 
-\gb{We place the same priors as stated above on $\vec{\alpha}$, $\eta$, and we now specify priors on $p$ and $\identifyadmixsource{G}$.  The admixture proportions, $p$, are capped at 0.5, to prevent populations from swapping identities with their source of admixture, and are heavily weighted at small values to be conservative with respect to admixture inference.  They are independently beta-distributed: $2 p_k \sim \beta(\alpha = 1,\beta = 100)$.  The priors on the sources of admixture, $\identifyadmixsource{G}$ are taken independently as bivariate normal spatial distributions, all with the same mean at the centroid of the observed population locations, $G$, and variance equal to twice the mean pairwise observed distance:  $\identifyadmixsource{G_k} \sim \mathcal{N}(\mu = \bar{G},\sigma = 2 \bar{D}(G))$.}
+
+%We treat the location of the source of admixture for population $k$, $\identifyadmixsource{G_k}$, and the population's admixture proportion, $p_k$, as random variables and jointly estimate them as part of our inference procedure. 
+
+The models described above may be used in various combinations.  In the simplest model, populations may not choose their own locations, nor are they allowed to draw admixture, and the only parameters to be estimated are those of the spatial covariance function given in Eqn \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_k$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of that admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  %The full likelihood of this most complex parameterization is given by,
+
+\gc{Graham edited this down to all be one section, as I think we can just talk about doing whole thing.}
+
 
 \begin{figure}[ht!]
 	\centering
@@ -249,7 +255,7 @@ as specified by the parameters $p$, $\identifyadmixsource{G}$, $\vec{\alpha}$, a
 	\caption{An illustration of the form of the admixed covariance given in Eqns. \eqref{eq:admixed_covariance_1} and \eqref{eq:admixed_covariance_2}.  Populations $i$ and $j$ are drawing admixture in proportions $p_i$ and $p_j$ from their respective sources of admixture, $i^{(A)}$ and $j^{(A)}$, and all pairwise spatial covariances (the $\Omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $j^{(A)}$ than $i$ is from its source $i^{(A)}$ (i.e., $p_j > p_i$).}\label{sfig:admixed_cov_diagram}
 \end{figure}
 
-Using the example admixture scenario described above and used in the analysis depicted in Figure \ref{sfig:admixture_inference_CYOL}, we demonstrate the inference of populations' sources and strengths of admixture and illustrate the results in Figure \ref{sfig:corner_admixture_just_adinf}.  The reader can see that only the admixed population (population 30) is drawing admixture from the location of the source of admixture that was used to simulate the data, and that all other populations, which are not admixed, are choosing to draw admixture in only negligible amounts.
+Using the example admixture scenario described above and used in the analysis depicted in Figure \ref{sfig:admixture_inference_CYOL}, we demonstrate the inference of populations' sources and strengths of admixture and illustrate the results in Figure \ref{sfig:corner_admixture_just_adinf}.  The reader can see that only the admixed population (population 30) is drawing admixture from the location of the source of admixture that was used to simulate the data, and that all other populations, which are not admixed, are choosing to draw admixture in only negligible amounts. \gc{run with choose your own location + admixture.}
 
 \begin{figure}[ht!]
 	\centering
@@ -257,22 +263,21 @@ Using the example admixture scenario described above and used in the analysis de
 	\caption{Posterior distribution of inference of the sources and strengths of admixture for the sampled populations.  The admixed population (Population 30) is drawing admixture from the location of its source of admixture that was used to simulate the data (the location of Population 1).}\label{sfig:corner_admixture_just_adinf}
 \end{figure}
 
-\subsection*{Models}
-The models described above may be used in various combinations.  In the simplest model, populations may not choose their own locations, nor are they allowed to draw admixture, and the only parameters to be estimated are those of the spatial covariance function given in Eqn \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_k$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of that admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  The full likelihood of this most complex parameterization is given by,
+%\subsection*{Models}
 
-\begin{equation}
-\label{eq:wishart_dist_admixed}
-P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}) = 
-	\mathcal{W}\left(\widehat{\Omega} \mid L^{-1} \identifyadmixsource{\Omega} \left( G',\identifyadmixsource{G}, \vec{p},\vec{\alpha}\right),L \right)	\text{.}
-\end{equation}
+%\begin{equation}
+%\label{eq:wishart_dist_admixed}
+%P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}) = 
+%	\mathcal{W}\left(\widehat{\Omega} \mid L^{-1} \identifyadmixsource{\Omega} \left( G',\identifyadmixsource{G}, \vec{p},\vec{\alpha}\right),L \right)	\text{.}
+%\end{equation}
 
-Now, the posterior probability can be expressed as a function of this parametric admixed covariance, $\identifyadmixsource{\Omega}$,
-\begin{equation}
-\label{admixed_post_prob}
-P(G',\identifyadmixsource{G}, \vec{p},\vec{\alpha}, \eta \mid \widehat{\Omega}, L,G) 
-	\propto  
-		P(\widehat{\Omega}  \mid \identifyadmixsource{\Omega}) P(\vec{\alpha}) P(G') P(\identifyadmixsource{G}) P(\vec{p}) P(\eta) 
-\end{equation}
+%Now, the posterior probability can be expressed as a function of this parametric admixed covariance, $\identifyadmixsource{\Omega}$,
+%\begin{equation}
+%\label{admixed_post_prob}
+%P(G',\identifyadmixsource{G}, \vec{p},\vec{\alpha}, \eta \mid \widehat{\Omega}, L,G) 
+%	\propto  
+%		P(\widehat{\Omega}  \mid \identifyadmixsource{\Omega}) P(\vec{\alpha}) P(G') P(\identifyadmixsource{G}) P(\vec{p}) P(\eta) 
+%\end{equation}
 \gb{A note here about how this complex model is still identifiable}
 
 To demonstrate the use of the model in which the location of each population as well as the location of its source of admixture are estimated jointly, we used the spatial stepping-stone coalescent simulation procedure described above to generate a dataset of populations on a lattice in which there is both a barrier to dispersal and a more subtle admixture event (admixture proportion = 10\%, see Fig. \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_scenario}).  In the SpaceMix analysis (Fig. \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_inference}), the separation of the east and west sides of the grid accommodates the effect of the barrier to migration, and the admixed population (population 23) chooses admixture from very close to its true source (population 13), and in close to the correct amount ($\bar{p} = 0.05; 95\% \text{ credible interval} = 0.02-0.08$). \gb{discuss how prior forces amount down, so it's cheaper to choose more westward pop as source}.
@@ -288,7 +293,7 @@ To demonstrate the use of the model in which the location of each population as 
 %This most complex model is, in many cases, nonetheless identifiable.  Although in certain scenarios, a population may choose a location nearer to its source of admixture, rather than 
 
 \section*{Empirical Applications}
-To demonstrate the applications of this novel method, we employed it in two canonical empirical systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.
+To demonstrate the applications of this novel method, we analysed population genomic data from two systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.
 
 \subsection*{Greenish Warblers}  
 The greenish warbler (\emph{Phylloscopus trochiloides}) species complex is broadly distributed around the Tibetan plateau, and exhibits gradients around the ring in a range of phenotypes including song, as well allele frequencies (Ticehurst (1938),Irwin et al 2001, Irwin et al 2005, Irwin et al 2008).  At the northern end of the ring in central Siberia, where the eastern and western arms of population expansion meet, there are discontinuities in call and morphology, as well as a genetic discontinuity and reproductive isolation (Irwin et al 2001, Irwin et al 2008). It is proposed that the species complex represents a ring species, in which selection and/or drift, acting in the populations as they spread northward on either side of the Tibetan plateau, have led to the evolution of reproductive isolation (REFs).  The question of whether it constitutes a ring species, in purest form, focuses on whether gene flow along the margins of the plateau has truly been continuous throughout the history of the expansion or if, alternatively, discontinuities in migration around the species complex's range have facilitated periods of differentiation in genotype or phenotype without gene flow (Mayr 1942, Mayr 1970, Coyne and Orr 2004).  However, we note that many would still classify this as a ring species even if that condition were not met, just not as a case of speciation-by-distance \citep[see][ for discussion]{}.

@@ -668,7 +668,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 
 	globe.coords <- cbind(globetrotter.long, globetrotter.lat)
 	pops <- row.names(globetrotter.counts)
-	k <- last.params$k
+	k <- length(pops)
 	continent.col <- numeric(k)
 		continent.col[which(globetrotter.long < -50)] <- "orange"
 		continent.col[match(c("BantuKenya","BantuSouthAfrica","BiakaPygmy",
@@ -688,9 +688,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 	
 	best <- which.max(Prob)
 	target.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,option=1)
-	source.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2) 
-
-	globe.admix.plot.cols <- continent.col
+	source.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2)
 
 	require(maps)
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_world_map_dots.png",res=300,width=9*300,height=5.5*300)
@@ -700,8 +698,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 		points(globe.coords,pch=20,col=continent.col,cex=2)
 			legend(x = -175,y=-10,
 					legend = c("Africa","Western Eurasia","Central Eurasia","Eastern Eurasia","Oceania","Americas"),
-					text.col = c("forestgreen","blue","purple","red","brown","orange"),cex=0.8,
-					title="Continent plotting colors",title.col=1)
+					text.col = c("forestgreen","blue","purple","red","brown","orange"),cex=0.8)
 	dev.off()
 	
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_world_map_text.png",res=300,width=9*300,height=5.5*300)
@@ -711,8 +708,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 		text(globe.coords,pops,col=continent.col,cex=0.5,font=2)
 			legend(x = -175,y=-10,
 					legend = c("Africa","Western Eurasia","Central Eurasia","Eastern Eurasia","Oceania","Americas"),
-					text.col = c("forestgreen","blue","purple","red","brown","orange"),cex=0.8,
-					title="Continent plotting colors",title.col=1)
+					text.col = c("forestgreen","blue","purple","red","brown","orange"),cex=0.8)
 	dev.off()
 	
 	x.min <- min(target.coords[,1]) - 5
@@ -734,8 +730,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			box(lwd=2)
 			legend(x = "bottomright",pch=NA,
 					legend = c("Africa","Western Eurasia","Central Eurasia","Eastern Eurasia","Oceania","Americas"),
-					text.col = c("forestgreen","blue","purple","red","brown","orange"),
-					title="Continent plotting colors",title.col=1)
+					text.col = c("forestgreen","blue","purple","red","brown","orange"))
 	dev.off()
 	
 	x.min <- min(target.coords[africa,1]) - 5
@@ -826,7 +821,6 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			legend(x = "topleft",pch=NA,
 					legend = c("Africa","Western Eurasia","East Asia","Oceania","Americas"),
 					text.col = c("forestgreen","purple4","red","brown","orange"),
-					title="Continent plotting colors",title.col=1,
 					cex=0.8)
 		box(lwd=2)
 		plot(obs.D,par.D,col="gray",pch=20,
@@ -876,29 +870,40 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			legend(x = "topright",pch=NA,
 					legend = c("Africa","Western Eurasia","East Asia","Oceania","Americas"),
 					text.col = c("forestgreen","purple4","red","brown","orange"),
-					title="Continent plotting colors",title.col=1,
 					cex=1)
 		box(lwd=2)
 	dev.off()
 
-
+################
+#	Admixture - rand prior
+################
 load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceruns/rand_prior2/globe_spaceruns_randpr1_LongRun/globe_spaceruns_randpr1space_MCMC_output1.Robj")
+	best <- which.max(Prob)
+	target.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,option=1)
+	source.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2) 
+
 	globe.admix.plot.cols <- fade.admixture.source.points(continent.col,admix.proportions[,best])
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_map_arrows.png",res=300,width=7*300,height=5*300,pointsize=9)
+
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
-					xlim = c(18,67),
+					xlim = c(18,68),
 					ylim = c(-20,50),
 					xlab="long",
 					ylab="lat")
 				text(target.coords[c(1:k),],
 						labels=pops,
-						col=adjustcolor(continent.col,0.8),
+						col=adjustcolor(continent.col,1),
 						font=2,cex=0.8)
-				points(source.coords[,1],
+				text(source.coords[,1],
 						source.coords[,2],
-							col=globe.admix.plot.cols,
-							pch=20)
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8)
+				# points(source.coords[,1],
+						# source.coords[,2],
+							# col=globe.admix.plot.cols,
+							# pch=20)
 			arrows(	x0 = source.coords[,1],
 					y0 = source.coords[,2],
 					x1 = target.coords[,1],
@@ -908,26 +913,32 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 					length=0.1)
 			box(lwd=2)
 			legend(x = "bottomright",pch=NA,
-					legend = c("Africa","Western Eurasia","Central Eurasia","Eastern Eurasia","Oceania","Americas"),
-					text.col = c("forestgreen","blue","purple","red","brown","orange"),
-					title="Continent plotting colors",title.col=1)
+					legend = c("Africa","Western Eurasia","Central Eurasia","Eastern Eurasia","Oceania","Americas","population","source of admixture"),
+					text.col = c("forestgreen","blue","purple","red","brown","orange",1,1),
+					text.font = c(rep(1,6),2,3))
+			legend(x="topleft",
+					lwd = c(1,0.5,0.1),
+					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					title = "Admixture proportions")
 	dev.off()
 
-	png(file="africa_map_arrows.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/subsaharan_africa_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
-					xlim=c(0,20),
-					ylim=c(-10,10),
+					xlim = c(18,35),
+					ylim = c(-20,0),
 					xlab="long",
 					ylab="lat")
 				text(target.coords[c(1:k),],
 						labels=pops,
-						col=adjustcolor(continent.col,0.8),
-						font=2,cex=0.9)
-				points(source.coords[,1],
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
 						source.coords[,2],
-							col=globe.admix.plot.cols,
-							pch=20)
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8)
 			arrows(	x0 = source.coords[,1],
 					y0 = source.coords[,2],
 					x1 = target.coords[,1],
@@ -935,222 +946,203 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 					col=globe.admix.plot.cols,
 					lwd=last.params$admix.proportions,
 					length=0.1)
+			box(lwd=2)
+			legend(x = "bottomright",pch=NA,
+					legend = c("Africa","Western Eurasia","Central Eurasia","Eastern Eurasia","Oceania","Americas","population","source of admixture"),
+					text.col = c("forestgreen","blue","purple","red","brown","orange",1,1),
+					text.font = c(rep(1,6),2,3))
+			legend(x="topleft",
+					lwd = c(1,0.5,0.1),
+					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					title = "Admixture proportions")
 	dev.off()
 
-	png(file="Nafrica_and_europe_map_arrows.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-		x <- c(africa,europe)
-			plot(target.coords[x,],type='n',
-					xlim=c(40.85,48.1),
-					ylim=c(29.5,31.3),
-					xlab="long",
-					ylab="lat")
-				text(target.coords[x,],
-						labels=pops[x],
-						col=adjustcolor(continent.col[x],0.8),
-						font=2,cex=0.9)
-				points(source.coords[x,1],
-						source.coords[x,2],
-							col=globe.admix.plot.cols[x],
-							pch=20)
-			arrows(	x0 = source.coords[x,1],
-					y0 = source.coords[x,2],
-					x1 = target.coords[x,1],
-					y1 = target.coords[x,2],
-					col=globe.admix.plot.cols[x],
-					lwd=last.params$admix.proportions[x],
-					length=0.1)
-	dev.off()
-
-	png(file="Nafrica_and_europe_map_noarrows.png",res=300,width=7*300,height=5*300,pointsize=9)
-		x <- c(africa,europe)
-			plot(target.coords[x,],type='n',
-					xlim=c(40.85,48.1),
-					ylim=c(29.5,31.3),
-					xlab="long",
-					ylab="lat")
-				text(target.coords[x,],
-						labels=pops[x],
-						col=adjustcolor(continent.col[x],0.8),
-						font=2,cex=0.9)
-	dev.off()
-
-	png(file="europe_map_arrows.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/eurasia_plus_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
-					xlim=c(45.7,47.75),
-					ylim=c(30.35,31.35),
+					xlim = c(34.5,70),
+					ylim = c(25,48),
 					xlab="long",
 					ylab="lat")
-				text(target.coords[europe,],
-						labels=pops[europe],
-						col=adjustcolor(continent.col[europe],0.8),
-						font=2,cex=0.9)
-				points(source.coords[europe,1],
-						source.coords[europe,2],
-							col=globe.admix.plot.cols[europe],
-							pch=20)
-			arrows(	x0 = source.coords[europe,1],
-					y0 = source.coords[europe,2],
-					x1 = target.coords[europe,1],
-					y1 = target.coords[europe,2],
-					col=globe.admix.plot.cols[europe],
-					lwd=last.params$admix.proportions[europe],
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8)
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=last.params$admix.proportions,
 					length=0.1)
-	dev.off()
-
-	png(file="eurasia_map_arrows.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-		x <- c(europe,middle.muddle,east.asia)
-			plot(target.coords[x,],type='n',
-					xlim=c(44,54),
-					ylim=c(29,42),
-					xlab="long",
-					ylab="lat")
-				text(target.coords[x,],
-						labels=pops[x],
-						col=adjustcolor(continent.col[x],0.8),
-						font=2,cex=0.9)
-				points(source.coords[x,1],
-						source.coords[x,2],
-							col=globe.admix.plot.cols[x],
-							pch=20)
-			arrows(	x0 = source.coords[x,1],
-					y0 = source.coords[x,2],
-					x1 = target.coords[x,1],
-					y1 = target.coords[x,2],
-					col=globe.admix.plot.cols[x],
-					lwd=last.params$admix.proportions[x],
-					length=0.1)
-	dev.off()
-
-	png(file="eurasia_map_arrows.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-		x <- c(europe,middle.muddle,east.asia)
-			plot(target.coords[x,],type='n',
-					xlim=c(44,54),
-					ylim=c(29,42),
-					xlab="long",
-					ylab="lat")
-				text(target.coords[x,],
-						labels=pops[x],
-						col=adjustcolor(continent.col[x],0.8),
-						font=2,cex=0.9)
-				points(source.coords[x,1],
-						source.coords[x,2],
-							col=globe.admix.plot.cols[x],
-							pch=20)
-			arrows(	x0 = source.coords[x,1],
-					y0 = source.coords[x,2],
-					x1 = target.coords[x,1],
-					y1 = target.coords[x,2],
-					col=globe.admix.plot.cols[x],
-					lwd=last.params$admix.proportions[x],
-					length=0.1)
-	dev.off()
-
-	png(file="eurasia_map_somearrows.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-		x <- c(europe,middle.muddle,east.asia)
-		y <- match(c("Hazara","Uzbekistani","Uygur"),pops)
-			plot(target.coords[x,],type='n',
-					xlim=c(44,54),
-					ylim=c(29,42),
-					xlab="long",
-					ylab="lat")
-				text(target.coords[x,],
-						labels=pops[x],
-						col=adjustcolor(continent.col[x],0.8),
-						font=2,cex=0.9)
-				points(source.coords[y,1],
-						source.coords[y,2],
-							col=globe.admix.plot.cols[y],
-							pch=20)
-			arrows(	x0 = source.coords[y,1],
-					y0 = source.coords[y,2],
-					x1 = target.coords[y,1],
-					y1 = target.coords[y,2],
-					col=globe.admix.plot.cols[y],
-					lwd=last.params$admix.proportions[y],
-					length=0.1)
-	dev.off()
-
-	png(file="eastasia_map_arrows.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-		x <- c(east.asia,middle.muddle)
-			plot(target.coords[x,],type='n',
-					xlim=c(48.7,53.8),
-					ylim=c(38.2,41),
-					xlab="long",
-					ylab="lat")
-				text(target.coords[x,],
-						labels=pops[x],
-						col=adjustcolor(continent.col[x],0.8),
-						font=2,cex=0.9)
-				points(source.coords[x,1],
-						source.coords[x,2],
-							col=globe.admix.plot.cols[x],
-							pch=20)
-			arrows(	x0 = source.coords[x,1],
-					y0 = source.coords[x,2],
-					x1 = target.coords[x,1],
-					y1 = target.coords[x,2],
-					col=globe.admix.plot.cols[x],
-					lwd=last.params$admix.proportions[x],
-					length=0.1)
-	dev.off()
-
-	
-	png(file="eastasia_oceania_americas_map_arrows.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-		x <- c(east.asia,oceania,americas)
-			plot(target.coords[x,],type='n',
-					xlim=c(42,66),
-					ylim=c(35,50),
-					xlab="long",
-					ylab="lat")
-				text(target.coords[x,],
-						labels=pops[x],
-						col=adjustcolor(continent.col[x],0.8),
-						font=2,cex=0.9)
-				points(source.coords[x,1],
-						source.coords[x,2],
-							col=globe.admix.plot.cols[x],
-							pch=20)
-			arrows(	x0 = source.coords[x,1],
-					y0 = source.coords[x,2],
-					x1 = target.coords[x,1],
-					y1 = target.coords[x,2],
-					col=globe.admix.plot.cols[x],
-					lwd=last.params$admix.proportions[x],
-					length=0.1)
+			legend(x="topright",
+					lwd = c(1,0.5,0.1),
+					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					title = "Admixture proportions")
+			box(lwd=2)
 	dev.off()
 	
-	png(file="eurasia_oceania_americas_map_arrows.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
-		x <- c(europe,middle.muddle,east.asia,oceania,americas,africa)
-			plot(target.coords[x,],type='n',
-					xlim=c(38,74),
-					ylim=c(25,50),
+			plot(target.coords,type='n',
+					xlim = c(42.5,52.5),
+					ylim = c(33.5,40),
 					xlab="long",
 					ylab="lat")
-				text(target.coords[x,],
-						labels=pops[x],
-						col=adjustcolor(continent.col[x],0.8),
-						font=2,cex=0.9)
-			points(source.coords[x,1],
-						source.coords[x,2],
-							col=globe.admix.plot.cols[x],
-							pch=20)
-			arrows(	x0 = source.coords[x,1],
-					y0 = source.coords[x,2],
-					x1 = target.coords[x,1],
-					y1 = target.coords[x,2],
-					col=globe.admix.plot.cols[x],
-					lwd=last.params$admix.proportions[x],
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8)
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=last.params$admix.proportions,
 					length=0.1)
+			legend(x="topleft",
+					lwd = c(1,0.5,0.1),
+					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					title = "Admixture proportions")
+			box(lwd=2)
+	dev.off()
+	
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/western_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(42.5,48),
+					ylim = c(34.5,37.5),
+					xlab="long",
+					ylab="lat")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8)
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=last.params$admix.proportions,
+					length=0.1)
+			legend(x="topleft",
+					lwd = c(1,0.5,0.1),
+					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					title = "Admixture proportions")
+			box(lwd=2)
 	dev.off()
 
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/eastern_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(48.5,52.2),
+					ylim = c(36,39.1),
+					xlab="long",
+					ylab="lat")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8)
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=last.params$admix.proportions,
+					length=0.1)
+			legend(x="bottomleft",
+					lwd = c(1,0.5,0.1),
+					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					title = "Admixture proportions")
+			box(lwd=2)
+	dev.off()
+
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/eurasiamericas_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(42.5,52.5),
+					ylim = c(33.5,46.5),
+					xlab="long",
+					ylab="lat")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8)
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=last.params$admix.proportions,
+					length=0.1)
+			legend(x="topleft",
+					lwd = c(1,0.5,0.1),
+					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					title = "Admixture proportions")
+			box(lwd=2)
+	dev.off()
+	
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/eurasioceania_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(42.5,55),
+					ylim = c(29,40),
+					xlab="long",
+					ylab="lat")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8)
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=last.params$admix.proportions,
+					length=0.1)
+			legend(x=47.5,y=32,
+					lwd = c(1,0.5,0.1),
+					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					title = "Admixture proportions")
+			box(lwd=2)
+	dev.off()
 ################################
 #	SIM FIGS
 ################################

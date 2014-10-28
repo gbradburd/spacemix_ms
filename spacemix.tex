@@ -17,9 +17,9 @@
 \setlength{\parindent}{0pt}%
 
 \newcommand{\e}[1]{{\mathbb E}\left[ #1 \right]}
-\newcommand{\admixsource}[1]{{$G^{(A)}$}}
-\newcommand{\kadmixsource}[1]{{$G^{(A)}_{#1}$}}
-\newcommand{\identifyadmixsource}[1]{{#1^{(A)}}}
+\newcommand{\admixsource}[1]{{$G^{(*)}$}}
+\newcommand{\kadmixsource}[1]{{$G^{(*)}_{#1}$}}
+\newcommand{\identifyadmixsource}[1]{{#1^{(*)}}}
 \newcommand{\gb}[1]{{\em \color{magenta} #1}}
 \newcommand{\plr}[1]{{\em \color{green} #1}}
 \newcommand{\gc}[1]{{\em \color{blue} #1}}
@@ -213,7 +213,7 @@ We can allow each of our populations to have this setup, each with an independen
 We can then consider the resulting parametric covariance matrix that follows from the form of the population frequencies in eqn. \eqref{eqn-admixedfreq}. The covariance between the standardized allele frequencies of population $i$ and $j$ can be modeled as 
 \begin{alignat}{3}
 \label{eq:admixed_covariance_1}
-\Omega_{i,j}^{(A)} = (1-w_i)(1-w_j) \Omega_{i\;,\;j\;} \; \times&\\
+\Omega_{i,j}^{(*)} = (1-w_i)(1-w_j) \Omega_{i\;,\;j\;} \; \times&\\
 (w_i)(1-w_j) \Omega_{\identifyadmixsource{i},\;j\;} \; \times   \notag&\\
 (w_j)(1-w_i) \Omega_{i\;,\;\identifyadmixsource{j}} \; \times   \notag&\\
 (w_i)(w_j) \Omega_{\identifyadmixsource{i},\;\identifyadmixsource{j}} \; +   \notag&\\
@@ -223,7 +223,7 @@ where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources fr
 
 %parameterized by the pairwise geographic distances between each pair of populations, \emph{without} the population-specific variance terms on the diagonal (i.e., in Eqn. \eqref{eq:admixed_covariance_1}, i.e. $\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right)$).  
 
-The admixed covariance between samples $i$ and $j$, $\Omega_{i,j}^{(A)}$ is then a function of all the pairwise spatial covariances between populations $i$ and $j$ and the points from which they draw admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$.  Those spatial covariances in turn are a function of all combinations of pairwise distances between their locations: $G_i$, $G_i$, \kadmixsource{i}, and \kadmixsource{j}.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}.
+The admixed covariance between samples $i$ and $j$, $\Omega_{i,j}^{(*)}$ is then a function of all the pairwise spatial covariances between populations $i$ and $j$ and the points from which they draw admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$.  Those spatial covariances in turn are a function of all combinations of pairwise distances between their locations: $G_i$, $G_i$, \kadmixsource{i}, and \kadmixsource{j}.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}.
 
 As we only get to observe the sample frequencies and we standardize our allele frequencies using the sample mean, our predicted admixture covariance matrix needs to be transformed to accommodate these sampling considerations. We can do this as before (see methods XXXX), and we again treat the likelihood of our sample covariance matrix as Wishart:
 \begin{equation}
@@ -252,7 +252,7 @@ The models described above may be used in various combinations.  In the simplest
 \begin{figure}[ht!]
 	\centering
 	\includegraphics[width=2in,height=2in]{figs/admix_cov_fig.pdf}
-	\caption{An illustration of the form of the admixed covariance given in Eqns. \eqref{eq:admixed_covariance_1} and \eqref{eq:admixed_covariance_2}.  Populations $i$ and $j$ are drawing admixture in proportions $p_i$ and $p_j$ from their respective sources of admixture, $i^{(A)}$ and $j^{(A)}$, and all pairwise spatial covariances (the $\Omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $j^{(A)}$ than $i$ is from its source $i^{(A)}$ (i.e., $p_j > p_i$).}\label{sfig:admixed_cov_diagram}
+	\caption{An illustration of the form of the admixed covariance given in Eqns. \eqref{eq:admixed_covariance_1} and \eqref{eq:admixed_covariance_2}.  Populations $i$ and $j$ are drawing admixture in proportions $p_i$ and $p_j$ from their respective sources of admixture, $i^{(*)}$ and $j^{(*)}$, and all pairwise spatial covariances (the $\Omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $j^{(*)}$ than $i$ is from its source $i^{(*)}$ (i.e., $p_j > p_i$).}\label{sfig:admixed_cov_diagram}
 \end{figure}
 
 Using the example admixture scenario described above and used in the analysis depicted in Figure \ref{sfig:admixture_inference_CYOL}, we demonstrate the inference of populations' sources and strengths of admixture and illustrate the results in Figure \ref{sfig:corner_admixture_just_adinf}.  The reader can see that only the admixed population (population 30) is drawing admixture from the location of the source of admixture that was used to simulate the data, and that all other populations, which are not admixed, are choosing to draw admixture in only negligible amounts. \gc{run with choose your own location + admixture.}
@@ -387,8 +387,6 @@ To answer these questions, we used a random subset of 10,000 SNPs from the SNP d
 
 In the analysis in which populations choose their own locations, the map roughly recapitulates the geography of the samples (Fig. \ref{sfig:globe_noad_maps}).  Populations generally cluster with populations sampled on their continent, and the relative placement of populations is similar to that of their observed geography.  Sub-Saharan African populations are distributed in a manner consistent with their sampled latitude, with the San populations in the south and the Ethiopian populations closest to the Eurasian populations.  North African populations, such as the Moroccan, Tunisian, and Egyptian populations, cluster with Middle Eastern populations such as the Yemeni and the UAE, and are quite close to both the Ethiopian populations and the western European populations, such as the Sicilians, the Cypriots, the Tuscans, and the Sardinians.  Within Eurasia, we see populations grouping roughly in the order of their longitude on the continent, with British, continental European, and Russian populations at the western margin, and Han, Japanese, and Southeast Asian populations such as the Cambodians, the Lahu, and Myanmar on the eastern margin.  Interspersed between are populations of the Sub-continent, such as the Indian, Indian Jewish, and Sindhi populations, as well as populations from farther north in Eurasia that choose intermediate locations between European and East Asian populations, such as the Uygur, the Hazara, the Uzbekistani, and the Chuvash.  Populations from the Americas cluster together and choose a location close to the East Asian populations, as do populations from Oceania.
 
-We also recover evidence for several major population expansions and colonization routes in human pre-history.  First, the scale of inferred inter-population distance within sub-Saharan Africa is much greater than that between any other group (see Fig NNN), a pattern indicative of a bottleneck (or series of bottlenecks) during an out-of-Africa event.  In addition, we see that both the populations in the Americas and in Oceania cluster close to the East Asian populations, but that the two clusters are on opposite sides.  The proximity of these groups to the East Asians represents the fact that both groups were ancestrally East Asian (REF?), but that the expansion events induced independent drift trajectories in both waves of colonization.  We also see intriguing evidence for potential admixture in the placement of the Chuvash, Uzbekistani, Hazara, and Uygur populations, which choose locations intermediate between Europe and East Asia, as well as in the placement of the Moroccan, Mozabite, and Ethiopian populations, which are choosing locations between the western Eurasian cluster and the sub-Saharan Africans.  To investigate possible patterns of admixture further, we ran a SpaceMix analysis in which we estimated, for each population, a location, a source of admixture, and the magnitude of that admixture.
-
 \begin{figure}
 	\centering
 		\subcaptionbox{Inferred map of human populations \label{globe_all_noad_map}}
@@ -402,6 +400,20 @@ We also recover evidence for several major population expansions and colonizatio
 
 	\caption{Map of human populations, inferred without admixture, colored by continent. (a) complete map;  (b) close up African populations; (c) close up of all non-African populations; (d) close up of Eurasian populations.}\label{sfig:globe_noad_maps}
 \end{figure}
+
+We also recover evidence for several major population expansions and colonization routes in human pre-history.  We can see evidence of these expansions by examining the relationship between observed and estimated pairwise distance between the daughter populations of a putative expansion event.   As can be seen in \ref{sfig:lattice_scenarios}\subref{expansion_inference}, populations that have recently expanded on the landscape are less differentiated both from each other and from their parent population than would be expected from their geographic separation, and this fact is reflected in the decreased ratio between estimated and observed pairwise distances between members of an expansion event.
+
+In the SpaceMix analysis of the human genetic data, the scale of inferred inter-population distance within Africa is much greater than that between any other group (see Fig. \ref{sfig:globe_noad_distcomp}), and the slope of the relationship between observed and estimated distances between populations on each continent decays with distance from Africa.  This pattern is consistent with a history of human colonization events characterized by serial bottlenecks, including an out-of-Africa expansion, an expansion into East Asia, and twin expansions into the Americas and Oceania (REFS) .  In addition, we see that both the populations in the Americas and in Oceania cluster close to the East Asian populations, but that the two clusters are on opposite sides.  The proximity of these groups to the East Asians represents the fact that both groups were ancestrally East Asian (REF?), but that the expansion events induced independent drift trajectories in both waves of colonization.  
+
+We also see intriguing evidence for potential admixture in the placement of the Chuvash, Uzbekistani, Hazara, and Uygur populations, which choose locations intermediate between Europe and East Asia, as well as in the placement of the Moroccan, Mozabite, and Ethiopian populations, which are choosing locations between the western Eurasian cluster and the African cluster.  To investigate possible patterns of admixture further, we ran a SpaceMix analysis in which we estimated, for each population, a location, a source of admixture, and the magnitude of that admixture.
+
+\begin{figure}
+	\centering
+		{\includegraphics[width=6in,height=2.5in]{figs/globe_NoAd_dist_decay.png}} %globe_NoAd_dist_compare.png
+	\caption{Comparison of observed distance to estimated distance between human populations, colored by continent from which populations were sampled (i.e. - two populations sampled from Africa are green).  Eurasia is divided into Western Eurasia and East Asia.}
+\label{sfig:globe_noad_distcomp}
+\end{figure}
+
 
 \section*{Conclusion}
 In this paper we have presented blah blah blah.  We believe this represents an advance over previous methods because blah blah blah.  This method can be used to answer a variety of empirical questions, including blah, blah, and blah, and also serves as an intuitive data visualization tool.
@@ -452,10 +464,10 @@ where $f_{\ell,i}$ is the allele frequency in population $i$, $f_{\ell,j}$ is th
  We re-introduce the population-specific variance terms on each diagonal element of this admixed covariance matrix.  The full expression for our admixed covariance function is below.
  \begin{alignat}{3}
  \label{eq:admixed_covariance_2}
- \Omega^{(A)}_{i,j} = (1-p_i)(1-p_j) \Omega_{i\;,\;j\;} \; \times&\\
- (p_i)(1-p_j) \Omega_{i^{(A)},\;j\;} \; \times   \notag&\\
- (p_j)(1-p_i) \Omega_{i\;,\;j^{(A)}} \; \times   \notag&\\
- (p_i)(p_j) \Omega_{i^{(A)},\;j^{(A)}} \; +   \notag&\\
+ \Omega^{(*)}_{i,j} = (1-p_i)(1-p_j) \Omega_{i\;,\;j\;} \; \times&\\
+ (p_i)(1-p_j) \Omega_{i^{(*)},\;j\;} \; \times   \notag&\\
+ (p_j)(1-p_i) \Omega_{i\;,\;j^{(*)}} \; \times   \notag&\\
+ (p_i)(p_j) \Omega_{i^{(*)},\;j^{(*)}} \; +   \notag&\\
  \delta_{i,j} \bar{S_k}^{-1} + \delta_{i,j} \eta_k \phantom{+} \notag&
  \end{alignat}
 
@@ -493,11 +505,11 @@ The analysis procedure went as follows:
 
 \begin{figure}
 	\centering
-		\subcaptionbox{Likelihood \label{basic_lattice}}
+		\subcaptionbox{Basic Lattice \label{basic_lattice}}
 			{\includegraphics[width=3in,height=2.5in]{figs/basic_lattice.png}}
-		\subcaptionbox{Posterior probability \label{barrier_lattice}}
+		\subcaptionbox{Lattice with Barrier \label{barrier_lattice}}
 			{\includegraphics[width=3in,height=2.5in]{figs/barrier_lattice.png}}
-		\subcaptionbox{Posterior probability \label{barrier_lattice}}
+		\subcaptionbox{Lattice with Expansion Event \label{barrier_lattice}}
 			{\includegraphics[width=3in,height=2.5in]{figs/expansion_lattice.png}}
 	\caption{Different simulation scenarios: (a) basic lattice; (b) lattice with a longitudinal barrier; (c) lattice with expansion event.}\label{sfig:sim_scenarios}
 \end{figure}
@@ -527,12 +539,6 @@ The analysis procedure went as follows:
 	\caption{Comparing observed to estimated pairwise distance between warbler individuals, (a) between and (b) within subspecies populations.}\label{sfig:warb_ind_distcomp}
 \end{figure}
 
-\begin{figure}
-	\centering
-		{\includegraphics[width=6in,height=3in]{figs/globe_NoAd_dist_compare.png}}
-	\caption{Comparison of observed distance to estimated distance between human populations, colored by continent from which populations were sampled (i.e. - two populations sampled from Africa are green).  Eurasia is divided into Western Eurasia and East Asia.}
-\label{sfig:globe_noad_distcomp}
-\end{figure}
 
 \end{document}
 

@@ -842,6 +842,44 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 		box(lwd=2)
 	dev.off()
 
+	line.obs <- vector("list",length=length(clusters))
+	line.coeffs <- numeric(length(clusters))
+	centroids <- matrix(0,nrow=length(clusters),ncol=2)
+	africa.centroid <- matrix(colMeans(globe.coords[clusters$africa,]),ncol=2,nrow=1)
+	mean.dist.from.africa <- numeric(length(clusters))
+		for(i in 1:length(line.obs)){
+			use.these <- clusters[[i]]
+			line.obs[[i]] <- lm(par.D[1:k,1:k][use.these,use.these][upper.tri(par.D[1:k,1:k][use.these,use.these],diag=TRUE)] ~ 
+									obs.D[use.these,use.these][upper.tri(obs.D[1:k,1:k][use.these,use.these],diag=TRUE)])
+			line.coeffs[i] <- line.obs[[i]]$coefficients[2]
+			centroids[i,] <- colMeans(globe.coords[clusters[[i]],])
+				row.names(centroids)[i] <- names(clusters[[i]])
+			mean.dist.from.africa[i] <- fields::rdist.earth(africa.centroid,centroids[i,,drop=FALSE])
+		}
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_NoAd_dist_decay.png",res=200,height=5*200,width=12*200)
+		#quartz(height=5,width=12)
+		par(mfrow=c(1,2),mar=c(4,4,2,2))
+		plot(obs.D,par.D,col="gray",pch=20,
+#			xlim=c(0,5500),ylim=c(0,4500),
+			ylab="estimated distance",
+			xlab="observed distance",cex=0.7)
+			for(i in 1:length(clusters)){
+				use.these <- clusters[[i]]
+				abline(line.obs[[i]],col=cluster.cols[i],lwd=2)
+				points(obs.D[use.these,use.these],par.D[use.these,use.these],col=1,pch=20,cex=0.73)
+				points(obs.D[use.these,use.these],par.D[use.these,use.these],col=cluster.cols[i],pch=20,cex=0.7)
+			}
+		box(lwd=2)
+		plot(mean.dist.from.africa,line.coeffs,col=cluster.cols,pch=19,cex=3,
+			ylab="slope of observed vs. estimated distance",
+			xlab="observed distance from Africa")
+			legend(x = "topright",pch=NA,
+					legend = c("Africa","Western Eurasia","East Asia","Oceania","Americas"),
+					text.col = c("forestgreen","purple4","red","brown","orange"),
+					title="Continent plotting colors",title.col=1,
+					cex=1)
+		box(lwd=2)
+	dev.off()
 
 
 load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceruns/rand_prior2/globe_spaceruns_randpr1_LongRun/globe_spaceruns_randpr1space_MCMC_output1.Robj")

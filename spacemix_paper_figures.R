@@ -1143,6 +1143,30 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 					title = "Admixture proportions")
 			box(lwd=2)
 	dev.off()
+	
+	pop.order <- c(africa[order(globe.coords[africa,2])],
+					western.eurasia[order(globe.coords[western.eurasia,1])],
+					east.asia[order(globe.coords[east.asia,1])],
+					oceania[rev(order(globe.coords[oceania,2]))],
+					americas[rev(order(globe.coords[americas,2]))])
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_proportions.png",res=300,width=12*300,height=5*300)
+		#quartz(width=12,height=5)
+		plot(rowMeans(admix.proportions)[pop.order]/2,type='n',main = "Mean Admixture Proportions",xlab="population",ylab="admixture proportion (w)")
+			text(rowMeans(admix.proportions)[pop.order]/2,col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
+	dev.off()
+								
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_nugget.png",res=300,width=12*300,height=5*300)
+		#quartz(width=12,height=5)
+		plot(rowMeans(nugget)[pop.order],type='n',main = "Mean Population Nuggets",xlab="population",ylab="nugget")
+			text(rowMeans(nugget)[pop.order],col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
+	dev.off()
+	
+	globe.ad.data.table <- data.frame(cbind(round(rowMeans(admix.proportions)[pop.order]/2,4),
+											round(rowMeans(nugget)[pop.order],4)),row.names=pops[pop.order])
+		names(globe.ad.data.table) <- c("mean_admix_prop","mean_nugget")
+
+	write.csv(globe.ad.data.table,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_mean_pop_adprop_nugg_vals.csv")
+
 ################################
 #	SIM FIGS
 ################################

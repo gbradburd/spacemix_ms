@@ -200,17 +200,15 @@ This signal of excess covariance over anomalously long distances is clearly diff
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Inference of Spatial Admixture}
-\gc{Graham is switching admixture prop. to w}
-We can incorporate recent admixture directly into out inference framework.  We imagine that population $k$ draws the majority of its ancestry from $G_{k'}$, but a proportion $0 \geq w_k<0.5$ of its ancestry comes from another location \kadmixsource{k}, which we refer to as its source of admixture. The mean standardized population allele frequency at locus $\ell$ in population $k$ is a weighted average of the allele frequencies at the geographic location of the sampled population chooses for itself ($p_{\ell,k'}$) and those at the coordinates of the source ($p_{\ell,\identifyadmixsource{j}}$) from which the observed population draws admixture:
+We can incorporate recent admixture directly into out inference framework.  We imagine that population $k$ draws the majority of its ancestry from $G_{k'}$, but a proportion $0 \geq w_k \leq 0.5$ of its ancestry comes from another location \kadmixsource{k}, which we refer to as its source of admixture. The mean standardized population allele frequency at locus $\ell$ in population $k$ is a weighted average of the allele frequencies at the geographic location of the sampled population chooses for itself ($p_{\ell,k'}$) and those at the coordinates of the source ($p_{\ell,\identifyadmixsource{k}}$) from which the observed population draws admixture:
 \begin{equation}
 w_k p_{\ell,k'} + (1-w_k) p_{\ell,\identifyadmixsource{k}} \label{eqn-admixedfreq}
 \end{equation}
-We can allow each of our populations to have this setup, each with an independent spatial source of admixture. Our $p_{\ell,k'}$ and $p_{\ell,\identifyadmixsource{k}} $ are well defined as given our population allele frequency covariance matrix, equation \ref{eq:spatial_covariance}, we can get the distribution of allele frequencies at any point in space simply by its co-ordinates into our $\Omega(D(G))$.
+We can allow each of our populations to have an independent spatial source of admixture. Our $p_{\ell,k'}$ and $p_{\ell,\identifyadmixsource{k}} $ are well defined, as, given our population allele frequency covariance matrix, Eqn. \ref{eq:spatial_covariance}, we can get the distribution of allele frequencies at any point in space simply by plugging its spatial coordinates into our $\Omega(D(G))$.
 
- 
 %where $p_{\ell,k}$ are the model-estimated allele frequencies at locus $\ell$ at the spatial location of population $G_k$ and $p_{\ell,k*}$ are the model-estimated allele frequencies at the spatial location of the source of admixture \kadmixsource{k}. 
 
-We can then consider the resulting parametric covariance matrix that follows from the form of the population frequencies in eqn. \eqref{eqn-admixedfreq}. The covariance between the standardized allele frequencies of population $i$ and $j$ can be modeled as 
+We can then consider the resulting parametric covariance matrix that follows from the form of the population frequencies in Eqn. \eqref{eqn-admixedfreq}. The covariance between the standardized allele frequencies of population $i$ and $j$ can be modeled as 
 \begin{alignat}{3}
 \label{eq:admixed_covariance_1}
 \Omega_{i,j}^{(*)} = (1-w_i)(1-w_j) \Omega_{i\;,\;j\;} \; \times&\\

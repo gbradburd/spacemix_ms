@@ -1149,15 +1149,42 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 					east.asia[order(globe.coords[east.asia,1])],
 					oceania[rev(order(globe.coords[oceania,2]))],
 					americas[rev(order(globe.coords[americas,2]))])
+	admix.cred.sets <- lapply(pop.order,FUN=function(i){quantile(admix.proportions[i,]/2,c(0.025,0.975))})
+		names(admix.cred.sets) <- pops[pop.order]
+	nugget.cred.sets <- lapply(pop.order,FUN=function(i){quantile(nugget[i,],c(0.025,0.975))})
+		names(nugget.cred.sets) <- pops[pop.order]
+
+	make.cred.bars <- function(quantile.vector,x.coord,bar.width,color){
+		lines(x = c(x.coord-bar.width/2,x.coord+bar.width/2),
+				y = c(quantile.vector[1],quantile.vector[1]),col=color)
+		lines(x = c(x.coord-bar.width/2,x.coord+bar.width/2),
+				y = c(quantile.vector[2],quantile.vector[2]),col=color)
+		lines(x = c(x.coord,x.coord),
+				y = quantile.vector,col=adjustcolor(color,0.15),lwd=0.5)
+	}
+
+
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_proportions.png",res=300,width=12*300,height=5*300)
 		#quartz(width=12,height=5)
-		plot(rowMeans(admix.proportions)[pop.order]/2,type='n',main = "Mean Admixture Proportions",xlab="population",ylab="admixture proportion (w)")
+		plot(rowMeans(admix.proportions)[pop.order]/2,type='n',
+				main = "Mean Admixture Proportions",xlab="population",
+				ylab="admixture proportion (w)",ylim=c(0,max(unlist(admix.cred.sets))))
+		for(i in 1:k){
+			# lines(x = c(i,i),y=c(admix.cred.sets[[i]]),col=continent.col[pop.order][i])
+			make.cred.bars(admix.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
+		}
 			text(rowMeans(admix.proportions)[pop.order]/2,col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
 	dev.off()
 								
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_nugget.png",res=300,width=12*300,height=5*300)
 		#quartz(width=12,height=5)
-		plot(rowMeans(nugget)[pop.order],type='n',main = "Mean Population Nuggets",xlab="population",ylab="nugget")
+		plot(rowMeans(nugget)[pop.order],type='n',
+				main = "Mean Population Nuggets",
+				xlab="population",ylab="nugget",ylim=c(0,max(unlist(nugget.cred.sets))))
+		for(i in 1:k){
+			make.cred.bars(nugget.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
+			# lines(x = c(i,i),y=c(nugget.cred.sets[[i]]),col=continent.col[pop.order][i])
+		}
 			text(rowMeans(nugget)[pop.order],col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
 	dev.off()
 	

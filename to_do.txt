@@ -1,19 +1,21 @@
-write human section
-	-admixed pops are who we expect
-		-Handwavy Indian section
+finish cleaning up warbler re-writes
 
+intro:
+	gene flow is pervasive in many species
+	not well represented by discrete samples
+	admixture should be defined as unusually long gene flow
+		
+make 2 object querying functions
+	-1) give a pop name and have the admix arrow + source highlighted
+	-2) 2 pop names, and have the covariance vs. distance between all pairs pop out
+			-esp. for warb_pops
+
+make notes on all globetrotter results
+	
 read pickrell&reich
 
-add bit for graham to fill in on IBD w/in diff clusters
-
-make names of admix sources diff
-	-make a gazillion pics
-	-experiment w/ dots in lieu of names for non-focal pops
-
-main text:
-	prior on admix proportions
-		capped at a half
-	prior on pop locations
+make new color scheme
+	make fig mock-ups w/ new color scheme
 
 Inference:
 	Methods section at the end:
@@ -38,3 +40,15 @@ COMPLETED:
 	re-color continental african pops
 	get D vs. D_hat for easy groupings (suppmat)
 	color sim pops by longitude
+	make names of admix sources diff
+		-make a gazillion pics
+		-experiment w/ dots in lieu of names for non-focal pops
+	main text:
+		prior on admix proportions
+			capped at a half
+		prior on pop locations
+	add bit for graham to fill in on IBD w/in diff clusters
+	write human section
+		-admixed pops are who we expect
+			-Handwavy Indian section
+

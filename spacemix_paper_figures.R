@@ -669,7 +669,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 	globe.coords <- cbind(globetrotter.long, globetrotter.lat)
 	pops <- row.names(globetrotter.counts)
 	k <- length(pops)
-	if(FALSE){
+
 		continent.col <- numeric(k)
 			continent.col[which(globetrotter.long < -50)] <- "orange"
 			continent.col[match(c("BantuKenya","BantuSouthAfrica","BiakaPygmy",
@@ -686,8 +686,8 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 		east.asia <- which(globetrotter.long > 95 & 
 								globetrotter.lat > 11.5)
 		western.eurasia <- c(1:k)[-c(americas,africa,oceania,east.asia)]
-	}
-	if(TRUE){
+
+
 		# af.eff.lat <- (globetrotter.lat[africa] + abs(min(globetrotter.lat[africa])))/max(globetrotter.lat[africa] + abs(min(globetrotter.lat[africa])))
 		af.loc.cols <- hsv(h = seq(0.22,0.69,length.out=length(africa))[rank(globetrotter.lat[africa])],
 				s = 1,
@@ -701,7 +701,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 		continent.col[americas] <- am.loc.cols
 		continent.col[africa] <- af.loc.cols
 		continent.col[-c(africa,americas)] <- eur.loc.cols
-	}
+
 	best <- which.max(Prob)
 	target.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,option=1)
 	source.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2)
@@ -899,6 +899,18 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 	source.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2) 
 
 	globe.admix.plot.cols <- fade.admixture.source.points(continent.col,admix.proportions[,best])
+
+MAP.admix.props <- admix.proportions[,best]
+MAP.nugget <- nugget[,best]
+
+globe_ad_obj <- list(africa = africa,americas = americas,continent.col = continent.col,
+						east.asia = east.asia,globe.admix.plot.cols = globe.admix.plot.cols,
+						globe.coords = globe.coords,k = k,MAP.admix.props = MAP.admix.props,
+						MAP.nugget = MAP.nugget,oceania = oceania,pops = pops,
+						source.coords = source.coords,target.coords = target.coords,
+						western.eurasia = western.eurasia)
+
+save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj")
 
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)

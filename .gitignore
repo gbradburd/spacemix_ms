@@ -1,6 +1,7 @@
 *.aux
 .Rapp.history
 *.log
+spacemix.pdf
 *.synctex.gz
 *.mp
 *.top

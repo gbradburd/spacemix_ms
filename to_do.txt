@@ -29,6 +29,9 @@ ditch borders on world map
 
 make admix map w/ africa inset
 
+
+
+
 COMPLETED:
 
 	Prioritize:

@@ -25,6 +25,9 @@ Inference:
 			
 			details of procrustes (R func)
 
+ditch borders on world map
+
+make admix map w/ africa inset
 
 COMPLETED:
 

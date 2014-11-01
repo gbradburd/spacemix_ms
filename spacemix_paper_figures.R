@@ -951,6 +951,82 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 					title = "Admixture proportions")
 	dev.off()
 
+
+	require(maps)
+	x.subplot1 <- c(43,67)
+	y.subplot1 <- c(-16,20)
+	x.subplot2 <- c(15,32.5)
+	y.subplot2 <- c(25.5,44)
+	subplot1.x.coords <- c(19.2,30)
+	subplot1.y.coords <- c(-19,-5.5)
+	subplot2.x.coords <- c(-165,180)
+	subplot2.y.coords <- c(-60,80)
+	#rect(xleft = x.subplot2[1],ybottom = y.subplot2[1],xright = x.subplot2[2],ytop = y.subplot2[2])
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_map_AfricaInset.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(15,68),
+					ylim = c(-20,50),
+					xlab="Eastings",
+					ylab="Northings")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+				# points(source.coords[,1],
+						# source.coords[,2],
+							# col=globe.admix.plot.cols,
+							# pch=20)
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=last.params$admix.proportions,
+					length=0.1)
+		rect(xleft = subplot1.x.coords[1]-2,ybottom = subplot1.y.coords[1],
+				xright = subplot1.x.coords[2]+1.5,ytop = subplot1.y.coords[2]+1,lty=2,border="gray",col=NA)
+		lines(x = c(subplot1.x.coords[2]+1.5,x.subplot1[1]), y = c(subplot1.y.coords[2]+1,y.subplot1[2]) , lty=2, col="gray")
+		lines(x = c(subplot1.x.coords[2]+1.5,x.subplot1[1]), y = c(subplot1.y.coords[1],y.subplot1[1]) , lty=2, col="gray")
+		TeachingDemos::subplot(fun = {
+						plot(target.coords,type='n',xlim = subplot1.x.coords,ylim = subplot1.y.coords,xlab="",ylab="",xaxt='n',yaxt='n') ; 
+						text(target.coords[c(1:k),],
+								labels=pops,
+								col=adjustcolor(continent.col,1),
+								font=2,cex=0.8) ; 
+						text(source.coords[,1],
+								source.coords[,2],
+								labels=pops,
+								font=3,
+								col=globe.admix.plot.cols,cex=0.8,family="HersheySerif") ; 
+						arrows(	x0 = source.coords[,1],
+								y0 = source.coords[,2],
+								x1 = target.coords[,1],
+								y1 = target.coords[,2],
+								col=globe.admix.plot.cols,
+								lwd=last.params$admix.proportions,
+								length=0.1) ; 
+							abline(v=0,lty=2,lwd=0.5) ; 
+							box(lwd=1.1)
+						},
+					x=x.subplot1,y=y.subplot1)
+		TeachingDemos::subplot(fun = {
+						# par(mar=c(0.1,0.1,0.1,0.1)) ; 
+						plot(0,xlim=subplot2.x.coords,ylim=subplot2.y.coords,type='n',yaxt='n',xaxt='n',xlab="",ylab="")
+						map(database="world",interior=FALSE,add=TRUE,xlim=subplot2.x.coords,ylim=subplot2.y.coords,lwd=0.5); 
+						points(globe.coords,pch=20,col=continent.col,cex=0.7) ; 
+							box(lwd=1.1)
+						},
+					x=x.subplot2,y=y.subplot2)
+			box(lwd=2)
+	dev.off()
+
+
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/subsaharan_africa_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',

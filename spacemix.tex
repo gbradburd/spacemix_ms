@@ -77,7 +77,7 @@ Our data consist of $L$ unlinked variable loci sampled across $K$ populations, a
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{The Normal Approximation to Drift}
-In order to model this covariance, we draw on previous work (Cavalli-Sforza \& Edwards, Nicholson et al 2002, Coop et al 2010, Pickrell \& Pritchard 2012), and model the process of genetic drift - the compouding of binomial sampling over the generations - as approximately Gaussian.  Briefly, if the population frequency of allele $\epsilon$ in an ancestral population, $A$ is $\epsilon_A$, then we model the population frequency of that allele in a daughter population,  $B$, as follows:
+In order to model this covariance, we draw on previous work (Cavalli-Sforza \& Edwards, Nicholson et al 2002, Coop et al 2010, Pickrell \& Pritchard 2012), and model the process of genetic drift - the compouding of binomial sampling over the generations - as approximately Gaussian.  Briefly, if the population frequency of allele $\epsilon$ in an ancestral population, $A$ is $\epsilon_A$, then we model the population frequency of that allele in a daughter population, $B$, as follows:
 \begin{equation}
 \label{eq:normal_drift}
 \epsilon_B \sim N(\epsilon_A,\delta_B(\epsilon_A)(1-\epsilon_A))
@@ -153,6 +153,7 @@ One way that we can accommodate these heterogeneous processes is to allow popula
 
 To generate this map, we can treat populations' geographic locations as a random variable, and estimate them as part of our Bayesian inference procedure.  The set of coordinates where the populations were sampled is $G$, and we designate the set of location parameters (i.e. coordinates) for our populations as $G'$. Our parametric covariance matrix $\Omega$, as given by equation \eqref{eq:spatial_covariance2}, is a function of the pairwise matrix of distances between these inferred locations, $D(G')$, and our $\vec{\alpha}$ and $\eta$ parameters.  We acknowledge this dependence by writing $\Omega(\vec{\alpha},{D}(G'))$.  We write the  posterior probability as 
 \begin{equation}
+\label{eq:cyol_prob}
 P(G', \vec{\alpha}, \eta \mid \widehat{\Omega}, L,G) \propto  P(\widehat{\Omega}  \mid \Omega(\vec{\alpha},{D}(G') ) P(\vec{\alpha}) P(G') P(\eta) 
 \end{equation}
 where the constant of proportionality is the normalization constant of the posterior. Here $P(G') $ are the priors for the spatial locations, which we assume are independent across populations. For the prior on population $k$'s location parameter, $G'_k$, we use a bivariate normal spatial prior centered on the observed location $G_k$ and with a variance \gb{of half the mean pairwise distance between the observed population locations, $D(G)$: $G'_k \sim \mathcal{N}(\mu = G_k,\sigma = \frac{1}{2}\bar{D}(G))$.} We perform MCMC on all of the random variables; for more details on our Bayesian inference procedure see Appendix B. This method is implemented in a program called SpaceMix.
@@ -231,7 +232,7 @@ P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}) =
 \end{equation}
 As before $G'$, $\vec{\alpha}$, $\vec{\eta}$ are treated as random variables to be estimated. Now the set of $K$ admixture sources $\identifyadmixsource{G}$ are also parameters to be estimated, along with the vector of $K$ admixture proportions $\vec{w}$. The posterior probability of these parameters can be expressed as a function of this parametric admixed covariance, $\identifyadmixsource{\Omega}$,
 \begin{equation}
-\label{admixed_post_prob}
+\label{eq:admixed_post_prob}
 P(G',\identifyadmixsource{G}, \vec{p},\vec{\alpha}, \eta \mid \widehat{\Omega}, L,G) 
 	\propto  
 		P(\widehat{\Omega}  \mid \identifyadmixsource{\Omega}) P(\vec{\alpha}) P(G') P(\identifyadmixsource{G}) P(\vec{w}) P(\eta) 
@@ -471,31 +472,132 @@ spatiotemporal model
 spatialSTRUCTURE
 
 \section*{Methods}
-\gb{this is all just taken from the main text and put together in rough order.}
-\
-\subsection*{Normal Approximation to Drift}
-The parameter $\delta_B$, the amount of drift that has occurred in $B$ since it split off from $A$, is approximately equal to $\frac{t}{2N_e}$, where $t$ is time in generations, and $N_e$ is the effective population size.  Note that the binomial variance term in the normal variance in \eqref{eq:normal_drift} ignores the fact that the drift variance will change from generation to generation due to changes in the frequency of $\epsilon$ within a population over time.  Note also that this approximation works best for alleles at intermediate frequency, which are less likely to be lost or fixed during the interval separating $A$ and $B$.  However, if the extent of drift sufficiently limited (time scales are short or population sizes are large), the approximation of inter-generational binomial sampling to Brownian motion is good (\gb{see figure comparing fit of binomial sampling to fit of normal approx?}).  
+As described above, we have developed an algorithm, called SpaceMix, that uses the standardized sample allele frequency covariance and the the likelihood equation in Eqn. \eqref{eq:admixed_post_prob} to simultaneously estimate the posterior distribution of the population locations, $G'$, their sources of admixture, $\identifyadmixsource{G}$, their admixture proportions, $w$, their independent drift parameters, $\eta$, and the parameters of the model of isolation by distance, $\vec{\alpha}$.  The inference procedure has two principal components: (1) the derivation of the standardized sample allele frequency covariance matrix, and (2) a Markov chain Monte Carlo algorithm that samples parameter values from the posterior distribution.  Here, we describe these procedures in detail.
 
-Unlike multivariate normal observations however, allele frequencies at variable loci are constrained to have a mean between 0 and 1, and may have heterogeneous variance across loci.  To more closely meet the assumptions of our statistical inference model, we mean-center and normalize our observations by the following procedure.
-
-\subsection*{Sample Mean-Centering Procedure}
-However, we do not have the population frequencies nor the `ancestral' frequency $\epsilon$. Instead we mean-center and normalize our observations at a locus using the weighted mean sample frequency in place of $\epsilon$.  Recall that the sample allele frequency at locus $\ell$ in population $k$ is given by $\hat{f}_{\ell,k} = C_{\ell,k}/S_{\ell,k}$.  We wish to calculate a sample mean frequency at each locus weighted by the sample size in each population.  As sample size may vary across loci, we first calculate $\bar{S}_k$, the mean population sample size in population $k$, as $\bar{S}_k = \frac{1}{L}\sum_L S_{\ell,k}$.  We then calculate the weighted sample mean frequency at locus $\ell$ as follows:
+\subsection*{Deriving the standardized sample covariance}
+In the section on the normal approximation to drift, we describe how genetic drift - serial binomial sampling of allele frequencies through time - can be approximated as normally distributed change in allele frequencies around some ancestral mean, which we call $\epsilon_A$.  Under this normal approximation, the frequency of an allele in daughter population $B$ (sampled at some later point in time) can be described by the following equation,
+%
 \begin{equation}
-\label{eq:sample_mean_freq}
+\label{eq:normal_drift}
+\epsilon_B \sim N(\epsilon_A,\delta_B(\epsilon_A)(1-\epsilon_A)),
+\end{equation}
+%
+where $\delta_B$ is the amount of drift separating $A$ and $B$.  This drift parameter is approximately equal to $\frac{t}{2N_e}$, where $t$ is time in generations separating $A$ and $B$, and $N_e$ is the constant effective population size.  Note that the binomial variance term in the normal variance in \eqref{eq:normal_drift} ignores the fact that the drift variance will change from generation to generation due to changes in the frequency of $\epsilon$ within a population over time.  Note also that this approximation works best for alleles at intermediate frequency, which are less likely to be lost or fixed during the interval separating the sampling of $A$ and $B$.  However, if the extent of drift is sufficiently limited (time scales are short or population sizes are large), the approximation of inter-generational binomial sampling to Brownian motion is good.  
+
+Among populations, the differentiating process of drift is counteracted by the homogenizing force of migration, so that populations with higher levels of historical or ongoing migration can be thought of as having more shared drift, i.e. stronger covariance in their allele frequency deviation around the ancestral (or global) mean.  Following Tobler's law (``everything is related to everything else, but near things are more related than distant things), we assume that the rate of migration between populations is inversely proportional to their geographic separation, such that the covariance in allele frequencies across loci between a pair of samples separated by a small distance is greater than that between a pair separated by a large distance.  
+
+We model the population frequencies at a locus as multivariate normal (MVN) with mean $\epsilon$ and covariance matrix $\epsilon(1 - \epsilon)\Omega$.  The multivariate normal distribution offers a natural statistical framework for describing this covariance, which may be straightforwardly modeled as a parametric function of any pairwise distance variable.
+
+We wish to model the covariance between populations as the result of a spatial process, in which migration rates between nearby populations are higher than between distant ones, so that a population has higher covariance with a close neighbor than with a more distant population.  We choose as the form of our parametric covariance matrix a simple and flexible model, with an exponential decay of allele frequency covariance with geographic distance (Wasser et al 2004, Bradburd, Ralph, and Coop 2013).  The covariance between population allele frequencies in populations $i$ and $j$ is 
+%
+\begin{equation}
+%\label{eq:spatial_covariance}
+\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right) \text{,}
+\end{equation}
+%
+where $D_{i,j}$ is the geographic distance between population $i$ and $j$ (and therefore a function of their locations, $G_i$ and $G_j$), $\alpha_0$ controls the within-population variance, or the covariance when distance between points is 0 (the sill of the covariance matrix),  $\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay. While previously we and others have used a logit link function combined with binomial sampling to model the sample frequencies \citep{Wasser, Bradburd}, here we chose to treat these standardized frequencies $\hat{f}_{\ell}$, as multivariate normal across populations \citep[]{Treemix}. To accommodate the effect of finite sample size we introduce ``nuggets'' of population-specific variance terms, on the diagonal of allelic covariance matrix,which accommodate the effects of both sampling and unshared genetic drift.
+%
+\begin{equation}
+%\label{eq:spatial_covariance2}
+\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right) + \delta(\bar{S}^{-1} + \eta) \text{,}
+\end{equation}
+%
+where $\delta_{i,j}$ is the indicator function $1$ if $i=j$, and $0$ otherwise. Our $\eta$ is a vector of population-specific variances, where $\eta_k$, the nugget estimated in population $k$, represents any genetic drift (or more generally excess allele frequency variance) not captured by our spatial model. Finally $\bar{S}$ is a vector of the mean sample sizes in each population, where $\bar{S}_k$, is the mean sample size across all loci in population $k$.  We then assume that
+%
+\begin{equation}
+\hat{f}_{\ell} \sim MVN(\epsilon, \epsilon (1-\epsilon)\Omega)
+\end{equation}
+%
+with $\Omega$ given by Eqn. \eqref{eq:spatial_covariance2},  where the $\epsilon(1 - \epsilon)  \bar{S}^{-1}$ on the diagonal of the covariance matrix captures, to first approximation, the effects of sampling.
+
+Given the assumption of multivariate normality for our sample frequencies, it follows that the sample covariance of our standardized sample frequencies calculated across loci ($\widehat{\Omega} = f f^T$)  is Wishart distributed with degrees of freedom equal to the number of loci ($L$) across which the covariance is calculated.
+That is, 
+%
+\begin{equation}
+%\label{eq:wishart_dist}
+\widehat{\Omega} \sim \mathcal{W}\left( L^{-1} \Omega, L	\right)
+\end{equation}
+%
+We can calculate an estimate of the covariance matrix ($\Omega$) across loci as 
+%
+\begin{equation}
+%\label{eq:sample_cov}
+\widehat{\Omega} = \frac{1}{L} \sum_{\ell=1}^{L} \frac{(\hat{f}_{\ell}  - \epsilon) (\hat{f}_{\ell}  - \epsilon)^T}{\epsilon(1-\epsilon)} \text{.}
+\end{equation}
+%
+Then, if we define our standardized sample allele frequencies, $X_\ell$, as
+%
+\begin{equation}
+%\label{eq:standardized_sample_freqs}
+X_\ell = (\hat{f}_{\ell}  - \epsilon)/\sqrt{\epsilon(1-\epsilon)}\text{,}
+\end{equation}
+%
+the expression given in Eqn. \eqref{eq:sample_cov} gives the sample covariance matrix of our standardized sample allele frequencies.
+Given the assumption of multivariate normality for our sample frequencies, it follows that this sample covariance of our standardized sample frequencies calculated across loci ($\widehat{\Omega} = X X^T$)  is Wishart distributed with degrees of freedom equal to the number of loci ($L$) across which the covariance is calculated.
+That is, 
+%
+\begin{equation}
+%\label{eq:wishart_dist}
+P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left(\widehat{\Omega} \mid L^{-1} \Omega,L \right)
+\end{equation}
+%
+However, we do not have the population frequencies nor the `ancestral' frequency $\epsilon$. Instead we mean-center and normalize our observations at a locus using the weighted mean sample frequency in place of $\epsilon$.  Recall that the sample allele frequency at locus $\ell$ in population $k$ is given by $\hat{f}_{\ell,k} = C_{\ell,k}/S_{\ell,k}$.  We wish to calculate a sample mean frequency at each locus weighted by the sample size in each population.  As sample size may vary across loci, we first calculate $\bar{S}_k$, the mean population sample size in population $k$, as $\bar{S}_k = \frac{1}{L}\sum_L S_{\ell,k}$.  We then calculate the weighted sample mean frequency at locus $\ell$ as follows:
+%
+\begin{equation}
+%\label{eq:sample_mean_freq}
 \bar{f}_{\ell} = \frac{1}{\sum_K S_{\ell,k}} \sum_K \hat{f}_{\ell,k} S_{\ell,k}
 \end{equation}
+%
 We approximate the binomial variance at each locus by $\bar{f}_{\ell}(1-\bar{f}_{\ell})$.  To avoid modeling the heterogeneous effect of this variance across loci, we standardize by this variance.  We call the standardized allele frequencies $X_{\ell,k}$, and calculate them as follows:
+%
 \begin{equation}
-\label{eq:MCN_freqs}
+%\label{eq:MCN_freqs}
 X_{\ell,k} = \frac{ \hat{f}_{\ell,k} - \bar{f}_{\ell} } {\bar{f}_{\ell}(1-\bar{f}_{\ell})}
 \end{equation}
-Note, by using the sample mean frequency to mean-center our observations, we lose a degree of freedom, and reduce the covariance across loci between populations (sometimes inducing negative covariance among distant populations). We accommodate the extra sampling noise distortion, and reduced rank of the covariance matrix by assuming that our
+%
+\gb{Peter, come to my aid!}\\
+Note, by using the sample mean frequency to mean-center our observations, we lose a degree of freedom, and reduce the covariance across loci between populations (sometimes inducing negative covariance between distant populations). We accommodate the extra sampling noise distortion and the reduced rank of the covariance matrix by assuming that our
+%
 \begin{equation}
 X_{\ell} \sim MVN(0, \Omega^{\prime} )
 \end{equation}
-where $\Omega^{\prime}$ is a simple transform of $\Omega$.
+%
+where $\Omega^{\prime}$ is a simple transform of $\Omega$.  Specifically, 
+%
+\begin{equation}
+\Omega^{\prime} = \Psi^{T}   \Omega   \Psi \text{,}
+\end{equation}
+%
+where
+ %
+$\Psi$ is a projection matrix that is used to project our degenerate covariance matrix back into full rank.  This projection matrix is given by
+\begin{equation}
+\Psi = \text{qr.Q}(\text{qr}(\Upsilon))[,1:(k-1)] \text{,}
+\end{equation}
+%
+where $\text{qr}$ is the QR decomposition, $\text{qr.Q}$ returns the original matrix on which the QR decomposition was performed, and $\Upsilon$, a matrix to mean-center the sample allele frequencies, weighting by the mean sample size in each population, is given by 
+%
+\[ \Upsilon = \left( 
+\begin{array}{cccc}
+1 - \frac{\bar{S}_1}{\sum\limits_{i=1}^{K} \bar{S}_k	} & -\frac{\bar{S}_2}{\sum\limits_{i=1}^{K} \bar{S}_k	} & \ldots & -\frac{\bar{S}_k}{\sum\limits_{i=1}^{K} \bar{S}_k	} \\
+-\frac{\bar{S}_1}{\sum\limits_{i=1}^{K} \bar{S}_k	} & 1 - \frac{\bar{S}_2}{\sum\limits_{i=1}^{K} \bar{S}_k	} & \ldots & -\frac{\bar{S}_k}{\sum\limits_{i=1}^{K} \bar{S}_k	} \\
+\vdots & \vdots & \ddots  & \vdots	\\
+-\frac{\bar{S}_1}{\sum\limits_{i=1}^{K} \bar{S}_k	} & -\frac{\bar{S}_2}{\sum\limits_{i=1}^{K} \bar{S}_k	} & \ldots  & 1 - \frac{\bar{S}_k}{\sum\limits_{i=1}^{K} \bar{S}_k	} 
+\end{array} \right).\]\\
+%
+The standardized sample allele frequency covariance $\Omega^{\prime}$ is then simply given by $XX^{T}$, and the Wishart likelihood of the standardized sample covariance is taken as a function of the projected parametric covariance matrix as follows:
+%
+\begin{equation}
+%\label{eq:wishart_dist}
+P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left(\widehat{\Omega^{\prime}} \mid L^{-1} \Psi^{T}   \Omega   \Psi,L \right) \text{.}
+\end{equation}
+%
 
-Between populations, the differentiating process of drift is counteracted by the homogenizing force of migration, so that populations with higher levels of historical or ongoing migration can be thought of as having more shared drift.  Across loci, populations with highly shared drift will tend to covary more strongly in the deviations their allele frequencies take from some ancestral (or global) mean.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Markov chain Monte Carlo Inference Procedure}
+We use a Bayesian approach to parameter inference, and specify priors on all parameters.
+
 
 % %%%%%%%%% %%%%%%%%% 
 \subsection*{Modeling Admixture}

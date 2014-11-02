@@ -13,7 +13,15 @@ procrusteez <- function(obs.locs,target.locs,k,source.locs = NULL,option){
 		proc.pop.loc <- proc.loc$scale * source.locs %*% proc.loc$rotation + matrix(proc.loc$translation,nrow=k,ncol=2,byrow=TRUE)
 	}
 	return(proc.pop.loc)	
-} 
+}
+
+fade.admixture.source.points <- function(pop.cols,admix.proportions){
+	faded.colors <- numeric(length(pop.cols))
+	for(i in 1:length(pop.cols)){
+		faded.colors[i] <- adjustcolor(pop.cols[i],admix.proportions[i])
+	}
+	return(faded.colors)
+}
 
 Covariance <- function(a0,aD,a2,GeoDist) {
 	covariance <- (1/a0)*exp(-(aD*GeoDist)^a2)
@@ -39,14 +47,6 @@ transformed.Covariance <- function(covariance,projection.matrix){
 	transformed.covariance <- 
 		crossprod(projection.matrix,covariance) %*% projection.matrix
 	return(transformed.covariance)		
-}
-
-fade.admixture.source.points <- function(pop.cols,admix.proportions){
-	faded.colors <- numeric(length(pop.cols))
-	for(i in 1:length(pop.cols)){
-		faded.colors[i] <- adjustcolor(pop.cols[i],admix.proportions[i])
-	}
-	return(faded.colors)
 }
 
 get.mean.sample.size <- function(sample.sizes){
@@ -113,8 +113,8 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 			plot(target.coords,type='n',
 					xlim=c(68,116), #realpr1: c(68,115), realpr2: c(53,101), randpr: c(71,114)
 					ylim=c(26,53), #realpr1: c(26,53), realpr2: c(25,54), randpr: c(71,114)
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=pop.col,
@@ -137,8 +137,8 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 			plot(target.coords,type='n',
 					xlim=c(68,101), #realpr1: c(68,101), realpr2: c(68,101), randpr: c(71,99)
 					ylim=c(25,55), #realpr1: c(25,55), realpr2: c(25,55), randpr: c(20.5,56)
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=pop.col,
@@ -184,8 +184,8 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 			plot(target.coords,type='n',
 					xlim=c(53,101), #realpr1: c(68,115), realpr2: c(53,101), randpr: c(71,114)
 					ylim=c(25,54), #realpr1: c(26,53), realpr2: c(25,54), randpr: c(71,114)
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=pop.col,
@@ -208,8 +208,8 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 			plot(target.coords,type='n',
 					xlim=c(68,101), #realpr1: c(68,101), realpr2: c(68,101), randpr: c(71,99)
 					ylim=c(25,55), #realpr1: c(25,55), realpr2: c(25,55), randpr: c(20.5,56)
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=pop.col,
@@ -254,8 +254,8 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 			plot(target.coords,type='n',
 					xlim=c(71,114), #realpr1: c(68,115), realpr2: c(53,101), randpr: c(71,114)
 					ylim=c(23,55), #realpr1: c(26,53), realpr2: c(25,54), randpr: c(23,55)
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=pop.col,
@@ -278,8 +278,8 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 			plot(target.coords,type='n',
 					xlim=c(71,99), #realpr1: c(68,101), realpr2: c(68,101), randpr: c(71,99)
 					ylim=c(20.5,56), #realpr1: c(25,55), realpr2: c(25,55), randpr: c(20.5,56)
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=pop.col,
@@ -379,8 +379,8 @@ best <- which.max(Prob)
 							max(target.coords[,1],source.coords[,1])),
 					ylim=c(min(target.coords[,2],source.coords[,2]),
 							max(target.coords[,2],source.coords[,2])),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=plot.inds,
 						col=adjustcolor(inds.col,0.8),
@@ -404,8 +404,8 @@ best <- which.max(Prob)
 							max(target.coords[,1],source.coords[,1])),
 					ylim=c(min(target.coords[,2],source.coords[,2]),
 							max(target.coords[,2],source.coords[,2])),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=plot.inds,
 						col=adjustcolor(inds.col,0.8),
@@ -427,8 +427,8 @@ best <- which.max(Prob)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[,1]),max(target.coords[,1])+2),
 					ylim=c(min(target.coords[,2]),max(target.coords[,2])),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=plot.inds,
 						col=adjustcolor(inds.col,0.8),
@@ -440,8 +440,8 @@ best <- which.max(Prob)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
 					ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[-c(which(plot.inds=="TU")),],
 						labels=plot.inds[-c(which(plot.inds=="TU"))],
 						col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
@@ -453,8 +453,8 @@ best <- which.max(Prob)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
 					ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				points(target.coords[-c(which(plot.inds=="TU")),],
 						col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
 						cex=last.params$nugget*5,lwd=1.5)
@@ -476,8 +476,8 @@ best <- which.max(Prob)
 							max(target.coords[,1],source.coords[,1])),
 					ylim=c(min(target.coords[,2],source.coords[,2]),
 							max(target.coords[,2],source.coords[,2])),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=plot.inds,
 						col=adjustcolor(inds.col,0.8),
@@ -501,8 +501,8 @@ best <- which.max(Prob)
 							max(target.coords[,1],source.coords[,1])),
 					ylim=c(min(target.coords[,2],source.coords[,2]),
 							max(target.coords[,2],source.coords[,2])),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=plot.inds,
 						col=adjustcolor(inds.col,0.8),
@@ -524,8 +524,8 @@ best <- which.max(Prob)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[,1]),max(target.coords[,1])+2),
 					ylim=c(min(target.coords[,2]),max(target.coords[,2])),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=plot.inds,
 						col=adjustcolor(inds.col,0.8),
@@ -537,8 +537,8 @@ best <- which.max(Prob)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
 					ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[-c(which(plot.inds=="TU")),],
 						labels=plot.inds[-c(which(plot.inds=="TU"))],
 						col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
@@ -550,8 +550,8 @@ best <- which.max(Prob)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
 					ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				points(target.coords[-c(which(plot.inds=="TU")),],
 						col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
 						cex=last.params$nugget*5,lwd=1.5)
@@ -574,8 +574,8 @@ best <- which.max(Prob)
 							max(target.coords[,1],source.coords[,1])),
 					ylim=c(min(target.coords[,2],source.coords[,2]),
 							max(target.coords[,2],source.coords[,2])),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=plot.inds,
 						col=adjustcolor(inds.col,0.8),
@@ -599,8 +599,8 @@ best <- which.max(Prob)
 							max(target.coords[,1],source.coords[,1])),
 					ylim=c(min(target.coords[,2],source.coords[,2]),
 							max(target.coords[,2],source.coords[,2])),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=plot.inds,
 						col=adjustcolor(inds.col,0.8),
@@ -622,8 +622,8 @@ best <- which.max(Prob)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[,1]),max(target.coords[,1])+2),
 					ylim=c(min(target.coords[,2]),max(target.coords[,2])),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=plot.inds,
 						col=adjustcolor(inds.col,0.8),
@@ -635,8 +635,8 @@ best <- which.max(Prob)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
 					ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[-c(which(plot.inds=="TU")),],
 						labels=plot.inds[-c(which(plot.inds=="TU"))],
 						col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
@@ -648,8 +648,8 @@ best <- which.max(Prob)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
 					ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				points(target.coords[-c(which(plot.inds=="TU")),],
 						col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
 						cex=last.params$nugget*5,lwd=1.5)
@@ -696,7 +696,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 		eur.eff.long <- adj.nonamaf.long/max(adj.nonamaf.long)
 		eur.loc.cols <- hsv(h = eur.eff.long * 0.4 + 0.6,s=1,v=1)
 		am.eff.long <- (globetrotter.long[americas] + abs(min(globetrotter.long[americas])))/max(globetrotter.long[americas] + abs(min(globetrotter.long[americas])))
-		am.loc.cols <- hsv(h = (am.eff.long) * 0.05 + 0.1,s=1,v=1)
+		am.loc.cols <- hsv(h = (am.eff.long) * 0.08 + 0.03,s=1,v=1)
 		continent.col <- numeric(k)
 		continent.col[americas] <- am.loc.cols
 		continent.col[africa] <- af.loc.cols
@@ -709,7 +709,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 	require(maps)
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_world_map_dots.png",res=300,width=9*300,height=5.5*300)
 	#quartz(width=9,height=5.5)
-	map("world")
+	map("world",interior=FALSE,lwd=0.5,ylim=c(-60,85))
 		box(lwd=2)
 		points(globe.coords,pch=20,col=continent.col,cex=2)
 #			legend(x = -175,y=-10,
@@ -719,9 +719,9 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 	
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_world_map_text.png",res=300,width=9*300,height=5.5*300)
 	#quartz(width=9,height=5.5)
-	map("world")
+	map("world",interior=FALSE,lwd=0.5,ylim=c(-60,85),xlim=c(-130,180))
 		box(lwd=2)
-		text(globe.coords,pops,col=continent.col,cex=0.5,font=2)
+		text(globe.coords,pops,col=continent.col,cex=0.8,font=2)
 #			legend(x = -175,y=-10,
 #					legend = c("Africa","Western Eurasia","Central Eurasia","Eastern Eurasia","Oceania","Americas"),
 #					text.col = c("forestgreen","blue","purple","red","brown","orange"),cex=0.8)
@@ -737,8 +737,8 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			plot(target.coords,type='n',
 					xlim=c(x.min,x.max),
 					ylim=c(y.min,y.max),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=adjustcolor(continent.col,0.8),
@@ -759,8 +759,8 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			plot(target.coords[africa,],type='n',
 					xlim=c(x.min,x.max),
 					ylim=c(y.min,y.max),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[africa,],
 						labels=pops[africa],
 						col=adjustcolor(continent.col[africa],0.8),
@@ -778,8 +778,8 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			plot(target.coords[-africa,],type='n',
 					xlim=c(x.min,x.max),
 					ylim=c(y.min,y.max),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[-africa,],
 						labels=pops[-africa],
 						col=adjustcolor(continent.col[-africa],0.8),
@@ -797,8 +797,8 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			plot(target.coords[-c(africa,americas,oceania),],type='n',
 					xlim=c(x.min,x.max),
 					ylim=c(y.min,y.max),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[-c(africa,americas,oceania),],
 						labels=pops[-c(africa,americas,oceania)],
 						col=adjustcolor(continent.col[-c(africa,americas,oceania)],0.8),
@@ -917,8 +917,8 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 			plot(target.coords,type='n',
 					xlim = c(18,68),
 					ylim = c(-20,50),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=adjustcolor(continent.col,1),
@@ -937,24 +937,24 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 					x1 = target.coords[,1],
 					y1 = target.coords[,2],
 					col=globe.admix.plot.cols,
-					lwd=last.params$admix.proportions,
+					lwd=admix.proportions[,best],
 					length=0.1)
 			box(lwd=2)
 #			legend(x = "bottomright",pch=NA,
 #					legend = c("Africa","Western Eurasia","Central Eurasia","Eastern Eurasia","Oceania","Americas","population","source of admixture"),
 #					text.col = c("forestgreen","blue","purple","red","brown","orange",1,1),
 #					text.font = c(rep(1,6),2,3),family=c())
-			legend(x="topleft",
-					lwd = c(1,0.5,0.1),
-					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
-					legend = c("w = 0.5","w = 0.25","w = 0.05"),
-					title = "Admixture proportions")
+			# legend(x="topleft",
+					# lwd = c(1,0.5,0.1),
+					# col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					# legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					# title = "Admixture proportions")
 	dev.off()
 
 
 	require(maps)
-	x.subplot1 <- c(43,67)
-	y.subplot1 <- c(-16,20)
+	x.subplot1 <- c(43,68)
+	y.subplot1 <- c(-18,20.5)
 	x.subplot2 <- c(15,32.5)
 	y.subplot2 <- c(25.5,44)
 	subplot1.x.coords <- c(19.2,30)
@@ -987,29 +987,29 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 					x1 = target.coords[,1],
 					y1 = target.coords[,2],
 					col=globe.admix.plot.cols,
-					lwd=last.params$admix.proportions,
+					lwd=admix.proportions[,best],
 					length=0.1)
 		rect(xleft = subplot1.x.coords[1]-2,ybottom = subplot1.y.coords[1],
-				xright = subplot1.x.coords[2]+1.5,ytop = subplot1.y.coords[2]+1,lty=2,border="gray",col=NA)
-		lines(x = c(subplot1.x.coords[2]+1.5,x.subplot1[1]), y = c(subplot1.y.coords[2]+1,y.subplot1[2]) , lty=2, col="gray")
-		lines(x = c(subplot1.x.coords[2]+1.5,x.subplot1[1]), y = c(subplot1.y.coords[1],y.subplot1[1]) , lty=2, col="gray")
+				xright = subplot1.x.coords[2]+1.5,ytop = subplot1.y.coords[2]+1,lty=2,border="gray",col=NA,lwd=0.6)
+		lines(x = c(subplot1.x.coords[2]+1.5,x.subplot1[1]), y = c(subplot1.y.coords[2]+1,y.subplot1[2]),lwd=0.6 , lty=2, col="gray")
+		lines(x = c(subplot1.x.coords[2]+1.5,x.subplot1[1]), y = c(subplot1.y.coords[1],y.subplot1[1]),lwd=0.6 , lty=2, col="gray")
 		TeachingDemos::subplot(fun = {
 						plot(target.coords,type='n',xlim = subplot1.x.coords,ylim = subplot1.y.coords,xlab="",ylab="",xaxt='n',yaxt='n') ; 
 						text(target.coords[c(1:k),],
 								labels=pops,
 								col=adjustcolor(continent.col,1),
-								font=2,cex=0.8) ; 
+								font=2,cex=1) ; 
 						text(source.coords[,1],
 								source.coords[,2],
 								labels=pops,
 								font=3,
-								col=globe.admix.plot.cols,cex=0.8,family="HersheySerif") ; 
+								col=globe.admix.plot.cols,cex=1,family="HersheySerif") ; 
 						arrows(	x0 = source.coords[,1],
 								y0 = source.coords[,2],
 								x1 = target.coords[,1],
 								y1 = target.coords[,2],
 								col=globe.admix.plot.cols,
-								lwd=last.params$admix.proportions,
+								lwd=admix.proportions[,best],
 								length=0.1) ; 
 							abline(v=0,lty=2,lwd=0.5) ; 
 							box(lwd=1.1)
@@ -1032,8 +1032,8 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 			plot(target.coords,type='n',
 					xlim = c(18,35),
 					ylim = c(-21,0),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=adjustcolor(continent.col,1),
@@ -1048,18 +1048,18 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 					x1 = target.coords[,1],
 					y1 = target.coords[,2],
 					col=globe.admix.plot.cols,
-					lwd=last.params$admix.proportions,
+					lwd=admix.proportions[,best],
 					length=0.1)
 			box(lwd=2)
 #			legend(x = "bottomright",pch=NA,
 #					legend = c("Africa","Western Eurasia","Central Eurasia","Eastern Eurasia","Oceania","Americas","population","source of admixture"),
 #					text.col = c("forestgreen","blue","purple","red","brown","orange",1,1),
 #					text.font = c(rep(1,6),2,3))
-			legend(x="topleft",
-					lwd = c(1,0.5,0.1),
-					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
-					legend = c("w = 0.5","w = 0.25","w = 0.05"),
-					title = "Admixture proportions")
+			# legend(x="topleft",
+					# lwd = c(1,0.5,0.1),
+					# col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					# legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					# title = "Admixture proportions")
 	dev.off()
 
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/eurasia_plus_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
@@ -1067,8 +1067,8 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 			plot(target.coords,type='n',
 					xlim = c(34.5,70),
 					ylim = c(25,48),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=adjustcolor(continent.col,1),
@@ -1083,13 +1083,13 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 					x1 = target.coords[,1],
 					y1 = target.coords[,2],
 					col=globe.admix.plot.cols,
-					lwd=last.params$admix.proportions,
+					lwd=admix.proportions[,best],
 					length=0.1)
-			legend(x="topright",
-					lwd = c(1,0.5,0.1),
-					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
-					legend = c("w = 0.5","w = 0.25","w = 0.05"),
-					title = "Admixture proportions")
+			# legend(x="topright",
+					# lwd = c(1,0.5,0.1),
+					# col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					# legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					# title = "Admixture proportions")
 			box(lwd=2)
 	dev.off()
 	
@@ -1098,8 +1098,8 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 			plot(target.coords,type='n',
 					xlim = c(42.5,52.5),
 					ylim = c(33.5,40),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=adjustcolor(continent.col,1),
@@ -1114,7 +1114,45 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 					x1 = target.coords[,1],
 					y1 = target.coords[,2],
 					col=globe.admix.plot.cols,
-					lwd=last.params$admix.proportions,
+					lwd=admix.proportions[,best],
+					length=0.1)
+			# legend(x="topleft",
+					# lwd = c(1,0.5,0.1),
+					# col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					# legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					# title = "Admixture proportions")
+			box(lwd=2)
+	dev.off()
+	
+	if(FALSE){
+	ind.proc.target.coords <- procrusteez(globe.coords[c(western.eurasia,east.asia),],population.coordinates[[best]][c(western.eurasia,east.asia),],length(c(western.eurasia,east.asia)),option=1)
+	ind.proc.source.coords <- procrusteez(globe.coords[c(western.eurasia,east.asia),],population.coordinates[[best]][c(western.eurasia,east.asia),],length(c(western.eurasia,east.asia)),population.coordinates[[best]][k + c(western.eurasia,east.asia),],option=2)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/eurasia_Ad_map_IndProc.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(ind.proc.target.coords,type='n',
+					yaxt='n',
+					xaxt='n',
+					xlim = c(min(ind.proc.target.coords[,1],ind.proc.source.coords[,1]),
+							max(ind.proc.target.coords[,1],ind.proc.source.coords[,1])),	#c(18,140),
+					ylim = c(min(ind.proc.target.coords[,2],ind.proc.source.coords[,2]),
+							max(ind.proc.target.coords[,2],ind.proc.source.coords[,2])),	#c(33.5,40),
+					xlab="Eastings",
+					ylab="Northings")
+				text(ind.proc.target.coords,
+						labels=pops[c(western.eurasia,east.asia)],
+						col=adjustcolor(continent.col[c(western.eurasia,east.asia)],1),
+						font=2,cex=0.8)
+				text(ind.proc.source.coords[,1],
+						ind.proc.source.coords[,2],
+							labels=pops[c(western.eurasia,east.asia)],
+							font=3,
+							col=globe.admix.plot.cols[c(western.eurasia,east.asia)],cex=0.8,family="HersheySerif")
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=admix.proportions[,best],
 					length=0.1)
 			legend(x="topleft",
 					lwd = c(1,0.5,0.1),
@@ -1123,14 +1161,14 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 					title = "Admixture proportions")
 			box(lwd=2)
 	dev.off()
-	
+	}
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/western_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(42.5,48),
 					ylim = c(34.5,37.5),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=adjustcolor(continent.col,1),
@@ -1145,13 +1183,13 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 					x1 = target.coords[,1],
 					y1 = target.coords[,2],
 					col=globe.admix.plot.cols,
-					lwd=last.params$admix.proportions,
+					lwd=admix.proportions[,best],
 					length=0.1)
-			legend(x="topleft",
-					lwd = c(1,0.5,0.1),
-					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
-					legend = c("w = 0.5","w = 0.25","w = 0.05"),
-					title = "Admixture proportions")
+			# legend(x="topleft",
+					# lwd = c(1,0.5,0.1),
+					# col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					# legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					# title = "Admixture proportions")
 			box(lwd=2)
 	dev.off()
 
@@ -1160,8 +1198,8 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 			plot(target.coords,type='n',
 					xlim = c(48.5,52.2),
 					ylim = c(36,39.1),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=adjustcolor(continent.col,1),
@@ -1176,13 +1214,13 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 					x1 = target.coords[,1],
 					y1 = target.coords[,2],
 					col=globe.admix.plot.cols,
-					lwd=last.params$admix.proportions,
+					lwd=admix.proportions[,best],
 					length=0.1)
-			legend(x="bottomleft",
-					lwd = c(1,0.5,0.1),
-					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
-					legend = c("w = 0.5","w = 0.25","w = 0.05"),
-					title = "Admixture proportions")
+			# legend(x="bottomleft",
+					# lwd = c(1,0.5,0.1),
+					# col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					# legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					# title = "Admixture proportions")
 			box(lwd=2)
 	dev.off()
 
@@ -1191,8 +1229,8 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 			plot(target.coords,type='n',
 					xlim = c(42.5,52.5),
 					ylim = c(33.5,46.5),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=adjustcolor(continent.col,1),
@@ -1207,13 +1245,13 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 					x1 = target.coords[,1],
 					y1 = target.coords[,2],
 					col=globe.admix.plot.cols,
-					lwd=last.params$admix.proportions,
+					lwd=admix.proportions[,best],
 					length=0.1)
-			legend(x="topleft",
-					lwd = c(1,0.5,0.1),
-					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
-					legend = c("w = 0.5","w = 0.25","w = 0.05"),
-					title = "Admixture proportions")
+			# legend(x="topleft",
+					# lwd = c(1,0.5,0.1),
+					# col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					# legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					# title = "Admixture proportions")
 			box(lwd=2)
 	dev.off()
 	
@@ -1222,8 +1260,8 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 			plot(target.coords,type='n',
 					xlim = c(42.5,55),
 					ylim = c(29,40),
-					xlab="long",
-					ylab="lat")
+					xlab="Eastings",
+					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=adjustcolor(continent.col,1),
@@ -1238,13 +1276,13 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 					x1 = target.coords[,1],
 					y1 = target.coords[,2],
 					col=globe.admix.plot.cols,
-					lwd=last.params$admix.proportions,
+					lwd=admix.proportions[,best],
 					length=0.1)
-			legend(x=47.5,y=32,
-					lwd = c(1,0.5,0.1),
-					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
-					legend = c("w = 0.5","w = 0.25","w = 0.05"),
-					title = "Admixture proportions")
+			# legend(x=47.5,y=32,
+					# lwd = c(1,0.5,0.1),
+					# col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					# legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					# title = "Admixture proportions")
 			box(lwd=2)
 	dev.off()
 	
@@ -1297,6 +1335,445 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 		names(globe.ad.data.table) <- c("mean_admix_prop","mean_nugget")
 
 	write.csv(globe.ad.data.table,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_mean_pop_adprop_nugg_vals.csv")
+
+################
+#	Admixture - real prior 3
+################
+load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceruns/real_prior3/globe_spaceruns_realpr3_LongRun/globe_spaceruns_realpr3space_MCMC_output1.Robj")
+	best <- which.max(Prob)
+	target.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,option=1)
+	source.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2) 
+
+	globe.admix.plot.cols <- fade.admixture.source.points(continent.col,admix.proportions[,best])
+
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/globe_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(-6,80),
+					ylim = c(-16,60),
+					xlab="Eastings",
+					ylab="Northings")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+				# points(source.coords[,1],
+						# source.coords[,2],
+							# col=globe.admix.plot.cols,
+							# pch=20)
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=admix.proportions[,best],
+					length=0.1)
+			box(lwd=2)
+#			legend(x = "bottomright",pch=NA,
+#					legend = c("Africa","Western Eurasia","Central Eurasia","Eastern Eurasia","Oceania","Americas","population","source of admixture"),
+#					text.col = c("forestgreen","blue","purple","red","brown","orange",1,1),
+#					text.font = c(rep(1,6),2,3),family=c())
+			legend(x="topleft",
+					lwd = c(1,0.5,0.1),
+					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
+					legend = c("w = 0.5","w = 0.25","w = 0.05"),
+					title = "Admixture proportions")
+	dev.off()
+
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/subsaharan_africa_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(-2,18),
+					ylim = c(-19,6),
+					xlab="Eastings",
+					ylab="Northings")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=admix.proportions[,best],
+					length=0.1)
+			box(lwd=2)
+	dev.off()
+
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/eurasia_plus_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(34.5,72),
+					ylim = c(23,52),
+					xlab="Eastings",
+					ylab="Northings")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=admix.proportions[,best],
+					length=0.1)
+			box(lwd=2)
+	dev.off()
+	
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(38,55),
+					ylim = c(26,45),
+					xlab="Eastings",
+					ylab="Northings")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=admix.proportions[,best],
+					length=0.1)
+			box(lwd=2)
+	dev.off()
+	
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/western_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(44.3,48),
+					ylim = c(29,35),
+					xlab="Eastings",
+					ylab="Northings")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=admix.proportions[,best],
+					length=0.1)
+			box(lwd=2)
+	dev.off()
+
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/eastern_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(48,54),
+					ylim = c(38,42),
+					xlab="Eastings",
+					ylab="Northings")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=admix.proportions[,best],
+					length=0.1)
+			box(lwd=2)
+	dev.off()
+	
+	pop.order <- c(africa[order(globe.coords[africa,2])],
+					western.eurasia[order(globe.coords[western.eurasia,1])],
+					east.asia[order(globe.coords[east.asia,1])],
+					oceania[rev(order(globe.coords[oceania,2]))],
+					americas[rev(order(globe.coords[americas,2]))])
+	admix.cred.sets <- lapply(pop.order,FUN=function(i){quantile(admix.proportions[i,]/2,c(0.025,0.975))})
+		names(admix.cred.sets) <- pops[pop.order]
+	nugget.cred.sets <- lapply(pop.order,FUN=function(i){quantile(nugget[i,],c(0.025,0.975))})
+		names(nugget.cred.sets) <- pops[pop.order]
+
+	make.cred.bars <- function(quantile.vector,x.coord,bar.width,color){
+		lines(x = c(x.coord-bar.width/2,x.coord+bar.width/2),
+				y = c(quantile.vector[1],quantile.vector[1]),col=color)
+		lines(x = c(x.coord-bar.width/2,x.coord+bar.width/2),
+				y = c(quantile.vector[2],quantile.vector[2]),col=color)
+		lines(x = c(x.coord,x.coord),
+				y = quantile.vector,col=adjustcolor(color,0.15),lwd=0.5)
+	}
+
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/globe_Ad_proportions.png",res=300,width=12*300,height=5*300)
+		#quartz(width=12,height=5)
+		plot(rowMeans(admix.proportions)[pop.order]/2,type='n',
+				main = "Mean Admixture Proportions",xlab="population",
+				ylab="admixture proportion (w)",ylim=c(0,max(unlist(admix.cred.sets))))
+		for(i in 1:k){
+			# lines(x = c(i,i),y=c(admix.cred.sets[[i]]),col=continent.col[pop.order][i])
+			make.cred.bars(admix.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
+		}
+			text(rowMeans(admix.proportions)[pop.order]/2,col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
+	dev.off()
+								
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/globe_Ad_nugget.png",res=300,width=12*300,height=5*300)
+		#quartz(width=12,height=5)
+		plot(rowMeans(nugget)[pop.order],type='n',
+				main = "Mean Population Nuggets",
+				xlab="population",ylab="nugget",ylim=c(0,max(unlist(nugget.cred.sets))))
+		for(i in 1:k){
+			make.cred.bars(nugget.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
+			# lines(x = c(i,i),y=c(nugget.cred.sets[[i]]),col=continent.col[pop.order][i])
+		}
+			text(rowMeans(nugget)[pop.order],col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
+	dev.off()
+	
+	globe.ad.data.table <- data.frame(cbind(round(rowMeans(admix.proportions)[pop.order]/2,4),
+											round(rowMeans(nugget)[pop.order],4)),row.names=pops[pop.order])
+		names(globe.ad.data.table) <- c("mean_admix_prop","mean_nugget")
+
+	write.csv(globe.ad.data.table,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_mean_pop_adprop_nugg_vals.csv")
+
+################
+#	Admixture - real prior 2
+################
+load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceruns/real_prior2/globe_spaceruns_realpr2_LongRun/globe_spaceruns_realpr2space_MCMC_output1.Robj")
+
+	best <- which.max(Prob)
+	target.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,option=1)
+	source.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2) 
+
+	globe.admix.plot.cols <- fade.admixture.source.points(continent.col,admix.proportions[,best])
+
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/globe_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(0,70),
+					ylim = c(-16,48),
+					xlab="Eastings",
+					ylab="Northings")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=admix.proportions[,best],
+					length=0.1)
+			box(lwd=2)
+	dev.off()
+
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/subsaharan_africa_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(7,17),
+					ylim = c(-15,0),
+					xlab="Eastings",
+					ylab="Northings")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=admix.proportions[,best],
+					length=0.1)
+			box(lwd=2)
+	dev.off()
+
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/eurasia_plus_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(41,60),
+					ylim = c(29,46),
+					xlab="Eastings",
+					ylab="Northings")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=admix.proportions[,best],
+					length=0.1)
+			box(lwd=2)
+	dev.off()
+	
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(46,51),
+					ylim = c(30,39),
+					xlab="Eastings",
+					ylab="Northings")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=admix.proportions[,best],
+					length=0.1)
+			box(lwd=2)
+	dev.off()
+	
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/western_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(46.2,49),
+					ylim = c(32,35),
+					xlab="Eastings",
+					ylab="Northings")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=admix.proportions[,best],
+					length=0.1)
+			box(lwd=2)
+	dev.off()
+
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/eastern_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(47.5,50.7),
+					ylim = c(36.8,38.8),
+					xlab="Eastings",
+					ylab="Northings")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=admix.proportions[,best],
+					length=0.1)
+			box(lwd=2)
+	dev.off()
+	
+	pop.order <- c(africa[order(globe.coords[africa,2])],
+					western.eurasia[order(globe.coords[western.eurasia,1])],
+					east.asia[order(globe.coords[east.asia,1])],
+					oceania[rev(order(globe.coords[oceania,2]))],
+					americas[rev(order(globe.coords[americas,2]))])
+	admix.cred.sets <- lapply(pop.order,FUN=function(i){quantile(admix.proportions[i,]/2,c(0.025,0.975))})
+		names(admix.cred.sets) <- pops[pop.order]
+	nugget.cred.sets <- lapply(pop.order,FUN=function(i){quantile(nugget[i,],c(0.025,0.975))})
+		names(nugget.cred.sets) <- pops[pop.order]
+
+	make.cred.bars <- function(quantile.vector,x.coord,bar.width,color){
+		lines(x = c(x.coord-bar.width/2,x.coord+bar.width/2),
+				y = c(quantile.vector[1],quantile.vector[1]),col=color)
+		lines(x = c(x.coord-bar.width/2,x.coord+bar.width/2),
+				y = c(quantile.vector[2],quantile.vector[2]),col=color)
+		lines(x = c(x.coord,x.coord),
+				y = quantile.vector,col=adjustcolor(color,0.15),lwd=0.5)
+	}
+
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/globe_Ad_proportions.png",res=300,width=12*300,height=5*300)
+		#quartz(width=12,height=5)
+		plot(rowMeans(admix.proportions)[pop.order]/2,type='n',
+				main = "Mean Admixture Proportions",xlab="population",
+				ylab="admixture proportion (w)",ylim=c(0,max(unlist(admix.cred.sets))))
+		for(i in 1:k){
+			# lines(x = c(i,i),y=c(admix.cred.sets[[i]]),col=continent.col[pop.order][i])
+			make.cred.bars(admix.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
+		}
+			text(rowMeans(admix.proportions)[pop.order]/2,col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
+	dev.off()
+								
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/globe_Ad_nugget.png",res=300,width=12*300,height=5*300)
+		#quartz(width=12,height=5)
+		plot(rowMeans(nugget)[pop.order],type='n',
+				main = "Mean Population Nuggets",
+				xlab="population",ylab="nugget",ylim=c(0,max(unlist(nugget.cred.sets))))
+		for(i in 1:k){
+			make.cred.bars(nugget.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
+			# lines(x = c(i,i),y=c(nugget.cred.sets[[i]]),col=continent.col[pop.order][i])
+		}
+			text(rowMeans(nugget)[pop.order],col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
+	dev.off()
+
 
 ################################
 #	SIM FIGS

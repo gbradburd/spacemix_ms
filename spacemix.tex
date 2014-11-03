@@ -27,46 +27,48 @@
 \newcommand{\plr}[1]{{\em \color{green} #1}}
 \newcommand{\gc}[1]{{\em \color{blue} #1}}
 
-\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
-\tikzset{square arrow/.style={to path={-- ++(0,-.25) -| (\tikztotarget)}}}
+
+%%Graham's attempts at arrows in equations 
+% \newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+% \tikzset{square arrow/.style={to path={-- ++(0,-.25) -| (\tikztotarget)}}}
 
 
-\newcommand\source[1]{%
-    \tikz[remember picture,baseline,inner sep=0pt] {%
-        \node [name=source,anchor=base]{$#1$};
-    }%
-    \setcounter{target}{0}
-}
+% \newcommand\source[1]{%
+%     \tikz[remember picture,baseline,inner sep=0pt] {%
+%         \node [name=source,anchor=base]{$#1$};
+%     }%
+%     \setcounter{target}{0}
+% }
 
-\newcounter{target}
-\newcommand\target[1]{%
-    \tikz[remember picture,baseline,inner sep=0pt] {%
-        \node [name=target-\thetarget,anchor=base]{$#1$};
-    }%
-    \stepcounter{target}%
-}
+% \newcounter{target}
+% \newcommand\target[1]{%
+%     \tikz[remember picture,baseline,inner sep=0pt] {%
+%         \node [name=target-\thetarget,anchor=base]{$#1$};
+%     }%
+%     \stepcounter{target}%
+% }
 
-\newcommand\drawarrows{
-    \tikz[remember picture, overlay, bend left=20, -latex] {
-        \foreach \i [evaluate=\i as \n using int(\i-1)] in {1,...,\thetarget} {
-            \draw (source.north) to (target-\n.north);
-        }
-    }
-}
+% \newcommand\drawarrows{
+%     \tikz[remember picture, overlay, bend left=20, -latex] {
+%         \foreach \i [evaluate=\i as \n using int(\i-1)] in {1,...,\thetarget} {
+%             \draw (source.north) to (target-\n.north);
+%         }
+%     }
+% }
 
 
-\newcommand\newdrawarrows{
-    \tikz[remember picture, overlay, bend left=20, -latex] {
-        \foreach \i [evaluate=\i as \n using int(\i-1)] in {1,...,\thetarget} {
-            \draw (target-\n.north) to (source.north);
-        }
-    }
-}
+% \newcommand\newdrawarrows{
+%     \tikz[remember picture, overlay, bend left=20, -latex] {
+%         \foreach \i [evaluate=\i as \n using int(\i-1)] in {1,...,\thetarget} {
+%             \draw (target-\n.north) to (source.north);
+%         }
+%     }
+% }
 
 
 \geometry{a4paper}
 
-\title{A Novel Spatial Framework for Understanding Genetic Admixture}
+\title{A Novel Spatial Framework for Understanding Population Structure}
 \date{\vspace{-5ex}}
 \author{Gideon S. Bradburd$^{1,a}$, Peter L. Ralph$^{3,b}$, Graham M. Coop$^{1,c}$}
 
@@ -287,12 +289,14 @@ The models described above may be used in various combinations.  In the simplest
 
 \gb{A note here about how this complex model is still identifiable}
 
-An obvious concern is the identifability of all of these parameters, most notability whether population locations, admixture locations and proportions can be estimated. If a population has received some level of admixture from a another population what is to stop it simply moving towards that population to in geogenetic space to satisfy its increased resemblance to that population, rather than choosing admixture from that location. 
-\begin{equation}
-\source{A}~~~~B~~~~ \target{C}~~~~D
-\drawarrows
-\end{equation}
-blah blah
+An natural concern is the identifability of all of these parameters, most notability whether population locations, admixture locations and proportions can be estimated. If a population has received some level of admixture from a another population what is to stop it simply moving towards that population in geogenetic space to satisfy its increased resemblance to that population, rather than choosing admixture from that location. 
+
+%%%Graham's attempts at arrows in equations
+%\begin{equation}
+%\source{A}~~~~B~~~~ \target{C}~~~~D
+%\drawarrows
+%\end{equation}
+%blah blah
 
 % \begin{equation}
 %   A~~~~B\tikzmark{b} ~~~~ C~~~~\tikzmark{a}D

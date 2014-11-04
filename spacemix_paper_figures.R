@@ -85,7 +85,7 @@ mc.cov_hat <- mean.centering.matrix %*% cov_hat %*% t(mean.centering.matrix)
 pc.coords <- cbind(eigen(mc.cov_hat)$vectors[,1],eigen(mc.cov_hat)$vectors[,2])
 proc.pc.coords <- fitted(vegan::procrustes(warbler.pop.coords,pc.coords))
 
-png(file="~/Desktop/Dropbox/space.mix/ms/figs/warb_pop_PC_map.png",res=200,width=5*200,height=4*200)
+png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_PC_map.png",res=200,width=5*200,height=4*200)
 	#quartz(width=5,height=4)
 	par(mar=c(4.5,4.5,3,1))
 	plot(proc.pc.coords,type='n',
@@ -108,7 +108,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 	source.coords <- procrusteez(warbler.pop.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2)
 	pop.plot.cols <- fade.admixture.source.points(pop.col,admix.proportions[,best])
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/population_warbler_map_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(68,116), #realpr1: c(68,115), realpr2: c(53,101), randpr: c(71,114)
@@ -132,7 +132,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 				box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/population_warbler_map_no_arrows_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_no_arrows_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(68,101), #realpr1: c(68,101), realpr2: c(68,101), randpr: c(71,99)
@@ -146,7 +146,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 				box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/population_warbler_admix_values_nugget_realpr1.png",res=300,width=4.5*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_admix_values_nugget_realpr1.png",res=300,width=4.5*300,height=5*300,pointsize=9)
 		#quartz(width=5,height=5,pointsize=9)
 		order <- c(1,3:15,2,16:22)
 		par(mfrow=c(2,1),mar=c(1,4,0,1),oma=c(1,1,1,1))
@@ -179,7 +179,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 	source.coords <- procrusteez(warbler.pop.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2)
 	pop.plot.cols <- fade.admixture.source.points(pop.col,admix.proportions[,best])
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/population_warbler_map_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(53,101), #realpr1: c(68,115), realpr2: c(53,101), randpr: c(71,114)
@@ -203,7 +203,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 				box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/population_warbler_map_no_arrows_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_no_arrows_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(68,101), #realpr1: c(68,101), realpr2: c(68,101), randpr: c(71,99)
@@ -217,7 +217,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 				box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/population_warbler_admix_values_nugget_realpr2.png",res=300,width=4.5*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_admix_values_nugget_realpr2.png",res=300,width=4.5*300,height=5*300,pointsize=9)
 		#quartz(width=5,height=5,pointsize=9)
 		order <- c(1,3:15,2,16:22)
 		par(mfrow=c(2,1),mar=c(1,4,0,1),oma=c(1,1,1,1))
@@ -249,7 +249,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 	source.coords <- procrusteez(warbler.pop.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2)
 	pop.plot.cols <- fade.admixture.source.points(pop.col,admix.proportions[,best])
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/population_warbler_map_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(71,114), #realpr1: c(68,115), realpr2: c(53,101), randpr: c(71,114)
@@ -273,7 +273,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 				box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/population_warbler_map_no_arrows_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_no_arrows_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(71,99), #realpr1: c(68,101), realpr2: c(68,101), randpr: c(71,99)
@@ -287,7 +287,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 				box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/population_warbler_admix_values_nugget_randpr1.png",res=300,width=4.5*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_admix_values_nugget_randpr1.png",res=300,width=4.5*300,height=5*300,pointsize=9)
 		#quartz(width=5,height=5,pointsize=9)
 		order <- c(1,3:15,2,16:22)
 		par(mfrow=c(2,1),mar=c(1,4,0,1),oma=c(1,1,1,1))
@@ -348,7 +348,7 @@ mc.cov_hat <- mean.centering.matrix %*% cov_hat %*% t(mean.centering.matrix)
 pc.coords <- cbind(eigen(mc.cov_hat)$vectors[,1],eigen(mc.cov_hat)$vectors[,2])
 proc.pc.coords <- fitted(vegan::procrustes(warbler.ind.coords,pc.coords))
 
-png(file="~/Desktop/Dropbox/space.mix/ms/figs/warb_ind_PC_map.png",res=200,width=5*200,height=4*200)
+png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_PC_map.png",res=200,width=5*200,height=4*200)
 	#quartz(width=5,height=4)
 	par(mar=c(4.5,4.5,3,1))
 	plot(proc.pc.coords,type='n',
@@ -372,7 +372,7 @@ best <- which.max(Prob)
 	source.coords <- procrusteez(warbler.ind.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2)
 	ind.plot.cols <- fade.admixture.source.points(inds.col,admix.proportions[,best])
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/individual_warbler_map_arrows_amped_admixture_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_amped_admixture_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[,1],source.coords[,1]),
@@ -397,7 +397,7 @@ best <- which.max(Prob)
 					length=0.1)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/individual_warbler_map_arrows_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[,1],source.coords[,1]),
@@ -422,7 +422,7 @@ best <- which.max(Prob)
 					length=0.1)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/individual_warbler_map_noarrows_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[,1]),max(target.coords[,1])+2),
@@ -435,7 +435,7 @@ best <- which.max(Prob)
 						font=2,cex=0.9)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/individual_warbler_map_noarrows_closeup_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
@@ -448,7 +448,7 @@ best <- which.max(Prob)
 						font=2,cex=0.9)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/individual_warbler_map_noarrows_closeup_nugget_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_nugget_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
@@ -469,7 +469,7 @@ best <- which.max(Prob)
 	source.coords <- procrusteez(warbler.ind.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2)
 	ind.plot.cols <- fade.admixture.source.points(inds.col,admix.proportions[,best])
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/individual_warbler_map_arrows_amped_admixture_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_amped_admixture_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[,1],source.coords[,1]),
@@ -494,7 +494,7 @@ best <- which.max(Prob)
 					length=0.1)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/individual_warbler_map_arrows_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[,1],source.coords[,1]),
@@ -519,7 +519,7 @@ best <- which.max(Prob)
 					length=0.1)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/individual_warbler_map_noarrows_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[,1]),max(target.coords[,1])+2),
@@ -532,7 +532,7 @@ best <- which.max(Prob)
 						font=2,cex=0.9)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/individual_warbler_map_noarrows_closeup_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
@@ -545,7 +545,7 @@ best <- which.max(Prob)
 						font=2,cex=0.9)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/individual_warbler_map_noarrows_closeup_nugget_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_nugget_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
@@ -567,7 +567,7 @@ best <- which.max(Prob)
 	source.coords <- procrusteez(warbler.ind.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2)
 	ind.plot.cols <- fade.admixture.source.points(inds.col,admix.proportions[,best])
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/individual_warbler_map_arrows_amped_admixture_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_amped_admixture_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[,1],source.coords[,1]),
@@ -592,7 +592,7 @@ best <- which.max(Prob)
 					length=0.1)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/individual_warbler_map_arrows_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[,1],source.coords[,1]),
@@ -617,7 +617,7 @@ best <- which.max(Prob)
 					length=0.1)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/individual_warbler_map_noarrows_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[,1]),max(target.coords[,1])+2),
@@ -630,7 +630,7 @@ best <- which.max(Prob)
 						font=2,cex=0.9)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/individual_warbler_map_noarrows_closeup_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
@@ -643,7 +643,7 @@ best <- which.max(Prob)
 						font=2,cex=0.9)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/individual_warbler_map_noarrows_closeup_nugget_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_nugget_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
@@ -707,7 +707,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 	source.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2)
 
 	require(maps)
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_world_map_dots.png",res=300,width=9*300,height=5.5*300)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_world_map_dots.png",res=300,width=9*300,height=5.5*300)
 	#quartz(width=9,height=5.5)
 	map("world",interior=FALSE,lwd=0.5,ylim=c(-60,85))
 		box(lwd=2)
@@ -717,7 +717,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 #					text.col = c("forestgreen","blue","purple","red","brown","orange"),cex=0.8)
 	dev.off()
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_world_map_text.png",res=300,width=9*300,height=5.5*300)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_world_map_text.png",res=300,width=9*300,height=5.5*300)
 	#quartz(width=9,height=5.5)
 	map("world",interior=FALSE,lwd=0.5,ylim=c(-60,85),xlim=c(-130,180))
 		box(lwd=2)
@@ -732,7 +732,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 	y.min <- min(target.coords[,2]) - 5
 	y.max <- max(target.coords[,2]) + 5
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_NoAd_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_NoAd_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(x.min,x.max),
@@ -754,7 +754,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 	y.min <- min(target.coords[africa,2]) - 5
 	y.max <- max(target.coords[africa,2]) + 5
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Africa_NoAd_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Africa_NoAd_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords[africa,],type='n',
 					xlim=c(x.min,x.max),
@@ -773,7 +773,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 	y.min <- min(target.coords[-africa,2]) - 5
 	y.max <- max(target.coords[-africa,2]) + 5
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Eurasia_Americas_Oceania_NoAd_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Eurasia_Americas_Oceania_NoAd_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords[-africa,],type='n',
 					xlim=c(x.min,x.max),
@@ -792,7 +792,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 	y.min <- min(target.coords[-c(africa,americas,oceania),2]) - 2
 	y.max <- max(target.coords[-c(africa,americas,oceania),2]) + 2
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Eurasia_NoAd_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Eurasia_NoAd_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords[-c(africa,americas,oceania),],type='n',
 					xlim=c(x.min,x.max),
@@ -816,7 +816,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 	obs.D <- fields::rdist.earth(globe.coords)
 	par.D <- fields::rdist.earth(target.coords)
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_NoAd_dist_compare.png",res=200,height=5*200,width=12*200)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_NoAd_dist_compare.png",res=200,height=5*200,width=12*200)
 		#quartz(height=5,width=12)
 		par(mfrow=c(1,2),mar=c(4,4,2,2))
 		plot(obs.D,par.D,col="gray",pch=20,
@@ -866,7 +866,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 				row.names(centroids)[i] <- names(clusters[[i]])
 			mean.dist.from.africa[i] <- fields::rdist.earth(africa.centroid,centroids[i,,drop=FALSE])
 		}
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_NoAd_dist_decay.png",res=200,height=5*200,width=12*200)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_NoAd_dist_decay.png",res=200,height=5*200,width=12*200)
 		#quartz(height=5,width=12)
 		par(mfrow=c(1,2),mar=c(4,4,2,2))
 		plot(obs.D,par.D,col="gray",pch=20,
@@ -910,9 +910,9 @@ globe_ad_obj <- list(africa = africa,americas = americas,continent.col = contine
 						source.coords = source.coords,target.coords = target.coords,
 						western.eurasia = western.eurasia)
 
-save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj")
+save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_object.Robj")
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(18,68),
@@ -962,7 +962,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 	subplot2.x.coords <- c(-165,180)
 	subplot2.y.coords <- c(-60,80)
 	#rect(xleft = x.subplot2[1],ybottom = y.subplot2[1],xright = x.subplot2[2],ytop = y.subplot2[2])
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_map_AfricaInset.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_map_AfricaInset.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(15,68),
@@ -1027,7 +1027,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 	dev.off()
 
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/subsaharan_africa_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/subsaharan_africa_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(18,35),
@@ -1062,7 +1062,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 					# title = "Admixture proportions")
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/eurasia_plus_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/eurasia_plus_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(34.5,70),
@@ -1093,7 +1093,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 			box(lwd=2)
 	dev.off()
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(42.5,52.5),
@@ -1127,7 +1127,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 	if(FALSE){
 	ind.proc.target.coords <- procrusteez(globe.coords[c(western.eurasia,east.asia),],population.coordinates[[best]][c(western.eurasia,east.asia),],length(c(western.eurasia,east.asia)),option=1)
 	ind.proc.source.coords <- procrusteez(globe.coords[c(western.eurasia,east.asia),],population.coordinates[[best]][c(western.eurasia,east.asia),],length(c(western.eurasia,east.asia)),population.coordinates[[best]][k + c(western.eurasia,east.asia),],option=2)
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/eurasia_Ad_map_IndProc.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/eurasia_Ad_map_IndProc.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(ind.proc.target.coords,type='n',
 					yaxt='n',
@@ -1162,7 +1162,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 			box(lwd=2)
 	dev.off()
 	}
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/western_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/western_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(42.5,48),
@@ -1193,7 +1193,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 			box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/eastern_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/eastern_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(48.5,52.2),
@@ -1224,7 +1224,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 			box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/eurasiamericas_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/eurasiamericas_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(42.5,52.5),
@@ -1255,7 +1255,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 			box(lwd=2)
 	dev.off()
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/eurasioceania_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/eurasioceania_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(42.5,55),
@@ -1306,7 +1306,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 	}
 
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_proportions.png",res=300,width=12*300,height=5*300)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_proportions.png",res=300,width=12*300,height=5*300)
 		#quartz(width=12,height=5)
 		plot(rowMeans(admix.proportions)[pop.order]/2,type='n',
 				main = "Mean Admixture Proportions",xlab="population",
@@ -1318,7 +1318,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 			text(rowMeans(admix.proportions)[pop.order]/2,col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
 	dev.off()
 								
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_nugget.png",res=300,width=12*300,height=5*300)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_nugget.png",res=300,width=12*300,height=5*300)
 		#quartz(width=12,height=5)
 		plot(rowMeans(nugget)[pop.order],type='n',
 				main = "Mean Population Nuggets",
@@ -1334,7 +1334,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_object.Robj
 											round(rowMeans(nugget)[pop.order],4)),row.names=pops[pop.order])
 		names(globe.ad.data.table) <- c("mean_admix_prop","mean_nugget")
 
-	write.csv(globe.ad.data.table,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_mean_pop_adprop_nugg_vals.csv")
+	write.csv(globe.ad.data.table,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_mean_pop_adprop_nugg_vals.csv")
 
 ################
 #	Admixture - real prior 3
@@ -1346,7 +1346,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 
 	globe.admix.plot.cols <- fade.admixture.source.points(continent.col,admix.proportions[,best])
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/globe_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/globe_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(-6,80),
@@ -1385,7 +1385,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 					title = "Admixture proportions")
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/subsaharan_africa_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/subsaharan_africa_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(-2,18),
@@ -1411,7 +1411,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/eurasia_plus_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/eurasia_plus_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(34.5,72),
@@ -1437,7 +1437,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			box(lwd=2)
 	dev.off()
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(38,55),
@@ -1463,7 +1463,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			box(lwd=2)
 	dev.off()
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/western_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/western_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(44.3,48),
@@ -1489,7 +1489,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/eastern_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/eastern_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(48,54),
@@ -1534,7 +1534,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 				y = quantile.vector,col=adjustcolor(color,0.15),lwd=0.5)
 	}
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/globe_Ad_proportions.png",res=300,width=12*300,height=5*300)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/globe_Ad_proportions.png",res=300,width=12*300,height=5*300)
 		#quartz(width=12,height=5)
 		plot(rowMeans(admix.proportions)[pop.order]/2,type='n',
 				main = "Mean Admixture Proportions",xlab="population",
@@ -1546,7 +1546,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			text(rowMeans(admix.proportions)[pop.order]/2,col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
 	dev.off()
 								
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior3/globe_Ad_nugget.png",res=300,width=12*300,height=5*300)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/globe_Ad_nugget.png",res=300,width=12*300,height=5*300)
 		#quartz(width=12,height=5)
 		plot(rowMeans(nugget)[pop.order],type='n',
 				main = "Mean Population Nuggets",
@@ -1562,7 +1562,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 											round(rowMeans(nugget)[pop.order],4)),row.names=pops[pop.order])
 		names(globe.ad.data.table) <- c("mean_admix_prop","mean_nugget")
 
-	write.csv(globe.ad.data.table,file="~/Desktop/Dropbox/space.mix/ms/figs/globe_Ad_mean_pop_adprop_nugg_vals.csv")
+	write.csv(globe.ad.data.table,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_mean_pop_adprop_nugg_vals.csv")
 
 ################
 #	Admixture - real prior 2
@@ -1575,7 +1575,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 
 	globe.admix.plot.cols <- fade.admixture.source.points(continent.col,admix.proportions[,best])
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/globe_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/globe_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(0,70),
@@ -1601,7 +1601,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/subsaharan_africa_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/subsaharan_africa_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(7,17),
@@ -1627,7 +1627,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/eurasia_plus_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/eurasia_plus_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(41,60),
@@ -1653,7 +1653,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			box(lwd=2)
 	dev.off()
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(46,51),
@@ -1679,7 +1679,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			box(lwd=2)
 	dev.off()
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/western_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/western_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(46.2,49),
@@ -1705,7 +1705,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/eastern_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/eastern_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim = c(47.5,50.7),
@@ -1750,7 +1750,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 				y = quantile.vector,col=adjustcolor(color,0.15),lwd=0.5)
 	}
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/globe_Ad_proportions.png",res=300,width=12*300,height=5*300)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/globe_Ad_proportions.png",res=300,width=12*300,height=5*300)
 		#quartz(width=12,height=5)
 		plot(rowMeans(admix.proportions)[pop.order]/2,type='n',
 				main = "Mean Admixture Proportions",xlab="population",
@@ -1762,7 +1762,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			text(rowMeans(admix.proportions)[pop.order]/2,col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
 	dev.off()
 								
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/other_globe_runs/real_prior2/globe_Ad_nugget.png",res=300,width=12*300,height=5*300)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/globe_Ad_nugget.png",res=300,width=12*300,height=5*300)
 		#quartz(width=12,height=5)
 		plot(rowMeans(nugget)[pop.order],type='n',
 				main = "Mean Population Nuggets",
@@ -1783,11 +1783,11 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 #	Simulation scenarios
 ################
 source("~/Desktop/Dropbox/space.mix/sims/spacemix_ms_sims.R")
-png(file="~/Desktop/Dropbox/space.mix/ms/figs/basic_lattice.png",res=200,width=6*200,height=5*200)
+png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/basic_lattice.png",res=200,width=6*200,height=5*200)
 	migration.rate.graphic(x.pops = 5,y.pops = 6,migration.rate=1,jitter=0.25,labels=TRUE,colors=TRUE)
 dev.off()
 
-png(file="~/Desktop/Dropbox/space.mix/ms/figs/barrier_lattice.png",res=200,width=6*200,height=5*200)
+png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/barrier_lattice.png",res=200,width=6*200,height=5*200)
 	migration.rate.graphic(x.pops = 5,y.pops = 6,migration.rate=1,jitter=0.25,barrier.effect=5,labels=TRUE,colors=TRUE)
 dev.off()
 
@@ -1800,8 +1800,24 @@ expansion.list <- vector(mode="list")
 									time.point = time.points[i])
 	}
 	
-png(file="~/Desktop/Dropbox/space.mix/ms/figs/expansion_lattice.png",res=200,width=6*200,height=5*200)
-	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,jitter = 0.25,expansion.list=expansion.list,labels=TRUE,colors=TRUE)
+png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/expansion_lattice.png",res=200,width=6*200,height=5*200)
+	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,jitter = 0.25,expansion.list=expansion.list,labels=TRUE,colors=TRUE,ylim=c(0,10.2),curve=0.3)
+dev.off()
+
+
+expansion.list2 <- list(list(parent = 61,
+						daughters = 105,
+						time.point = 1))
+	
+png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/barr_indland_ad_lattice.png",res=200,width=6*200,height=5*200)
+	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,barrier.effect=5,jitter = 0.25,expansion.list=expansion.list2,labels=TRUE,colors=TRUE,arrow.col="green")
+dev.off()
+
+expansion.list3 <- list(list(parent = 13,
+						daughters = 131,
+						time.point = 1))
+png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/corner_admixture_lattice.png",res=200,width=6*200,height=5*200)
+	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,jitter = 0.25,expansion.list=expansion.list3,labels=TRUE,colors=TRUE,arrow.col="green",curve=0.2)
 dev.off()
 
 ################
@@ -1816,7 +1832,7 @@ target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 							target.locs = population.coordinates[[best]][1:k,],
 							k = k,
 							option = 1)
-pdf("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_lattice.pdf",width=6,height=5,pointsize=9)
+pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_lattice.pdf",width=6,height=5,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
 plot(target.coords,pch=1,xlim=c(0,12),ylim=c(-0.4,10),cex=3.5,
@@ -1826,6 +1842,7 @@ plot(target.coords,pch=1,xlim=c(0,12),ylim=c(-0.4,10),cex=3.5,
 	box(lwd=2)
 	text(target.coords,labels=paste(1:k))
 dev.off()
+
 ################
 #	Barrier
 ################
@@ -1837,7 +1854,7 @@ target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 							target.locs = population.coordinates[[best]][1:k,],
 							k = k,
 							option = 1)
-pdf("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_barrier.pdf",width=6,height=5,pointsize=9)
+pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_barrier.pdf",width=6,height=5,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
 plot(target.coords,pch=1,xlim=c(0,12),ylim=c(-0.4,10),cex=3.5,
@@ -1861,7 +1878,7 @@ target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 							target.locs = population.coordinates[[best]][1:k,],
 							k = k,
 							option = 1)
-pdf("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_expansion.pdf",width=6,height=5,pointsize=9)
+pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_expansion.pdf",width=6,height=5,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
 plot(target.coords,pch=1,xlim=c(1.2,9.5),ylim=c(-2,12),cex=3.5,
@@ -1895,7 +1912,7 @@ x.max <- max(target.coords[,1]) + 0.5
 y.min <- min(target.coords[,2]) - 0.5
 y.max <- max(target.coords[,2]) + 1
 source.coord.cols <- fade.admixture.source.points(pop.cols,admix.proportions[,best])
-png("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_corner_admixture.png",res=300,width=6*300,height=5*300,pointsize=9)
+png("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_corner_admixture.png",res=300,width=6*300,height=5*300,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
 plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
@@ -1937,7 +1954,7 @@ x.max <- max(target.coords[,1]) + 0.5
 y.min <- min(target.coords[,2]) - 0.5
 y.max <- max(target.coords[,2]) + 1
 
-png("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_corner_admixture_CYOL.png",res=300,width=6*300,height=5*300,pointsize=9)
+png("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_corner_admixture_CYOL.png",res=300,width=6*300,height=5*300,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
 plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
@@ -1970,7 +1987,7 @@ x.max <- max(target.coords[,1]) + 0.5
 y.min <- min(target.coords[,2]) - 0.5
 y.max <- max(target.coords[,2]) + 1
 source.coord.cols <- fade.admixture.source.points(pop.cols,admix.proportions[,best])
-png("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_corner_admixture_adinf.png",res=300,width=6*300,height=5*300,pointsize=9)
+png("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_corner_admixture_adinf.png",res=300,width=6*300,height=5*300,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
 plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
@@ -2024,7 +2041,7 @@ y.min <- min(target.coords[,2]) - 0.5
 y.max <- max(target.coords[,2]) + 2
 scalar <- 4
 source.coord.cols <- fade.admixture.source.points(pop.cols,scalar*admix.proportions[,best])
-png("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_barr_inland_admixture_1.png",res=300,width=6*300,height=5*300,pointsize=9)
+png("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_barr_inland_admixture_1.png",res=300,width=6*300,height=5*300,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
 plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
@@ -2068,7 +2085,7 @@ source.coord.hdr <- hdr.2d(ad.pop.source.coords.mat[,1],ad.pop.source.coords.mat
 source.coord.hdr2 <- source.coord.hdr
 source.coord.hdr2$mode <- c(100,100)
 
-png("~/Desktop/Dropbox/space.mix/ms/figs/GeoGenMap_barr_inland_admixture_2.png",res=300,width=6*300,height=5*300,pointsize=9)
+png("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_barr_inland_admixture_2.png",res=300,width=6*300,height=5*300,pointsize=9)
 #quartz(width=6,height=5)
 par(mar=c(4.3,4.3,3,1))
 plot(source.coord.hdr2,shadecols=adjustcolor(pop.cols[k],0.2),show.points=FALSE,outside.points=FALSE,

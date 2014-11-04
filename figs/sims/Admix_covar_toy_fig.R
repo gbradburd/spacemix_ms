@@ -43,5 +43,5 @@ text(loc,rep(-0.1,4),c("A","B","C",'D'),col=cols,cex=1.5)
 iArrows(loc[4], -0.18, loc[2], -0.18,
           h.lwd=2, sh.lwd=2, sh.col="black",
           curve=0.15 , width=1, size=0.7)
-          dev.copy2pdf(file="~/Dropbox/Students/gideon/spacemix_ms/figs/Admix_covar_toy_fig.pdf")
+          dev.copy2pdf(file="~/Dropbox/Students/gideon/spacemix_ms/figs/sims/Admix_covar_toy_fig.pdf")
           

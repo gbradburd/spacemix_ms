@@ -14,8 +14,8 @@ make notes on all globetrotter results
 	
 read pickrell&reich
 
-make new color scheme
-	make fig mock-ups w/ new color scheme
+In runs where Indian and IndianJew don't find each other's admixture, 
+	what happens if they do? - boutique
 
 Inference:
 	Methods section at the end:
@@ -25,11 +25,9 @@ Inference:
 			
 			details of procrustes (R func)
 
-ditch borders on world map
+make plotting functions doc
 
-make admix map w/ africa inset
-
-
+re-sim big_barr_ad_scenario w/ 40% admixture
 
 
 COMPLETED:
@@ -57,4 +55,9 @@ COMPLETED:
 	write human section
 		-admixed pops are who we expect
 			-Handwavy Indian section
-
+	send P.D. Fields the vcf2bedassle function
+	make new color scheme
+		make fig mock-ups w/ new color scheme
+	ditch borders on world map
+	make admix map w/ africa inset
+	re-jigger sim lattice figs

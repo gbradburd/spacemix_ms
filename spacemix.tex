@@ -220,26 +220,29 @@ If our data are well fit by a model of isolation by distance then (1) a populati
 \begin{figure}
 	\centering
 		\subcaptionbox{Simulated Lattice \label{simple_lattice}}
-			{\includegraphics[width=2.8in,height=2.33in]{figs/basic_lattice.png}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/basic_lattice.png}}
 		\subcaptionbox{Lattice \label{lattice_inference}}
-			{\includegraphics[width=2.8in,height=2.33in]{figs/GeoGenMap_lattice.pdf}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_lattice.pdf}}
 		\subcaptionbox{Barrier \label{barrier_inference}}
-			{\includegraphics[width=2.8in,height=2.33in]{figs/GeoGenMap_barrier.pdf}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_barrier.pdf}}
 		\subcaptionbox{Expansion  \label{expansion_inference}}
-			{\includegraphics[width=2.8in,height=2.33in]{figs/GeoGenMap_expansion.pdf}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_expansion.pdf}}
 	\caption{Population maps inferred using SpaceMix under three different scenarios: a) configuration of simulated populations; (c) simple lattice at equilibrium; c) a lattice with a barrier across the center line of longitude; d) a lattice with recent expansion on the eastern margin.}\label{sfig:lattice_scenarios}
 \end{figure}
 
 
 \begin{figure}
 	\centering
-	\includegraphics[width=2.4in,height=2in]{figs/GeoGenMap_corner_admixture_CYOL.png}
-	\caption{Inference of population locations in the scenario depicted in Figure \ref{sfig:admixture_scenario}.  Population 30 has received half of its lineages from population 1, to simulate a long distance admixture event in the very recent past.}\label{sfig:admixture_inference_CYOL}
+		\subcaptionbox{Location Inference \label{sfig:admixture_inference_CYOL}}
+			{\includegraphics[width=2.4in,height=2in]{figs/sims/GeoGenMap_corner_admixture_CYOL.png}}
+		\subcaptionbox{Location and Admixture Inference \label{sfig:admixture_inference_CYOL}}
+			{\includegraphics[width=2.4in,height=2in]{figs/sims/GeoGenMap_corner_admixture.png}}
+	\caption{Inference of population locations in the scenario depicted in Figure \ref{sfig:admixture_scenario}.  Population 30 has received half of its lineages from population 1, to simulate a long distance admixture event in the very recent past. a) Inference of population locations; b) inference of both population locations and their sources of admixture}\label{sfig:corner_admixture_inference}
 \end{figure}
 
 
-To examine the behavior of SpaceMix when there is long distance covariance between populations, we simulated an admixture event on the stepping-stone model we had used previously.  Specifically, (using Fig. \ref{sfig:lattice_scenarios}\subref{simple_lattice} as a reference) we allowed population 30, in the northeast corner of the grid, to draw half of its ancestry from population 1, in the southwest corner.  The result of a SpaceMix analysis in which the locations of these populations were estimated is shown in Figure \ref{sfig:admixture_inference_CYOL}.
-This signal of excess covariance over anomalously long distances is clearly difficult to accommodate within the ``choose-your-own-location" framework described above.  In Figure \ref{sfig:admixture_inference_CYOL}, the reader can see the torturous lengths to which the method goes to come up with a configuration of populations that accommodates their genetic relationships.  The admixed population 30 is estimated to have a location intermediate between population 1, the source of its admixture, and populations 24, 25, and 29, the nearest neighbors to the location of its non-admixed lineages.  However, this warping of space is difficult to interpret, especially in the visualization of genetic relationships in empirical data for which a researcher does not know the true demographic history.  It would therefore be of great utility to directly model the action of admixture on spatial patterns of genetic variation.
+To examine the behavior of SpaceMix when there is long distance covariance between populations, we simulated an admixture event on the stepping-stone model we had used previously.  Specifically, (using Fig. \ref{sfig:lattice_scenarios}\subref{simple_lattice} as a reference) we allowed population 30, in the northeast corner of the grid, to draw half of its ancestry from population 1, in the southwest corner.  The result of a SpaceMix analysis in which the locations of these populations were estimated is shown in Figure \ref{sfig:corner_admixture_inference}\subref{admixture_inference_CYOL}.
+This signal of excess covariance over anomalously long distances is clearly difficult to accommodate within the ``choose-your-own-location" framework described above.  In Figure \ref{sfig:corner_admixture_inference}\subref{admixture_inference_CYOL}, the reader can see the torturous lengths to which the method goes to come up with a configuration of populations that accommodates their genetic relationships.  The admixed population 30 is estimated to have a location intermediate between population 1, the source of its admixture, and populations 24, 25, and 29, the nearest neighbors to the location of its non-admixed lineages.  However, this warping of space is difficult to interpret, especially in the visualization of genetic relationships in empirical data for which a researcher does not know the true demographic history.  It would therefore be of great utility to directly model the action of admixture on spatial patterns of genetic variation.
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Inference of Spatial Admixture}
@@ -338,7 +341,7 @@ Using the example admixture scenario described above and used in the analysis de
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=2.4in,height=2in]{figs/GeoGenMap_corner_admixture_adinf.png}
+	\includegraphics[width=2.4in,height=2in]{figs/sims/GeoGenMap_corner_admixture_adinf.png}
 	\caption{Posterior distribution of inference of the sources and strengths of admixture for the sampled populations.  The admixed population (Population 30) is drawing admixture from the location of its source of admixture that was used to simulate the data (the location of Population 1).}\label{sfig:corner_admixture_just_adinf}
 \end{figure}
 
@@ -364,9 +367,9 @@ To demonstrate the use of the model in which the location of each population as 
 \begin{figure}[ht!]
 	\centering
 		\subcaptionbox{Lattice \label{barr_inland_ad_scenario}}
-			{\includegraphics[width=2in,height=1.66in]{figs/bar_inland_ad_scenario.pdf}}
+			{\includegraphics[width=2in,height=1.66in]{figs/sims/barr_indland_ad_lattice.png}}
 		\subcaptionbox{Barrier \label{barr_inland_ad_inference}}
-			{\includegraphics[width=2in,height=1.66in]{figs/GeoGenMap_barr_inland_admixture_1.png}}
+			{\includegraphics[width=2in,height=1.66in]{figs/sims/GeoGenMap_barr_inland_admixture_1.png}}
 	\caption{Population maps inferred using SpaceMix under three different scenarios: a) simple lattice at equilibrium; b) a lattice with a barrier across the center line of longitude; c) a lattice with recent expansion on the eastern margin.}\label{sfig:barr_inland_ad}
 \end{figure}
 %This most complex model is, in many cases, nonetheless identifiable.  Although in certain scenarios, a population may choose a location nearer to its source of admixture, rather than 
@@ -383,13 +386,13 @@ The greenish warbler (\emph{Phylloscopus trochiloides}) species complex is broad
 \begin{figure}
 	\centering
 		\subcaptionbox{Warbler subspecies distribution map \label{irwin_map}}
-			{\includegraphics[width=2.4in,height=2in]{figs/Irwin_warbler_map_figure.png}}
+			{\includegraphics[width=2.4in,height=2in]{figs/warblers/Irwin_warbler_map_figure.png}}
 		\subcaptionbox{Inferred admixture proportions and population nuggets \label{warb_pop_adnug}}			
-			{\includegraphics[width=2.4in,height=2in]{figs/population_warbler_admix_values_nugget.png}}
+			{\includegraphics[width=2.4in,height=2in]{figs/warblers/population_warbler_admix_values_nugget.png}}
 		\subcaptionbox{Map inferred using SpaceMix \label{warb_pop_no_arrows}}
-			{\includegraphics[width=2.4in,height=2in]{figs/population_warbler_map_no_arrows.png}}
+			{\includegraphics[width=2.4in,height=2in]{figs/warblers/population_warbler_map_no_arrows.png}}
 		\subcaptionbox{Map inferred using SpaceMix with admixture arrows shown \label{warb_pop_arrows}}
-			{\includegraphics[width=2.4in,height=2in]{figs/population_warbler_map_randpr1.png}}
+			{\includegraphics[width=2.4in,height=2in]{figs/warblers/population_warbler_map_randpr1.png}}
 	\caption{Greenish warbler subspecies distributions contrasted with maps of all 22 sampled populations inferred using SpaceMix.  For clarity of presentation, the inferred coordinates and parameter values are taken from the single draw of the MCMC with the highest posterior probability and have have been Procrustes transformed around the coordinates of the lattice used to simulate the data. (a) Greenish warbler subspecies distribution map (from Irwin et al NNN).  (b) Inferred population admixture proportions and nugget parameters. (c) Inferred population map without admixture arrows shown, with population labels colored as in (a). (d) Inferred population map with admixture arrows (with thickness proportional to inferred admixture proportion) shown, with population labels colored as in (a). }\label{sfig:warbler_pops}
 \end{figure}
 
@@ -408,11 +411,11 @@ We then ran the method allowing admixture, and again discuss the random priors r
 \begin{figure}
 	\centering
 		\subcaptionbox{\label{warb_pop_realpr1}}
-			{\includegraphics[width=1.85in,height=1.54in]{figs/population_warbler_map_realpr1.png}}
+			{\includegraphics[width=1.85in,height=1.54in]{figs/warblers/population_warbler_map_realpr1.png}}
 		\subcaptionbox{\label{warb_pop_realpr2}}			
-			{\includegraphics[width=1.85in,height=1.54in]{figs/population_warbler_map_realpr2.png}}
+			{\includegraphics[width=1.85in,height=1.54in]{figs/warblers/population_warbler_map_realpr2.png}}
 		\subcaptionbox{\label{warb_pop_randpr1}}
-			{\includegraphics[width=1.85in,height=1.54in]{figs/population_warbler_map_randpr1.png}}
+			{\includegraphics[width=1.85in,height=1.54in]{figs/warblers/population_warbler_map_randpr1.png}}
 	\caption{Comparison of inferred maps from three independent analyses.  (a,b) Results from analysis using observed locations as priors on population locations.  (c) Results from analysis using random, uniformly distributed locations within the observed range of latitude and longitude as priors on population locations.}\label{sfig:warbler_pop_compare}
 \end{figure}
 
@@ -423,9 +426,9 @@ Because \textit{a priori} assigned population membership may be artificial (indi
 \begin{figure}
 	\centering
 		\subcaptionbox{Inferred map of warbler individuals \label{warb_ind_map}}
-			{\includegraphics[width=2.8in,height=2.3in]{figs/individual_warbler_map_noarrows_randpr1.png}}
+			{\includegraphics[width=2.8in,height=2.3in]{figs/warblers/individual_warbler_map_noarrows_randpr1.png}}
 		\subcaptionbox{Closeup of non-\textit{nitidus} samples \label{warb_ind_map_closeup}}
-			{\includegraphics[width=2.8in,height=2.3in]{figs/individual_warbler_map_noarrows_closeup_randpr1.png}}
+			{\includegraphics[width=2.8in,height=2.3in]{figs/warblers/individual_warbler_map_noarrows_closeup_randpr1.png}}
 	\caption{Inferred maps for individual warbler individuals, colored by subspecies. (a) complete map including Turkish \textit{nitidus} samples.  (b) close up of all non-\textit{nitidus} samples.}\label{sfig:warbler_inds}
 \end{figure}
 
@@ -439,7 +442,7 @@ The SpaceMix map also diverges from the observed map in the distribution of indi
 
 \begin{figure}
 	\centering
-	\includegraphics[width=2.4in,height=2in]{figs/warb_ind_PC_map.png}
+	\includegraphics[width=2.4in,height=2in]{figs/warblers/warb_ind_PC_map.png}
 	\caption{The map of warbler individuals derived from a Principal Components analysis.}\label{warb_ind_PC_map}
 \end{figure}
 
@@ -457,7 +460,7 @@ Specifically, our research questions were:
 
 \begin{figure}
 	\centering
-	\includegraphics[width=4in,height=2.4in]{figs/globe_world_map_text.png}
+	\includegraphics[width=4in,height=2.4in]{figs/globetrotter/globe_world_map_text.png}
 	\caption{The map of sampled human populations}\label{globe_world_map}
 \end{figure}
 
@@ -469,13 +472,13 @@ In the analysis in which populations choose their own locations, the map roughly
 \begin{figure}
 	\centering
 		\subcaptionbox{Inferred map of human populations \label{globe_all_noad_map}}
-			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_NoAd_map.png}}
+			{\includegraphics[width=2.8in,height=2.3in]{figs/globetrotter/globe_NoAd_map.png}}
 %		\subcaptionbox{Closeup of African populations \label{globe_africa_noad_map}}
 %			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Africa_NoAd_map.png}}
 %		\subcaptionbox{Closeup of non-Africa populations \label{globe_notafrica_noad_map}}
 %			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Eurasia_Americas_Oceania_NoAd_map.png}}
 		\subcaptionbox{Closeup of Eurasian populations \label{globe_eurasia_noad_map}}
-			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Eurasia_NoAd_map.png}}
+			{\includegraphics[width=2.8in,height=2.3in]{figs/globetrotter/globe_Eurasia_NoAd_map.png}}
 	\caption{Map of human populations, inferred without admixture. (a) complete map; (b) close up of Eurasian 
 populations.}\label{sfig:globe_noad_maps}
 %(b) close up African populations; (c) close up of all non-African populations;
@@ -523,7 +526,7 @@ Pathan draws from where india also draws admixture from.
 
 \begin{figure}
 	\centering
-		{\includegraphics[width=6in,height=2.5in]{figs/globe_NoAd_dist_decay.png}} %globe_NoAd_dist_compare.png
+		{\includegraphics[width=6in,height=2.5in]{figs/globetrotter/globe_NoAd_dist_decay.png}} %globe_NoAd_dist_compare.png
 	\caption{Comparison of observed distance to estimated distance between human populations, colored by continent from which populations were sampled (i.e. - two populations sampled from Africa are green).  Eurasia is divided into Western Eurasia and East Asia.}
 \label{sfig:globe_noad_distcomp}
 \end{figure}
@@ -531,13 +534,13 @@ Pathan draws from where india also draws admixture from.
 \begin{figure}
 	\centering
 		\subcaptionbox{Inferred map of human populations \label{globe_all_ad_map}}
-			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Ad_map.png}}
+			{\includegraphics[width=2.8in,height=2.3in]{figs/globetrotter/globe_Ad_map.png}}
 %		\subcaptionbox{Closeup of African populations \label{globe_africa_noad_map}}
 %			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Africa_NoAd_map.png}}
 %		\subcaptionbox{Closeup of non-Africa populations \label{globe_notafrica_noad_map}}
 %			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Eurasia_Americas_Oceania_NoAd_map.png}}
 		\subcaptionbox{Closeup of Eurasian populations \label{globe_eurasia_ad_map}}
-			{\includegraphics[width=2.8in,height=2.3in]{figs/Eurasia_Ad_map.png}}
+			{\includegraphics[width=2.8in,height=2.3in]{figs/globetrotter/Eurasia_Ad_map.png}}
 	\caption{Map of human populations, inferred with admixture. (a) complete map; (b) close up of Eurasian populations.}\label{sfig:globe_ad_maps}
 \end{figure}
 
@@ -734,17 +737,17 @@ The analysis procedure went as follows:
 \begin{figure}
 	\centering
 		\subcaptionbox{Basic Lattice \label{basic_lattice}}
-			{\includegraphics[width=3in,height=2.5in]{figs/basic_lattice.png}}
+			{\includegraphics[width=3in,height=2.5in]{figs/sims/basic_lattice.png}}
 		\subcaptionbox{Lattice with Barrier \label{barrier_lattice}}
-			{\includegraphics[width=3in,height=2.5in]{figs/barrier_lattice.png}}
+			{\includegraphics[width=3in,height=2.5in]{figs/sims/barrier_lattice.png}}
 		\subcaptionbox{Lattice with Expansion Event \label{barrier_lattice}}
-			{\includegraphics[width=3in,height=2.5in]{figs/expansion_lattice.png}}
+			{\includegraphics[width=3in,height=2.5in]{figs/sims/expansion_lattice.png}}
 	\caption{Different simulation scenarios: (a) basic lattice; (b) lattice with a longitudinal barrier; (c) lattice with expansion event.}\label{sfig:sim_scenarios}
 \end{figure}
 
 \begin{figure}[ht!]
 	\centering
-		{\includegraphics[width=2.4in,height=2in]{figs/GeoGenMap_barr_inland_admixture_2.png}}
+		{\includegraphics[width=2.4in,height=2in]{figs/sims/GeoGenMap_barr_inland_admixture_2.png}}
 	\caption{credible interval of where population 23 draws admixture from.}
 \label{sfig:barr_inland_ad_credset}
 \end{figure}
@@ -752,18 +755,18 @@ The analysis procedure went as follows:
 \begin{figure}
 	\centering
 		\subcaptionbox{Likelihood \label{admix_prop_func_loc_lnl}}
-			{\includegraphics[width=6in,height=2in]{figs/admix_prop_func_loc_lnl.png}}
+			{\includegraphics[width=6in,height=2in]{figs/warblers/admix_prop_func_loc_lnl.png}}
 		\subcaptionbox{Posterior probability \label{admix_prop_func_loc_prob}}
-			{\includegraphics[width=6in,height=2in]{figs/admix_prop_func_loc_prob.png}}
+			{\includegraphics[width=6in,height=2in]{figs/warblers/admix_prop_func_loc_prob.png}}
 	\caption{Likelihood surfaces for different placements of population ST between \textit{plumbeitarsus} and \textit{viridanus} clusters: (a) log likelihood surface; (b) posterior probability surface, incorporating the priors.}\label{sfig:admix_prop_func_loc}
 \end{figure}
 
 \begin{figure}
 	\centering
 		\subcaptionbox{All population pairs \label{warb_ind_dist_compare_allpairs}}
-			{\includegraphics[width=6in,height=3in]{figs/warb_ind_dist_compare_allpairs.png}}
+			{\includegraphics[width=6in,height=3in]{figs/warblers/warb_ind_dist_compare_allpairs.png}}
 		\subcaptionbox{Just within population comparisons \label{warb_ind_dist_compare}}
-			{\includegraphics[width=6in,height=3in]{figs/warb_ind_dist_compare.png}}
+			{\includegraphics[width=6in,height=3in]{figs/warblers/warb_ind_dist_compare.png}}
 	\caption{Comparing observed to estimated pairwise distance between warbler individuals, (a) between and (b) within subspecies populations.}\label{sfig:warb_ind_distcomp}
 \end{figure}
 

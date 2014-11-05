@@ -1,9 +1,4 @@
 finish cleaning up warbler re-writes
-
-intro:
-	gene flow is pervasive in many species
-	not well represented by discrete samples
-	admixture should be defined as unusually long gene flow
 		
 make 2 object querying functions
 	-1) give a pop name and have the admix arrow + source highlighted
@@ -29,6 +24,9 @@ make plotting functions doc
 
 re-sim big_barr_ad_scenario w/ 40% admixture
 
+fix SpaceMix so that admix proportions don't go 0,1 (only in the prior)
+
+move bar_inland_ad to suppmat, move big_barr_ad to main text
 
 COMPLETED:
 
@@ -61,3 +59,7 @@ COMPLETED:
 	ditch borders on world map
 	make admix map w/ africa inset
 	re-jigger sim lattice figs
+	intro:
+	gene flow is pervasive in many species
+	not well represented by discrete samples
+	admixture should be defined as unusually long gene flow

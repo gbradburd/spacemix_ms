@@ -26,6 +26,8 @@ re-sim big_barr_ad_scenario w/ 40% admixture
 
 fix SpaceMix so that admix proportions don't go 0,1 (only in the prior)
 
+move bar_inland_ad to suppmat, move big_barr_ad to main text
+
 COMPLETED:
 
 	Prioritize:

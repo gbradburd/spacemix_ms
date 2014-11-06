@@ -1813,6 +1813,14 @@ png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/barr_indland_ad_lattice.png",
 	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,barrier.effect=5,jitter = 0.25,expansion.list=expansion.list2,labels=TRUE,colors=TRUE,arrow.col="green")
 dev.off()
 
+expansion.list2.5 <- list(list(parent = 61,
+						daughters = 83,
+						time.point = 1))
+	
+png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/big_barr_ad_lattice.png",res=200,width=6*200,height=5*200)
+	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,barrier.effect=5,jitter = 0.25,expansion.list=expansion.list2.5,labels=TRUE,colors=TRUE,arrow.col="green")
+dev.off()
+
 expansion.list3 <- list(list(parent = 13,
 						daughters = 131,
 						time.point = 1))
@@ -2006,7 +2014,7 @@ plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
 dev.off()
 
 ################
-#	Barrier w/ Admixture
+#	Barrier w/ Admixture - Inland
 ################
 
 load("~/Desktop/Dropbox/space.mix/sims/bar_inland_ad/bar_inland_ad_spacemix/bar_inland_ad_spacemix1/rand_prior/bar_inland_ad_randpr__LongRun/bar_inland_ad_randpr_space_MCMC_output1.Robj")
@@ -2128,6 +2136,127 @@ points(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,col=p
 dev.off()
 
 
+################
+#	Barrier w/ Admixture - Nearest Neighbor
+################
+
+load("~/Desktop/Dropbox/space.mix/sims/big_barr_ad/big_barr_ad_spacemix/rand_prior1/big_barr_ad_randpr_1_LongRun/big_barr_ad_randpr_1space_MCMC_output1.Robj")
+load("~/Desktop/Dropbox/space.mix/sims/big_barr_ad/big_barr_ad_spacemix/rand_prior1/sim_big_barr_ad_dataset.Robj")
+k <- last.params$k
+best <- which.max(Prob)
+target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
+							target.locs = population.coordinates[[best]][1:k,],
+							k = k,
+							option = 1)
+source.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
+								target.locs = population.coordinates[[best]][1:k,],
+								source.locs = population.coordinates[[best]][(k+1):(2*k),],
+								k = k,
+								option = 2)
+target.coords.list <- vector(mode="list",length = length(which(Prob!=0)))
+source.coords.list <- vector(mode="list",length = length(which(Prob!=0)))
+	for(i in 1:length(source.coords.list)){
+		source.coords.list[[i]] <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
+								target.locs = population.coordinates[[i]][1:k,],
+								source.locs = population.coordinates[[i]][(k+1):(2*k),],
+								k = k,
+								option = 2)
+		target.coords.list[[i]] <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
+							target.locs = population.coordinates[[i]][1:k,],
+							k = k,
+							option = 1)
+	}
+x.min <- min(target.coords[,1]) - 0.5
+x.max <- max(target.coords[,1]) + 0.5
+y.min <- min(target.coords[,2]) - 0.5
+y.max <- max(target.coords[,2]) + 2
+scalar <- 4
+source.coord.cols <- fade.admixture.source.points(pop.cols,scalar*admix.proportions[,best])
+png("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_big_barr_ad_1.png",res=300,width=6*300,height=5*300,pointsize=9)
+#quartz(width=6,height=5)
+par(mar=c(4.3,4.3,3,1))
+plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
+		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Barrier and Admixture",
+		col=pop.cols,lwd=2)
+		points(source.coords,pch=20,col=source.coord.cols)
+	box(lwd=2)
+	text(target.coords,labels=paste(1:k))
+	arrows(x0 = source.coords[,1],
+			y0 = source.coords[,2],
+			x1 = target.coords[,1],
+			y1 = target.coords[,2],
+			col= source.coord.cols,
+			lwd = scalar*admix.proportions[,best],
+			length=0.2)
+	legend(x = "topleft",
+			pch=c(20,rep(NA,5)),
+			lty=c(NA,rep(1,5)),
+			lwd=c(NA,0.2,0.4,0.6,0.8,1),
+			col=c(1,adjustcolor(1,0.2),adjustcolor(1,0.4),adjustcolor(1,0.6),adjustcolor(1,0.8),adjustcolor(1,1)),
+			legend = c("admixture source",
+								paste("w = ",round(0.1/scalar,2),sep=""),
+								paste("w = ",round(0.2/scalar,2),sep=""),
+								paste("w = ",round(0.3/scalar,2),sep=""),
+								paste("w = ",round(0.4/scalar,2),sep=""),
+								paste("w = ",round(0.5/scalar,2),sep="")),
+			cex=0.9)
+dev.off()
+
+
+burnin <- 0.5
+x <- seq(length(source.coords.list)*burnin + 1,length(source.coords.list),1)
+ad.pop.source.coords.mat <- matrix(0,nrow=length(x),ncol=2)
+	for(i in 1:nrow(ad.pop.source.coords.mat)){
+		ad.pop.source.coords.mat[i,] <- source.coords.list[[x[i]]][18,]
+	}
+
+	#ad.pop.source.coords.cred.set <- ellipse(mu = colMeans(ad.pop.source.coords.mat), sigma = cov(ad.pop.source.coords.mat), alpha = 0.4,draw=FALSE)
+require(hdrcde)
+source.coord.hdr <- hdr.2d(ad.pop.source.coords.mat[,1],ad.pop.source.coords.mat[,2],prob=0.05)
+source.coord.hdr2 <- source.coord.hdr
+source.coord.hdr2$mode <- c(100,100)
+
+png("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_barr_inland_admixture_2.png",res=300,width=6*300,height=5*300,pointsize=9)
+#quartz(width=6,height=5)
+par(mar=c(4.3,4.3,3,1))
+plot(source.coord.hdr2,shadecols=adjustcolor(pop.cols[k],0.2),show.points=FALSE,outside.points=FALSE,
+		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Barrier and Admixture",
+		xlim=c(x.min,x.max),
+		ylim=c(y.min,y.max))
+points(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,col=pop.cols,lwd=2)
+	# points(ad.pop.source.coords.mat,col=adjustcolor("blue",0.2))
+	box(lwd=2)
+		points(source.coords,pch=20,col=source.coord.cols)
+	text(target.coords,labels=paste(1:k))
+		arrows(x0 = source.coords[,1],
+			y0 = source.coords[,2],
+			x1 = target.coords[,1],
+			y1 = target.coords[,2],
+			col= source.coord.cols,
+			lwd = scalar*admix.proportions[,best],
+			length=0.2)
+	# for(i in 1:nrow(ad.pop.source.coords.mat)){
+		# arrows(x0 = ad.pop.source.coords.mat[i,1],
+				# y0 = ad.pop.source.coords.mat[i,2],
+				# x1 = target.coords[23,1],
+				# y1 = target.coords[23,2],
+				# col= adjustcolor(1,admix.proportions[23,x[i]]),
+				# lwd = scalar*admix.proportions[23,x[i]],
+				# length=0.2)
+	# }
+	legend(x = "topleft",
+			pch=c(20,rep(NA,5)),
+			lty=c(NA,rep(1,5)),
+			lwd=c(NA,0.2,0.4,0.6,0.8,1),
+			col=c(1,adjustcolor(1,0.2),adjustcolor(1,0.4),adjustcolor(1,0.6),adjustcolor(1,0.8),adjustcolor(1,1)),
+			legend = c("admixture source",
+								paste("w = ",round(0.1/scalar,2),sep=""),
+								paste("w = ",round(0.2/scalar,2),sep=""),
+								paste("w = ",round(0.3/scalar,2),sep=""),
+								paste("w = ",round(0.4/scalar,2),sep=""),
+								paste("w = ",round(0.5/scalar,2),sep="")),
+			cex=0.9)
+dev.off()
 
 
 

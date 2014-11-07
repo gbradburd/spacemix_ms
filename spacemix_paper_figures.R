@@ -2260,10 +2260,27 @@ dev.off()
 
 
 
+################
+#	Acceptance rate figs
+################
+load("~/Desktop/Dropbox/space.mix/sims/big_barr_ad/big_barr_ad_spacemix/rand_prior1/big_barr_ad_randpr_1_LongRun/big_barr_ad_randpr_1space_MCMC_output1.Robj")
+load("~/Desktop/Dropbox/space.mix/sims/big_barr_ad/sim_big_barr_ad_dataset.Robj")
+k <- last.params$k
+pop.cols <- rainbow(k,start=4/6,end=6/6)[as.numeric(cut(spacemix.dataset$population.coordinates[,1],k))]
 
-
-
-
+png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/example_acceptance_rates.png",res=300,width=12*300,height=5*300)
+#quartz(width=12,height=5)
+par(mfrow=c(1,2))
+	plot(accept_rates$a2_accept_rate,
+			type='l',ylab=expression(paste(alpha[2]," proportion accepted moves",sep="")),
+			xlab="MCMC iterations",
+			ylim=c(0.3,0.55))
+	mtext(side=3,text="Adaptive Metropolis-within-Gibbs Proposal Mechanism",font=2,padj=-2.5,adj=8)
+	matplot(t(accept_rates$nugget_accept_rate),col=pop.cols,type='l',
+				ylab="nugget proportion accepted moves",
+				xlab="MCMC iterations",
+				ylim=c(0.3,0.55))
+dev.off()
 
 
 

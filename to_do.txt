@@ -1,7 +1,6 @@
 finish cleaning up warbler re-writes
 		
 make 2 object querying functions
-	-1) give a pop name and have the admix arrow + source highlighted
 	-2) 2 pop names, and have the covariance vs. distance between all pairs pop out
 			-esp. for warb_pops
 
@@ -11,22 +10,34 @@ read pickrell&reich
 
 In runs where Indian and IndianJew don't find each other's admixture, 
 	what happens if they do? - boutique
-
-Inference:
-	Methods section at the end:
-		MCMC:
-			description of each proposal mechanism
-			simplifications to the likelihood (impt. speedups)
 			
-			details of procrustes (R func)
-
 make plotting functions doc
 
-re-sim big_barr_ad_scenario w/ 40% admixture
-
 fix SpaceMix so that admix proportions don't go 0,1 (only in the prior)
+	-alpha_D -> alpha_1
 
 move bar_inland_ad to suppmat, move big_barr_ad to main text
+
+sims description, mij, segsite
+
+
+meet w/ graham todo:
+	-check for globe anomalies
+	-add cornerad CYOL to CYOL panel
+		-shrink scenario to inset panel
+	-make admix panel with
+		-cornerad, bar_inland_ad, big_barr_ad
+	-take out source_only cornerad fig
+	-make PCA for everybody
+	-empirical systems fig w/ warb next to globe map
+	-take out warb nuggs*adprops
+	-shrink warb map and inset?
+	-CYOL figs for warb pops
+	-warb PCA to suppmat
+
+
+
+
 
 COMPLETED:
 
@@ -63,3 +74,20 @@ COMPLETED:
 	gene flow is pervasive in many species
 	not well represented by discrete samples
 	admixture should be defined as unusually long gene flow
+	re-sim big_barr_ad_scenario w/ 40% admixture
+	-take out alpha priors and just ref appendix
+	-"accommodating heterogeneous processes"
+	-change (*) to *
+	-take out location prior math
+	-1) give a pop name and have the admix arrow + source highlighted
+	Inference:
+		Methods section at the end:
+			MCMC:
+				description of each proposal mechanism
+				simplifications to the likelihood (impt. speedups)
+			details of procrustes (R func)
+	-fix admix covariance fig
+	-take out warb inferred maps across runs
+	-put in good globe ad figs
+	-try to procrustes CYOL eurasia to flatten out
+	-try to procrustes CYOL&AD eurasia to flatten out

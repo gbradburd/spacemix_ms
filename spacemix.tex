@@ -20,9 +20,9 @@
 \setlength{\parindent}{0pt}%
 
 \newcommand{\e}[1]{{\mathbb E}\left[ #1 \right]}
-\newcommand{\admixsource}[1]{{$G^{(*)}$}}
-\newcommand{\kadmixsource}[1]{{$G^{(*)}_{#1}$}}
-\newcommand{\identifyadmixsource}[1]{{#1^{(*)}}}
+\newcommand{\admixsource}[1]{{$G^{*}$}}
+\newcommand{\kadmixsource}[1]{{$G^{*}_{#1}$}}
+\newcommand{\identifyadmixsource}[1]{{#1^{*}}}
 \newcommand{\gb}[1]{{\em \color{magenta} #1}}
 \newcommand{\plr}[1]{{\em \color{green} #1}}
 \newcommand{\gc}[1]{{\em \color{blue} #1}}
@@ -155,9 +155,6 @@ That is,
 \end{equation}
 \gc{should the $L^{-1}$ be there?} \gb{I'm pretty sure it goes there, b/c the mean of the Wishart is $n\textbf{V}$, where $n$ is the degrees of freedom and $\textbf{V}$ is the scale matrix.  This seems fairly important, so maybe \plr{P} or \gc{G} could take a look at the wiki page and confirm this?} 
 
-%\gb{this section was repeated below so I took this one out and just kept it below}
-%We can estimate the parameters of our simple isolation by distance model, $\alpha_0,\alpha_1, \alpha_2$, by treating Eqn. \eqref{eq:wishart_dist} as the likelihood of our standardized sample frequencies across loci, as this contains all of the information about our parameters of interest.  Handily, it also means that once the sample covariance matrix has been calculated, all other computations do not scale with the number of loci, making the method scalable to genome size datasets.  \gb{We use a Bayesian approach to estimating parameter values, and we place priors on the $\vec{\alpha}$ parameters: $\alpha_0 \sim Exp(0.01)$;  $\alpha_1 \sim Exp(1)$;  $\alpha_0 \sim U(0.1,2)$.}  For more details on our inference procedure, please see Appendix NNN.  \gc{Have some link to an appendix describing what to do with linked loci?}
-
 We can calculate an estimate of the covariance matrix ($\Omega$) across loci as 
 
 \begin{equation}
@@ -183,10 +180,10 @@ Now, in practice, we do not get to observe $\epsilon$ and so we replace $\epsilo
 % These are given by $I\bar{S_k}^{-1} + I\eta_k$, where $I$ is the identity matrix, $I\bar{S_k}$ is the mean sample size in population $k$ across all loci, and.  
 
 %Given the assumption of multivariate normality for our sample frequencies, it follows that the sample covariance of our standardized sample frequencies calculated across loci ($\widehat{\Omega} = X X^T$)  is Wishart distributed with degrees of freedom equal to the number of loci ($L$) across which the covariance is calculated.
-We can estimate the parameters of our simple isolation by distance model, $\alpha_0,\alpha_1, \alpha_2$, by treating Eqn. \eqref{eq:wishart_dist} as the likelihood of our standardized sample frequencies across loci, as this contains all of the information about our parameters of interest.  Handily, it also means that once the sample covariance matrix has been calculated, all other computations do not scale with the number of loci, making the method scalable to genome size datasets.  \gb{We use a Bayesian approach to estimating parameter values, and we place priors on the $\vec{\alpha}$ parameters: $\alpha_0 \sim Exp(0.01)$;  $\alpha_1 \sim Exp(1)$;  $\alpha_0 \sim U(0.1,2)$, as well as independent priors on the nugget in each population: $\eta_k \sim Exp(1)$.}  For more details on our inference procedure, please see Appendix NNN.  \gc{Have some link to an appendix describing what to do with linked loci?}
+We can estimate the parameters of our simple isolation by distance model, $\alpha_0,\alpha_1, \alpha_2$, by treating Eqn. \eqref{eq:wishart_dist} as the likelihood of our standardized sample frequencies across loci, as this contains all of the information about our parameters of interest.  Handily, it also means that once the sample covariance matrix has been calculated, all other computations do not scale with the number of loci, making the method scalable to genome size datasets.  We use a Bayesian approach to estimating parameter values, and we place priors on the $\vec{\alpha}$ parameters as well as independent priors on the nugget in each population. These priors are detailed in Table \ref{tab:param_prior_tab}, and for more details on our inference procedure, please see Appendix NNN.  \gc{Have some link to an appendix describing what to do with linked loci?}
 
 %%%%%%%%% %%%%%%%%% 
-\paragraph{Accommodating non-equilibrium processes} 
+\paragraph{Accommodating heterogeneous processes}
 
 This model assumes that the variance in allele frequencies is the same in all locations and that the covariance between pairs of populations decays in the same way with geographic distance in all portions of the sampled range (i.e. that the process is homogeneous and isotropic). However, in many cases these assumptions will not be met. Non-equilibrium processes like long distance admixture, colonization, or population expansion events will  distort the relationship between covariance and distance across the range.  Barriers to dispersal on the landscape can also change the relationship between allele frequency covariance and distance.
 
@@ -197,7 +194,7 @@ To generate this map, we can treat populations' geographic locations as a random
 \label{eq:cyol_prob}
 P(G', \vec{\alpha}, \eta \mid \widehat{\Omega}, L,G) \propto  P(\widehat{\Omega}  \mid \Omega(\vec{\alpha},{D}(G') ) P(\vec{\alpha}) P(G') P(\eta) 
 \end{equation}
-where the constant of proportionality is the normalization constant of the posterior. Here $P(G') $ are the priors for the spatial locations, which we assume are independent across populations. For the prior on population $k$'s location parameter, $G'_k$, we use a bivariate normal spatial prior centered on the observed location $G_k$ and with a variance \gb{of half the mean pairwise distance between the observed population locations, $D(G)$: $G'_k \sim \mathcal{N}(\mu = G_k,\sigma = \frac{1}{2}\bar{D}(G))$.} We perform MCMC on all of the random variables; for more details on our Bayesian inference procedure see Appendix B. This method is implemented in a program called SpaceMix.
+where the constant of proportionality is the normalization constant of the posterior. Here $P(G') $ are the priors for the spatial locations, which we assume are independent across populations. For the prior on population $k$'s location parameter, $G'_k$, we use a bivariate normal spatial prior centered on the observed location $G_k$ and with a variance of half the mean pairwise distance between the observed population locations. We perform MCMC on all of the random variables; for more details on our Bayesian inference procedure see Appendix B. This method is implemented in a program called SpaceMix.
 
 %The probability of the sample covariance matrix, $P(\widehat{\Omega} |\Omega (\vec{\alpha}\pmb{D}(\pmb{G'}) )$, is as before the Wishart likelihood of the sample covariance matrix of our standardized frequencies, and our priors on $\pmb{\vec{\alpha}}$ are as before. 
 
@@ -251,12 +248,10 @@ w_k p_{\ell,k'} + (1-w_k) p_{\ell,\identifyadmixsource{k}} \label{eqn-admixedfre
 \end{equation}
 We can allow each of our populations to have an independent spatial source of admixture. Our $p_{\ell,k'}$ and $p_{\ell,\identifyadmixsource{k}} $ are well defined, as, given our population allele frequency covariance matrix, Eqn. \ref{eq:spatial_covariance}, we can get the distribution of allele frequencies at any point in space simply by plugging its spatial coordinates into our $\Omega(D(G))$.
 
-%where $p_{\ell,k}$ are the model-estimated allele frequencies at locus $\ell$ at the spatial location of population $G_k$ and $p_{\ell,k*}$ are the model-estimated allele frequencies at the spatial location of the source of admixture \kadmixsource{k}. 
-
 We can then consider the resulting parametric covariance matrix that follows from the form of the population frequencies in Eqn. \eqref{eqn-admixedfreq}. The covariance between the standardized allele frequencies of population $i$ and $j$ can be modeled as 
 \begin{alignat}{3}
 \label{eq:admixed_covariance_1}
-\Omega_{i,j}^{(*)} = (1-w_i)(1-w_j) \Omega_{i\;,\;j\;} \; \times&\\
+\identifyadmixsource{\Omega_{i,j}} = (1-w_i)(1-w_j) \Omega_{i\;,\;j\;} \; \times&\\
 (w_i)(1-w_j) \Omega_{\identifyadmixsource{i},\;j\;} \; \times   \notag&\\
 (w_j)(1-w_i) \Omega_{i\;,\;\identifyadmixsource{j}} \; \times   \notag&\\
 (w_i)(w_j) \Omega_{\identifyadmixsource{i},\;\identifyadmixsource{j}} \; +   \notag&\\
@@ -266,7 +261,7 @@ where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources fr
 
 %parameterized by the pairwise geographic distances between each pair of populations, \emph{without} the population-specific variance terms on the diagonal (i.e., in Eqn. \eqref{eq:admixed_covariance_1}, i.e. $\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right)$).  
 
-The admixed covariance between samples $i$ and $j$, $\Omega_{i,j}^{(*)}$ is then a function of all the pairwise spatial covariances between populations $i$ and $j$ and the points from which they draw admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$.  Those spatial covariances in turn are a function of all combinations of pairwise distances between their locations: $G_i$, $G_i$, \kadmixsource{i}, and \kadmixsource{j}.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}.
+The admixed covariance between samples $i$ and $j$, $\identifyadmixsource{\Omega_{i,j}}$ is then a function of all the pairwise spatial covariances between populations $i$ and $j$ and the points from which they draw admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$.  Those spatial covariances in turn are a function of all combinations of pairwise distances between their locations: $G_i$, $G_i$, \kadmixsource{i}, and \kadmixsource{j}.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}.
 
 As we only get to observe the sample frequencies and we standardize our allele frequencies using the sample mean, our predicted admixture covariance matrix needs to be transformed to accommodate these sampling considerations. We can do this as before (see methods XXXX), and we again treat the likelihood of our sample covariance matrix as Wishart:
 \begin{equation}
@@ -329,12 +324,12 @@ Due to the admixture B has lower covariance with A than expected given its dista
  
 
 
-Using the example admixture scenario described above and used in the analysis depicted in Figure \ref{sfig:admixture_inference_CYOL}, we demonstrate the inference of populations' sources and strengths of admixture and illustrate the results in Figure \ref{sfig:corner_admixture_just_adinf}.  The reader can see that only the admixed population (population 30) is drawing admixture from the location of the source of admixture that was used to simulate the data, and that all other populations, which are not admixed, are choosing to draw admixture in only negligible amounts. \gc{run with choose your own location + admixture.
+Using the example admixture scenario described above and used in the analysis depicted in Figure \ref{sfig:admixture_inference_CYOL}, we demonstrate the inference of populations' sources and strengths of admixture and illustrate the results in Figure \ref{sfig:corner_admixture_just_adinf}.  The reader can see that only the admixed population (population 30) is drawing admixture from the location of the source of admixture that was used to simulate the data, and that all other populations, which are not admixed, are choosing to draw admixture in only negligible amounts. \gc{run with choose your own location + admixture.}
 
 \begin{figure}[ht!]
 	\centering
 	\includegraphics[width=2in,height=2in]{figs/admix_cov_fig.pdf}
-	\caption{An illustration of the form of the admixed covariance given in Eqns. \eqref{eq:admixed_covariance_1} and \eqref{eq:admixed_covariance_2}.  Populations $i$ and $j$ are drawing admixture in proportions $p_i$ and $p_j$ from their respective sources of admixture, $i^{(*)}$ and $j^{(*)}$, and all pairwise spatial covariances (the $\Omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $j^{(*)}$ than $i$ is from its source $i^{(*)}$ (i.e., $p_j > p_i$).}\label{sfig:admixed_cov_diagram}
+	\caption{An illustration of the form of the admixed covariance given in Eqns. \eqref{eq:admixed_covariance_1} and \eqref{eq:admixed_covariance_2}.  Populations $i$ and $j$ are drawing admixture in proportions $p_i$ and $p_j$ from their respective sources of admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$, and all pairwise spatial covariances (the $\Omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $\identifyadmixsource{j}$ than $i$ is from its source $\identifyadmixsource{i}$ (i.e., $p_j > p_i$).}\label{sfig:admixed_cov_diagram}
 \end{figure}
 
 
@@ -343,23 +338,6 @@ Using the example admixture scenario described above and used in the analysis de
 	\includegraphics[width=2.4in,height=2in]{figs/sims/GeoGenMap_corner_admixture_adinf.png}
 	\caption{Posterior distribution of inference of the sources and strengths of admixture for the sampled populations.  The admixed population (Population 30) is drawing admixture from the location of its source of admixture that was used to simulate the data (the location of Population 1).}\label{sfig:corner_admixture_just_adinf}
 \end{figure}
-
-%\subsection*{Models}
-
-%\begin{equation}
-%\label{eq:wishart_dist_admixed}
-%P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}) = 
-%	\mathcal{W}\left(\widehat{\Omega} \mid L^{-1} \identifyadmixsource{\Omega} \left( G',\identifyadmixsource{G}, \vec{p},\vec{\alpha}\right),L \right)	\text{.}
-%\end{equation}
-
-%Now, the posterior probability can be expressed as a function of this parametric admixed covariance, $\identifyadmixsource{\Omega}$,
-%\begin{equation}
-%\label{admixed_post_prob}
-%P(G',\identifyadmixsource{G}, \vec{p},\vec{\alpha}, \eta \mid \widehat{\Omega}, L,G) 
-%	\propto  
-%		P(\widehat{\Omega}  \mid \identifyadmixsource{\Omega}) P(\vec{\alpha}) P(G') P(\identifyadmixsource{G}) P(\vec{p}) P(\eta) 
-%\end{equation}
-}
 
 To demonstrate the use of the model in which the location of each population as well as the location of its source of admixture are estimated jointly, we used the spatial stepping-stone coalescent simulation procedure described above to generate a dataset of populations on a lattice in which there is both a barrier to dispersal and a more subtle admixture event (admixture proportion = 10\%, see Fig. \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_scenario}).  In the SpaceMix analysis (Fig. \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_inference}), the separation of the east and west sides of the grid accommodates the effect of the barrier to migration, and the admixed population (population 23) chooses admixture from very close to its true source (population 13), and in close to the correct amount ($\bar{p} = 0.05; 95\% \text{ credible interval} = 0.02-0.08$). 
 
@@ -379,7 +357,6 @@ We also show a scenario in which there has been admixture (40\%) between two pop
 			{\includegraphics[width=2in,height=1.66in]{figs/sims/GeoGenMap_big_barr_ad_1.png}}
 	\caption{Simulation scenarios and inferred population maps for two different admixture scenarios: a) lattice with a barrier and an admixture event across the barrier to an `inland' population; b) the inferred population map for the scenario in (a); c) lattice with a barrier and an admixture event across the barrier to a population on the border of the barrier; (d) the inferred population map for the scenario in (c).}\label{sfig:barr_inland_ad}
 \end{figure}
-%This most complex model is, in many cases, nonetheless identifiable.  Although in certain scenarios, a population may choose a location nearer to its source of admixture, rather than 
 
 \section*{Empirical Applications}
 To demonstrate the applications of this novel method, we analysed population genomic data from two systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.
@@ -413,19 +390,6 @@ In the north, where the twin waves of expansion around the Tibetan Plateau are h
 
 We then ran the method allowing admixture, and again discuss the random priors results. The Stolby population chooses the highest admixture proportion, with a mean of 0.19 \textbf{95\% credible intervals}.  Multiple runs agreed well on the level of admixture of the Stolby (see caption of Supplementary Figure \ref{sfig:warbler_pop_compare}). What does vary across runs, is whether the Stolby population chooses to locate itself by the \textit{viridanus} cluster and draw admixture from near the \textit{plumbeitarsus}  cluster or vise versa, however, this is to be expected given the 50/50 nature of the sample (Supplementary Figure \ref{sfig:warbler_pop_compare}). 
 
-%\gc{Graham: dont feel like we need the three analyses in main text.} Across the three independent analyses (two with the observed population locations as spatial priors on the locations, $G'$, that they choose for themselves, one with random locations as spatial priors), the inferred values of admixture proportion are consistent (95\% credible intervals:  0.146-0.233, 0.154-0.242, 0.146-0.238).  However, both the position that the Stolby population chooses for itself and the region from which it draws admixture varies between runs (Figure \ref{sfig:warbler_pop_compare}).  In two of the analyses, the Stolby population moves to a position proximate to the \textit{viridanus} cluster and chooses admixture from a point beyond the \textit{plumbeitarsus} cluster, and in one analysis, this pattern is reversed.  
-
-\begin{figure}
-	\centering
-		\subcaptionbox{\label{warb_pop_realpr1}}
-			{\includegraphics[width=1.85in,height=1.54in]{figs/warblers/population_warbler_map_realpr1.png}}
-		\subcaptionbox{\label{warb_pop_realpr2}}			
-			{\includegraphics[width=1.85in,height=1.54in]{figs/warblers/population_warbler_map_realpr2.png}}
-		\subcaptionbox{\label{warb_pop_randpr1}}
-			{\includegraphics[width=1.85in,height=1.54in]{figs/warblers/population_warbler_map_randpr1.png}}
-	\caption{Comparison of inferred maps from three independent analyses.  (a,b) Results from analysis using observed locations as priors on population locations.  (c) Results from analysis using random, uniformly distributed locations within the observed range of latitude and longitude as priors on population locations.}\label{sfig:warbler_pop_compare}
-\end{figure}
-
 Because \textit{a priori} assigned population membership may be artificial (individuals from more than one population may be sampled at a single site), we repeated these analyses on an individual level.  In these analyses, the sample size in each `population' was 2 (for the two alleles in a diploid), and each individual chose its own location as well as the location of its source of admixture, the proportion of that admixture, and its nugget.  As with the analysis on multi-sample populations, the results \gc{approximately} mirror the geography of the individuals.  \gc{Individuals choose very low levels of admixture...}
 
 %The order of individuals' estimated locations around the Plateau is largely concordant with their true locations, and, in most cases, individuals sampled from the same population cluster closely together, as would be expected if samples collected at a single site are draws from a population that is locally panmictic.  
@@ -447,14 +411,7 @@ A second difference between the observed and inferred maps is a pair of individu
 
 The SpaceMix map also diverges from the observed map in the distribution of individuals from the subspecies \textit{ludlowi}.  These samples were taken from seven sampling locations along the southwest margin of the Tibetan Plateau, but, in the SpaceMix analysis, partition into two main clusters, one near the \textit{trochiloides} cluster, and one near the \textit{viridanus} cluster.  This break between samples from the same subspecies, which is concordant with the findings of Alcaide et al (2014), makes the \textit{ludlowi} cluster unusual compared to the estimated spatial distributions of the other subspecies (see SuppMat Figure NNN).
 
-\begin{figure}
-	\centering
-	\includegraphics[width=2.4in,height=2in]{figs/warblers/warb_ind_PC_map.png}
-	\caption{The map of warbler individuals derived from a Principal Components analysis.}\label{warb_ind_PC_map}
-\end{figure}
-
 %
-\newpage
 \subsection*{Human Populations}
 The geography of human population structure is a complex product of the forces of migration, drift, and selection acting on both local and global scales.  Recent work in this area has demonstrated that the signature of these forces can be read in the genomes of modern humans (e.g. Novembre et al 2008, Ralph \& Coop 2013, Moorjani, Reich, ARG folks, Hellenthal et al 2014).  This research has revealed that patterns of spatial genetic differentiation across human populations are byzantine in their complexity, varying across both space (Ralph \& Coop 2013) and time (Skoglund et al 2012, 2014), and shaped by culture (Reich et al 2009, Atzmon et al 2010, Moorjani et al 2011), landscape (Bradburd, Ralph, Coop 2013), and environment (Beall et al 2010, Bigham et al 2010).  To visualize the patterns these processes have induced, we set out to create a geogenetic map for a worldwide sample of modern human populations.  
 
@@ -485,7 +442,7 @@ In the analysis in which populations choose their own locations, the map roughly
 %		\subcaptionbox{Closeup of non-Africa populations \label{globe_notafrica_noad_map}}
 %			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Eurasia_Americas_Oceania_NoAd_map.png}}
 		\subcaptionbox{Closeup of Eurasian populations \label{globe_eurasia_noad_map}}
-			{\includegraphics[width=2.8in,height=2.3in]{figs/globetrotter/globe_Eurasia_NoAd_map.png}}
+			{\includegraphics[width=2.8in,height=2.3in]{figs/globetrotter/globe_Eurasia_NoAd_map_indproc.png}}
 	\caption{Map of human populations, inferred without admixture. (a) complete map; (b) close up of Eurasian 
 populations.}\label{sfig:globe_noad_maps}
 %(b) close up African populations; (c) close up of all non-African populations;
@@ -525,29 +482,16 @@ Xibo from weirdly ``north west'' of Europe.
 Pathan draws from where india also draws admixture from.
 
 
-
-
-
-
-
-
-\begin{figure}
-	\centering
-		{\includegraphics[width=6in,height=2.5in]{figs/globetrotter/globe_NoAd_dist_decay.png}} %globe_NoAd_dist_compare.png
-	\caption{Comparison of observed distance to estimated distance between human populations, colored by continent from which populations were sampled (i.e. - two populations sampled from Africa are green).  Eurasia is divided into Western Eurasia and East Asia.}
-\label{sfig:globe_noad_distcomp}
-\end{figure}
-
 \begin{figure}
 	\centering
 		\subcaptionbox{Inferred map of human populations \label{globe_all_ad_map}}
-			{\includegraphics[width=2.8in,height=2.3in]{figs/globetrotter/globe_Ad_map.png}}
+			{\includegraphics[width=2.8in,height=2.3in]{figs/globetrotter/globe_Ad_map_AfricaInset.png}}
 %		\subcaptionbox{Closeup of African populations \label{globe_africa_noad_map}}
 %			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Africa_NoAd_map.png}}
 %		\subcaptionbox{Closeup of non-Africa populations \label{globe_notafrica_noad_map}}
 %			{\includegraphics[width=2.8in,height=2.3in]{figs/globe_Eurasia_Americas_Oceania_NoAd_map.png}}
 		\subcaptionbox{Closeup of Eurasian populations \label{globe_eurasia_ad_map}}
-			{\includegraphics[width=2.8in,height=2.3in]{figs/globetrotter/Eurasia_Ad_map.png}}
+			{\includegraphics[width=2.8in,height=2.3in]{figs/globetrotter/eurasia_Ad_map_indproc.png}}
 	\caption{Map of human populations, inferred with admixture. (a) complete map; (b) close up of Eurasian populations.}\label{sfig:globe_ad_maps}
 \end{figure}
 
@@ -768,7 +712,7 @@ R = \text{min}\left(1, \frac{P(D \mid \theta^{\prime})} {P(D \mid \theta)}
 
 where $\frac{P(D \mid \theta^{\prime})} {P(D \mid \theta)}$ gives the ratio of the likelihood of the data under the proposed parameter value to that under the current parameter value, $\frac{P(\theta^{\prime})}{P(\theta)}$ gives the ratio of the prior probability of the proposed parameter value to that of the current parameter value, and $\frac{P(\theta^{\prime} \to \theta)}{P(\theta \to \theta^{\prime})}$ is the Hastings ratio, or the ratio of the conditional probability of proposing the current parameter value given the proposed parameter value to that of proposing the proposed parameter value given the current parameter value (Hastings 1970, Gilks 1996).
 
-In each generation of the MCMC, one of \{$\alpha_0$, $\alpha_1$, $\alpha_2$, $\eta$, $w$, $G^{\prime}$, $\identifyadmixsource{G}$\} is randomly chosen to be updated.  In the cases of \{$\eta$, $w$, $G^{\prime}$, $\identifyadmixsource{G}$\}, for which each population receives a free parameter, a single population, $k$ is selected and only its parameter value (e.g. $\eta_k$) is chosen to be updated.  Next, we outline the proposal distributions for each parameter.
+In each iteration of the MCMC, one of \{$\alpha_0$, $\alpha_1$, $\alpha_2$, $\eta$, $w$, $G^{\prime}$, $\identifyadmixsource{G}$\} is randomly chosen to be updated.  In the cases of \{$\eta$, $w$, $G^{\prime}$, $\identifyadmixsource{G}$\}, for which each population receives a free parameter, a single population, $k$ is selected and only its parameter value (e.g. $\eta_k$) is chosen to be updated.  Next, we outline the proposal distributions for each parameter.
 
 We propose updates to the values of the $\vec{\alpha}$, $\eta$, and $w$ parameters via a symmetric normal density with mean zero and some variance given by the scale of the tuning parameter for that parameter.  For example $\alpha_0^{\prime} \sim \alpha_0 + \mathcal{N}(0,\sigma_{\alpha_0})$, where $\sigma_{\alpha_0} \neq \sigma_{\alpha_1} \neq \sigma_{\alpha_2}$.  For $\eta$ and $w$, each of which consists of $K$ parameters, each parameter receives its own scale of the tuning parameter (e.g. - $\sigma_{\eta_{i}} \neq \sigma_{\eta_{j}}$).  
 
@@ -809,35 +753,48 @@ When we start our MCMC, $\zeta_i$ for all parameters is initiated at a value of 
 
 We choose to cap the maximum adaption amount at 20 (which is, recall, the equivalent of capping the variance of the proposal distribution at $~4.85 \times 10^8$) to avoid proposal distributions that offer absurdly large or small updates.  This procedure, also referred to as ``auto-tuning," results in acceptance rate plots like those shown in Figure \ref{sfig:example_acceptance_rates}, and in more efficient mixing and decreased autocorrelation time of parameter estimates.
 
+Finally, in the interest of computational efficiency, we have implemented several important speed-ups to the calculation of the Wishart likelihood.  The full Wishart probability of the sample standardized covariance matrix, $\widehat{\Omega^{\prime}}$, given the projected parametric covariance matrix, $\identifyadmixsource{\Omega}$, is given below:
+\begin{equation}
+\mathcal{P}(\widehat{\Omega^{\prime}}(X) \; | \; \identifyadmixsource{\Omega}) = \frac{|\widehat{\Omega^{\prime}}|^{ \frac{L - K - 1}{2} } \text{exp} \left(  \frac{-\text{tr}(\frac{\identifyadmixsource{\Omega}^{-1}}{L}\widehat{\Omega^{\prime}})}{2}	\right) }	
+									{2^{\frac{LK}{2}}  |\frac{\identifyadmixsource{\Omega}}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}{2} \right)	},
+\label{eq:full_wishart_lnl}
+\end{equation}
+
+where $\text{tr}$ denotes the trace function, $\Gamma_{p}$ denotes the multivariate gamma function, $L$ the number of independent loci over which the covariance is taken, and $K$ the number of samples.  However, because we are using a Markov chain Monte Carlo approach to parameter inference, we may skip the calculation of any parts of this equation that are constant across parameter values (i.e., they do not depend on $\identifyadmixsource{\Omega}$), as these quantities will cancel out during the calculation of the Metropolis-Hastings acceptance ratio (Eqn. \eqref{eq:MH_algorithm}).  We therefore need only calculate the Wishart likelihood as follows:
+
+\begin{equation}
+\mathcal{P}(\widehat{\Omega^{\prime}}(X) \; | \; \identifyadmixsource{\Omega}) = \frac{ \text{exp} \left(  \frac{-\text{tr}(\frac{\identifyadmixsource{\Omega}^{-1}}{L}\widehat{\Omega^{\prime}})}{2}	\right) }	
+									{  |\frac{\identifyadmixsource{\Omega}}{L}|^{\frac{L}{2}}  }.
+\label{eq:simple_wishart}
+\end{equation}
+
+We calculate the log likelihood of the standardized sample covariance given the parametric covariance matrix, so we express the log of this simplified likelihood as 
+
+\begin{equation}
+\text{log}\left(	\mathcal{P}(\widehat{\Omega^{\prime}}(X) \; |
+			 \; \identifyadmixsource{\Omega}) \right) = 
+			\frac{-1}{2} \text{tr}(\identifyadmixsource{\Omega}^{-1}\widehat{\Omega^{\prime}}) - 
+									\frac{L}{2} \text{log}\left(  \left|\frac{\identifyadmixsource{\Omega}}{L}\right| \right)\text{.}
+\label{eq:log_simple_wishart}
+\end{equation}
+
 % %%%%%%%%% %%%%%%%%% 
 
 \subsection*{Empirical Applications}
-The analysis procedure used to in all analyses of empirical data is detailed in the Appendix.  Below, we describe the specifics of our analyses of the greenish warbler dataset and the global human dataset.  
+Below, we describe the specifics of our analyses of the greenish warbler dataset and the global human dataset.  The analysis procedure for each dataset is given here:
 
-\subsubsection*{Warblers}
-
-We ran two analyses using the observed population locations as the prior on $G'$.  Then, to assess the potential influence of the spatial prior on population locations, we ran one analysis in which random, uniformly distributed locations between, for longitude, the minimum and maximum observed longitude, and, for latitude, the minimum and maximum observed latitude were used as the prior on population locations.  We then repeated these analyses, but treated each sequenced individual as its own population.  For clarity and ease of interpretation, we present a full Procrustes superimposition of the inferred population locations ($G'$) and their sources of admixture (\admixsource{}), using the observed latitude and longitude of the populations/individuals ($G$) to give a reference position and orientation.  As results were generally consistent across multiple runs for each dataset regardless of the prior employed we (unless stated otherwise) present only the results from the `random' prior analyses.
-
-Finally, we compared the SpaceMix map to a map derived from a Principal Components Analysis (Patterson and Reich 2006).  For this analysis, we calculated the eigendecomposition of the mean-centered allelic covariance matrix, then plotted individual's coordinates on the first two eigenvectors (e.g. Novembre et al 2008).  For clarity of presentation, we show the full Procrustes superimposition of the PC coordinate space around the geographic sampling locations of the warbler individuals (Figure NNN).  The concordance between the PC map and the SpaceMix map is generally quite good, and we discuss the interpretation of the geography implied by this map further below.
-
-To investigate the potential reason for this behavior, we calculated average pairwise sequence divergence at the 2,247 polymorphic loci in the dataset between all 95 individuals and plotted it against the pairwise geographic distance between the individuals (see SuppMat Figure NNN).  The pairwise sequence divergence (0.103) at polymorphic loci between Lud-MN3 and Tro-LN11 is significantly lower than that between any other pair of individuals separated by a comparable distance - lower, in fact, than any comparison between individuals that were not co-located, and lower than any pairwise divergence between any pair of individuals save that between the two Turkish \textit{nitidus} samples. 
-
-\subsubsection*{Humans}
-
-
-%%%%%%%%% %%%%%%%%% 
-%%%%%%%%%
-
-\section*{Appendix}
-
-The analysis procedure went as follows: 
+For each analysis,
 \begin{itemize}
-\item[1.] five independent chains were run for 5e6 generations each in which populations were allowed to choose their own locations (but no admixture).  Population locations were initiated at the origin (i.e. - at generation 1 of the MCMC, $G'_i = (0,0)$), and all other parameters were drawn randomly from their priors at the start of each chain.  
+\item[1.] five independent chains were run for 5e6 MCMC iterations each in which populations were allowed to choose their own locations (but no admixture).  Population locations were initiated at the origin (i.e. - at iteration 1 of the MCMC, $G'_i = (0,0)$), and all other parameters were drawn randomly from their priors at the start of each chain.  
 %
 \item[2.]The chain with the highest posterior probability at the end of the analysis was selected and identified as the``Best Short Run".
 %
-\item[3.] A chain was initiated from the parameter values in the last generation of the Best Short Run.  Because inference of admixture proportion and location was not allowed in the five initial runs, admixture proportions were initiated at 0 and admixture locations, \admixsource{G} were initiated at the origin.  This  chain (the ``Long Run") was run for 1e8 generations, and sampled every 1e5 generations for a total of 1e3 draws from the posterior.
+\item[3.] A chain was initiated from the parameter values in the last iteration of the Best Short Run.  Because inference of admixture proportion and location was not allowed in the five initial runs, admixture proportions were initiated at 0 and admixture locations, \admixsource{G} were initiated at the origin.  This  chain (the ``Long Run") was run for 1e8 iterations, and sampled every 1e5 iterations for a total of 1e3 draws from the posterior.
 \end{itemize}
+
+For each dataset, we ran two analyses using the observed population locations as the prior on $G'$.  Then, to assess the potential influence of the spatial prior on population locations, we ran one analysis in which random, uniformly distributed locations between, for longitude, the minimum and maximum observed longitude, and, for latitude, the minimum and maximum observed latitude were used as the prior on population locations.  For the warbler dataset, we repeated this analysis procedure, treating each sequenced individual as its own population.  For clarity and ease of interpretation, we present a full Procrustes superimposition of the inferred population locations ($G'$) and their sources of admixture ($\identifyadmixsource{G}$), using the observed latitude and longitude of the populations/individuals ($G$) to give a reference position and orientation.  As results were generally consistent across multiple runs for each dataset regardless of the prior employed we (unless stated otherwise) present only the results from the `random' prior analyses.
+
+Finally, we compared the SpaceMix map to a map derived from a Principal Components Analysis (Patterson and Reich 2006).  For this analysis, we calculated the eigendecomposition of the mean-centered allelic covariance matrix, then plotted individual's coordinates on the first two eigenvectors (e.g. Novembre et al 2008).  For clarity of presentation, we show the full Procrustes superimposition of the PC coordinate space around the geographic sampling locations.
 
 \newpage
 
@@ -860,6 +817,26 @@ The analysis procedure went as follows:
 		{\includegraphics[width=2.4in,height=2in]{figs/sims/GeoGenMap_barr_inland_admixture_2.png}}
 	\caption{credible interval of where population 23 draws admixture from.}
 \label{sfig:barr_inland_ad_credset}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=2.4in,height=2in]{figs/warblers/warb_ind_PC_map.png}
+	\caption{The map of warbler individuals derived from a Principal Components analysis.}\label{warb_ind_PC_map}
+\end{figure}
+
+%\gc{Graham: dont feel like we need the three analyses in main text.} Across the three independent analyses (two with the observed population locations as spatial priors on the locations, $G'$, that they choose for themselves, one with random locations as spatial priors), the inferred values of admixture proportion are consistent (95\% credible intervals:  0.146-0.233, 0.154-0.242, 0.146-0.238).  However, both the position that the Stolby population chooses for itself and the region from which it draws admixture varies between runs (Figure \ref{sfig:warbler_pop_compare}).  In two of the analyses, the Stolby population moves to a position proximate to the \textit{viridanus} cluster and chooses admixture from a point beyond the \textit{plumbeitarsus} cluster, and in one analysis, this pattern is reversed.  
+
+\begin{figure}
+	\centering
+		\subcaptionbox{\label{warb_pop_realpr1}}
+			{\includegraphics[width=1.85in,height=1.54in]{figs/warblers/population_warbler_map_realpr1.png}}
+		\subcaptionbox{\label{warb_pop_realpr2}}			
+			{\includegraphics[width=1.85in,height=1.54in]{figs/warblers/population_warbler_map_realpr2.png}}
+		\subcaptionbox{\label{warb_pop_randpr1}}
+			{\includegraphics[width=1.85in,height=1.54in]{figs/warblers/population_warbler_map_randpr1.png}}
+	\caption{Comparison of inferred maps from three independent analyses.  (a,b) Results from analysis using observed locations as priors on population locations.  (c) Results from analysis using random, uniformly distributed locations within the observed range of latitude and longitude as priors on population locations.}\label{sfig:warbler_pop_compare}
 \end{figure}
 
 \begin{figure}
@@ -888,6 +865,12 @@ The analysis procedure went as follows:
 \end{figure}
 \end{document}
 
+\begin{figure}
+	\centering
+		{\includegraphics[width=6in,height=2.5in]{figs/globetrotter/globe_NoAd_dist_decay.png}} %globe_NoAd_dist_compare.png
+	\caption{Comparison of observed distance to estimated distance between human populations, colored by continent from which populations were sampled (i.e. - two populations sampled from Africa are green).  Eurasia is divided into Western Eurasia and East Asia.}
+\label{sfig:globe_noad_distcomp}
+\end{figure}
 
 
 
@@ -924,3 +907,5 @@ where $f_{\ell,i}$ is the allele frequency in population $i$, $f_{\ell,j}$ is th
 
 \section*{Inference}
 For details on our Bayesian inference framework and Markov chain Monte Carlo inference procedure, please see the Section: How I spent the past year!
+
+To investigate the potential reason for this behavior, we calculated average pairwise sequence divergence at the 2,247 polymorphic loci in the dataset between all 95 individuals and plotted it against the pairwise geographic distance between the individuals (see SuppMat Figure NNN).  The pairwise sequence divergence (0.103) at polymorphic loci between Lud-MN3 and Tro-LN11 is significantly lower than that between any other pair of individuals separated by a comparable distance - lower, in fact, than any comparison between individuals that were not co-located, and lower than any pairwise divergence between any pair of individuals save that between the two Turkish \textit{nitidus} samples. 

@@ -6,7 +6,7 @@
 \usepackage{url}
 \usepackage{mathtools}
 \usepackage{color}
-\usepackage{natbib}
+\usepackage[authoryear]{natbib}
 \usepackage{fullpage}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -26,44 +26,6 @@
 \newcommand{\gb}[1]{{\em \color{magenta} #1}}
 \newcommand{\plr}[1]{{\em \color{green} #1}}
 \newcommand{\gc}[1]{{\em \color{blue} #1}}
-
-
-%%Graham's attempts at arrows in equations 
-% \newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
-% \tikzset{square arrow/.style={to path={-- ++(0,-.25) -| (\tikztotarget)}}}
-
-
-% \newcommand\source[1]{%
-%     \tikz[remember picture,baseline,inner sep=0pt] {%
-%         \node [name=source,anchor=base]{$#1$};
-%     }%
-%     \setcounter{target}{0}
-% }
-
-% \newcounter{target}
-% \newcommand\target[1]{%
-%     \tikz[remember picture,baseline,inner sep=0pt] {%
-%         \node [name=target-\thetarget,anchor=base]{$#1$};
-%     }%
-%     \stepcounter{target}%
-% }
-
-% \newcommand\drawarrows{
-%     \tikz[remember picture, overlay, bend left=20, -latex] {
-%         \foreach \i [evaluate=\i as \n using int(\i-1)] in {1,...,\thetarget} {
-%             \draw (source.north) to (target-\n.north);
-%         }
-%     }
-% }
-
-
-% \newcommand\newdrawarrows{
-%     \tikz[remember picture, overlay, bend left=20, -latex] {
-%         \foreach \i [evaluate=\i as \n using int(\i-1)] in {1,...,\thetarget} {
-%             \draw (target-\n.north) to (source.north);
-%         }
-%     }
-% }
 
 
 \geometry{a4paper}
@@ -94,7 +56,7 @@ The patterns of genetic variation observed in modern populations are the product
 %%%%%%%%% %%%%%%%%% %%%%%%%%%
 \section*{Introduction}
 Population structure and the long term demography of populations leave their mark on patterns of genetic variation and differentiation within and between populations. 
-There are many different population genetic approaches to learn about population structure. At one end there are those approaches which focus on learning a detailed view of the migrational history of a small number of populations. There has been considerable recent progress in this area using a variety of approaches summaries such as the allele frequency spectrum (Dadi, Song, Excoffier) or approximations to the coalescent applied to sequence data (Song, Li and Durbin, ). At the other end of the axis are a broad set of approaches focus on visualizing patterns of genetic relatedness and population structure. Such methods are usually less dependent on a particular population genetic model, and can deal with many populations or individuals as the unit of analysis. Examples of this second set of methods include cluster-based methods \citep{STRUCTURE, ADMIXTURE, FINESTRUCTURE} and reduced dimensionality representations of the data such as Principal Components Analysis (e.g. Menozzi, Piazza, and Cavalli-Sforza 1978, Novembre et al 2008, Novembre and Stephens 2008, McVean 2009,Yang et al 2012, Yang et al 2014).
+There are many different population genetic approaches to learn about population structure. At one end there are those approaches which focus on learning a detailed view of the migrational history of a small number of populations. There has been considerable recent progress in this area using a variety of approaches summaries such as the allele frequency spectrum (\citep{dadi}, Song, Excoffier) or approximations to the coalescent applied to sequence data (Song, Li and Durbin, ). At the other end of the axis are a broad set of approaches focus on visualizing patterns of genetic relatedness and population structure. Such methods are usually less dependent on a particular population genetic model, and can deal with many populations or individuals as the unit of analysis. Examples of this second set of methods include cluster-based methods \citep{STRUCTURE, ADMIXTURE, FINESTRUCTURE} and reduced dimensionality representations of the data such as Principal Components Analysis (e.g. Menozzi, Piazza, and Cavalli-Sforza 1978, Novembre et al 2008, Novembre and Stephens 2008, McVean 2009,Yang et al 2012, Yang et al 2014).
 
 There are a wide variety of approaches that sit between these two end points. One large set of approaches are methods that visualize patterns of relatedness, by estimating a population phylogeny describing the evolutionary history shared between sampled individuals or populations from allele frequencies.  This approach of modeling relatedness between populations within species as a tree-like structure was pioneered by Cavalli-Sforza \& Edwards,  (\&Thompson?) along with methods to test whether a tree was a good model \citep{treeness} see  \citep{Felsenstein} for a review. 
 Recently there has been a resurgence of interest in methods in methods using population trees as a null model to test and quantitify the signal of admixture between samples, which is defined as covariance between samples in excess of that predicted by their tree-like history. To aid data analysis and visualization methods such as Treemix \citep{Pickrell} and mixmapper which fit allele frequency covariance among populations as a directed acyclic graph between populations. Specifically methods such as TreeMix accommodates reticulate population structure by allowing branches on the population t tree to be connected by arrows of admixture that explain excess residual covariance between populations or population `clades'.
@@ -202,45 +164,59 @@ where the constant of proportionality is the normalization constant of the poste
 
 The sampled locations are a natural prior on where the populations are positioned under the null of isolation by distance (as well as a natural starting position for the MCMC). This prior also encourages the resulting inferred geogenetic map to be anchored in the observed locations and to represent (informally) the minimum distortion to space necessary to satisfy the constraints placed by genetic similarities of populations. However, one concern is that if the method returns a spatial configuration that strongly resembles the observed population map, this could reflect the possibility that there is insufficient information in the data to overcome the influence of the prior, or that the MCMC has not been run long enough.  To address this concern, we can also use random locations as the ``observed locations" ($G_k$) to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference.
 
-%\gb{equation here}\\
-
 To illustrate this inference procedure, we present several scenarios simulated under the coalescent (using \textrm{ms}, (Hudson)), as well as the results of SpaceMix analyses run on them.  In all scenarios, we simulate variations of a stepping stone model in which populations are arranged on a grid with symmetric nearest neighbor migration (\ref{sfig:lattice_scenarios}\subref{simple_lattice}), with 10 haploid individuals sampled from every other population at 10,000 unlinked loci (for details on all simulations, see Appendix NNN). On all simulated datasets, we perform SpaceMix analyses in which we treat population locations as random variables to be estimated as part of the model, and randomly place the `observed' location of each population so as to remove the influence of the prior.  For clarity, we present the full Procrustes superimposition of the inferred locations around the coordinates used to simulate the data.
+
+\begin{figure}
+	\centering
+		\subcaptionbox{simulated lattice \label{simple_lattice}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/basic_lattice.png}}
+		\subcaptionbox{lattice inference \label{lattice_inference}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_lattice.pdf}}
+	\caption{Simulation scenarios and SpaceMix inference.  a) configuration of simulated populations on a simple lattice at equilibrium; b) inference of population locations under this scenario.}\label{sfig:lattice_scenarios}
+\end{figure}
 
 In the first scenario (output illustrated in Fig. \ref{sfig:lattice_scenarios}\subref{lattice_inference}), we simulate a stepping stone model at migration-drift equilibrium with homogeneous migration rates across the grid. In Figure \ref{sfig:lattice_scenarios}\subref{lattice_inference}, the reader can see that the configuration estimated for the populations by SpaceMix matches the lattice structure used to simulate the data, and that populations are correctly choosing their nearest neighbors.  Populations at the edge of the lattice have the least amount of data informing their exact placement, and are therefore pulled in somewhat.
 
-In our second scenario (Fig. \ref{sfig:lattice_scenarios}\subref{barrier_inference}), we simulate under the same stepping stone model, but introduce a longitudinal barrier to dispersal (between populations 11:15 and 16:20), across which migration rates are attenuated by a factor of 5.  In Figure \ref{sfig:lattice_scenarios}\subref{barrier_inference}, the population configuration matches that of the lattice used to simulate the data, but due to the influence of the barrier, the two halves of the map have pushed farther away from one another.  This gap between populations on either side of the barrier reflects the way those populations perceive the increased effective distance between them.
+\begin{figure}
+	\centering
+		\subcaptionbox{simulated lattice with barrier \label{barrier_lattice}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/barrier_lattice.png}}
+		\subcaptionbox{barrier inferece\label{barrier_inference}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_barrier.pdf}}
+	\caption{Simulation scenarios and SpaceMix inference.  a) a lattice with a barrier across the center line of longitude; b) inference of population locations under this scenario.}\label{sfig:barrier_scenarios}
+\end{figure}
 
-In the third scenario (Fig. \ref{sfig:lattice_scenarios}\subref{expansion_inference}), we simulate an expansion event, in which, all populations in the last five columns of the grid have expanded in the recent past from the nearest population in their row (referring to Fig. \ref{sfig:lattice_scenarios}\subref{simple_lattice}, populations 25 and 30, as well as the three unsampled populations that bracket them, have all expanded at the same point in the recent past from population 20). In the scenario of recent expansion (Fig. \ref{sfig:lattice_scenarios}\subref{expansion_inference}), the daughter populations of the expansion event cluster with their parent populations, reflecting the higher relatedness (per unit geographic separation) between them.  \gc{In Supp. Figs XXX. we show the relationship between covariance in allele frequencies and geographic distance and inferred geogenetic distance for these simulations}.
+In our second scenario (Fig. \ref{sfig:barrier_scenarios}\subref{barrier_inference}), we simulate under the same stepping stone model, but introduce a longitudinal barrier to dispersal (between populations 11:15 and 16:20), across which migration rates are attenuated by a factor of 5.  In Figure \ref{sfig:barrier_scenarios}\subref{barrier_inference}, the population configuration matches that of the lattice used to simulate the data, but due to the influence of the barrier, the two halves of the map have pushed farther away from one another.  This gap between populations on either side of the barrier reflects the way those populations perceive the increased effective distance between them.
+
+\begin{figure}
+	\centering
+		\subcaptionbox{simulated lattice with expansion \label{expansion_lattice}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/expansion_lattice.png}}
+		\subcaptionbox{Expansion  \label{expansion_inference}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_expansion.pdf}}
+	\caption{Simulation scenarios and SpaceMix inference.  a) a lattice with recent expansion on the eastern margin; b) inference of population locations under this scenario.}\label{sfig:expansion_scenarios}
+\end{figure}
+
+In the third scenario (Fig. \ref{sfig:expansion_scenarios}\subref{expansion_inference}), we simulate an expansion event, in which, all populations in the last five columns of the grid have expanded in the recent past from the nearest population in their row (e.g., populations 25 and 30, as well as the three unsampled populations that bracket them, have all expanded at the same point in the recent past from population 20). In the scenario of recent expansion (Fig. \ref{sfig:expansion_scenarios}\subref{expansion_inference}), the daughter populations of the expansion event cluster with their parent populations, reflecting the higher relatedness (per unit geographic separation) between them.  \gc{In Supp. Figs XXX. we show the relationship between covariance in allele frequencies and geographic distance and inferred geogenetic distance for these simulations}.
+
+%referring to Fig. \ref{sfig:lattice_scenarios}\subref{simple_lattice},
 
 If our data are well fit by a model of isolation by distance then (1) a population's genetic makeup should be well predicted by that of its neighbors, and (2) populations should not show excess covariance with distant populations. Violation of either of these two points will result in a poor fit of a simple isolation by distance model, and particularly a violation of point (2) may indicate that long distance admixture has taken place.
 
+To examine the behavior of SpaceMix when there is long distance covariance between populations, we simulated an admixture event on the stepping-stone model we had used previously.  Specifically, (using Fig. \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice} as a reference) we allowed population 30, in the northeast corner of the grid, to draw half of its ancestry from population 1, in the southwest corner.  The result of a SpaceMix analysis in which the locations of these populations were estimated is shown in Figure \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}.
 
 \begin{figure}
 	\centering
-		\subcaptionbox{Simulated Lattice \label{simple_lattice}}
-			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/basic_lattice.png}}
-		\subcaptionbox{Lattice \label{lattice_inference}}
-			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_lattice.pdf}}
-		\subcaptionbox{Barrier \label{barrier_inference}}
-			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_barrier.pdf}}
-		\subcaptionbox{Expansion  \label{expansion_inference}}
-			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_expansion.pdf}}
-	\caption{Population maps inferred using SpaceMix under three different scenarios: a) configuration of simulated populations; (c) simple lattice at equilibrium; c) a lattice with a barrier across the center line of longitude; d) a lattice with recent expansion on the eastern margin.}\label{sfig:lattice_scenarios}
+		\subcaptionbox{simulated lattice with admixture \label{corner_admixture_lattice}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/corner_admixture_lattice.png}}
+		\subcaptionbox{location Inference \label{sfig:corner_admix_inference_CYOL}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_corner_admixture_CYOL.pdf}}
+		\subcaptionbox{location and admixture inference  \label{corner_admix_inference}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_corner_admixture.png}}
+	\caption{Simulation scenarios and SpaceMix inference.  a) a lattice with recent admixture event between population 1 in the southwest corner and population 30 in the northeast corner; b) inference of population locations under this scenario; c) inference of population locations and their sources of admixture under this scenario.}\label{sfig:corner_admix_scenarios}
 \end{figure}
 
-
-\begin{figure}
-	\centering
-		\subcaptionbox{Location Inference \label{sfig:admixture_inference_CYOL}}
-			{\includegraphics[width=2.4in,height=2in]{figs/sims/GeoGenMap_corner_admixture_CYOL.png}}
-		\subcaptionbox{Location and Admixture Inference \label{sfig:admixture_inference_CYOL}}
-			{\includegraphics[width=2.4in,height=2in]{figs/sims/GeoGenMap_corner_admixture.png}}
-	\caption{Inference of population locations in the scenario depicted in Figure \ref{sfig:admixture_scenario}.  Population 30 has received half of its lineages from population 1, to simulate a long distance admixture event in the very recent past. a) Inference of population locations; b) inference of both population locations and their sources of admixture}\label{sfig:corner_admixture_inference}
-\end{figure}
-
-
-To examine the behavior of SpaceMix when there is long distance covariance between populations, we simulated an admixture event on the stepping-stone model we had used previously.  Specifically, (using Fig. \ref{sfig:lattice_scenarios}\subref{simple_lattice} as a reference) we allowed population 30, in the northeast corner of the grid, to draw half of its ancestry from population 1, in the southwest corner.  The result of a SpaceMix analysis in which the locations of these populations were estimated is shown in Figure \ref{sfig:corner_admixture_inference}\subref{admixture_inference_CYOL}.
-This signal of excess covariance over anomalously long distances is clearly difficult to accommodate within the ``choose-your-own-location" framework described above.  In Figure \ref{sfig:corner_admixture_inference}\subref{admixture_inference_CYOL}, the reader can see the torturous lengths to which the method goes to come up with a configuration of populations that accommodates their genetic relationships.  The admixed population 30 is estimated to have a location intermediate between population 1, the source of its admixture, and populations 24, 25, and 29, the nearest neighbors to the location of its non-admixed lineages.  However, this warping of space is difficult to interpret, especially in the visualization of genetic relationships in empirical data for which a researcher does not know the true demographic history.  It would therefore be of great utility to directly model the action of admixture on spatial patterns of genetic variation.
+This signal of excess covariance over anomalously long distances is clearly difficult to accommodate within the ``choose-your-own-location" framework described above.  In Figure \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_inference_CYOL}, the reader can see the torturous lengths to which the method goes to come up with a configuration of populations that accommodates their genetic relationships.  The admixed population 30 is estimated to have a location intermediate between population 1, the source of its admixture, and populations 24, 25, and 29, the nearest neighbors to the location of its non-admixed lineages.  However, this warping of space is difficult to interpret, especially in the visualization of genetic relationships in empirical data for which a researcher does not know the true demographic history.  It would therefore be of great utility to directly model the action of admixture on spatial patterns of genetic variation.
 
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Inference of Spatial Admixture}
@@ -281,71 +257,33 @@ P(G',\identifyadmixsource{G}, \vec{p},\vec{\alpha}, \eta \mid \widehat{\Omega}, 
 %
 as specified by the parameters $w$, $\identifyadmixsource{G}$, $\vec{\alpha}$, and $\eta$, and the observed locations, $G$.  We place the same priors as stated above on $\vec{\alpha}$, $\eta$, and we now specify priors on $q$ and $\identifyadmixsource{G}$.  The admixture proportions, $w$, are capped at 0.5, to prevent populations from swapping identities with their source of admixture, and are heavily weighted towards small values to be conservative with respect to admixture inference.  Our admixture proportions are independently beta-distributed: $2 w_k \sim \beta(\alpha = 1,\beta = 100)$.  The priors on the sources of admixture, $\identifyadmixsource{G}$ are taken independently as bivariate normal spatial distributions, all with the same mean at the centroid of the observed population locations, $G$, and variance equal to twice the mean pairwise observed distance:  $\identifyadmixsource{G_k} \sim \mathcal{N}(\mu = \bar{G},\sigma = 2 \bar{D}(G))$.
 
-
 \begin{figure}[ht!]
 	\centering
 	\includegraphics[width=2in,height=2in]{figs/admix_cov_fig.pdf}
-	\caption{An illustration of the form of the admixed covariance given in Eqns. \eqref{eq:admixed_covariance_1} and \eqref{eq:admixed_covariance_2}.  Populations $i$ and $j$ are drawing admixture in proportions $p_i$ and $p_j$ from their respective sources of admixture, $i^{(*)}$ and $j^{(*)}$, and all pairwise spatial covariances (the $\Omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $j^{(*)}$ than $i$ is from its source $i^{(*)}$ (i.e., $p_j > p_i$).}\label{sfig:admixed_cov_diagram}
+	\caption{An illustration of the form of the admixed covariance given in Eqns. \eqref{eq:admixed_covariance_1}.  Populations $i$ and $j$ are drawing admixture in proportions $p_i$ and $p_j$ from their respective sources of admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$, and all pairwise spatial covariances (the $\Omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $\identifyadmixsource{j}$ than $i$ is from its source $\identifyadmixsource{i}$ (i.e., $p_j > p_i$).}
+\label{sfig:admixed_cov_diagram}
 \end{figure}
-
 
 %We treat the location of the source of admixture for population $k$, $\identifyadmixsource{G_k}$, and the population's admixture proportion, $p_k$, as random variables and jointly estimate them as part of our inference procedure. 
 
-The models described above may be used in various combinations.  In the simplest model, populations may not choose their own locations, nor are they allowed to draw admixture, and the only parameters to be estimated are those of the spatial covariance function given in Eqn \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_k$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of that admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  %The full likelihood of this most complex parameterization is given by,
+The models described above may be used in various combinations.  In the simplest model, populations may not choose their own locations, nor are they allowed to draw admixture, and the only parameters to be estimated are those of the spatial covariance function given in Eqn \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_k$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of that admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  
 
-An natural concern is whether all of these parameters are separately identifiable, most notability whether population locations, admixture locations and proportions can be estimated. If a population has received some level of admixture from a another population what is to stop it simply moving towards that population in geogenetic space to satisfy its increased resemblance to that population, rather than choosing admixture from that location. The recent developments to test for admixture from population allele frequencies \citep{treemix}, rely on the fact that a population tree dictates particular conditions on the covariances of allele frequency differences among particular parts of the tree. Violations of these conditions allow for admixture to be identified, and also highlight conditions under which these tests may be misled (ancient population structure). Similarly admixture is identifiable in our model as their are covariance relationships among populations that can not simply be satisified by shifting populations locations around (as demonstrated by the tortured nature of Figure \ref{sfig:admixture_inference_CYOL}). To illustrate this point consider the simple spatial admixture scenerio shown in Figure \ref{fig:toy_admixture}. Our populations A-D are arrayed spatially along a line, and there allele frequencies are specified by a simple isolation by distance model. The lines show the expected covariance that a population at a given distance to populations A, B, or D (as indicated by line color). There is recent admixture from D into B (such that 40\% of the alleles in B are drawn from D). The dots show the resulting admixed covariance between B and the three other populations, as well as B's variance (B-B) as specified by equation \eqref{eq:admixed_covariance_1}, with no nugget or sampling effect
+An natural concern is whether all of these parameters are separately identifiable, most notably whether population locations, admixture locations, and proportions can be estimated. That is, if a population has received some level of admixture from a another population, what is to stop it from simply moving toward that population in geogenetic space to satisfy its increased resemblance to that population, rather than choosing admixture from that location?
+
+%\gb{Not sure what you were trying to say here.} The recent developments to test for admixture between populations using allele frequencies \citep{treemix}, rely on the fact that a population tree dictates particular conditions on the covariances of allele frequency differences among particular parts of the tree. Violations of these conditions allow for admixture to be identified, and also highlight conditions under which these tests may be misled (ancient population structure). 
+Admixture is identifiable in our model because there are covariance relationships among populations that cannot simply be satisfied by shifting population locations around (as demonstrated by the tortured nature of Figure \ref{sfig:admixture_inference_CYOL}). To illustrate this point, consider the simple spatial admixture scenario shown in Figure \ref{fig:toy_admixture}. Our populations A-D are spatially arrayed  along a line, and their allele frequencies are specified by a simple isolation by distance model, but there is recent admixture from D into B (such that 40\% of the alleles in B are drawn from D). The lines show the expected covariance under IBD that each population populations A, C, or D (as indicated by line color) has with a putative population at a given distance.  The dots show the resulting admixed covariance between B and the three other populations, as well as B's variance with itself (B-B) as specified by equation \eqref{eq:admixed_covariance_1}, with no nugget or sampling effect.
+
 \begin{figure}[ht!]
 	\centering
 	\includegraphics[width=\textwidth]{figs/sims/Admix_covar_toy_fig.pdf}
 	\caption{} \label{fig:toy_admixture}
 \end{figure}
-Due to the admixture B has lower covariance with A than expected given its distance, somewhat higher covariance with C, and much higher covariance with D. In addition the variance of B is lower than the other three populations, which each have variance $1$, the value of covariance when the distance is zero. This lower variance results from the fact that the frequencies at $B$ represent a mixture of the frequency at $D$ and the frequency at $B$ before the admixture. For the sake of simplicity lets assume that we hold the locations of A, B, and D constant, as well as the decay of covariance with distance (as could be the case if A-D are part of a larger analysis).  The covariance relationships of $B$ to the other populations can not be simply satisfied by moving $B$ towards D. Doing so would better match B's covariance to D, but it would then have to covary much more with C and much less with A than we observe. Moving B also does not resolve its lower variance than the other populations. Introducing admixture into the model allows it to satisify all of these conditions, it can draw ancestry from D but keep part of its resemblance to A, it also avoids B having to closer to C. Even in the absence of a sample from population C, B's covariance with A and D and its low variance could not be satisfied simply by moving B. B is better described as a linear mixture of a population close to A and D.
 
+Due to its admixture from D, B has lower covariance with A than expected given its distance, somewhat higher covariance with C, and much higher covariance with D. In addition, the variance of B is lower than that of the other three populations, which each have variance $1$ - the value of the covariance when the distance is zero. This lower variance results from the fact that the frequencies at $B$ represent a mixture of the frequency at $D$ and the frequency at $B$ before the admixture. 
 
-%%%Graham's attempts at arrows in equations
-%\begin{equation}
-%\source{A}~~~~B~~~~ \target{C}~~~~D
-%\drawarrows
-%\end{equation}
-%blah blah
+Now, using this example scenario, let us return to the concern posed above: that admixture location and population location are non identifiable.  For the sake of simplicity, assume that we hold the locations of A, C, and D constant, as well as the decay of covariance with distance (as could be the case if A-D are part of a larger analysis).  The covariance relationships of $B$ to the other populations cannot be simply satisfied by moving $B$ towards D. Doing so would better match B's covariance to D, but B would then have a covariance with C that is higher, and a covariance with A that is lower, than that we actually observe. Moving B also does not resolve the mystery that its variance is lower than that of the other populations. Introducing admixture into the model allows it to satisfy all of these conditions: it can draw ancestry from D but keep part of its resemblance to A, it also avoids B having to move closer to C. Even in the absence of a sample from population C, B's covariance with A and D and its low variance could not be satisfied simply by moving B.  B is better described as a linear mixture of a population close to A and D.
 
-% \begin{equation}
-%   A~~~~B\tikzmark{b} ~~~~ C~~~~\tikzmark{a}D
-%   \tikz[overlay,remember picture]
-%    {\draw[->,square arrow] (a.south) to (b.south);}
-% \end{equation}
-% blah blah
-% \begin{equation}
-%   A~~~~B\tikzmark{b} ~~~~ C~~~~\tikzmark{a}D
-%   \tikz[overlay,remember picture]
-%    {\draw[->,square arrow] (a.south) to (b.south);}
-% \end{equation}
- 
- 
-%\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
-%\tikzset{square arrow/.style={to path={-- ++(0,-.25) -| (\tikztotarget)}}}
-
-%\begin{equation}
- % a\tikzmark{a}x^2 + bx + c = 5\tikzmark{b}x^2 + bx + c.
- % \tikz[overlay,remember picture]
- %  {\draw[->,square arrow] (a.south) to (b.south);}
-%\end{equation}
- 
-
-
-Using the example admixture scenario described above and used in the analysis depicted in Figure \ref{sfig:admixture_inference_CYOL}, we demonstrate the inference of populations' sources and strengths of admixture and illustrate the results in Figure \ref{sfig:corner_admixture_just_adinf}.  The reader can see that only the admixed population (population 30) is drawing admixture from the location of the source of admixture that was used to simulate the data, and that all other populations, which are not admixed, are choosing to draw admixture in only negligible amounts. \gc{run with choose your own location + admixture.}
-
-\begin{figure}[ht!]
-	\centering
-	\includegraphics[width=2in,height=2in]{figs/admix_cov_fig.pdf}
-	\caption{An illustration of the form of the admixed covariance given in Eqns. \eqref{eq:admixed_covariance_1} and \eqref{eq:admixed_covariance_2}.  Populations $i$ and $j$ are drawing admixture in proportions $p_i$ and $p_j$ from their respective sources of admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$, and all pairwise spatial covariances (the $\Omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $\identifyadmixsource{j}$ than $i$ is from its source $\identifyadmixsource{i}$ (i.e., $p_j > p_i$).}\label{sfig:admixed_cov_diagram}
-\end{figure}
-
-\begin{figure}[ht!]
-	\centering
-	\includegraphics[width=2.4in,height=2in]{figs/sims/GeoGenMap_corner_admixture_adinf.png}
-	\caption{Posterior distribution of inference of the sources and strengths of admixture for the sampled populations.  The admixed population (Population 30) is drawing admixture from the location of its source of admixture that was used to simulate the data (the location of Population 1).}\label{sfig:corner_admixture_just_adinf}
-\end{figure}
+Using the example admixture scenario described above and used in the analysis depicted in Figure \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}, we demonstrate the inference of populations' sources and strengths of admixture and illustrate the results in Figure \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference}.  The reader can see that only the admixed population (population 30) is drawing admixture from the location of the source of admixture that was used to simulate the data, and that all other populations, which are not admixed, are choosing to draw admixture in only negligible amounts.
 
 To demonstrate the use of the model in which the location of each population as well as the location of its source of admixture are estimated jointly, we used the spatial stepping-stone coalescent simulation procedure described above to generate a dataset of populations on a lattice in which there is both a barrier to dispersal and a more subtle admixture event (admixture proportion = 10\%, see Fig. \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_scenario}).  In the SpaceMix analysis (Fig. \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_inference}), the separation of the east and west sides of the grid accommodates the effect of the barrier to migration, and the admixed population (population 23) chooses admixture from very close to its true source (population 13), and in close to the correct amount ($\bar{p} = 0.05; 95\% \text{ credible interval} = 0.02-0.08$). 
 
@@ -355,15 +293,15 @@ We also show a scenario in which there has been admixture (40\%) between two pop
 
 \begin{figure}[ht!]
 	\centering
-		\subcaptionbox{Lattice \label{barr_inland_ad_scenario}}
+		\subcaptionbox{`inland' admixture\label{barr_inland_ad_scenario}}
 			{\includegraphics[width=2in,height=1.66in]{figs/sims/barr_indland_ad_lattice.png}}
-		\subcaptionbox{Barrier \label{barr_inland_ad_inference}}
+		\subcaptionbox{inference \label{barr_inland_ad_inference}}
 			{\includegraphics[width=2in,height=1.66in]{figs/sims/GeoGenMap_barr_inland_admixture_1.png}}
-		\subcaptionbox{Lattice \label{big_barr_ad_scenario}}
+		\subcaptionbox{`neighbor' admixture \label{big_barr_ad_scenario}}
 			{\includegraphics[width=2in,height=1.66in]{figs/sims/big_barr_ad_lattice.png}}
-		\subcaptionbox{Barrier \label{barr_inland_ad_inference}}
+		\subcaptionbox{inference \label{barr_inland_ad_inference}}
 			{\includegraphics[width=2in,height=1.66in]{figs/sims/GeoGenMap_big_barr_ad_1.png}}
-	\caption{Simulation scenarios and inferred population maps for two different admixture scenarios: a) lattice with a barrier and an admixture event across the barrier to an `inland' population; b) the inferred population map for the scenario in (a); c) lattice with a barrier and an admixture event across the barrier to a population on the border of the barrier; (d) the inferred population map for the scenario in (c).}\label{sfig:barr_inland_ad}
+	\caption{Simulation scenarios and inferred population maps for two different admixture scenarios: a) lattice with a barrier and an admixture event across the barrier to an `inland' population; b) the inferred population map for the scenario in (a); c) lattice with a barrier and an admixture event across the barrier to a `neighbor' population on the border of the barrier; (d) the inferred population map for the scenario in (c).}\label{sfig:barr_inland_ad}
 \end{figure}
 
 \section*{Empirical Applications}
@@ -806,6 +744,10 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 
 \newpage
 
+\bibliography{spacemix.refs.bib}
+
+\newpage
+
 
 \section*{Supplementary Materials}
 
@@ -871,7 +813,6 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 	{\includegraphics[width=6in,height=2.5in]{figs/sims/example_acceptance_rates.png}}
 	\caption{Example parameter acceptance proportions for the $\alpha_2$ parameter and the nugget parameter, $\eta$, using the adaptive Metropolis-within-Gibbs proposal mechanism.}\label{sfig:example_acceptance_rates}
 \end{figure}
-\end{document}
 
 \begin{figure}
 	\centering
@@ -880,7 +821,21 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 \label{sfig:globe_noad_distcomp}
 \end{figure}
 
+\begin{figure}
+	\centering
+		\subcaptionbox{Simulated Lattice \label{simple_lattice}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/basic_lattice.png}}
+		\subcaptionbox{Lattice \label{lattice_inference}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_lattice.pdf}}
+		\subcaptionbox{Barrier \label{barrier_inference}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_barrier.pdf}}
+		\subcaptionbox{Expansion  \label{expansion_inference}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_expansion.pdf}}
+	\caption{Population maps inferred using SpaceMix under three different scenarios: a) configuration of simulated populations; (c) simple lattice at equilibrium; c) a lattice with a barrier across the center line of longitude; d) a lattice with recent expansion on the eastern margin.}\label{sfig:lattice_scenarios}
+\end{figure}
 
+
+\end{document}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -917,3 +872,123 @@ where $f_{\ell,i}$ is the allele frequency in population $i$, $f_{\ell,j}$ is th
 For details on our Bayesian inference framework and Markov chain Monte Carlo inference procedure, please see the Section: How I spent the past year!
 
 To investigate the potential reason for this behavior, we calculated average pairwise sequence divergence at the 2,247 polymorphic loci in the dataset between all 95 individuals and plotted it against the pairwise geographic distance between the individuals (see SuppMat Figure NNN).  The pairwise sequence divergence (0.103) at polymorphic loci between Lud-MN3 and Tro-LN11 is significantly lower than that between any other pair of individuals separated by a comparable distance - lower, in fact, than any comparison between individuals that were not co-located, and lower than any pairwise divergence between any pair of individuals save that between the two Turkish \textit{nitidus} samples. 
+
+
+\begin{figure}
+	\centering
+		\subcaptionbox{Lattice \label{lattice_inference}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_lattice.pdf}}
+		\subcaptionbox{Barrier \label{barrier_inference}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_barrier.pdf}}
+		\subcaptionbox{Expansion  \label{expansion_inference}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_expansion.pdf}}
+		\subcaptionbox{Admixture \label{sfig:admixture_inference_CYOL}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_corner_admixture_CYOL.pdf}}
+	\caption{Population maps inferred using SpaceMix under three different scenarios: a) simple lattice at equilibrium; b) a lattice with a barrier across the center line of longitude; c) a lattice with recent expansion on the eastern margin; d) a lattice with an admixture event between populations 1 and 30.}\label{sfig:lattice_scenarios}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+		\subcaptionbox{Location Inference \label{sfig:admixture_inference_CYOL}}
+			{\includegraphics[width=2.4in,height=2in]{figs/sims/GeoGenMap_corner_admixture_CYOL.pdf}}
+		\subcaptionbox{Location and Admixture Inference \label{sfig:admixture_inference_CYOL}}
+			{\includegraphics[width=2.4in,height=2in]{figs/sims/GeoGenMap_corner_admixture.png}}
+	\caption{Inference of population locations in the scenario depicted in Figure \ref{sfig:admixture_scenario}.  Population 30 has received half of its lineages from population 1, to simulate a long distance admixture event in the very recent past. a) Inference of population locations; b) inference of both population locations and their sources of admixture}\label{sfig:corner_admixture_inference}
+\end{figure}
+
+\begin{figure}
+	\centering
+		\subcaptionbox{Lattice \label{lattice_inference}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_lattice.pdf}}
+		\subcaptionbox{Barrier \label{barrier_inference}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_barrier.pdf}}
+		\subcaptionbox{Expansion  \label{expansion_inference}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_expansion.pdf}}
+		\subcaptionbox{Admixture \label{sfig:admixture_inference_CYOL}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_corner_admixture_CYOL.pdf}}
+	\caption{Population maps inferred using SpaceMix under three different scenarios: a) simple lattice at equilibrium; b) a lattice with a barrier across the center line of longitude; c) a lattice with recent expansion on the eastern margin; d) a lattice with an admixture event between populations 1 and 30.}\label{sfig:lattice_scenarios}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+		\subcaptionbox{Location Inference \label{sfig:admixture_inference_CYOL}}
+			{\includegraphics[width=2.4in,height=2in]{figs/sims/GeoGenMap_corner_admixture_CYOL.pdf}}
+		\subcaptionbox{Location and Admixture Inference \label{sfig:admixture_inference_CYOL}}
+			{\includegraphics[width=2.4in,height=2in]{figs/sims/GeoGenMap_corner_admixture.png}}
+	\caption{Inference of population locations in the scenario depicted in Figure \ref{sfig:admixture_scenario}.  Population 30 has received half of its lineages from population 1, to simulate a long distance admixture event in the very recent past. a) Inference of population locations; b) inference of both population locations and their sources of admixture}\label{sfig:corner_admixture_inference}
+\end{figure}
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=2.4in,height=2in]{figs/sims/GeoGenMap_corner_admixture.png}
+	\caption{Posterior distribution of inference of the sources and strengths of admixture for the sampled populations.  The admixed population (Population 30) is drawing admixture from the location of its source of admixture that was used to simulate the data (the location of Population 1).}\label{sfigGeoGenMap_corner_admixture}
+\end{figure}
+
+%%%Graham's attempts at arrows in equations
+%\begin{equation}
+%\source{A}~~~~B~~~~ \target{C}~~~~D
+%\drawarrows
+%\end{equation}
+%blah blah
+
+% \begin{equation}
+%   A~~~~B\tikzmark{b} ~~~~ C~~~~\tikzmark{a}D
+%   \tikz[overlay,remember picture]
+%    {\draw[->,square arrow] (a.south) to (b.south);}
+% \end{equation}
+% blah blah
+% \begin{equation}
+%   A~~~~B\tikzmark{b} ~~~~ C~~~~\tikzmark{a}D
+%   \tikz[overlay,remember picture]
+%    {\draw[->,square arrow] (a.south) to (b.south);}
+% \end{equation}
+ 
+ 
+%\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+%\tikzset{square arrow/.style={to path={-- ++(0,-.25) -| (\tikztotarget)}}}
+
+%\begin{equation}
+ % a\tikzmark{a}x^2 + bx + c = 5\tikzmark{b}x^2 + bx + c.
+ % \tikz[overlay,remember picture]
+ %  {\draw[->,square arrow] (a.south) to (b.south);}
+%\end{equation}
+
+
+%%Graham's attempts at arrows in equations 
+% \newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+% \tikzset{square arrow/.style={to path={-- ++(0,-.25) -| (\tikztotarget)}}}
+
+
+% \newcommand\source[1]{%
+%     \tikz[remember picture,baseline,inner sep=0pt] {%
+%         \node [name=source,anchor=base]{$#1$};
+%     }%
+%     \setcounter{target}{0}
+% }
+
+% \newcounter{target}
+% \newcommand\target[1]{%
+%     \tikz[remember picture,baseline,inner sep=0pt] {%
+%         \node [name=target-\thetarget,anchor=base]{$#1$};
+%     }%
+%     \stepcounter{target}%
+% }
+
+% \newcommand\drawarrows{
+%     \tikz[remember picture, overlay, bend left=20, -latex] {
+%         \foreach \i [evaluate=\i as \n using int(\i-1)] in {1,...,\thetarget} {
+%             \draw (source.north) to (target-\n.north);
+%         }
+%     }
+% }
+
+
+% \newcommand\newdrawarrows{
+%     \tikz[remember picture, overlay, bend left=20, -latex] {
+%         \foreach \i [evaluate=\i as \n using int(\i-1)] in {1,...,\thetarget} {
+%             \draw (target-\n.north) to (source.north);
+%         }
+%     }
+% }

@@ -1372,6 +1372,33 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_A
 
 	write.csv(globe.ad.data.table,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_mean_pop_adprop_nugg_vals.csv")
 
+tmp.order <- heatmap(last.params$D)$rowInd
+dee <- last.params$D[tmp.order,tmp.order]
+labels <- c(pops,pops)[tmp.order]
+cols <- c(continent.col,continent.col)[tmp.order]
+
+x.ticks <- c(1:(2*k) - 1)/(2*k-1)
+	par(oma=c(1,1,1,3))
+	image(dee)
+		for(i in 1:(2*k)){
+			axis(side=1,at=x.ticks[i],labels=labels[i],las=2,cex.axis=0.3,col=cols[i])
+			axis(side=2,at=x.ticks[i],labels=labels[i],las=2,cex.axis=0.3,col=cols[i])
+		}
+				leg.x <- c(1:(2*k))
+				leg.y <- sort(as.matrix(dee))
+				leg.z <- outer(leg.x,leg.y)
+				leg.lab.vals <- c(round(min(dee),2),round(max(dee),2))
+				fields::image.plot(leg.x,leg.y,leg.z,add=TRUE,
+						nlevel=2*k,
+						horizontal=FALSE,graphics.reset=TRUE,
+						legend.only=TRUE,col=heat.colors(nrow(dee)),
+						smallplot=c(0.975,0.990,0.25,0.68),				
+						axis.args=list(at=c(-82,84),labels=leg.lab.vals))
+
+plot(last.params$population.coordinates,type='n')
+	text(last.params$population.coordinates,labels=c(pops,pops),col=c(continent.col, continent.col))
+
+
 ################
 #	Admixture - real prior 3
 ################
@@ -1599,6 +1626,9 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 		names(globe.ad.data.table) <- c("mean_admix_prop","mean_nugget")
 
 	write.csv(globe.ad.data.table,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_mean_pop_adprop_nugg_vals.csv")
+
+
+
 
 ################
 #	Admixture - real prior 2
@@ -1878,15 +1908,61 @@ target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 							option = 1)
 pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_lattice.pdf",width=6,height=5,pointsize=9)
 #quartz(width=6,height=5)
-par(mar=c(4.3,4.3,3,1))
+# par(mar=c(4.3,4.3,3,1))
+	par(mar=c(1,1,1,1))
 plot(target.coords,pch=1,xlim=c(0,12),ylim=c(-0.4,10),cex=3.5,
-		xlab="Eastings",ylab="Northings",
-		main="Inferred Population Map:\n Simple Lattice",
+		# xlab="Eastings",ylab="Northings",
+		# main="Inferred Population Map:\n Simple Lattice",
+		xaxt='n',yaxt='n',
 		col=pop.cols,lwd=2)
 	box(lwd=2)
 	text(target.coords,labels=paste(1:k))
 dev.off()
 
+
+x.subplot <- c(-2.56,1.5)
+y.subplot <- c(8.75,12.5)
+pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_lattice_InsetScenario_dots.pdf",width=6,height=5,pointsize=9)
+#quartz(width=6,height=5)
+# par(mar=c(4.3,4.3,3,1))
+plot(target.coords,pch=1,xlim=c(-2,12),ylim=c(-0.4,12),cex=3.5,
+		xlab="Eastings",ylab="Northings",
+		main="Inferred Population Map:\n Simple Lattice",
+		col=pop.cols,lwd=2)
+	box(lwd=2)
+	text(target.coords,labels=paste(1:k))
+	TeachingDemos::subplot(fun = {
+						plot(generate.geographic.coordinates(5,6)[[1]],
+							xlim=c(0,12),ylim=c(0,10),
+							col=pop.cols,pch=19,cex=1,
+							xlab="",ylab="",
+							xaxt='n',yaxt='n');
+						box(lwd=1.5)
+						},
+					x=x.subplot,y=y.subplot)
+dev.off()
+
+pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_lattice_InsetScenario_numbers.pdf",width=6,height=5,pointsize=9)
+#quartz(width=6,height=5)
+par(mar=c(4.3,4.3,3,1))
+plot(target.coords,pch=1,xlim=c(-2,12),ylim=c(-0.4,12),cex=3.5,
+		xlab="Eastings",ylab="Northings",
+		main="Inferred Population Map:\n Simple Lattice",
+		col=pop.cols,lwd=2)
+	box(lwd=2)
+	text(target.coords,labels=paste(1:k))
+	TeachingDemos::subplot(fun = {
+						plot(generate.geographic.coordinates(5,6)[[1]],
+							xlim=c(0,12),ylim=c(0,10),
+							xlab="",ylab="",
+							xaxt='n',yaxt='n',type='n');
+						text(generate.geographic.coordinates(5,6)[[1]],
+							col=pop.cols,pch=19,
+							labels=paste(1:30),cex=0.8)
+						box(lwd=1.5)
+						},
+					x=x.subplot,y=y.subplot)
+dev.off()
 ################
 #	Barrier
 ################
@@ -1900,10 +1976,12 @@ target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 							option = 1)
 pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_barrier.pdf",width=6,height=5,pointsize=9)
 #quartz(width=6,height=5)
-par(mar=c(4.3,4.3,3,1))
+	par(mar=c(1,1,1,1))
+# par(mar=c(4.3,4.3,3,1))
 plot(target.coords,pch=1,xlim=c(0,12),ylim=c(-0.4,10),cex=3.5,
-		xlab="Eastings",ylab="Northings",
-		main="Inferred Population Map:\n Lattice with Barrier",
+#		xlab="Eastings",ylab="Northings",
+#		main="Inferred Population Map:\n Lattice with Barrier",
+		xaxt='n',yaxt='n',
 		col=pop.cols,lwd=2)
 	box(lwd=2)
 	text(target.coords,labels=paste(1:k))
@@ -1924,10 +2002,12 @@ target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 							option = 1)
 pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_expansion.pdf",width=6,height=5,pointsize=9)
 #quartz(width=6,height=5)
-par(mar=c(4.3,4.3,3,1))
+	par(mar=c(1,1,1,1))
+#par(mar=c(4.3,4.3,3,1))
 plot(target.coords,pch=1,xlim=c(1.2,9.5),ylim=c(-2,12),cex=3.5,
-		xlab="Eastings",ylab="Northings",
-		main="Inferred Population Map:\n Lattice with Expansion",
+#		xlab="Eastings",ylab="Northings",
+#		main="Inferred Population Map:\n Lattice with Expansion",
+		xaxt='n',yaxt='n',
 		col=pop.cols,lwd=2)
 	box(lwd=2)
 	text(target.coords,labels=paste(1:k))
@@ -1958,9 +2038,10 @@ y.max <- max(target.coords[,2]) + 1
 source.coord.cols <- fade.admixture.source.points(pop.cols,admix.proportions[,best])
 png("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_corner_admixture.png",res=300,width=6*300,height=5*300,pointsize=9)
 #quartz(width=6,height=5)
-par(mar=c(4.3,4.3,3,1))
+	par(mar=c(1,1,1,1))
+# par(mar=c(4.3,4.3,3,1))
 plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
-		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Admixture",
+		# xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Admixture",
 		col=pop.cols,lwd=2)
 		points(source.coords,pch=20,col=source.coord.cols)
 	box(lwd=2)
@@ -1998,11 +2079,12 @@ x.max <- max(target.coords[,1]) + 0.5
 y.min <- min(target.coords[,2]) - 0.5
 y.max <- max(target.coords[,2]) + 1
 
-png("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_corner_admixture_CYOL.png",res=300,width=6*300,height=5*300,pointsize=9)
+pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_corner_admixture_CYOL.pdf",width=6,height=5,pointsize=9)
 #quartz(width=6,height=5)
-par(mar=c(4.3,4.3,3,1))
+	par(mar=c(1,1,1,1))
+# par(mar=c(4.3,4.3,3,1))
 plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
-		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Admixture",
+#		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Admixture",
 		col=pop.cols,lwd=2)
 	box(lwd=2)
 	text(target.coords,labels=paste(1:k))
@@ -2087,9 +2169,11 @@ scalar <- 4
 source.coord.cols <- fade.admixture.source.points(pop.cols,scalar*admix.proportions[,best])
 png("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_barr_inland_admixture_1.png",res=300,width=6*300,height=5*300,pointsize=9)
 #quartz(width=6,height=5)
-par(mar=c(4.3,4.3,3,1))
+	par(mar=c(1,1,1,1))
+#par(mar=c(4.3,4.3,3,1))
 plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
-		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Barrier and Admixture",
+#		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Barrier and Admixture",
+		xaxt='n',yaxt='n',
 		col=pop.cols,lwd=2)
 		points(source.coords,pch=20,col=source.coord.cols)
 	box(lwd=2)
@@ -2210,9 +2294,11 @@ scalar <- 4
 source.coord.cols <- fade.admixture.source.points(pop.cols,scalar*admix.proportions[,best])
 png("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_big_barr_ad_1.png",res=300,width=6*300,height=5*300,pointsize=9)
 #quartz(width=6,height=5)
-par(mar=c(4.3,4.3,3,1))
+#par(mar=c(4.3,4.3,3,1))
+	par(mar=c(1,1,1,1))
 plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
-		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Barrier and Admixture",
+#		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Barrier and Admixture",
+		xaxt='n',yaxt='n',
 		col=pop.cols,lwd=2)
 		points(source.coords,pch=20,col=source.coord.cols)
 	box(lwd=2)

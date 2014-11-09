@@ -115,7 +115,7 @@ Given the assumption of multivariate normality for our sample frequencies, it fo
 That is, 
 \begin{equation}
 \label{eq:wishart_dist}
-(L-1) \widehat{\Omega} \sim \mathcal{W}\left( \Omega, L	\right)
+L \widehat{\Omega} \sim \mathcal{W}\left( \Omega, L	\right)
 \end{equation}
 %\gc{should the $L^{-1}$ be there?} \gb{I'm pretty sure it goes there, b/c the mean of the Wishart is $n\textbf{V}$, where $n$ is the degrees of freedom and $\textbf{V}$ is the scale matrix.  This seems fairly important, so maybe \plr{P} or \gc{G} could take a look at the wiki page and confirm this?} 
 
@@ -138,7 +138,7 @@ Given the assumption of multivariate normality for our sample frequencies, it fo
 That is, 
 \begin{equation}
 \label{eq:wishart_dist}
-P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left((L-1) \widehat{\Omega} \mid \Omega,L \right)
+P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left( L\widehat{\Omega} \mid \Omega,L \right)
 \end{equation}
 Now, in practice, we do not get to observe $\epsilon$ and so we replace $\epsilon$ with $\bar{f}_{\ell}$, the mean sample allele frequency at locus  $\ell$. We discuss the implications of this move in the Methods XXX.
 % These are given by $I\bar{S_k}^{-1} + I\eta_k$, where $I$ is the identity matrix, $I\bar{S_k}$ is the mean sample size in population $k$ across all loci, and.  
@@ -245,7 +245,7 @@ As we only get to observe the sample frequencies and we standardize our allele f
 \begin{equation}
 \label{eq:wishart_dist_admixed}
 P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}) = 
-	\mathcal{W}\left(\widehat{\Omega} \mid L^{-1} \identifyadmixsource{\Omega} \left( G',\identifyadmixsource{G}, \vec{w},\vec{\alpha}\right),L \right)	\text{.}
+	\mathcal{W}\left(L \widehat{\Omega} \mid \identifyadmixsource{\Omega} \left( G',\identifyadmixsource{G}, \vec{w},\vec{\alpha}\right),L \right)	\text{.}
 \end{equation}
 As before $G'$, $\vec{\alpha}$, $\vec{\eta}$ are treated as random variables to be estimated. Now the set of $K$ admixture sources $\identifyadmixsource{G}$ are also parameters to be estimated, along with the vector of $K$ admixture proportions $\vec{w}$. The posterior probability of these parameters can be expressed as a function of this parametric admixed covariance, $\identifyadmixsource{\Omega}$,
 \begin{equation}
@@ -495,7 +495,7 @@ That is,
 %
 \begin{equation}
 %\label{eq:wishart_dist}
-\widehat{\Omega} \sim \mathcal{W}\left( L^{-1} \Omega, L	\right)
+L \widehat{\Omega} \sim \mathcal{W}\left( \Omega, L	\right)
 \end{equation}
 %
 We can calculate an estimate of the covariance matrix ($\Omega$) across loci as 
@@ -518,7 +518,7 @@ That is,
 %
 \begin{equation}
 %\label{eq:wishart_dist}
-P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left(\widehat{\Omega} \mid L^{-1} \Omega,L \right)
+P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left(L \widehat{\Omega} \mid  \Omega,L \right)
 \end{equation}
 %
 However, we do not have the population frequencies nor the `ancestral' frequency $\epsilon$. Instead we mean-center and normalize our observations at a locus using the weighted mean sample frequency in place of $\epsilon$.  Recall that the sample allele frequency at locus $\ell$ in population $k$ is given by $\hat{f}_{\ell,k} = C_{\ell,k}/S_{\ell,k}$.  We wish to calculate a sample mean frequency at each locus weighted by the sample size in each population.  As sample size may vary across loci, we first calculate $\bar{S}_k$, the mean population sample size in population $k$, as $\bar{S}_k = \frac{1}{L}\sum_L S_{\ell,k}$.  We then calculate the weighted sample mean frequency at locus $\ell$ as follows:
@@ -570,7 +570,7 @@ The standardized sample allele frequency covariance $\Omega^{\prime}$ is then si
 %
 \begin{equation}
 \label{eq:projected_wishart_dist}
-P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left(\widehat{\Omega^{\prime}} \mid L^{-1} \Psi^{T}   \Omega   \Psi,L \right) \text{.}
+P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left(L \widehat{\Omega^{\prime}} \mid  \Psi^{T}   \Omega   \Psi,L \right) \text{.}
 \end{equation}
 %
 

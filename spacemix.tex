@@ -153,9 +153,9 @@ Given the assumption of multivariate normality for our sample frequencies, it fo
 That is, 
 \begin{equation}
 \label{eq:wishart_dist}
-\widehat{\Omega} \sim \mathcal{W}\left( L^{-1} \Omega, L	\right)
+(L-1) \widehat{\Omega} \sim \mathcal{W}\left( \Omega, L	\right)
 \end{equation}
-\gc{should the $L^{-1}$ be there?} \gb{I'm pretty sure it goes there, b/c the mean of the Wishart is $n\textbf{V}$, where $n$ is the degrees of freedom and $\textbf{V}$ is the scale matrix.  This seems fairly important, so maybe \plr{P} or \gc{G} could take a look at the wiki page and confirm this?} 
+%\gc{should the $L^{-1}$ be there?} \gb{I'm pretty sure it goes there, b/c the mean of the Wishart is $n\textbf{V}$, where $n$ is the degrees of freedom and $\textbf{V}$ is the scale matrix.  This seems fairly important, so maybe \plr{P} or \gc{G} could take a look at the wiki page and confirm this?} 
 
 We can calculate an estimate of the covariance matrix ($\Omega$) across loci as 
 
@@ -176,7 +176,7 @@ Given the assumption of multivariate normality for our sample frequencies, it fo
 That is, 
 \begin{equation}
 \label{eq:wishart_dist}
-P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left(\widehat{\Omega} \mid L^{-1} \Omega,L \right)
+P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left((L-1) \widehat{\Omega} \mid \Omega,L \right)
 \end{equation}
 Now, in practice, we do not get to observe $\epsilon$ and so we replace $\epsilon$ with $\bar{f}_{\ell}$, the mean sample allele frequency at locus  $\ell$. We discuss the implications of this move in the Methods XXX.
 % These are given by $I\bar{S_k}^{-1} + I\eta_k$, where $I$ is the identity matrix, $I\bar{S_k}$ is the mean sample size in population $k$ across all loci, and.  

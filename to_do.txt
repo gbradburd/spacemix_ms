@@ -20,9 +20,10 @@ move bar_inland_ad to suppmat, move big_barr_ad to main text
 
 sims description, mij, segsite
 
+fix spacemix so that \hat(omega)/L ~ W(\Omega,L)
+	P: is it L or L-1 degrees of freedom?
 
 meet w/ graham todo:
-	-check for globe anomalies
 	-add cornerad CYOL to CYOL panel
 		-shrink scenario to inset panel
 	-make admix panel with
@@ -91,3 +92,8 @@ COMPLETED:
 	-put in good globe ad figs
 	-try to procrustes CYOL eurasia to flatten out
 	-try to procrustes CYOL&AD eurasia to flatten out
+	-check for globe anomalies
+	
+AFTER SUBMISSION:
+	fix spacemix to run \hat(omega)/L ~ W(\Omega,L)
+	re-mean centering our standardized freq.

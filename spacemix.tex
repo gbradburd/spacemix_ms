@@ -162,7 +162,7 @@ where the constant of proportionality is the normalization constant of the poste
 
 %The probability of the sample covariance matrix, $P(\widehat{\Omega} |\Omega (\vec{\alpha}\pmb{D}(\pmb{G'}) )$, is as before the Wishart likelihood of the sample covariance matrix of our standardized frequencies, and our priors on $\pmb{\vec{\alpha}}$ are as before. 
 
-The sampled locations are a natural prior on where the populations are positioned under the null of isolation by distance (as well as a natural starting position for the MCMC). This prior also encourages the resulting inferred geogenetic map to be anchored in the observed locations and to represent (informally) the minimum distortion to space necessary to satisfy the constraints placed by genetic similarities of populations. However, one concern is that if the method returns a spatial configuration that strongly resembles the observed population map, this could reflect the possibility that there is insufficient information in the data to overcome the influence of the prior, or that the MCMC has not been run long enough.  To address this concern, we can also use random locations as the ``observed locations" ($G_k$) to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference.
+The sampled locations are a natural prior on where the populations are positioned under the null of isolation by distance (as well as a natural starting position for the MCMC). This prior also encourages the resulting inferred geogenetic map to be anchored in the observed locations and to represent (informally) the minimum distortion to space necessary to satisfy the constraints placed by genetic similarities of populations. However, one concern is that if the method returns a spatial configuration that strongly resembles the observed population map, this could reflect the possibility that there is insufficient information in the data to overcome the influence of the prior, or that the MCMC has not been run long enough.  To address this concern, we can also use random locations as the ``observed locations" ($G_k$) to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference. 
 
 To illustrate this inference procedure, we present several scenarios simulated under the coalescent (using \textrm{ms}, (Hudson)), as well as the results of SpaceMix analyses run on them.  In all scenarios, we simulate variations of a stepping stone model in which populations are arranged on a grid with symmetric nearest neighbor migration (\ref{sfig:lattice_scenarios}\subref{simple_lattice}), with 10 haploid individuals sampled from every other population at 10,000 unlinked loci (for details on all simulations, see Appendix NNN). On all simulated datasets, we perform SpaceMix analyses in which we treat population locations as random variables to be estimated as part of the model, and randomly place the `observed' location of each population so as to remove the influence of the prior.  For clarity, we present the full Procrustes superimposition of the inferred locations around the coordinates used to simulate the data.
 
@@ -305,49 +305,51 @@ We also show a scenario in which there has been admixture (40\%) between two pop
 \end{figure}
 
 \section*{Empirical Applications}
-To demonstrate the applications of this novel method, we analysed population genomic data from two systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.
-
-\subsection*{Greenish Warblers}  
-The greenish warbler (\emph{Phylloscopus trochiloides}) species complex is broadly distributed around the Tibetan plateau, and exhibits gradients around the ring in a range of phenotypes including song, as well allele frequencies (Ticehurst (1938),Irwin et al 2001, Irwin et al 2005, Irwin et al 2008).  At the northern end of the ring in central Siberia, where the eastern and western arms of population expansion meet, there are discontinuities in call and morphology, as well as a genetic discontinuity and reproductive isolation (Irwin et al 2001, Irwin et al 2008). It is proposed that the species complex represents a ring species, in which selection and/or drift, acting in the populations as they spread northward on either side of the Tibetan plateau, have led to the evolution of reproductive isolation (REFs).  The question of whether it constitutes a ring species, in purest form, focuses on whether gene flow along the margins of the plateau has truly been continuous throughout the history of the expansion or if, alternatively, discontinuities in migration around the species complex's range have facilitated periods of differentiation in genotype or phenotype without gene flow (Mayr 1942, Mayr 1970, Coyne and Orr 2004).  However, we note that many would still classify this as a ring species even if that condition were not met, just not as a case of speciation-by-distance \citep[see][ for discussion]{}.
-
-
-\gc{Based on a larger SNP dataset Alcaide et al (2014),} have suggested that the greenish warbler species complex constitutes a `broken' ring species, in which there have been historical discontinuities in gene flow that facilitated the evolution of reproductive isolation between adjacent forms.  Because the questions in this system are fundamentally both geographic and genetic in nature, it is eminently SpaceMix-able, and, within this spatial framework, we performed a number of analyses to investigate the geographic context of population differentiation in the greenish warbler species complex. For these analyses, we used the dataset from Alcaide et al (2014), which consisted of 95 individuals sampled at 22 distinct locations and sequenced at 2,334 SNPs, of which 2,247 were bi-allelic and retained for SpaceMix runs. 
+To demonstrate the applications of this novel method, we analyzed population genomic data from two systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.  \gb{Maps showing our sampling in these two systems are shown in Figure \ref{sfig:empirical_maps}, and information on the specific populations included is given in the Appendix, Tables XXX and XXX.  To minimize the potential influence of the spatial prior on population locations, for each empirical analysis, we performed one SpaceMix run in which random, uniformly distributed locations between, for longitude, the minimum and maximum observed longitude, and, for latitude, the minimum and maximum observed latitude were used as the prior on population locations (in addition to two runs for which the observed locations are used as priors).  For clarity and ease of interpretation, we then present a full Procrustes superimposition of the inferred population locations ($G'$) and their sources of admixture ($\identifyadmixsource{G}$), using the observed latitude and longitude of the populations/individuals ($G$) to give a reference position and orientation.  As results were generally consistent across multiple runs for each dataset regardless of the prior employed we (unless stated otherwise) present only the results from the `random' prior analyses.}
 
 \begin{figure}
 	\centering
 		\subcaptionbox{Warbler subspecies distribution map \label{irwin_map}}
-			{\includegraphics[width=2.4in,height=2in]{figs/warblers/Irwin_warbler_map_figure.png}}
-		\subcaptionbox{Inferred admixture proportions and population nuggets \label{warb_pop_adnug}}			
-			{\includegraphics[width=2.4in,height=2in]{figs/warblers/population_warbler_admix_values_nugget.png}}
-		\subcaptionbox{Map inferred using SpaceMix \label{warb_pop_no_arrows}}
-			{\includegraphics[width=2.4in,height=2in]{figs/warblers/population_warbler_map_no_arrows.png}}
-		\subcaptionbox{Map inferred using SpaceMix with admixture arrows shown \label{warb_pop_arrows}}
-			{\includegraphics[width=2.4in,height=2in]{figs/warblers/population_warbler_map_randpr1.png}}
-	\caption{Greenish warbler subspecies distributions contrasted with maps of all 22 sampled populations inferred using SpaceMix.  For clarity of presentation, the inferred coordinates and parameter values are taken from the single draw of the MCMC with the highest posterior probability and have have been Procrustes transformed around the coordinates of the lattice used to simulate the data. (a) Greenish warbler subspecies distribution map (from Irwin et al NNN).  (b) Inferred population admixture proportions and nugget parameters. (c) Inferred population map without admixture arrows shown, with population labels colored as in (a). (d) Inferred population map with admixture arrows (with thickness proportional to inferred admixture proportion) shown, with population labels colored as in (a). }\label{sfig:warbler_pops}
+			{\includegraphics[width=2in,height=1.66in]{figs/warblers/Irwin_warbler_map_figure.png}}
+		\subcaptionbox{Human sample distribution map \label{human_map}}
+			{\includegraphics[width=4in,height=2.4in]{figs/globetrotter/globe_world_map_text.png}}
+\caption{Sampling maps of both empirical systems analyzed.  (a) greenish warbler subspecies distributions of all 22 sampled populations, consisting of 95 individuals; (b) sampling map for human dataset, consisting of 1,490 individuals from 95 sampling locations.}
+\label{empirical_maps}
 \end{figure}
 
-\gc{run method w. no admixture. I think we should define the random priors in the methods above, as it's not specific to any of the analyses}
+\subsection*{Greenish Warblers}  
+The greenish warbler (\emph{Phylloscopus trochiloides}) species complex is broadly distributed around the Tibetan plateau, and exhibits gradients around the ring in a range of phenotypes including song, as well in allele frequencies (Ticehurst (1938), Irwin et al 2001, Irwin et al 2005, Irwin et al 2008).  At the northern end of the ring in central Siberia, where the eastern and western arms of population expansion meet, there are discontinuities in call and morphology, as well as a genetic discontinuity and reproductive isolation (Irwin et al 2001, Irwin et al 2008). It is proposed that the species complex represents a ring species, in which selection and/or drift, acting in the populations as they spread northward on either side of the Tibetan plateau, have led to the evolution of reproductive isolation (REFs).  The question of whether it constitutes a ring species, in purest form, focuses on whether gene flow along the margins of the plateau has truly been continuous throughout the history of the expansion or if, alternatively, discontinuities in migration around the species complex's range have facilitated periods of differentiation in genotype or phenotype without gene flow (Mayr 1942, Mayr 1970, Coyne and Orr 2004).  However, we note that many would still classify this as a ring species even if that condition were not met, just not as a case of speciation-by-distance \citep[see][ for discussion]{}.
 
-\gc{We first ran spacemix on the population dataset, with no admixture, setting the prior locations of the populations at random (as described above).} The inferred map (Figure \ref{sfig:warbler_pops}) largely recapitulates the geography of the sampled populations.  Populations choose locations around a large ring, with ordering similar to that of their true geographic locations.  The Turkish population (\textit{Phylloscopus trochiloides} ssp. \textit{nitidus}) clustered with the populations in the subspecies \textit{ludlowi}, but also chose a relatively high nugget parameter, reflecting the independent drift it does not share with its \textit{ludlowi} neighbors.  The Yekat population of \textit{viridanus} individuals clusters closely with the other, less far-flung \textit{viridanus} individuals, indicating that differentiation within that subspecies is not commensurate with the amount of IBD expected for samples separated by that much distance. 
+%Based on a larger SNP dataset, 
+Alcaide et al (2014), have suggested that the greenish warbler species complex constitutes a `broken' ring species, in which historical discontinuities in gene flow have facilitated the evolution of reproductive isolation between adjacent forms.  Because the questions in this system are fundamentally both geographic and genetic in nature, it is eminently SpaceMix-able, and, within this spatial framework, we performed a number of analyses to investigate the geographic context of population differentiation in the greenish warbler species complex. For these analyses, we used the dataset from Alcaide et al (2014), which consisted of 95 individuals sampled at 22 distinct locations and sequenced at 2,334 SNPs, of which 2,247 were bi-allelic and retained for SpaceMix runs.
 
-In the north, where the twin waves of expansion around the Tibetan Plateau are hypothesized to meet, the inferred \gc{geogenetic} distance between populations identified as \textit{Phylloscopus trochiloides} ssp. \textit{plumbeitarsus} and ssp. \textit{viridanus} was \gc{much} greater than their observed geographic separation, reflecting the reproductive isolation between these adjacent forms \gc{{\bf POINT to graph showing this in supp}.  Interestingly, the ST population, which consists of six individuals sampled in Stolby, Russia, chooses a location intermediate between the \textit{plumbeitarsus} and \textit{viridanus} groups. The Stolby sample is composed of three individuals that belong to the eastern \textit{plumbeitarsus} and three individuals that belong to the western \textit{viridanus} \cite{Alcaide et al (2014)}. In the case where no admixture is allowed this population is forced to adopt an intermediate position to incorporate its admixed nature. }
+\begin{figure}
+	\centering
+		{\includegraphics[width=2.4in,height=2in]{figs/warblers/warb_pop_noad.png}}
+\caption{Inferred population map with population labels colored as in \ref{sfig:empirical_maps}\subref{irwin_map}.}
+\label{sfig:warbler_pop_noad}
+\end{figure}
+
+We first ran SpaceMix on the population dataset, with no admixture, setting the prior locations of the populations at random (as described above). The inferred map (Figure \ref{sfig:warbler_pop_noad}) largely recapitulates the geography of the sampled populations.  Populations choose locations around a large ring, with ordering similar to that of their true geographic locations.  The Turkish population (\textit{Phylloscopus trochiloides} ssp. \textit{nitidus}) clustered with the populations in the subspecies \textit{ludlowi}, but also chose a relatively high nugget parameter (see SuppMat Fig XXX), reflecting the independent drift it does not share with its \textit{ludlowi} neighbors.  The Yekat population of \textit{viridanus} individuals clusters closely with the other, less far-flung \textit{viridanus} individuals, indicating that differentiation within that subspecies is incommensurate with the amount of IBD expected for samples separated by that much distance. 
+
+In the North, where the twin waves of expansion around the Tibetan Plateau are hypothesized to meet, the inferred geogenetic distance between populations identified as \textit{Phylloscopus trochiloides} ssp. \textit{plumbeitarsus} and ssp. \textit{viridanus} was much greater than their observed geographic separation, reflecting the reproductive isolation between these adjacent forms (see Figure \ref{sfig:warb_pop_distcomp}).  Interestingly, the ST population, which consists of six individuals sampled in Stolby, Russia, chooses a location intermediate between the \textit{plumbeitarsus} and \textit{viridanus} groups. The Stolby sample is composed of three individuals that belong to the eastern \textit{plumbeitarsus} and three individuals that belong to the western \textit{viridanus} \cite{Alcaide et al (2014)}. In the case where no admixture is allowed, this population is forced to adopt an intermediate position to incorporate its admixed nature.
 
 %However, where the population-level analysis shows the Stolby population intermediate between the \textit{viridanus} and \textit{plumbeitarsus} clusters, the individual-level analysis reveals that the Stolby population (n=6)
 
-We then ran the method allowing admixture, and again discuss the random priors results. The Stolby population chooses the highest admixture proportion, with a mean of 0.19 \textbf{95\% credible intervals}.  Multiple runs agreed well on the level of admixture of the Stolby (see caption of Supplementary Figure \ref{sfig:warbler_pop_compare}). What does vary across runs, is whether the Stolby population chooses to locate itself by the \textit{viridanus} cluster and draw admixture from near the \textit{plumbeitarsus}  cluster or vise versa, however, this is to be expected given the 50/50 nature of the sample (Supplementary Figure \ref{sfig:warbler_pop_compare}). 
+We then ran the method allowing admixture, and again discuss the results from the analysis using random locations as priors on $G^{\prime}$. The Stolby population chooses the highest admixture proportion, with a mean of 0.19 \textbf{95\% credible intervals}.  Multiple runs agreed well on the level of admixture of the Stolby (see caption of Supplementary Figure \ref{sfig:warbler_pop_compare}). What does vary across runs is whether the Stolby population chooses to locate itself by the \textit{viridanus} cluster and draw admixture from near the \textit{plumbeitarsus}  cluster or vise versa, however; this is to be expected given the 50/50 nature of the sample's makeup (Supplementary Figure \ref{sfig:warbler_pop_compare}). 
 
 Because \textit{a priori} assigned population membership may be artificial (individuals from more than one population may be sampled at a single site), we repeated these analyses on an individual level.  In these analyses, the sample size in each `population' was 2 (for the two alleles in a diploid), and each individual chose its own location as well as the location of its source of admixture, the proportion of that admixture, and its nugget.  As with the analysis on multi-sample populations, the results \gc{approximately} mirror the geography of the individuals.  \gc{Individuals choose very low levels of admixture...}
 
 %The order of individuals' estimated locations around the Plateau is largely concordant with their true locations, and, in most cases, individuals sampled from the same population cluster closely together, as would be expected if samples collected at a single site are draws from a population that is locally panmictic.  
 
-\begin{figure}
-	\centering
-		\subcaptionbox{Inferred map of warbler individuals \label{warb_ind_map}}
-			{\includegraphics[width=2.8in,height=2.3in]{figs/warblers/individual_warbler_map_noarrows_randpr1.png}}
-		\subcaptionbox{Closeup of non-\textit{nitidus} samples \label{warb_ind_map_closeup}}
-			{\includegraphics[width=2.8in,height=2.3in]{figs/warblers/individual_warbler_map_noarrows_closeup_randpr1.png}}
-	\caption{Inferred maps for individual warbler individuals, colored by subspecies. (a) complete map including Turkish \textit{nitidus} samples.  (b) close up of all non-\textit{nitidus} samples.}\label{sfig:warbler_inds}
-\end{figure}
+%\begin{figure}
+%	\centering
+%		\subcaptionbox{Inferred map of warbler individuals \label{warb_ind_map}}
+%			{\includegraphics[width=2.8in,height=2.3in]{figs/warblers/individual_warbler_map_noarrows_randpr1.png}}
+%		\subcaptionbox{Closeup of non-\textit{nitidus} samples \label{warb_ind_map_closeup}}
+%			{\includegraphics[width=2.8in,height=2.3in]{figs/warblers/individual_warbler_map_noarrows_closeup_randpr1.png}}
+%	\caption{Inferred maps for individual warbler individuals, colored by subspecies. (a) complete map including Turkish \textit{nitidus} samples.  (b) close up of all non-\textit{nitidus} samples.}\label{sfig:warbler_inds}
+%\end{figure}
 
 There are a number of obvious departures in the individual inferred geogenetic map from the observed map. The most obvious again is the clear split between \textit{viridanus} and \textit{plumbeitarsus} individuals in the north at the contact zone of the two waves of expansion.  This is clearer now than in the population-based analysis as individuals from the Stolby population have moved to near their respective \textit{viridanus} \textit{plumbeitarsus}  clusters. 
 
@@ -367,12 +369,6 @@ Specifically, our research questions were:
 \item Can the map we estimate reconstruct the many of the important expansion events in human pre-history, including the out-of-Africa expansion, the colonizations of Oceania, and the colonization of the Americas via Beringia?
 \item Which human populations are most greatly admixed, and from where?  Will the SpaceMix results confirm the admixture findings of previous studies?
 \end{enumerate}
-
-\begin{figure}
-	\centering
-	\includegraphics[width=4in,height=2.4in]{figs/globetrotter/globe_world_map_text.png}
-	\caption{The map of sampled human populations}\label{globe_world_map}
-\end{figure}
 
 \gc{Not totally clear why we are taking 10k SNPs}
 To answer these questions, we used a random subset of 10,000 SNPs from the SNP dataset of Hellenthal et al (2014), which is comprised of 1490 sampled in 95 populations (see Fig. \ref{globe_world_map} for map of sampling), as well as the latitude and longitude attributed to each population.  We ran two sets of SpaceMix analyses: in the first, we estimated population locations, and in the second, we estimated population locations, and their admixture sources and amounts.
@@ -769,6 +765,12 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 \label{sfig:barr_inland_ad_credset}
 \end{figure}
 
+\begin{figure}
+\centering
+	{\includegraphics[width=6in,height=2.5in]{figs/warblers/warb_pop_dist_compare.png}}
+	\caption{Comparing observed to estimated pairwise distance between warbler populations: a) observed population coordinates; b) observed pairwise distance between populations compared to that between their inferred locations.  The highlighted points show distances between populations from the \textit{plumbeitarsus} and \textit{viridanus} subspecies.  Notice that, regardless of their observed distance, their inferred separations are roughly constant, and much larger than their observed distance.}
+	\label{sfig:warb_pop_distcomp}
+\end{figure}
 
 \begin{figure}
 	\centering

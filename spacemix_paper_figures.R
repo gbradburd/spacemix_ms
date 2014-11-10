@@ -99,8 +99,66 @@ png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_PC_map.png",res=
 	text(proc.pc.coords,col=pop.col,labels=pops,cex=0.7,font=2)
 	box(lwd=2)
 dev.off()
+
 ################
-#	RealPrior1
+#	NO ADMIXTURE - RealPrior1
+################
+load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop_spaceruns/warb_pop_no_admixture/rand_prior1/warb_pop_spaceruns_NoAd_randpr1_LongRun/warb_pop_spaceruns_NoAd_randpr1space_MCMC_output1.Robj")
+	best <- which.max(Prob)
+	target.coords <- procrusteez(warbler.pop.coords,population.coordinates[[best]][1:k,],k,option=1)
+	
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_noad.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+#					xlim=c(68,116), #realpr1: c(68,115), realpr2: c(53,101), randpr: c(71,114)
+#					ylim=c(26,53), #realpr1: c(26,53), realpr2: c(25,54), randpr: c(71,114)
+					xlab="Eastings",
+					ylab="Northings")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=pop.col,
+						font=2,cex=1.5)
+				box(lwd=2)
+	dev.off()
+
+	obs.D <- fields::rdist.earth(warbler.pop.coords)
+	par.D <- fields::rdist.earth(target.coords)
+	index.mat <- upper.tri(obs.D)
+	color.combos <- combn(unique(pop.col),2)
+
+png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_dist_compare.png",res=200,width=10*200,height=5*200)
+#quartz(width=10,height=5)
+par(mfrow=c(1,2))
+	plot(warbler.pop.coords,pch=19,cex=2,col=pop.col,
+			xlab="Longitude",
+			ylab="Latitude")
+	plot(obs.D[index.mat],par.D[index.mat],pch=20,col="gray",
+			xlab="Observed Pairwise Distance",
+			ylab="Inferred Pairwise Distance")
+if(FALSE){
+	for(i in 1:length(unique(pop.col))){
+		use.these <- pop.col==unique(pop.col)[i]
+		tmp.ind.mat <- upper.tri(par.D[1:k,1:k][use.these,use.these],diag=TRUE)
+		points(obs.D[use.these,use.these],par.D[1:k,1:k][use.these,use.these],col = unique(pop.col)[i],pch=20,cex=2)
+		abline(lm(c(par.D[use.these,use.these][tmp.ind.mat]) ~ c(obs.D[use.these,use.these][tmp.ind.mat])),col=unique(pop.col)[i],lwd=2)
+	}
+}
+	for(i in 1:ncol(color.combos)){
+		if(i == 1){
+			use.these1 <- pop.col == color.combos[1,i]
+			use.these2 <- pop.col == color.combos[2,i]
+#			abline(lm(par.D[1:k,1:k][use.these1,use.these2] ~ obs.D[use.these1,use.these2]),col=color.combos[1,i],lwd=4)
+#			abline(lm(par.D[1:k,1:k][use.these1,use.these2] ~ obs.D[use.these1,use.these2]),col=color.combos[2,i],lty=3,lwd=4)
+			points(obs.D[use.these1,use.these2],par.D[1:k,1:k][use.these1,use.these2],pch=21,bg=color.combos[1,i],col=color.combos[2,i])
+			lines(lowess(par.D[1:k,1:k][use.these1,use.these2] ~ obs.D[use.these1,use.these2]),col=color.combos[1,i],lwd=4)
+			lines(lowess(par.D[1:k,1:k][use.these1,use.these2] ~ obs.D[use.these1,use.these2]),col=color.combos[2,i],lty=3,lwd=4)
+		}
+	}
+dev.off()
+
+
+################
+#	ADMIXTURE - RealPrior1
 ################
 load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop_spaceruns/real_prior1/warb_pop_spaceruns_realpr1_LongRun/warb_pop_spaceruns_realpr1space_MCMC_output1.Robj")
 	best <- which.max(Prob)
@@ -364,7 +422,34 @@ png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_PC_map.png",res=
 dev.off()
 
 ################
-#	RealPrior1
+#	NO ADMIXTURE - RealPrior1
+################
+load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/ind/warb_ind_spaceruns/warb_ind_no_admixture/rand_prior1/warb_ind_spaceruns_NoAd_randpr1_LongRun/warb_ind_spaceruns_NoAd_randpr1space_MCMC_output1.Robj")
+best <- which.max(Prob)
+	target.coords <- procrusteez(warbler.ind.coords,population.coordinates[[best]][1:k,],k,option=1)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_noad.pdf",width=7,height=5)
+	#quartz(width=7,height=5,pointsize=9)
+	plot(target.coords,type='n',
+			ylab="Eastings",xlab="Northings")
+		text(target.coords,
+				labels=plot.inds,
+				col=inds.col,
+				font=2)
+	dev.off()
+
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_noad_closeup.pdf",width=7,height=5)
+	# quartz(width=7,height=5,pointsize=9)
+		plot(target.coords,type='n',
+				ylab="Eastings",xlab="Northings",
+				xlim=c(74,103),ylim=c(26,51))
+			text(target.coords,
+					labels=plot.inds,
+					col=inds.col,
+					font=2)
+	dev.off()
+
+################
+#	ADMIXTURE - RealPrior1
 ################
 load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/ind/warb_ind_spaceruns/real_prior1/warb_ind_spaceruns_realpr1_LongRun/warb_ind_spaceruns_realpr1space_MCMC_output1.Robj")
 best <- which.max(Prob)

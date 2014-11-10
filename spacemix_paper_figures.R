@@ -422,7 +422,7 @@ png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_PC_map.png",res=
 dev.off()
 
 ################
-#	NO ADMIXTURE - RealPrior1
+#	NO ADMIXTURE - RandPrior1
 ################
 load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/ind/warb_ind_spaceruns/warb_ind_no_admixture/rand_prior1/warb_ind_spaceruns_NoAd_randpr1_LongRun/warb_ind_spaceruns_NoAd_randpr1space_MCMC_output1.Robj")
 best <- which.max(Prob)
@@ -702,43 +702,148 @@ best <- which.max(Prob)
 					length=0.1)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_randpr1_closeup.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
-					xlim=c(min(target.coords[,1]),max(target.coords[,1])+2),
-					ylim=c(min(target.coords[,2]),max(target.coords[,2])),
+					xlim=c(75,102),
+					ylim=c(26,51),
 					xlab="Eastings",
 					ylab="Northings")
 				text(target.coords[c(1:k),],
 						labels=plot.inds,
-						col=adjustcolor(inds.col,0.8),
-						font=2,cex=0.9)
+						col=adjustcolor(inds.col,1),
+						font=2,cex=1)
+				points(source.coords,
+							col=ind.plot.cols,
+							pch=20)
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col= inds.col,
+					lwd=admix.proportions[,best],
+					length=0.1)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
-					ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[-c(which(plot.inds=="TU")),],
-						labels=plot.inds[-c(which(plot.inds=="TU"))],
-						col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
-						font=2,cex=0.9)
+################
+#	warb inds on a line
+################
+load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/ind/warb_ind_spaceruns/warb_ind_NoAd_Line/line_prior1/warb_ind_spaceruns_NoAd_linepr1_LongRun/warb_ind_spaceruns_NoAd_linepr1space_MCMC_output1.Robj")
+#load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/ind/warb_ind_spaceruns/warb_ind_NoAd_Line/line_prior2/warb_ind_spaceruns_NoAd_linepr2_LongRun/warb_ind_spaceruns_NoAd_linepr2space_MCMC_output1.Robj")
+load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/ind/warb_ind_spaceruns/warb_ind_NoAd_Line/warbler_line_dataset.Robj")
+k <- last.params$k
+obs.coords <- warbler.ind.coords[-c(which(plot.inds=="TU")),]
+redux.plot.inds <- plot.inds[-c(which(plot.inds=="TU"))]
+
+best <- which.max(Prob)
+	target.coords <- procrusteez(obs.coords,population.coordinates[[best]][1:k,],k,option=1)
+
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_inds_on_a_line_MAP1.pdf",width=7,height=5)
+	#quartz(width=7,height=5,pointsize=9)
+		plot(target.coords,col=inds.col,
+			ylab="Eastings",xlab="Northings",type='n')
+		text(target.coords,
+				labels=plot.inds,
+				col=inds.col,
+				font=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_nugget_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
-					ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
-					xlab="Eastings",
-					ylab="Northings")
-				points(target.coords[-c(which(plot.inds=="TU")),],
-						col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
-						cex=last.params$nugget*5,lwd=1.5)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_inds_on_a_line_MAP2.pdf",width=7,height=5)
+	#quartz(width=7,height=5,pointsize=9)
+		plot(target.coords,col=inds.col,
+			ylab="Eastings",xlab="Northings",type='n')
+		text(target.coords,
+				labels=plot.inds,
+				col=inds.col,
+				font=2)
 	dev.off()
+
+
+	target.coords.list <- vector(mode="list",length = length(which(Prob!=0)))
+	for(i in 1:length(target.coords.list)){
+		target.coords.list[[i]] <- procrusteez(obs.locs = obs.coords,
+												target.locs = population.coordinates[[i]][1:k,],
+												k = k,
+												option = 1)
+	}
+
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_inds_on_a_line_post1.pdf",width=7,height=5)
+	#quartz(width=7,height=5,pointsize=9)
+		plot(target.coords,col=inds.col,
+			ylim=c(30,50), xlim=c(70,105),
+			ylab="Eastings",xlab="Northings",type='n')
+		for(i in seq(1,length(target.coords.list),length.out=100)){
+			points(target.coords.list[[i]],col=adjustcolor(inds.col,0.1),pch=19)
+		}
+	dev.off()
+
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_inds_on_a_line_post2.pdf",width=7,height=5)
+	#quartz(width=7,height=5,pointsize=9)
+		plot(target.coords,col=inds.col,
+			ylim=c(30,50), xlim=c(70,105),
+			ylab="Eastings",xlab="Northings",type='n')
+		for(i in seq(1,length(target.coords.list),length.out=100)){
+			points(target.coords.list[[i]],col=adjustcolor(inds.col,0.1),pch=19)
+		}
+	dev.off()
+
+########
+# make the line set up fig
+########
+load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/ind/warb_ind_spaceruns/real_prior1/warb_ind_spaceruns_realpr1_LongRun/warb_ind_spaceruns_realpr1space_MCMC_output1.Robj")
+load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/ind/warb_ind_spaceruns/real_prior1/warbler_ind_dataset.Robj")
+setwd("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/ind/warb_ind_spaceruns/warb_ind_NoAd_Line")
+
+		k <- last.params$k
+		inds <- row.names(warbler.ind.allele.counts)
+			inds[11] <- "Vir-STvi1"
+			inds[12] <- "Vir-STvi2"
+			inds[13] <- "Vir-STvi3"
+		ind.subspp <- unlist(strsplit(inds,"-"))[seq(1,190,2)]
+		inds.col <- numeric(length(ind.subspp))
+			inds.col[grepl("Vir",ind.subspp)] <- "dodgerblue2"
+			inds.col[grepl("Ni",ind.subspp)] <- "slateblue4"
+			inds.col[grepl("Lud",ind.subspp)] <- "mediumseagreen"
+			inds.col[grepl("Tro",ind.subspp)] <- "gold"
+			inds.col[grepl("Obs",ind.subspp)] <- "orange"
+			inds.col[grepl("Plu",ind.subspp)] <- "red"
+
+			plot.inds <- gsub(" ","",inds)
+			plot.inds <- gsub("[[:digit:]]","",plot.inds)
+			plot.inds <- gsub(c("Plu-"),"",plot.inds)
+			plot.inds <- gsub(c("Vir-"),"",plot.inds)
+			plot.inds <- gsub(c("Ni-"),"",plot.inds)
+			plot.inds <- gsub(c("Lud-"),"",plot.inds)
+			plot.inds <- gsub(c("Tro-"),"",plot.inds)
+			plot.inds <- gsub(c("Obs-"),"",plot.inds)
+			plot.inds <- gsub(c("vi"),"",plot.inds)
+
+
+tu.pops <- grep("TU",inds)
+plu.pops <- grep("Plu",inds)
+ring.coords <- last.params$population.coordinates[1:last.params$k,]
+line.coords <- ring.coords
+line.coords[-plu.pops,2] <- 0
+
+line.coords[plu.pops,] <- cbind(max(line.coords[-plu.pops,1]) + 
+								mean(fields::rdist(ring.coords[c(grep("Obs",inds),plu.pops),])[1:5,6:19]) + 
+								ring.coords[plu.pops,1][order(ring.coords[plu.pops,1],decreasing=TRUE)] - 
+								min(ring.coords[plu.pops,1][order(ring.coords[plu.pops,1],decreasing=TRUE)]),
+								rep(0,length(plu.pops)))
+
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_inds_on_a_line_setup",width=6,height=6)
+	plot(ring.coords,col=inds.col,ylim=c(-5,55),xlim=c(45,170),xlab="",ylab="",main="'Projecting' estimated locations onto flat line for priors")
+	#points(ring.coords[-plu.pops,],col=inds.col[-c(plu.pops)],pch=20,cex=0.6)
+		points(line.coords,col=inds.col,pch=20,cex=0.6)
+		segments(x0=line.coords[,1],
+				y0=line.coords[,2],
+				x1=ring.coords[,1],
+				y1=ring.coords[,2],
+				col=inds.col,
+				lty=2,
+				lwd=0.3)
+	legend(x="topright",pch=c(1,20),legend=c("estimated locations","flat line prior locations"))
+dev.off()
 
 
 ################################
@@ -1979,6 +2084,24 @@ png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/corner_admixture_lattice.png"
 	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,jitter = 0.25,expansion.list=expansion.list3,labels=TRUE,colors=TRUE,arrow.col="green",curve=0.2)
 dev.off()
 
+
+load("~/Desktop/Dropbox/space.mix/sims/line_pops/spacemix/linepops1/rand_prior/spacemix.ms.dataset.Robj")
+k <- nrow(spacemix.dataset$population.coordinates)
+pop.cols <- rainbow(k,start=4/6,end=6/6)[as.numeric(cut(spacemix.dataset$population.coordinates[,1],k))]
+
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/line_pops_scenario.pdf",width=8,height=4)
+	#quartz(width=8,height=4)
+	plot(spacemix.dataset$population.coordinates,
+			col=pop.cols,pch=19,cex=5,
+			xlim=c(-0.5,20.5),
+			ylim=c(0.8,1.2),
+			xlab="Eastings",
+			ylab="Northings")
+		points(spacemix.dataset$population.coordinates,
+				pch=19,cex=3,col="white")
+		text(spacemix.dataset$population.coordinates,
+				labels=paste(1:k),font=2,cex=0.9)
+dev.off()
 ################
 #	Grid
 ################
@@ -2465,7 +2588,81 @@ points(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,col=p
 			cex=0.9)
 dev.off()
 
+################
+#	Pops in a Line
+################
+load("~/Desktop/Dropbox/space.mix/sims/line_pops/spacemix/linepops1/rand_prior/linepop_1randpr_space_MCMC_output1.Robj")
+load("~/Desktop/Dropbox/space.mix/sims/line_pops/spacemix/linepops1/rand_prior/spacemix.ms.dataset.Robj")
+k <- nrow(spacemix.dataset$population.coordinates)
+pop.cols <- rainbow(k,start=4/6,end=6/6)[as.numeric(cut(spacemix.dataset$population.coordinates[,1],k))]
+burnin <- 200
+thinning <- 10
+x <- seq(burnin,length(which(Prob!=0)),length.out = length(which(Prob!=0))/thinning)
+target.coords.list <- vector(mode="list",length = length(x))
+	for(i in 1:length(target.coords.list)){
+		target.coords.list[[i]] <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
+												target.locs = population.coordinates[[x[i]]][1:k,],
+												k = k,
+												option = 1)
+	}
+	
+y.min <- min(unlist(lapply(1:length(target.coords.list),FUN=function(i){target.coords.list[[i]][,2]}))) - 0.25
+y.max <- max(unlist(lapply(1:length(target.coords.list),FUN=function(i){target.coords.list[[i]][,2]}))) + 0.25
 
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/line_pops_inference_post.pdf",width=8,height=4)
+	#quartz(width=8,height=4)
+	plot(spacemix.dataset$population.coordinates,
+			col=pop.cols,pch=19,cex=5,
+			xlim=c(-0.5,20.5),
+			ylim=c(y.min,y.max),
+			xlab="Eastings",
+			ylab="Northings",type='n',
+			main = "Posterior Distribution of Inferred Locations")
+	for(i in 1:length(target.coords.list)){
+		points(target.coords.list[[i]],col=adjustcolor(pop.cols,0.15),pch=19)
+	}
+dev.off()
+
+best <- which.max(Prob)
+target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
+										target.locs = population.coordinates[[best]][1:k,],
+										k = k,
+										option = 1)
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/line_pops_inference_MAP.pdf",width=8,height=4)
+	#quartz(width=8,height=4)
+	plot(target.coords,
+			col=pop.cols,pch=19,cex=5,
+			xlim=c(-0.5,20.5),
+			ylim=c(y.min,y.max),
+			xlab="Eastings",
+			ylab="Northings",
+			main = "MAP estimate of Inferred Locations")
+		points(target.coords,
+				pch=19,cex=3,col="white")
+		text(target.coords,
+				labels=paste(1:k),font=2,cex=0.9)
+dev.off()
+
+pc.obj <- prcomp(spacemix.dataset$allele.counts/spacemix.dataset$sample.sizes)
+	pc1 <- pc.obj$x[,1]
+	pc2 <- pc.obj$x[,2]
+		x.min <- min(pc1)-1
+		x.max <- max(pc1)+1
+		y.min <- min(pc2)-1
+		y.max <- max(pc2)+1
+	pc.weights <- pc.obj$sdev/(sum(pc.obj$sdev))
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/line_pops_PCA.pdf",width=6,height=6)
+	plot(pc1,pc2,col=pop.cols,
+		xlab = paste("PC Axis 1 (",100*round(pc.weights[1],3),"%)",sep=""),
+		ylab = paste("PC Axis 2 (",100*round(pc.weights[2],3),"%)",sep=""),
+		pch=19,cex=5,
+		xlim=c(x.min,x.max),
+		ylim=c(y.min,y.max))
+		points(pc1,pc2,
+				pch=19,cex=3,col="white")
+		text(pc1,pc2,
+				labels=paste(1:k),font=2,cex=0.9)
+dev.off()
 
 ################
 #	Acceptance rate figs

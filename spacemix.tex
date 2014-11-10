@@ -552,12 +552,13 @@ Therefore, we assume that
 \begin{equation}
 X_{\ell}^{\prime} \sim MVN(0, T^T \Omega T)
 \end{equation}
-the mean centering acts to to reduce the covariance among populations in $X_{\ell}^{\prime}$ compared to $X_{\ell}$, and can induce negative covariance between distant populations (as they are often on either side of the mean). In addition the covariance matrix of our mean centered frequencies has rank $K-1$ rather than $K$, as any one of our mean centered frequencies could be written as a linear function of the others, and so is non-invertible.
+the mean centering acts to to reduce the covariance among populations in $X_{\ell}^{\prime}$ compared to $X_{\ell}$, and can induce negative covariance between distant populations (as they are often on either side of the mean). In addition the covariance matrix of our mean centered frequencies has rank $K-1$ rather than $K$, as any one of our mean centered frequencies could be written as a linear function of the others. 
 
-To circumvent this problem we take the $QR$ decomposition of the matrix $T$, and form a projection matrix $\Psi= Q_{,-K}$. We write our Wishart likelihood as
+This means that $T^T \Omega T$ not invertible, and so can not be used directly in our Wishart likelihood. To circumvent this problem we take the $QR$ decomposition of the matrix $T$, and form a projection matrix $\Psi= Q_{,-K}$ dropping the $K^{th}$ column of $Q$. We then write our Wishart likelihood as
 \begin{equation}
 P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left( \Psi^T YY^T \Psi \mid  \Psi^{T}   \Omega   \Psi,L \right) \text{.}
 \end{equation}
+this fully side steps the reduced rank of our covariances. 
 
 % \gc{BLAH}
 % Note, by using the sample mean frequency to mean-center our observations, we lose a degree of freedom, and reduce the covariance across loci between populations (sometimes inducing negative covariance between distant populations). We accommodate the extra sampling noise distortion and the reduced rank of the covariance matrix by assuming that our

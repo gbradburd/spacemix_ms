@@ -693,26 +693,39 @@ To initiate our MCMC, we specify starting values for each parameter.  We draw in
 \paragraph{Overview of MCMC procedure}
 %and the observed $\bar{S_k}^{-1}$, can be used to specif
 %This parametric covariance matrix is then projected following Eqn. \eqref{eq:projected_covariance}, using the projection matrix $\Psi$ described in the standardization of allele frequencies above. 
-In each iteration of the MCMC, one of our current set of parameter $\Theta= \{\alpha_0$, $\alpha_1$, $\alpha_2$, $\eta$, $w$, $G^{\prime}$, $\identifyadmixsource{G}\}$ is randomly chosen to be updated by proposing a new value.  In the cases of \{$\eta$, $w$, $G^{\prime}$, $\identifyadmixsource{G}$\}, where each population has its own parameters, a single population, $k$ is randomly selected and only its parameter value (e.g. $\eta_k$) is chosen to be updated. Below we outline the proposal distributions for each parameter. This gives us a proposed set of parameter $\Theta^{NEW}$, which differs from $\Theta$ at only one parameter.
+We use a Metropolis-Hastings update algorithm. In each iteration of the MCMC, one of our current set of parameter $\Theta= \{\alpha_0$, $\alpha_1$, $\alpha_2$, $\eta$, $w$, $G^{\prime}$, $\identifyadmixsource{G}\}$ is randomly chosen to be updated by proposing a new value.  In the cases of \{$\eta$, $w$, $G^{\prime}$, $\identifyadmixsource{G}$\}, where each population has its own parameters, a single population, $k$ is randomly selected and only its parameter value (e.g. $\eta_k$) is chosen to be updated. Below we outline the proposal distributions for each parameter. This gives us a proposed update to our set of parameters $\Theta^{NEW}$, which differs from $\Theta$ at only one entry.
 
-The current set of locations of populations and their sources of admixture specify a pairwise geographic distance matrix $D$, which, given the current $\vec{\alpha}$ and $\eta$ parameters, gives the admixed covariance matrix described in \eqref{eq:admixed_covariance_1}, $\identifyadmixsource{\Omega}$.  We can then take the likelihood of the standardized sample covariance $\widehat{\Omega}^{\prime}$ following Eqn. \eqref{eq:projected_wishart_dist}, $P(\widehat{\Omega} \mid \Omega)$. We calculate the likelihood for the current set of parameters $P(\widehat{\Omega}^{\prime} |\Omega(\Theta))$ and the likelihood our proposed update to our set of parameters $P(\widehat{\Omega}^{\prime} |\Omega(\Theta^{NEW}))$ 
+The set of locations of populations and their sources of admixture specify a pairwise geographic distance matrix $D$, which, given the current $\vec{\alpha}$ and $\eta$ parameters, gives the admixed covariance matrix described in \eqref{eq:admixed_covariance_1}, $\identifyadmixsource{\Omega}$.  We then calculate the likelihood of the standardized sample covariance $\widehat{\Omega}^{\prime}$ following Eqn. \eqref{eq:projected_wishart_dist} for the current set of parameters $P(\widehat{\Omega}^{\prime} \mid \identifyadmixsource{\Omega}(\Theta))$ and our proposed update to our set of parameters $P(\widehat{\Omega}^{\prime} \mid \identifyadmixsource{\Omega}(\Theta^{NEW}))$. We then calculate the prior probabilities of both sets of parameter values, $P(\Theta^{NEW}),~P(\Theta) $, following the priors given in Table \ref{tab:param_prior_tab}.
 
 
-as well as the prior probabilities of the initial parameter values following the priors given in Table \ref{tab:param_prior_tab}.
+%We can then take the likelihood of the standardized sample covariance $\widehat{\Omega}^{\prime}$ following Eqn. \eqref{eq:projected_wishart_dist}, $P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}())$. 
 
-We use a Metropolis-Hastings update algorithm; that is, the probability, \emph{R}, of accepting the proposed parameter value $\theta^{\prime}$ is given by 
+
+We combine these together to give the Metropolis-Hastings ratio, \emph{R}, the probability of accepting the proposed parameter values $\Theta^{NEW}$:
 \begin{equation}
-R = \text{min}\left(1, \frac{P(D \mid \theta^{\prime})} {P(D \mid \theta)} 
-				\frac{P(\theta^{\prime})}{P(\theta)} 
-				\frac{P(\theta^{\prime} \to \theta)}{P(\theta \to \theta^{\prime})}		\right) \text{,}
+R = \text{min}\left(1, \frac{(\widehat{\Omega}^{\prime} \mid \identifyadmixsource{\Omega}(\Theta^{NEW}))} {P(\widehat{\Omega}^{\prime} \mid \identifyadmixsource{\Omega}(\Theta))} 
+				\frac{P(\Theta^{NEW})}{P(\Theta)} 	\right) \text{,}
+			%	\frac{P(\theta^{\prime} \to \theta)}{P(\theta \to \theta^{\prime})}	
 \label{eq:MH_algorithm}
 \end{equation}
+Note that all of our moves, described below, are symmetric so a Hastings ratio cancels through. If we accept our proposed move $\Theta$ is replaced by $\Theta^{NEW}$ and this is recorded, otherwise $\Theta^{NEW}$ is disgarded and we remain at $\Theta$. 
 
-where $\frac{P(D \mid \theta^{\prime})} {P(D \mid \theta)}$ gives the ratio of the likelihood of the data under the proposed parameter value to that under the current parameter value, $\frac{P(\theta^{\prime})}{P(\theta)}$ gives the ratio of the prior probability of the proposed parameter value to that of the current parameter value, and $\frac{P(\theta^{\prime} \to \theta)}{P(\theta \to \theta^{\prime})}$ is the Hastings ratio, or the ratio of the conditional probability of proposing the current parameter value given the proposed parameter value to that of proposing the proposed parameter value given the current parameter value (Hastings 1970, Gilks 1996).
+%\begin{equation}
+%R = \text{min}\left(1, \frac{P(D \mid \theta^{\prime})} {P(D \mid \theta)} 
+%				\frac{P(\theta^{\prime})}{P(\theta)} 
+%				\frac{P(\theta^{\prime} \to \theta)}{P(\theta \to \theta^{\prime})}		\right) \text{,}
+%\label{eq:MH_algorithm}
+%\end{equation}
+
+%where $\frac{P(D \mid \theta^{\prime})} {P(D \mid \theta)}$ gives the ratio of the likelihood of the data under the proposed parameter value to that under the current parameter value, $\frac{P(\theta^{\prime})}{P(\theta)}$ gives the ratio of the prior probability of the proposed parameter value to that of the current parameter value, and $\frac{P(\theta^{\prime} \to \theta)}{P(\theta \to \theta^{\prime})}$ is the Hastings ratio, or the ratio of the conditional probability of proposing the current parameter value given the proposed parameter value to that of proposing the proposed parameter value given the current parameter value (Hastings 1970, Gilks 1996).
 
 
 \paragraph{Udates for $\vec{\alpha}$, $\eta$, and $w$.}
-We propose updates to the values of the $\vec{\alpha}$, $\eta$, and $w$ parameters via a symmetric normal density with mean zero and some variance given by the scale of the tuning parameter for that parameter.  For example $\alpha_0^{\prime} \sim \alpha_0 + \mathcal{N}(0,\sigma_{\alpha_0})$, where $\sigma_{\alpha_0} \neq \sigma_{\alpha_1} \neq \sigma_{\alpha_2}$.  For $\eta$ and $w$, each of which consists of $K$ parameters, each parameter receives its own scale of the tuning parameter (e.g. - $\sigma_{\eta_{i}} \neq \sigma_{\eta_{j}}$).  
+We propose updates to the values of the $\vec{\alpha}$, $\eta$, and $w$ parameters via a symmetric normal density with mean zero and its own variance given by the scale of the tuning parameter for that parameter.  For example $\alpha_0^{\prime} \sim \alpha_0 + \delta$, where $delta \sim \mathcal{N}(0,\sigma_{\alpha_0})$ and $\sigma_{\alpha_0}$ is scale of the tuning parameter.  For $\eta$ and $w$, each of which consists of $K$ parameters, each parameter receives its own idependent scale of the tuning parameter. If the proposed move takes the parameter outside of its permitted range that move is rejected and we do not move in that iteration of the MCMC.
+
+%\neq \sigma_{\alpha_1} \neq \sigma_{\alpha_2}$
+
+%(e.g. - $\sigma_{\eta_{i}} \neq \sigma_{\eta_{j}}$)
 
 \paragraph{Updates for geographic co-ordinates $G^{\prime}$ and $\identifyadmixsource{G}$}. Updates to the location parameters, $G^{\prime}$ and $\identifyadmixsource{G}$, are somewhat more complicated due to the curvature of the Earth (Eratosthenes, \textit{personal observation}).  Implementing updates via a symmetric normal density on estimated latitude and longitude directly, which would have the drawback of a) being naive to the continuity of the spherical manifold and b) vary the actual distance of the proposed move as a function of the current lat/long parameter values (e.g., a $1^{\circ}$ change in longitude at the equator is a larger distance than at the North Pole).  
 
@@ -734,7 +747,7 @@ and
 						& \hspace{2cm} \sin(\text{proposed latitude})) + \pi) \; \bmod (2\pi) \\ \notag
 \end{align}
 
-where latitude and longitude are given in radians.  As with $\eta$ and $w$, the scales of the tuning parameters for the different populations and different location parameters ($G^{\prime}$ and $\identifyadmixsource{G}$) were not equal.
+where latitude and longitude are given in radians.  As with $\eta$ and $w$, the scales of the tuning parameters for the different populations and different location parameters ($G^{\prime}$ and $\identifyadmixsource{G}$) are independent.
 
 
 \paragraph{Adaptive Metropolis-within-Gibbs proposal mechanism }.
@@ -753,31 +766,31 @@ When we start our MCMC, $\zeta_i$ for all parameters is initiated at a value of 
 
 We choose to cap the maximum adaption amount at 20 (which is, recall, the equivalent of capping the variance of the proposal distribution at $~4.85 \times 10^8$) to avoid proposal distributions that offer absurdly large or small updates.  This procedure, also referred to as ``auto-tuning," results in acceptance rate plots like those shown in Figure \ref{sfig:example_acceptance_rates}, and in more efficient mixing and decreased autocorrelation time of parameter estimates.
 
-\paragraph{Speedups}
-Finally, in the interest of computational efficiency, we have implemented several important speed-ups to the calculation of the Wishart likelihood.  The full Wishart probability of the sample standardized covariance matrix, $\widehat{\Omega^{\prime}}$, given the projected parametric covariance matrix, $\identifyadmixsource{\Omega}$, is given below:
-\begin{equation}
-\mathcal{P}(\widehat{\Omega^{\prime}}(X) \; | \; \identifyadmixsource{\Omega}) = \frac{|\widehat{\Omega^{\prime}}|^{ \frac{L - K - 1}{2} } \text{exp} \left(  \frac{-\text{tr}(\frac{\identifyadmixsource{\Omega}^{-1}}{L}\widehat{\Omega^{\prime}})}{2}	\right) }	
-									{2^{\frac{LK}{2}}  |\frac{\identifyadmixsource{\Omega}}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}{2} \right)	},
-\label{eq:full_wishart_lnl}
-\end{equation}
+% \paragraph{Speedups}
+% Finally, in the interest of computational efficiency, we have implemented several important speed-ups to the calculation of the Wishart likelihood.  The full Wishart probability of the sample standardized covariance matrix, $\widehat{\Omega^{\prime}}$, given the projected parametric covariance matrix, $\identifyadmixsource{\Omega}$, is given below:
+% \begin{equation}
+% \mathcal{P}(\widehat{\Omega^{\prime}}(X) \; | \; \identifyadmixsource{\Omega}) = \frac{|\widehat{\Omega^{\prime}}|^{ \frac{L - K - 1}{2} } \text{exp} \left(  \frac{-\text{tr}(\frac{\identifyadmixsource{\Omega}^{-1}}{L}\widehat{\Omega^{\prime}})}{2}	\right) }	
+% 									{2^{\frac{LK}{2}}  |\frac{\identifyadmixsource{\Omega}}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}{2} \right)	},
+% \label{eq:full_wishart_lnl}
+% \end{equation}
 
-where $\text{tr}$ denotes the trace function, $\Gamma_{p}$ denotes the multivariate gamma function, $L$ the number of independent loci over which the covariance is taken, and $K$ the number of samples.  However, because we are using a Markov chain Monte Carlo approach to parameter inference, we may skip the calculation of any parts of this equation that are constant across parameter values (i.e., they do not depend on $\identifyadmixsource{\Omega}$), as these quantities will cancel out during the calculation of the Metropolis-Hastings acceptance ratio (Eqn. \eqref{eq:MH_algorithm}).  We therefore need only calculate the Wishart likelihood as follows:
+% where $\text{tr}$ denotes the trace function, $\Gamma_{p}$ denotes the multivariate gamma function, $L$ the number of independent loci over which the covariance is taken, and $K$ the number of samples.  However, because we are using a Markov chain Monte Carlo approach to parameter inference, we may skip the calculation of any parts of this equation that are constant across parameter values (i.e., they do not depend on $\identifyadmixsource{\Omega}$), as these quantities will cancel out during the calculation of the Metropolis-Hastings acceptance ratio (Eqn. \eqref{eq:MH_algorithm}).  We therefore need only calculate the Wishart likelihood as follows:
 
-\begin{equation}
-\mathcal{P}(\widehat{\Omega^{\prime}}(X) \; | \; \identifyadmixsource{\Omega}) = \frac{ \text{exp} \left(  \frac{-\text{tr}(\frac{\identifyadmixsource{\Omega}^{-1}}{L}\widehat{\Omega^{\prime}})}{2}	\right) }	
-									{  |\frac{\identifyadmixsource{\Omega}}{L}|^{\frac{L}{2}}  }.
-\label{eq:simple_wishart}
-\end{equation}
+% \begin{equation}
+% \mathcal{P}(\widehat{\Omega^{\prime}}(X) \; | \; \identifyadmixsource{\Omega}) = \frac{ \text{exp} \left(  \frac{-\text{tr}(\frac{\identifyadmixsource{\Omega}^{-1}}{L}\widehat{\Omega^{\prime}})}{2}	\right) }	
+% 									{  |\frac{\identifyadmixsource{\Omega}}{L}|^{\frac{L}{2}}  }.
+% \label{eq:simple_wishart}
+% \end{equation}
 
-We calculate the log likelihood of the standardized sample covariance given the parametric covariance matrix, so we express the log of this simplified likelihood as 
+% We calculate the log likelihood of the standardized sample covariance given the parametric covariance matrix, so we express the log of this simplified likelihood as 
 
-\begin{equation}
-\text{log}\left(	\mathcal{P}(\widehat{\Omega^{\prime}}(X) \; |
-			 \; \identifyadmixsource{\Omega}) \right) = 
-			\frac{-1}{2} \text{tr}(\identifyadmixsource{\Omega}^{-1}\widehat{\Omega^{\prime}}) - 
-									\frac{L}{2} \text{log}\left(  \left|\frac{\identifyadmixsource{\Omega}}{L}\right| \right)\text{.}
-\label{eq:log_simple_wishart}
-\end{equation}
+% \begin{equation}
+% \text{log}\left(	\mathcal{P}(\widehat{\Omega^{\prime}}(X) \; |
+% 			 \; \identifyadmixsource{\Omega}) \right) = 
+% 			\frac{-1}{2} \text{tr}(\identifyadmixsource{\Omega}^{-1}\widehat{\Omega^{\prime}}) - 
+% 									\frac{L}{2} \text{log}\left(  \left|\frac{\identifyadmixsource{\Omega}}{L}\right| \right)\text{.}
+% \label{eq:log_simple_wishart}
+% \end{equation}
 
 % %%%%%%%%% %%%%%%%%% 
 

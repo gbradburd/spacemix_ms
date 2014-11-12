@@ -2102,6 +2102,153 @@ pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/line_pops_scenario.pdf",width
 		text(spacemix.dataset$population.coordinates,
 				labels=paste(1:k),font=2,cex=0.9)
 dev.off()
+
+################
+#	Sim covariance curves
+################
+load("~/Desktop/Dropbox/space.mix/sims/stationary_pops/spacemix/stationary_pops_1/spacemix.ms.dataset_stationary_pops.Robj")
+load("~/Desktop/Dropbox/space.mix/sims/stationary_pops/spacemix/stationary_pops_1/spacemix_ms_sim_stationary_pops_1space_MCMC_output1.Robj")
+cov.hat.stationary <- cov(t(spacemix.dataset$allele.counts/spacemix.dataset$sample.sizes))
+D.stationary <- spacemix.dataset$D
+best <- which.max(Prob)
+par.D.stationary <- fields::rdist(procrusteez(spacemix.dataset$population.coordinates,population.coordinates[[best]][1:last.params$k,],last.params$k,option=1))
+
+load("~/Desktop/Dropbox/space.mix/sims/barrier/spacemix/barrier_1/spacemix.ms.dataset.Robj")
+load("~/Desktop/Dropbox/space.mix/sims/barrier/spacemix/barrier_1/spacemix_ms_sim_barrier_1space_MCMC_output1.Robj")
+best <- which.max(Prob)
+par.D.barrier <- fields::rdist(procrusteez(spacemix.dataset$population.coordinates,population.coordinates[[best]][1:last.params$k,],last.params$k,option=1))
+cov.hat.barrier <- cov(t(spacemix.dataset$allele.counts/spacemix.dataset$sample.sizes))
+D.barrier <- spacemix.dataset$D
+E.barrier <- spacemix.dataset$E
+
+load("~/Desktop/Dropbox/space.mix/sims/expansion/spacemix/noad/real_prior2/sim_expansion_dataset.Robj")
+load("~/Desktop/Dropbox/space.mix/sims/expansion/spacemix/noad/rand_prior1/expansion_randpr_noad_1_LongRun/expansion_randpr_noad_1space_MCMC_output1.Robj")
+best <- which.max(Prob)
+par.D.expansion <- fields::rdist(procrusteez(spacemix.dataset$population.coordinates,population.coordinates[[best]][1:last.params$k,],last.params$k,option=1))
+cov.hat.expansion <- cov(t(spacemix.dataset$allele.counts/spacemix.dataset$sample.sizes))
+D.expansion <- spacemix.dataset$D
+expansion.index1 <- c(20,20,19,19,18,18,17,17,16,16,21,22,23,24,25)
+expansion.index2 <- c(25,30,24,29,23,28,22,27,21,26,26,27,28,29,30)
+
+
+load("~/Desktop/Dropbox/space.mix/sims/admixture/spacemix/admixture_1/spacemix.ms.dataset.Robj")
+load("~/Desktop/Dropbox/space.mix/sims/admixture/spacemix/admixture_1/spacemix_ms_sim_admixture_1space_MCMC_output1.Robj")
+best <- which.max(Prob)
+par.D.cornerad <- fields::rdist(procrusteez(spacemix.dataset$population.coordinates,population.coordinates[[best]][1:last.params$k,],last.params$k,option=1))
+cov.hat.cornerad <- cov(t(spacemix.dataset$allele.counts/spacemix.dataset$sample.sizes))
+D.cornerad <- spacemix.dataset$D
+
+
+
+index.mat <- upper.tri(D.stationary,diag=TRUE)
+y.min <- min(cov.hat.stationary, cov.hat.barrier, cov.hat.expansion, cov.hat.cornerad)
+y.max <- max(cov.hat.stationary, cov.hat.barrier, cov.hat.expansion, cov.hat.cornerad)
+
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/sim_covariance_decays.pdf",width=6,height=11,pointsize=14)
+par(mfrow=c(4,2),mar=c(0,0,1,1) + 0.1,oma=c(6,6,0,0)+0.1)
+	plot(D.stationary[index.mat],
+		cov.hat.stationary[index.mat],
+		ylim=c(y.min,y.max),
+		ylab="Covariance",
+		xlab="",
+		# main = "Simple Lattice",
+		xaxt='n',
+		pch=20)
+		mtext(text="Simple Lattice",font=2,cex=1,side=3,padj=3)
+	plot(par.D.stationary[index.mat],
+		cov.hat.stationary[index.mat],
+		ylim=c(y.min,y.max),
+		ylab="Covariance",
+		xlab="",
+		# main = "Simple Lattice",
+		xaxt='n',yaxt='n',
+		pch=20)
+#
+	plot(D.barrier[index.mat],
+		cov.hat.barrier[index.mat],
+		ylim=c(y.min,y.max),
+		ylab="",
+		xlab="",
+		xaxt='n',
+		# main = "Lattice with Barrier",
+		col = E.barrier[index.mat] + 1,
+		pch=20)
+		mtext(text="Lattice with \nBarrier",font=2,cex=1,side=3,padj=1.75)
+	plot(par.D.barrier[index.mat],
+		cov.hat.barrier[index.mat],
+		ylim=c(y.min,y.max),
+		ylab="",
+		xlab="",
+		xaxt='n',yaxt='n',
+		# main = "Lattice with Barrier",
+		col = E.barrier[index.mat] + 1,
+		pch=20)
+		legend(x="topright",pch=19,
+				col=c(1,2),
+				legend=c("Same side of barrier",
+							"Opposite side of barrier"),
+				cex=0.9)
+#
+	plot(D.expansion[index.mat],
+		cov.hat.expansion[index.mat],
+		ylim=c(y.min,y.max),
+		ylab="Covariance",
+		xlab="Pairwise Distance",
+		# main = "Lattice with Expansion",
+		xaxt='n',
+		pch=20)
+		for(i in 1:length(expansion.index1)){
+			points(D.expansion[expansion.index1[i],expansion.index2[i]],
+				cov.hat.expansion[expansion.index1[i],expansion.index2[i]],col="red",pch=20)
+		}
+		mtext(text="Lattice with \nExpansion",font=2,cex=1,side=3,padj=1.75)
+	plot(par.D.expansion[index.mat],
+		cov.hat.expansion[index.mat],
+		ylim=c(y.min,y.max),
+		ylab="Covariance",
+		xlab="Pairwise Distance",
+		# main = "Lattice with Expansion",
+		xaxt='n',yaxt='n',
+		pch=20)
+		for(i in 1:length(expansion.index1)){
+			points(par.D.expansion[expansion.index1[i],expansion.index2[i]],
+				cov.hat.expansion[expansion.index1[i],expansion.index2[i]],col="red",pch=20)
+		}
+		legend(x="topright",pch=19,col=c(1,2),
+				title="Population Comparison",
+				legend=c("standard","parent-daughter"),
+				cex=0.9)
+#
+	plot(D.cornerad[index.mat],
+		cov.hat.cornerad[index.mat],
+		ylim=c(y.min,y.max),
+		ylab="",
+		xlab="Pairwise Distance",
+		# main = "Lattice with Admixture",
+		pch=20)
+		points(D.cornerad[30,], cov.hat.cornerad[30,],col="red",pch=20)
+		points(D.cornerad[30,1], cov.hat.cornerad[30,1],col="green",pch=20)
+		mtext(text="Lattice with \nAdmixture",font=2,cex=1,side=3,padj=1.75)
+	plot(par.D.cornerad[index.mat],
+		cov.hat.cornerad[index.mat],
+		ylim=c(y.min,y.max),
+		ylab="",
+		xlab="Pairwise Distance",
+		yaxt='n',
+		# main = "Lattice with Admixture",
+		pch=20)
+		points(par.D.cornerad[30,], cov.hat.cornerad[30,],col="red",pch=20)
+		points(par.D.cornerad[30,1], cov.hat.cornerad[30,1],col="green",pch=20)
+		legend(x="topright",
+				pch=19,col=c(1,2,"green"),
+				title="Population Comparison",
+				legend=c("standard",
+							"with the admixed population",
+							"between admixture\n source and target"),
+				cex=0.9)
+	title(xlab="Pairwise Distance",ylab="Covariance in Allele Frequencies",outer=TRUE,cex.lab=2)
+dev.off()
+
 ################
 #	Grid
 ################
@@ -2689,4 +2836,64 @@ dev.off()
 
 
 
-
+#GRAVEYARD
+if(FALSE){
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/sim_covariance_decays.pdf",width=8,height=8,pointsize=14)
+par(mfrow=c(2,2),mar=c(0,0,1,1) + 0.1,oma=c(6,6,0,0)+0.1)
+	plot(D.stationary[index.mat],
+		cov.hat.stationary[index.mat],
+		ylim=c(y.min,y.max),
+		ylab="Covariance",
+		xlab="",
+		# main = "Simple Lattice",
+		xaxt='n',
+		pch=20)
+	plot(D.barrier[index.mat],
+		cov.hat.barrier[index.mat],
+		ylim=c(y.min,y.max),
+		ylab="",
+		xlab="",
+		xaxt='n',yaxt='n',
+		# main = "Lattice with Barrier",
+		col = E.barrier[index.mat] + 1,
+		pch=20)
+		legend(x="topright",pch=19,
+				col=c(1,2),
+				legend=c("Same side of barrier",
+							"Opposite side of barrier"),
+				cex=0.9)
+	plot(D.expansion[index.mat],
+		cov.hat.expansion[index.mat],
+		ylim=c(y.min,y.max),
+		ylab="Covariance",
+		xlab="Pairwise Distance",
+		# main = "Lattice with Expansion",
+		pch=20)
+		for(i in 1:length(expansion.index1)){
+			points(D.expansion[expansion.index1[i],expansion.index2[i]],
+				cov.hat.expansion[expansion.index1[i],expansion.index2[i]],col="red",pch=20)
+		}
+		legend(x="topright",pch=19,col=c(1,2),
+				title="Population Comparison",
+				legend=c("standard","parent-daughter"),
+				cex=0.9)
+	plot(D.cornerad[index.mat],
+		cov.hat.cornerad[index.mat],
+		ylim=c(y.min,y.max),
+		ylab="",
+		xlab="Pairwise Distance",
+		yaxt='n',
+		# main = "Lattice with Admixture",
+		pch=20)
+		points(D.cornerad[30,], cov.hat.cornerad[30,],col="red",pch=20)
+		points(D.cornerad[30,1], cov.hat.cornerad[30,1],col="green",pch=20)
+		legend(x="topright",
+				pch=19,col=c(1,2,"green"),
+				title="Population Comparison",
+				legend=c("standard",
+							"with the admixed population",
+							"between admixture\n source and target"),
+				cex=0.9)
+	title(xlab="Pairwise Distance",ylab="Covariance in Allele Frequencies",outer=TRUE,cex.lab=2)
+dev.off()
+}

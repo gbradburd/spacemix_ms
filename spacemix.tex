@@ -5,6 +5,7 @@
 \usepackage{subcaption}
 \usepackage{url}
 \usepackage{mathtools}
+\usepackage[usenames,dvipsnames]{color}
 \usepackage{color}
 \usepackage[authoryear]{natbib}
 \usepackage{fullpage}
@@ -94,7 +95,7 @@ Among populations, the differentiating process of drift is counteracted by the h
 
 %%%%%%%%% %%%%%%%%% 
 \paragraph{Spatial Covariance Model}
-We wish to model the covariance between populations as the result of a spatial process, in which migration rates between nearby populations are higher than between distant ones, so that a population has higher covariance with a close neighbor than with a more distant population.  We choose as the form of our parametric covariance matrix a simple and flexible model, with an exponential decay of allele frequency covariance with geographic distance (Wasser et al 2004, Bradburd, Ralph, and Coop 2013).  The covariance between population allele frequencies in populations $i$ and $j$ is 
+We wish to model the covariance between populations as the result of a spatial process, in which migration rates between nearby populations are higher than between distant ones, so that a population has higher covariance with a close neighbor than with a more distant population.  This modeling framework is inspired by that of Wasser et al (2004), in which the authors assign individuals onto a spatially smoothed landscape of geographically placed allele frequencies .  We choose as the form of our parametric covariance matrix a simple and flexible model, with an exponential decay of allele frequency covariance with geographic distance (Diggle et al 1998, Wasser et al 2004, Bradburd, Ralph, and Coop 2013).  The covariance between population allele frequencies in populations $i$ and $j$ is 
 \begin{equation}
 \label{eq:spatial_covariance}
 \Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right) \text{,}
@@ -305,7 +306,7 @@ We also show a scenario in which there has been admixture (40\%) between two pop
 \end{figure}
 
 \section*{Empirical Applications}
-To demonstrate the applications of this novel method, we analyzed population genomic data from two systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.  \gb{Maps showing our sampling in these two systems are shown in Figure \ref{sfig:empirical_maps}, and information on the specific populations included is given in the Appendix, Tables XXX and XXX.  To minimize the potential influence of the spatial prior on population locations, for each empirical analysis, we performed one SpaceMix run in which random, uniformly distributed locations between, for longitude, the minimum and maximum observed longitude, and, for latitude, the minimum and maximum observed latitude were used as the prior on population locations (in addition to two runs for which the observed locations are used as priors).  For clarity and ease of interpretation, we then present a full Procrustes superimposition of the inferred population locations ($G'$) and their sources of admixture ($\identifyadmixsource{G}$), using the observed latitude and longitude of the populations/individuals ($G$) to give a reference position and orientation.  As results were generally consistent across multiple runs for each dataset regardless of the prior employed we (unless stated otherwise) present only the results from the `random' prior analyses.}
+To demonstrate the applications of this novel method, we analyzed population genomic data from two systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.  \gb{Maps showing our sampling in these two systems are shown in Figure \ref{sfig:empirical_maps}, and information on the specific populations included is given in the Appendix, Tables \ref{tab:warbler_data_table} and \ref{tab:globe_data_table}.  To minimize the potential influence of the spatial prior on population locations, for each empirical analysis, we performed one SpaceMix run in which random, uniformly distributed locations between, for longitude, the minimum and maximum observed longitude, and, for latitude, the minimum and maximum observed latitude were used as the prior on population locations (in addition to two runs for which the observed locations are used as priors).  For clarity and ease of interpretation, we then present a full Procrustes superimposition of the inferred population locations ($G'$) and their sources of admixture ($\identifyadmixsource{G}$), using the observed latitude and longitude of the populations/individuals ($G$) to give a reference position and orientation.  As results were generally consistent across multiple runs for each dataset regardless of the prior employed we (unless stated otherwise) present only the results from the `random' prior analyses.}
 
 \begin{figure}
 	\centering
@@ -406,11 +407,16 @@ We also see intriguing evidence for potential admixture in the placement of the 
 
 In Figure \ref{sfig:globe_ad_maps} we show the results of of the location and admixture analysis of the human population dataset.  The opacity of the admixture arrows (which point from the estimated location of a population's source of admixture to its own estimated location) is proportional to the weight of admixture that population draws, which means that some arrows are hard to see.  These faint signatures of admixture seem nonetheless to be biologically meaningful: for example the Maya draw admixture from a location close to the North African and Middle Eastern samples of only 7.3\% (X - X), a finding similar to that of Patterson \textit{et al.} (2012) and Hellenthal \textit{et al.} (2014) that reflects the combination of ancestry they received from North Africa and Spanish Europeans.
 
-The biggest change between the geogenetic map of human populations inferred with admixture and that without is the positioning of Sub-Saharan African samples with respect to the rest of the world.  The inclusion of admixture allowed samples that fell intermediate between Sub-Saharan Africa and North Africa and the Middle East tos move closer to one or the other.  The Ethiopian and Ethiopian Jewish samples move to be relatively closer to the Sub-Saharan samples than the North African samples (mention Hadza and Sandawe).  While the North African populations (Egyptian, Tunisian, Morocan, Mozabite) move to join the middle eastern populations (positioning in rough accord with their sampling location along north-Africa). The relatively large distances between these groups reflects the fact that ,,,
+The biggest change between the geogenetic map of human populations inferred with admixture and that without is the positioning of Sub-Saharan African samples with respect to the rest of the world.  The inclusion of admixture allowed samples that fell intermediate between Sub-Saharan Africa and North Africa and the Middle East to move closer to one or the other, which, in turn, allows each of those major clusters to move relatively farther apart.  The Ethiopian and Ethiopian Jewish samples move to be closer to the Sub-Saharan samples than the North African samples, but draw substantial amounts of admixture ($\sim 40\%$) from close to where the Egyptian sample has positioned itself in the the middle East cluster, as do the the Hadza and the Sandawe.  
 
-Now instead of occupying an intermediate position the two Ethiopian samples draw a substantial proportion of their ancestry ($\sim 40\%$) from close to where the Egyptian sample has positioned itself in the the middle East cluster. The Sandawe population also draw a substantial portion of their ancestry from the middle east cluster.  Where's the Hadza going? Reciprocally, our North African samples (Egyptian, Tunisian, Morocan, Mozabite), having moved to join the middle eastern populations draw ancestry from close to the Ethiopian samples. Interestingly the Bantu South African sample, though the move to join the other Bantu populations, draws admixture from close to the (Kohi?) San populations. This is consistent with previous signals ....
+Reciprocally, the North African populations (Egyptian, Tunisian, Morocan, Mozabite) move to join the Middle Eastern populations (positioning in rough accord with their sampling location along North Africa), and draw admixture from near the Sub-Saharan Africa samples.  Interestingly the Bantu South African sample, though it moves to join the other Bantu populations, draws admixture from close to the San populations. This is consistent with previous signals of the expansion of Bantu-speaking peoples into southern Africa (Pickrell et al 2012; Hellenthal 2014).
 
-SanKhomani draws admixture from near syria.
+%%%%%%%%%
+%Now instead of occupying an intermediate position the two Ethiopian samples draw a substantial proportion of their ancestry ($\sim 40\%$) from close to where the Egyptian sample has positioned itself in the the middle East cluster. The Sandawe population also draw a substantial portion of their ancestry from the middle east cluster.  Where's the Hadza going? Reciprocally, our North African samples (Egyptian, Tunisian, Morocan, Mozabite), having moved to join the middle eastern populations draw ancestry from close to the Ethiopian samples. 
+
+SanKhomani draws admixture from near syria.  Hellenthal et al infer 2 admixture events and 3 admixture sources for the San Khomani: 1 event from the Bantu peoples in South Africa, and 1 event from a combination of northern European and southeast Asian populations.  If you squint, the centroid of these locations is the middle east, from which the San Khomani choose to draw their admixture in our analysis.
+
+The relatively large distances between these groups reflects the fact that Eurasian, North African, Oceanian, and American populations all share significant drift that they do not share with the Sub-Saharan African samples.
 
 The middle eastern sample () draw admixture from close to the location chosen by the Ethiopian samples, close to where the North African samples draw admixture from. It seems potentially likely that this spread of populations represents North African influence. 
 
@@ -443,7 +449,12 @@ Pathan draws from where india also draws admixture from.
 
 
 \section*{Conclusion}
-In this paper we have presented blah blah blah.  We believe this represents an advance over previous methods because blah blah blah.  This method can be used to answer a variety of empirical questions, including blah, blah, and blah, and also serves as an intuitive data visualization tool.
+In this paper we have presented a statistical framework for modeling the geography of population structure from genomic sequencing data.
+We have demonstrated that the method, SpaceMix, is able to accurately present patterns of population structure of a variety of simulated scenarios, which included the effects of spatially heterogeneous migration, population expansion, and population admixture.  In our empirical applications of SpaceMix, we have largely recovered previous population relationships in a circum-Tibetan sample of greenish warblers and in a global sample of human populations, while also providing a novel way to visualize these relationships.
+
+Within the constellation of existing methods for inferring and visualizing patterns of population structure, SpaceMix falls between methods that use model-based inference to infer population trees, such as TreeMix, mixmapper, or Reich et al's \textit{f}-statistics, and methods that use dimensionality reduction to visualize patterns of structure on a map.  Tree-based methods 
+
+blah blah blah.  We believe this represents an advance over previous methods because blah blah blah.  This method can be used to answer a variety of empirical questions, including blah, blah, and blah, and also serves as an intuitive data visualization tool.
 
 \section*{Future Directions}
 
@@ -888,6 +899,325 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 	\caption{SpaceMix analyses performed on a warbler individuals for which prior locations are projected onto a flat line in an order that approximately corresponds to their order around the ring: a) the setup of the analysis, in which warbler individuals are projected from their estimated locations in a previous SpaceMix run onto a flat line; b) the MAP estimate of individual locations from a SpaceMix analysis with no admixture, using the flat line locations from (a) as priors on $G^{\prime}$; c) posterior distribution of individual locations from the same analysis.  As with the other inferred maps, here, for clarity, the inferred locations have been rotated via a Procrustes superimposition around their true sampling coordinates.}
 	\label{sfig:warb_inds_on_a_line}
 \end{figure}
+
+\begin{table}
+\centering
+\tiny
+\begin{tabular}{rlrr}
+  \hline
+Sample & Subspecies & Longitude & Latitude \\ 
+  \hline
+ Vir-YK1 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+   Vir-YK11 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+   Vir-YK3 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+   Vir-YK4 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+   Vir-YK5 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+   Vir-YK6 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+   Vir-YK7 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+   Vir-YK9 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+   Vir-AB1 & \textcolor{blue}{Viridanus} & 89.50 & 89.50 \\ 
+   Vir-AB2 & \textcolor{blue}{Viridanus} & 89.50 & 89.50 \\ 
+  Vir-STvi1 & \textcolor{blue}{Viridanus} & 92.60 & 92.60 \\ 
+  Vir-STvi2 & \textcolor{blue}{Viridanus} & 92.60 & 92.60 \\ 
+  Vir-STvi3 & \textcolor{blue}{Viridanus} & 92.60 & 92.60 \\ 
+   Vir-TL1 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+   Vir-TL10 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+   Vir-TL11 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+   Vir-TL12 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+   Vir-TL2 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+   Vir-TL3 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+   Vir-TL4 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+   Vir-TL5 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+   Vir-TL7 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+   Vir-TL8 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+   Vir-TL9 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+   Vir-AA1 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+   Vir-AA10 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+   Vir-AA11 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+   Vir-AA3 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+   Vir-AA4 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+   Vir-AA5 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+   Vir-AA6 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+   Vir-AA7 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+   Vir-AA8 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+   Vir-AA9 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+   \hline
+   Ni-TU1 & \textcolor{BlueViolet}{Nitidus} & 42.00 & 42.00 \\ 
+   Ni-TU2 & \textcolor{BlueViolet}{Nitidus} & 42.00 & 42.00 \\ 
+      \hline
+   Lud-PKA8 & \textcolor{ForestGreen}{Ludlowi} & 73.69 & 73.69 \\ 
+   Lud-PKA10 & \textcolor{ForestGreen}{Ludlowi} & 73.69 & 73.69 \\ 
+   Lud-PKB1 & \textcolor{ForestGreen}{Ludlowi} & 73.61 & 73.61 \\ 
+   Lud-PKB2 & \textcolor{ForestGreen}{Ludlowi} & 73.61 & 73.61 \\ 
+   Lud-PKB4 & \textcolor{ForestGreen}{Ludlowi} & 73.61 & 73.61 \\ 
+   Lud-PKB5 & \textcolor{ForestGreen}{Ludlowi} & 73.61 & 73.61 \\ 
+   Lud-KS1 & \textcolor{ForestGreen}{Ludlowi} & 75.19 & 75.19 \\ 
+   Lud-KS2 & \textcolor{ForestGreen}{Ludlowi} & 75.19 & 75.19 \\ 
+   Lud-KL6 & \textcolor{ForestGreen}{Ludlowi} & 76.37 & 76.37 \\ 
+   Lud-KL7 & \textcolor{ForestGreen}{Ludlowi} & 76.37 & 76.37 \\ 
+   Lud-KL1 & \textcolor{ForestGreen}{Ludlowi} & 76.37 & 76.37 \\ 
+   Lud-PA1 & \textcolor{ForestGreen}{Ludlowi} & 76.97 & 76.97 \\ 
+   Lud-PA2 & \textcolor{ForestGreen}{Ludlowi} & 76.97 & 76.97 \\ 
+   Lud-ML2 & \textcolor{ForestGreen}{Ludlowi} & 76.43 & 76.43 \\ 
+   Lud-MN1 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
+   Lud-MN12 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
+   Lud-MN3 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
+   Lud-MN5 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
+   Lud-MN8 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
+   Lud-MN9 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
+      \hline
+   Tro-LN1 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+   Tro-LN10 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+   Tro-LN11 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+   Tro-LN12 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+   Tro-LN14 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+   Tro-LN16 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+   Tro-LN18 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+   Tro-LN19 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+   Tro-LN2 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+   Tro-LN20 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+   Tro-LN3 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+   Tro-LN4 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+   Tro-LN6 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+   Tro-LN7 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+   Tro-LN8 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+      \hline
+   Obs-EM1 & \textcolor{BurntOrange}{Obscuratus} & 103.30 & 103.30 \\ 
+   Obs-XN1 & \textcolor{BurntOrange}{Obscuratus} & 102.00 & 102.00 \\ 
+   Obs-XN2 & \textcolor{BurntOrange}{Obscuratus} & 102.00 & 102.00 \\ 
+   Obs-XN3 & \textcolor{BurntOrange}{Obscuratus} & 102.00 & 102.00 \\ 
+   Obs-XN5 & \textcolor{BurntOrange}{Obscuratus} & 102.00 & 102.00 \\ 
+      \hline
+   Plu-BK2 & \textcolor{red}{Plumbeitarsus} & 104.90 & 104.90 \\ 
+   Plu-BK3 & \textcolor{red}{Plumbeitarsus} & 104.90 & 104.90 \\ 
+   Plu-AN1 & \textcolor{red}{Plumbeitarsus} & 102.50 & 102.50 \\ 
+   Plu-AN2  & \textcolor{red}{Plumbeitarsus} & 102.50 & 102.50 \\ 
+   Plu-IL1 & \textcolor{red}{Plumbeitarsus} & 95.50 & 95.50 \\ 
+   Plu-IL2 & \textcolor{red}{Plumbeitarsus} & 95.50 & 95.50 \\ 
+   Plu-IL4 & \textcolor{red}{Plumbeitarsus} & 95.50 & 95.50 \\ 
+   Plu-ST1 & \textcolor{red}{Plumbeitarsus} & 92.60 & 92.60 \\ 
+   Plu-ST12 & \textcolor{red}{Plumbeitarsus} & 92.60 & 92.60 \\ 
+   Plu-ST3 & \textcolor{red}{Plumbeitarsus} & 92.60 & 92.60 \\ 
+   Plu-UY1 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
+   Plu-UY2 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
+   Plu-UY3 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
+   Plu-UY4 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
+   Plu-UY5 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
+   Plu-UY6 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
+   Plu-SL1 & \textcolor{red}{Plumbeitarsus} & 91.00 & 91.00 \\ 
+   Plu-SL2 & \textcolor{red}{Plumbeitarsus} & 91.00 & 91.00 \\ 
+   Plu-TA1 & \textcolor{red}{Plumbeitarsus} & 92.00 & 92.00 \\ 
+   \hline
+   \end{tabular}
+   \caption{Subspecies and geographic meta-data for greenish warbler individuals included in analysis}
+   \label{tab:warbler_data_table}
+\end{table}
+
+
+ \definecolor{Adygei}{HTML}{4B00FF} 
+ \definecolor{Armenian}{HTML}{6200FF} 
+ \definecolor{Balochi}{HTML}{B400FF} 
+ \definecolor{BantuKenya}{HTML}{00FF12} 
+ \definecolor{BantuSouthAfrica}{HTML}{ADFF00} 
+ \definecolor{Basque}{HTML}{0047FF} 
+ \definecolor{Bedouin}{HTML}{3600FF} 
+ \definecolor{Belorussian}{HTML}{2200FF} 
+ \definecolor{BiakaPygmy}{HTML}{00FF72} 
+ \definecolor{Brahui}{HTML}{AD00FF} 
+ \definecolor{Bulgarian}{HTML}{1800FF} 
+ \definecolor{Burusho}{HTML}{CE00FF} 
+ \definecolor{Cambodian}{HTML}{FF00BC} 
+ \definecolor{Chuvash}{HTML}{7500FF} 
+ \definecolor{Colombian}{HTML}{FF9800} 
+ \definecolor{Cypriot}{HTML}{3600FF} 
+ \definecolor{Dai}{HTML}{FF00D2} 
+ \definecolor{Daur}{HTML}{FF0074} 
+ \definecolor{Druze}{HTML}{4300FF} 
+ \definecolor{EastSicilian}{HTML}{000BFF} 
+ \definecolor{Egyptian}{HTML}{006CFF} 
+ \definecolor{English}{HTML}{004AFF} 
+ \definecolor{Ethiopian}{HTML}{00FCFF} 
+ \definecolor{EthiopianJew}{HTML}{009CFF} 
+ \definecolor{Finnish}{HTML}{1900FF} 
+ \definecolor{French}{HTML}{0040FF} 
+ \definecolor{Georgian}{HTML}{6000FF} 
+ \definecolor{GermanyAustria}{HTML}{0020FF} 
+ \definecolor{Greek}{HTML}{0A00FF} 
+ \definecolor{Hadza}{HTML}{1EFF00} 
+ \definecolor{Han}{HTML}{FF009A} 
+ \definecolor{HanNchina}{HTML}{FF00B0} 
+ \definecolor{Hazara}{HTML}{BD00FF} 
+ \definecolor{Hezhen}{HTML}{FF0053} 
+ \definecolor{Hungarian}{HTML}{0200FF} 
+ \definecolor{IndianJew}{HTML}{CA00FF} 
+ \definecolor{Indian}{HTML}{DC00FF} 
+ \definecolor{Myanmar}{HTML}{FF00DD} 
+ \definecolor{Iranian}{HTML}{8200FF} 
+ \definecolor{Ireland}{HTML}{0066FF} 
+ \definecolor{Japanese}{HTML}{FF0040} 
+ \definecolor{Jordanian}{HTML}{4300FF} 
+ \definecolor{Kalash}{HTML}{C300FF} 
+ \definecolor{Karitiana}{HTML}{FFA600} 
+ \definecolor{Lahu}{HTML}{FF00CA} 
+ \definecolor{Lezgin}{HTML}{6B00FF} 
+ \definecolor{Lithuanian}{HTML}{1200FF} 
+ \definecolor{Makrani}{HTML}{A900FF} 
+ \definecolor{Mandenka}{HTML}{00CCFF} 
+ \definecolor{Maya}{HTML}{FF5B00} 
+ \definecolor{MbutiPygmy}{HTML}{00FF42} 
+ \definecolor{Melanesian}{HTML}{FF0000} 
+ \definecolor{Miao}{HTML}{FF00B0} 
+ \definecolor{Mongola}{HTML}{FF0087} 
+ \definecolor{Moroccan}{HTML}{000CFF} 
+ \definecolor{Mozabite}{HTML}{003CFF} 
+ \definecolor{Naxi}{HTML}{FF00CE} 
+ \definecolor{NorthItalian}{HTML}{0023FF} 
+ \definecolor{Norwegian}{HTML}{0027FF} 
+ \definecolor{Orcadian}{HTML}{0053FF} 
+ \definecolor{Oroqen}{HTML}{FF006D} 
+ \definecolor{Palestinian}{HTML}{3C00FF} 
+ \definecolor{Papuan}{HTML}{FF002D} 
+ \definecolor{Pathan}{HTML}{C900FF} 
+ \definecolor{Pima}{HTML}{FF2E00} 
+ \definecolor{Polish}{HTML}{0000FF} 
+ \definecolor{Romanian}{HTML}{1600FF} 
+ \definecolor{Russian}{HTML}{4F00FF} 
+ \definecolor{Sandawe}{HTML}{00FFA2} 
+ \definecolor{SanNamibia}{HTML}{4EFF00} 
+ \definecolor{SanKhomani}{HTML}{7DFF00} 
+ \definecolor{Sardinian}{HTML}{0026FF} 
+ \definecolor{Saudi}{HTML}{6200FF} 
+ \definecolor{Scottish}{HTML}{0057FF} 
+ \definecolor{She}{HTML}{FF0087} 
+ \definecolor{Sindhi}{HTML}{BC00FF} 
+ \definecolor{SouthItalian}{HTML}{0008FF} 
+ \definecolor{Spanish}{HTML}{0055FF} 
+ \definecolor{Surui}{HTML}{FFA800} 
+ \definecolor{Syrian}{HTML}{4B00FF} 
+ \definecolor{Tu}{HTML}{FF00CA} 
+ \definecolor{Tujia}{HTML}{FF00A9} 
+ \definecolor{Tunisian}{HTML}{2400FF} 
+ \definecolor{Turkish}{HTML}{3D00FF} 
+ \definecolor{Tuscan}{HTML}{001EFF} 
+ \definecolor{UAE}{HTML}{8500FF} 
+ \definecolor{Uygur}{HTML}{E900FF} 
+ \definecolor{Uzbekistani}{HTML}{AB00FF} 
+ \definecolor{Welsh}{HTML}{0055FF} 
+ \definecolor{WestSicilian}{HTML}{0018FF} 
+ \definecolor{Xibo}{HTML}{E900FF} 
+ \definecolor{Yakut}{HTML}{FF0062} 
+ \definecolor{Yemeni}{HTML}{6F00FF} 
+ \definecolor{Yi}{HTML}{FF00C3} 
+ \definecolor{Yoruba}{HTML}{00FFD2}
+ 
+ 
+ \begin{table}[ht]
+ \tiny
+\centering
+\begin{tabular}{rlrrr}
+  \hline
+ & Population & Longitude & Latitude & Mean.Sample.Size \\ 
+  \hline
+1 & \textcolor{BantuSouthAfrica}{BantuSouthAfrica} & 28.00 & -26.00 & 15.99 \\ 
+  2 & \textcolor{SanKhomani}{SanKhomani} & 18.10 & -24.60 & 59.96 \\ 
+  3 & \textcolor{SanNamibia}{SanNamibia} & 20.00 & -21.50 & 9.99 \\ 
+  4 & \textcolor{Hadza}{Hadza} & 33.10 & -4.50 & 5.93 \\ 
+  5 & \textcolor{BantuKenya}{BantuKenya} & 37.00 & -3.00 & 21.99 \\ 
+  6 & \textcolor{MbutiPygmy}{MbutiPygmy} & 29.00 & 1.00 & 25.98 \\ 
+  7 & \textcolor{BiakaPygmy}{BiakaPygmy} & 17.00 & 4.00 & 41.97 \\ 
+  8 & \textcolor{Sandawe}{Sandawe} & 35.70 & 6.20 & 55.94 \\ 
+  9 & \textcolor{Yoruba}{Yoruba} & 5.00 & 8.00 & 41.98 \\ 
+  10 & \textcolor{Ethiopian}{Ethiopian} & 38.70 & 9.00 & 37.70 \\ 
+  11 & \textcolor{Mandenka}{Mandenka} & -12.00 & 12.00 & 43.98 \\ 
+  12 & \textcolor{EthiopianJew}{EthiopianJew} & 38.70 & 14.10 & 22.00 \\ 
+  13 & \textcolor{Egyptian}{Egyptian} & 26.80 & 30.80 & 24.00 \\ 
+  14 & \textcolor{Mozabite}{Mozabite} & 3.00 & 32.00 & 57.98 \\ 
+  15 & \textcolor{Moroccan}{Moroccan} & -5.50 & 33.60 & 49.97 \\ 
+  16 & \textcolor{Tunisian}{Tunisian} & 9.80 & 35.60 & 24.00 \\ 
+  17 & \textcolor{Ireland}{Ireland} & -8.20 & 53.40 & 14.00 \\ 
+  18 & \textcolor{Scottish}{Scottish} & -4.20 & 56.50 & 12.00 \\ 
+  19 & \textcolor{Spanish}{Spanish} & -3.70 & 40.50 & 67.95 \\ 
+  20 & \textcolor{Welsh}{Welsh} & -3.70 & 52.60 & 8.00 \\ 
+  21 & \textcolor{Orcadian}{Orcadian} & -3.00 & 59.00 & 29.99 \\ 
+  22 & \textcolor{English}{English} & -0.80 & 52.00 & 12.00 \\ 
+  23 & \textcolor{Basque}{Basque} & 0.00 & 43.00 & 47.99 \\ 
+  24 & \textcolor{French}{French} & 2.00 & 46.00 & 55.97 \\ 
+  25 & \textcolor{Norwegian}{Norwegian} & 8.50 & 60.50 & 35.99 \\ 
+  26 & \textcolor{Sardinian}{Sardinian} & 9.00 & 40.00 & 55.98 \\ 
+  27 & \textcolor{NorthItalian}{NorthItalian} & 9.70 & 45.70 & 23.99 \\ 
+  28 & \textcolor{GermanyAustria}{GermanyAustria} & 10.50 & 51.20 & 8.00 \\ 
+  29 & \textcolor{Tuscan}{Tuscan} & 11.00 & 43.00 & 16.00 \\ 
+  30 & \textcolor{WestSicilian}{WestSicilian} & 12.50 & 38.00 & 20.00 \\ 
+  31 & \textcolor{EastSicilian}{EastSicilian} & 16.10 & 37.00 & 20.00 \\ 
+  32 & \textcolor{SouthItalian}{SouthItalian} & 16.90 & 39.50 & 35.96 \\ 
+  33 & \textcolor{Polish}{Polish} & 19.10 & 51.90 & 31.99 \\ 
+  34 & \textcolor{Hungarian}{Hungarian} & 19.50 & 47.20 & 40.00 \\ 
+  35 & \textcolor{Greek}{Greek} & 21.80 & 39.10 & 39.99 \\ 
+  36 & \textcolor{Lithuanian}{Lithuanian} & 23.90 & 55.20 & 20.00 \\ 
+  37 & \textcolor{Romanian}{Romanian} & 25.00 & 45.90 & 28.00 \\ 
+  38 & \textcolor{Bulgarian}{Bulgarian} & 25.50 & 42.70 & 35.99 \\ 
+  39 & \textcolor{Finnish}{Finnish} & 25.70 & 61.90 & 4.00 \\ 
+  40 & \textcolor{Belorussian}{Belorussian} & 28.00 & 53.70 & 16.00 \\ 
+  41 & \textcolor{Bedouin}{Bedouin} & 33.50 & 31.00 & 89.98 \\ 
+  42 & \textcolor{Cypriot}{Cypriot} & 33.50 & 35.50 & 24.00 \\ 
+  43 & \textcolor{Palestinian}{Palestinian} & 35.00 & 33.50 & 91.95 \\ 
+  44 & \textcolor{Turkish}{Turkish} & 35.20 & 39.00 & 34.00 \\ 
+  45 & \textcolor{Druze}{Druze} & 37.00 & 32.00 & 83.96 \\ 
+  46 & \textcolor{Jordanian}{Jordanian} & 37.00 & 30.00 & 40.00 \\ 
+  47 & \textcolor{Adygei}{Adygei} & 39.00 & 44.00 & 33.99 \\ 
+  48 & \textcolor{Syrian}{Syrian} & 39.00 & 34.80 & 32.00 \\ 
+  49 & \textcolor{Russian}{Russian} & 40.00 & 61.00 & 49.98 \\ 
+  50 & \textcolor{Georgian}{Georgian} & 44.60 & 41.80 & 39.99 \\ 
+  51 & \textcolor{Armenian}{Armenian} & 45.00 & 40.10 & 31.99 \\ 
+  52 & \textcolor{Saudi}{Saudi} & 45.10 & 23.90 & 20.00 \\ 
+  53 & \textcolor{Lezgin}{Lezgin} & 47.50 & 43.00 & 35.96 \\ 
+  54 & \textcolor{Yemeni}{Yemeni} & 48.50 & 15.60 & 13.99 \\ 
+  55 & \textcolor{Chuvash}{Chuvash} & 50.20 & 53.20 & 34.00 \\ 
+  56 & \textcolor{Iranian}{Iranian} & 53.70 & 32.40 & 39.99 \\ 
+  57 & \textcolor{UAE}{UAE} & 54.40 & 24.50 & 27.98 \\ 
+  58 & \textcolor{Makrani}{Makrani} & 64.00 & 26.00 & 49.99 \\ 
+  59 & \textcolor{Uzbekistani}{Uzbekistani} & 64.60 & 41.40 & 29.99 \\ 
+  60 & \textcolor{Brahui}{Brahui} & 65.00 & 29.00 & 49.98 \\ 
+  61 & \textcolor{Balochi}{Balochi} & 67.00 & 31.00 & 47.99 \\ 
+  62 & \textcolor{Sindhi}{Sindhi} & 69.00 & 25.00 & 47.99 \\ 
+  63 & \textcolor{Hazara}{Hazara} & 69.50 & 33.00 & 43.98 \\ 
+  64 & \textcolor{Kalash}{Kalash} & 71.00 & 36.00 & 45.99 \\ 
+  65 & \textcolor{Pathan}{Pathan} & 72.50 & 34.00 & 43.99 \\ 
+  66 & \textcolor{IndianJew}{IndianJew} & 72.90 & 19.00 & 16.00 \\ 
+  67 & \textcolor{Burusho}{Burusho} & 74.00 & 37.00 & 49.98 \\ 
+  68 & \textcolor{Indian}{Indian} & 77.60 & 13.00 & 25.97 \\ 
+  69 & \textcolor{Uygur}{Uygur} & 81.00 & 44.00 & 20.00 \\ 
+  70 & \textcolor{Xibo}{Xibo} & 81.00 & 43.00 & 17.99 \\ 
+  71 & \textcolor{Myanmar}{Myanmar} & 96.00 & 21.90 & 5.99 \\ 
+  72 & \textcolor{Dai}{Dai} & 99.00 & 21.00 & 19.98 \\ 
+  73 & \textcolor{Naxi}{Naxi} & 100.00 & 26.00 & 15.99 \\ 
+  74 & \textcolor{Lahu}{Lahu} & 101.00 & 22.00 & 16.00 \\ 
+  75 & \textcolor{Tu}{Tu} & 101.00 & 36.00 & 20.00 \\ 
+  76 & \textcolor{Yi}{Yi} & 103.00 & 28.00 & 20.00 \\ 
+  77 & \textcolor{Cambodian}{Cambodian} & 105.00 & 12.00 & 19.98 \\ 
+  78 & \textcolor{HanNchina}{HanNchina} & 108.00 & 39.00 & 20.00 \\ 
+  79 & \textcolor{Miao}{Miao} & 108.00 & 28.00 & 19.99 \\ 
+  80 & \textcolor{Tujia}{Tujia} & 110.00 & 29.00 & 20.00 \\ 
+  81 & \textcolor{Han}{Han} & 114.00 & 26.00 & 67.96 \\ 
+  82 & \textcolor{Mongola}{Mongola} & 119.00 & 48.00 & 20.00 \\ 
+  83 & \textcolor{She}{She} & 119.00 & 27.00 & 19.99 \\ 
+  84 & \textcolor{Daur}{Daur} & 124.00 & 49.00 & 17.99 \\ 
+  85 & \textcolor{Oroqen}{Oroqen} & 126.00 & 50.00 & 18.00 \\ 
+  86 & \textcolor{Yakut}{Yakut} & 129.00 & 63.00 & 49.98 \\ 
+  87 & \textcolor{Hezhen}{Hezhen} & 133.00 & 47.00 & 16.00 \\ 
+  88 & \textcolor{Japanese}{Japanese} & 138.00 & 38.00 & 55.97 \\ 
+  89 & \textcolor{Papuan}{Papuan} & 143.00 & -4.00 & 33.97 \\ 
+  90 & \textcolor{Melanesian}{Melanesian} & 155.00 & -6.00 & 19.99 \\ 
+  91 & \textcolor{Pima}{Pima} & -108.00 & 29.00 & 27.99 \\ 
+  92 & \textcolor{Maya}{Maya} & -91.00 & 19.00 & 41.97 \\ 
+  93 & \textcolor{Colombian}{Colombian} & -68.00 & 3.00 & 13.99 \\ 
+  94 & \textcolor{Karitiana}{Karitiana} & -63.00 & -10.00 & 27.99 \\ 
+  95 & \textcolor{Surui}{Surui} & -62.00 & -11.00 & 16.00 \\ 
+   \hline
+\end{tabular}
+   \caption{sample size and geographic meta-data for human samples included in analysis}
+   \label{tab:globe_data_table}
+\end{table}
 
 \end{document}
 

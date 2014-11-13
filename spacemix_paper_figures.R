@@ -2834,7 +2834,121 @@ par(mfrow=c(1,2))
 dev.off()
 
 
+################
+#	Data Tables
+################
 
+load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop_spaceruns/real_prior1/warbler_pop_dataset.Robj")
+	pops <- row.names(warbler.pop.coords)
+	k <- length(pops)
+	pop.col <- numeric(k)
+	pop.col[match(c("XN"),pops)] <- "orange"
+	pop.col[match(c("EM","TB","LN"),pops)] <- "gold"
+	pop.col[match(c("MN","ML","PA","KL","KS","PKA","PKB"),pops)] <- "mediumseagreen"
+	pop.col[match(c("AA"),pops)] <- "dodgerblue2"
+	pop.col[match(c("YK","TL","AB"),pops)] <- "dodgerblue2"		#"slateblue4"
+	pop.col[match(c("ST","UY","IL","AN","BK","TA","SL"),pops)] <- "red"
+	pop.col[match(c("TU"),pops)] <- "slateblue4"
+
+load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/ind/warb_ind_spaceruns/real_prior1/warbler_ind_dataset.Robj")
+	inds <- row.names(warbler.ind.allele.counts)
+	k <- length(inds)
+		inds[11] <- "Vir-STvi1"
+		inds[12] <- "Vir-STvi2"
+		inds[13] <- "Vir-STvi3"
+	ind.subspp <- unlist(strsplit(inds,"-"))[seq(1,190,2)]
+	inds.col <- numeric(length(ind.subspp))
+		inds.col[grepl("Vir",ind.subspp)] <- "dodgerblue2"
+		inds.col[grepl("Ni",ind.subspp)] <- "slateblue4"
+		inds.col[grepl("Lud",ind.subspp)] <- "mediumseagreen"
+		inds.col[grepl("Tro",ind.subspp)] <- "gold"
+		inds.col[grepl("Obs",ind.subspp)] <- "orange"
+		inds.col[grepl("Plu",ind.subspp)] <- "red"
+
+		plot.inds <- gsub(" ","",inds)
+		plot.inds <- gsub("[[:digit:]]","",plot.inds)
+		plot.inds <- gsub(c("Plu-"),"",plot.inds)
+		plot.inds <- gsub(c("Vir-"),"",plot.inds)
+		plot.inds <- gsub(c("Ni-"),"",plot.inds)
+		plot.inds <- gsub(c("Lud-"),"",plot.inds)
+		plot.inds <- gsub(c("Tro-"),"",plot.inds)
+		plot.inds <- gsub(c("Obs-"),"",plot.inds)
+		plot.inds <- gsub(c("vi"),"",plot.inds)
+
+ind.subspp.table <- gsub(" ","",ind.subspp)
+	ind.subspp.table <- gsub("Vir","Viridanus",ind.subspp.table)
+	ind.subspp.table <- gsub("Ni","Nitidus",ind.subspp.table)
+	ind.subspp.table <- gsub("Lud","Ludlowi",ind.subspp.table)
+	ind.subspp.table <- gsub("Tro","Trochiloides",ind.subspp.table)
+	ind.subspp.table <- gsub("Obs","Obscuratus",ind.subspp.table)
+	ind.subspp.table <- gsub("Plu","Plumbeitarsus",ind.subspp.table)
+
+warbler.data.table <- data.frame("Subspecies" = ind.subspp.table, 
+									"Longitude" = warbler.ind.coords[,1], 
+									"Latitude" = warbler.ind.coords[,1],
+									row.names=inds)
+require(xtable)
+
+xtable(warbler.data.table)
+
+load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceruns/rand_prior2/globetrotter_dataset.Robj")
+
+	globe.coords <- cbind(globetrotter.long, globetrotter.lat)
+	pops <- row.names(globetrotter.counts)
+	k <- length(pops)
+
+		continent.col <- numeric(k)
+			continent.col[which(globetrotter.long < -50)] <- "orange"
+			continent.col[match(c("BantuKenya","BantuSouthAfrica","BiakaPygmy",
+									"Egyptian","Ethiopian","EthiopianJew","Hadza","Mandenka",
+									"MbutiPygmy","Moroccan","Mozabite","Sandawe","SanNamibia",
+									"SanKhomani","Tunisian","Yoruba"),pops)] <- "forestgreen"
+		continent.col[which(globetrotter.long > 100 &
+							globetrotter.lat < 5)] <- "brown"
+		continent.col[which(continent.col==0)] <- rainbow(length(continent.col[which(continent.col==0)]),
+															start=4/6,end=6/6)[as.numeric(cut(globetrotter.long[which(continent.col==0)],length(which(continent.col==0))))]
+		americas <- which(continent.col=="orange")
+		africa <- which(continent.col=="forestgreen")
+		oceania <- which(continent.col=="brown")
+		east.asia <- which(globetrotter.long > 95 & 
+								globetrotter.lat > 11.5)
+		western.eurasia <- c(1:k)[-c(americas,africa,oceania,east.asia)]
+		eurasia <- c(1:k)[-c(americas,africa,oceania)]
+
+		# af.eff.lat <- (globetrotter.lat[africa] + abs(min(globetrotter.lat[africa])))/max(globetrotter.lat[africa] + abs(min(globetrotter.lat[africa])))
+		af.loc.cols <- hsv(h = seq(0.22,0.69,length.out=length(africa))[rank(globetrotter.lat[africa])],
+				s = 1,
+				v = 1)
+		adj.nonamaf.long <- globetrotter.long[-c(africa,americas)] + abs(min(globe.coords[western.eurasia,1]))
+		eur.eff.long <- adj.nonamaf.long/max(adj.nonamaf.long)
+		eur.loc.cols <- hsv(h = eur.eff.long * 0.4 + 0.6,s=1,v=1)
+		am.eff.long <- (globetrotter.long[americas] + abs(min(globetrotter.long[americas])))/max(globetrotter.long[americas] + abs(min(globetrotter.long[americas])))
+		am.loc.cols <- hsv(h = (am.eff.long) * 0.08 + 0.03,s=1,v=1)
+		continent.col <- numeric(k)
+		continent.col[americas] <- am.loc.cols
+		continent.col[africa] <- af.loc.cols
+		continent.col[-c(africa,americas)] <- eur.loc.cols
+
+globe.table.colors <- numeric(length(continent.col))
+for(i in 1:length(continent.col)){
+	globe.table.colors[i] <- paste("\\","definecolor{",pops[i],"}{HTML}{",continent.col[i],"}",sep="")
+} #cat(globe.table.colors)
+pop.color.names <- numeric(length(continent.col))
+for(i in 1:length(continent.col)){
+	pop.color.names[i] <- c(paste("textcolor{",pops[i],"}{",pops[i],"}",sep=""))
+} #cat(pop.color.names)
+
+	pop.order <- c(africa[order(globe.coords[africa,2])],
+					western.eurasia[order(globe.coords[western.eurasia,1])],
+					east.asia[order(globe.coords[east.asia,1])],
+					oceania[rev(order(globe.coords[oceania,2]))],
+					americas[rev(order(globe.coords[americas,2]))])
+
+globe.data.table <- data.frame("Population" = pop.color.names[pop.order],
+								"Longitude" = globe.coords[pop.order,1],
+								"Latitude" = globe.coords[pop.order,2],
+								"Mean Sample Size" = signif(rowMeans(globetrotter.sample.sizes),4)[pop.order],row.names=NULL)
+xtable(globe.data.table)
 
 #GRAVEYARD
 if(FALSE){
@@ -2897,3 +3011,5 @@ par(mfrow=c(2,2),mar=c(0,0,1,1) + 0.1,oma=c(6,6,0,0)+0.1)
 	title(xlab="Pairwise Distance",ylab="Covariance in Allele Frequencies",outer=TRUE,cex.lab=2)
 dev.off()
 }
+
+

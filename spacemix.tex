@@ -565,11 +565,11 @@ X_{\ell}^{\prime} \sim MVN(0, T^T \Omega T)
 \end{equation}
 the mean centering acts to to reduce the covariance among populations in $X_{\ell}^{\prime}$ compared to $X_{\ell}$, and can induce negative covariance between distant populations (as they are often on either side of the mean). In addition the covariance matrix of our mean centered frequencies has rank $K-1$ rather than $K$, as any one of our mean centered frequencies could be written as a linear function of the others. 
 
-This means that $T^T \Omega T$ not invertible, and so can not be used directly in our Wishart likelihood. To circumvent this problem we take the $QR$ decomposition of the matrix $T$, and form a projection matrix $\Psi= Q_{,-K}$ dropping the $K^{th}$ column of $Q$. We then write our Wishart likelihood as
-\begin{equation}
+This means that $T^T \Omega T$ is not invertible, and so can not be used directly in our Wishart likelihood. To circumvent this problem we take the $QR$ decomposition of the matrix $T$, and form a projection matrix $\Psi= Q_{,-K}$ dropping the $K^{th}$ column of $Q$. We then write our Wishart likelihood as
+\begin{equation} \label{eq:projected_wishart_dist}
 P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left( \Psi^T YY^T \Psi \mid  \Psi^{T}   \Omega   \Psi,L \right) \text{.}
 \end{equation}
-this fully side steps the reduced rank of our covariances. 
+this procedure avoids the reduced rank of our covariance matrices. 
 
 % \gc{BLAH}
 % Note, by using the sample mean frequency to mean-center our observations, we lose a degree of freedom, and reduce the covariance across loci between populations (sometimes inducing negative covariance between distant populations). We accommodate the extra sampling noise distortion and the reduced rank of the covariance matrix by assuming that our
@@ -648,7 +648,7 @@ The inference algorithm described here may be used to estimate the parameters of
 
 Below, we outline the inference procedure for the most parameter-rich model (inference on both population locations, their sources of admixture, and the proportions in which they draw admixture, in addition to inference of the parameters of the spatial covariance function).
 
-We use a Bayesian approach to parameter inference, and specify priors on all parameters.  A table of all parameters, their descriptions, and their priors is given in Table \ref{tab:param_prior_tab}.
+We use a Bayesian MCMC approach to parameter inference, and specify priors on all parameters.  A table of all parameters, their descriptions, and their priors is given in Table \ref{tab:param_prior_tab}.
 
 \begin{centering}
 \begin{table}
@@ -693,29 +693,52 @@ We assume that the user has specified the following data:
 
 Geographic location data may be missing, or generated randomly, for some or all of the samples; if so, the spatial priors on estimated population locations, $G^{\prime}$ and their sources of admixture, $\identifyadmixsource{G}$ will not be tethered to the true map. 
 
-We then calculate the standardized (mean-centered and normalized by variance) allele frequency, $X$, at each locus, and, from $X$, the standardized sample covariance matrix $\widehat{\Omega}^{\prime}$ as outlined in the section ``Deriving the standardized sample covariance" above.  We calculate $\bar{S_k}$, the mean sample size across loci for population $k$, for each population as part of the standardization of the sample allele frequencies, and we retain the inverse of this quantity ($\bar{S_k}^{-1}$) as part of the spatial covariance function detailed in \eqref{eq:spatial_covariance2}.
+% standardized (mean-centered and normalized by variance) allele frequency, $X$, at each locus, and, from $X$, the 
+\paragraph{Initiating the MCMC}
+We then calculate the standardized sample covariance matrix $\widehat{\Omega}^{\prime}$ as outlined in the section ``Deriving the standardized sample covariance" above.  We calculate $\bar{S_k}$, the mean sample size across loci for population $k$, for each population as part of the standardization of the sample allele frequencies, and for use as $\bar{S_k}^{-1}$ as part of the spatial covariance function detailed in \eqref{eq:spatial_covariance2}.
 
 Armed with the standardized sample covariance, the geographic sampling locations, and the inverse mean sample sizes across samples ($\widehat{\Omega}^{\prime}$, $G$, $\bar{S_k}^{-1}$), we may embark upon our analysis.
 
 To initiate our MCMC, we specify starting values for each parameter.  We draw initial values for $\alpha_0$, $\alpha_1$, $\alpha_2$, $\eta$, and $w$ randomly from their priors.  We initiate $G^{\prime}$ at the user-specified geographic sampling locations $G$, and $\identifyadmixsource{G}$ at randomly drawn, uniformly distributed values of latitude and longitude in the observed range of both axes.  
 
-The locations of populations and their sources of admixture specify a pairwise geographic distance matrix, which, given the $\vec{\alpha}$ and $\eta$ parameters, and the observed $\bar{S_k}^{-1}$, can be used to specify the admixed covariance matrix described in \eqref{eq:admixed_covariance_1}, $\identifyadmixsource{\Omega}$.  This parametric covariance matrix is then projected following Eqn. \eqref{eq:projected_covariance}, using the projection matrix $\Psi$ described in the standardization of allele frequencies above.  We can then take the likelihood of the standardized sample covariance $\widehat{\Omega}^{\prime}$ following Eqn. \eqref{eq:projected_wishart_dist}, as well as the prior probabilities of the initial parameter values following the priors given in Table \ref{tab:param_prior_tab}.
+\paragraph{Overview of MCMC procedure}
+%and the observed $\bar{S_k}^{-1}$, can be used to specif
+%This parametric covariance matrix is then projected following Eqn. \eqref{eq:projected_covariance}, using the projection matrix $\Psi$ described in the standardization of allele frequencies above. 
+We use a Metropolis-Hastings update algorithm. In each iteration of the MCMC, one of our current set of parameter $\Theta= \{\alpha_0$, $\alpha_1$, $\alpha_2$, $\eta$, $w$, $G^{\prime}$, $\identifyadmixsource{G}\}$ is randomly chosen to be updated by proposing a new value.  In the cases of \{$\eta$, $w$, $G^{\prime}$, $\identifyadmixsource{G}$\}, where each population has its own parameters, a single population, $k$ is randomly selected and only its parameter value (e.g. $\eta_k$) is chosen to be updated. Below we outline the proposal distributions for each parameter. This gives us a proposed update to our set of parameters $\Theta^{NEW}$, which differs from $\Theta$ at only one entry.
 
-We use a Metropolis-Hastings update algorithm; that is, the probability, \emph{R}, of accepting the proposed parameter value $\theta^{\prime}$ is given by 
+The set of locations of populations and their sources of admixture specify a pairwise geographic distance matrix $D$, which, given the current $\vec{\alpha}$ and $\eta$ parameters, gives the admixed covariance matrix described in \eqref{eq:admixed_covariance_1}, $\identifyadmixsource{\Omega}$.  We then calculate the likelihood of the standardized sample covariance $\widehat{\Omega}^{\prime}$ following Eqn. \eqref{eq:projected_wishart_dist} for the current set of parameters $P(\widehat{\Omega}^{\prime} \mid \identifyadmixsource{\Omega}(\Theta))$ and our proposed update to our set of parameters $P(\widehat{\Omega}^{\prime} \mid \identifyadmixsource{\Omega}(\Theta^{NEW}))$. We then calculate the prior probabilities of both sets of parameter values, $P(\Theta^{NEW}),~P(\Theta) $, following the priors given in Table \ref{tab:param_prior_tab}.
+
+
+%We can then take the likelihood of the standardized sample covariance $\widehat{\Omega}^{\prime}$ following Eqn. \eqref{eq:projected_wishart_dist}, $P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}())$. 
+
+
+We combine these together to give the Metropolis-Hastings ratio, \emph{R}, the probability of accepting the proposed parameter values $\Theta^{NEW}$:
 \begin{equation}
-R = \text{min}\left(1, \frac{P(D \mid \theta^{\prime})} {P(D \mid \theta)} 
-				\frac{P(\theta^{\prime})}{P(\theta)} 
-				\frac{P(\theta^{\prime} \to \theta)}{P(\theta \to \theta^{\prime})}		\right) \text{,}
+R = \text{min}\left(1, \frac{(\widehat{\Omega}^{\prime} \mid \identifyadmixsource{\Omega}(\Theta^{NEW}))} {P(\widehat{\Omega}^{\prime} \mid \identifyadmixsource{\Omega}(\Theta))} 
+				\frac{P(\Theta^{NEW})}{P(\Theta)} 	\right) \text{,}
+			%	\frac{P(\theta^{\prime} \to \theta)}{P(\theta \to \theta^{\prime})}	
 \label{eq:MH_algorithm}
 \end{equation}
+Note that all of our moves, described below, are symmetric so a Hastings ratio cancels through. If we accept our proposed move $\Theta$ is replaced by $\Theta^{NEW}$ and this is recorded, otherwise $\Theta^{NEW}$ is disgarded and we remain at $\Theta$. 
 
-where $\frac{P(D \mid \theta^{\prime})} {P(D \mid \theta)}$ gives the ratio of the likelihood of the data under the proposed parameter value to that under the current parameter value, $\frac{P(\theta^{\prime})}{P(\theta)}$ gives the ratio of the prior probability of the proposed parameter value to that of the current parameter value, and $\frac{P(\theta^{\prime} \to \theta)}{P(\theta \to \theta^{\prime})}$ is the Hastings ratio, or the ratio of the conditional probability of proposing the current parameter value given the proposed parameter value to that of proposing the proposed parameter value given the current parameter value (Hastings 1970, Gilks 1996).
+%\begin{equation}
+%R = \text{min}\left(1, \frac{P(D \mid \theta^{\prime})} {P(D \mid \theta)} 
+%				\frac{P(\theta^{\prime})}{P(\theta)} 
+%				\frac{P(\theta^{\prime} \to \theta)}{P(\theta \to \theta^{\prime})}		\right) \text{,}
+%\label{eq:MH_algorithm}
+%\end{equation}
 
-In each iteration of the MCMC, one of \{$\alpha_0$, $\alpha_1$, $\alpha_2$, $\eta$, $w$, $G^{\prime}$, $\identifyadmixsource{G}$\} is randomly chosen to be updated.  In the cases of \{$\eta$, $w$, $G^{\prime}$, $\identifyadmixsource{G}$\}, for which each population receives a free parameter, a single population, $k$ is selected and only its parameter value (e.g. $\eta_k$) is chosen to be updated.  Next, we outline the proposal distributions for each parameter.
+%where $\frac{P(D \mid \theta^{\prime})} {P(D \mid \theta)}$ gives the ratio of the likelihood of the data under the proposed parameter value to that under the current parameter value, $\frac{P(\theta^{\prime})}{P(\theta)}$ gives the ratio of the prior probability of the proposed parameter value to that of the current parameter value, and $\frac{P(\theta^{\prime} \to \theta)}{P(\theta \to \theta^{\prime})}$ is the Hastings ratio, or the ratio of the conditional probability of proposing the current parameter value given the proposed parameter value to that of proposing the proposed parameter value given the current parameter value (Hastings 1970, Gilks 1996).
 
-We propose updates to the values of the $\vec{\alpha}$, $\eta$, and $w$ parameters via a symmetric normal density with mean zero and some variance given by the scale of the tuning parameter for that parameter.  For example $\alpha_0^{\prime} \sim \alpha_0 + \mathcal{N}(0,\sigma_{\alpha_0})$, where $\sigma_{\alpha_0} \neq \sigma_{\alpha_1} \neq \sigma_{\alpha_2}$.  For $\eta$ and $w$, each of which consists of $K$ parameters, each parameter receives its own scale of the tuning parameter (e.g. - $\sigma_{\eta_{i}} \neq \sigma_{\eta_{j}}$).  
 
-Updates to the location parameters, $G^{\prime}$ and $\identifyadmixsource{G}$, are somewhat more complicated due to the curvature of the Earth (Eratosthenes, \textit{personal observation}).  Implementing updates via a symmetric normal density on estimated latitude and longitude directly, which would have the drawback of a) being naive to the continuity of the spherical manifold and b) vary the actual distance of the proposed move as a function of the current lat/long parameter values (e.g., a $1^{\circ}$ change in longitude at the equator is a larger distance than at the North Pole).  
+\paragraph{Udates for $\vec{\alpha}$, $\eta$, and $w$.}
+We propose updates to the values of the $\vec{\alpha}$, $\eta$, and $w$ parameters via a symmetric normal density with mean zero and its own variance given by the scale of the tuning parameter for that parameter.  For example $\alpha_0^{\prime} \sim \alpha_0 + \delta$, where $delta \sim \mathcal{N}(0,\sigma_{\alpha_0})$ and $\sigma_{\alpha_0}$ is scale of the tuning parameter.  For $\eta$ and $w$, each of which consists of $K$ parameters, each parameter receives its own idependent scale of the tuning parameter. If the proposed move takes the parameter outside of its permitted range that move is rejected and we do not move in that iteration of the MCMC.
+
+%\neq \sigma_{\alpha_1} \neq \sigma_{\alpha_2}$
+
+%(e.g. - $\sigma_{\eta_{i}} \neq \sigma_{\eta_{j}}$)
+
+\paragraph{Updates for geographic co-ordinates $G^{\prime}$ and $\identifyadmixsource{G}$}. Updates to the location parameters, $G^{\prime}$ and $\identifyadmixsource{G}$, are somewhat more complicated due to the curvature of the Earth (Eratosthenes, \textit{personal observation}).  Implementing updates via a symmetric normal density on estimated latitude and longitude directly, which would have the drawback of a) being naive to the continuity of the spherical manifold and b) vary the actual distance of the proposed move as a function of the current lat/long parameter values (e.g., a $1^{\circ}$ change in longitude at the equator is a larger distance than at the North Pole).  
 
 Instead, we propose for a bearing and a distance traveled, and, given these two quantities and a starting position, calculate the latitude and longitude of the proposed location.  For example, in an update to the location of population $i$, $G^{\prime}_i$, we propose a distance traveled $\Delta_{{G^{\prime}}_i}$, where, e.g., $\Delta_{{G^{\prime}}_i}  \sim | \mathcal{N}(0,\sigma_{{G^{\prime}}_i})|$, and a bearing, $\gamma$, where $\gamma \sim U(0,2\pi)$.  Then we use the following equations to calculate the latitude and longitude of the proposed location:
 \begin{align}
@@ -735,9 +758,11 @@ and
 						& \hspace{2cm} \sin(\text{proposed latitude})) + \pi) \; \bmod (2\pi) \\ \notag
 \end{align}
 
-where latitude and longitude are given in radians.  As with $\eta$ and $w$, the scales of the tuning parameters for the different populations and different location parameters ($G^{\prime}$ and $\identifyadmixsource{G}$) were not equal.
+where latitude and longitude are given in radians.  As with $\eta$ and $w$, the scales of the tuning parameters for the different populations and different location parameters ($G^{\prime}$ and $\identifyadmixsource{G}$) are independent.
 
-We use an adaptive Metropolis-within-Gibbs proposal mechanism on each parameter (Roberts and Rosenthal 2008, Rosenthal 2010).  This mechanism attempts to maintain an acceptance proportion for each parameter as close as possible to 0.44 (optimal for one-dimensional proposal mechanisms; Roberts et al 1997, Roberts and Rosenthal 2001).  We implement this mechanism by creating, for each variable, an associated variable $\zeta_i$, which gives the log of the standard deviation of the normal distribution from which parameter value updates are proposed.  As outlined above, in the cases of \{$\eta$, $w$, $G^{\prime}$, $\identifyadmixsource{G}$\}, for which each population receives a free parameter, each population gets its own value of $\zeta$.  
+
+\paragraph{Adaptive Metropolis-within-Gibbs proposal mechanism }.
+We use an adaptive Metropolis-within-Gibbs proposal mechanism on each parameter (Roberts and Rosenthal 2008, Rosenthal 2010).  This mechanism attempts to maintain an acceptance proportion for each parameter as close as possible to 0.44 (optimal for one-dimensional proposal mechanisms; Roberts et al 1997, Roberts and Rosenthal 2001).  We implement this mechanism by creating, for each variable $i$, an associated variable $\zeta_i$, which gives the log of the standard deviation of the normal distribution from which parameter value updates are proposed.  As outlined above, in the cases of \{$\eta$, $w$, $G^{\prime}$, $\identifyadmixsource{G}$\}, for which each population receives a free parameter, each population gets its own value of $\zeta$.  
 
 When we start our MCMC, $\zeta_i$ for all parameters is initiated at a value of 0, which gives a proposal distribution variance of 1.  We then proceed to track the acceptance rate, $r_i$ for each parameter in windows of 50 MCMC iterations, and, after the $n$th set of 50 iterations, we adjust $\zeta_i$ by an "adaption amount," which is added to $\zeta_i$ if the acceptance proportion in the $n$th set of 50 iterations (${r^{(n)}}_i$ has been above 0.44, and subtracted from $\zeta_i$ if not.  The magnitude of the adaption amount is a decreasing function of the index $n$, so that updates to $\zeta_i$ proceed as follows:
 
@@ -752,30 +777,31 @@ When we start our MCMC, $\zeta_i$ for all parameters is initiated at a value of 
 
 We choose to cap the maximum adaption amount at 20 (which is, recall, the equivalent of capping the variance of the proposal distribution at $~4.85 \times 10^8$) to avoid proposal distributions that offer absurdly large or small updates.  This procedure, also referred to as ``auto-tuning," results in acceptance rate plots like those shown in Figure \ref{sfig:example_acceptance_rates}, and in more efficient mixing and decreased autocorrelation time of parameter estimates.
 
-Finally, in the interest of computational efficiency, we have implemented several important speed-ups to the calculation of the Wishart likelihood.  The full Wishart probability of the sample standardized covariance matrix, $\widehat{\Omega^{\prime}}$, given the projected parametric covariance matrix, $\identifyadmixsource{\Omega}$, is given below:
-\begin{equation}
-\mathcal{P}(\widehat{\Omega^{\prime}}(X) \; | \; \identifyadmixsource{\Omega}) = \frac{|\widehat{\Omega^{\prime}}|^{ \frac{L - K - 1}{2} } \text{exp} \left(  \frac{-\text{tr}(\frac{\identifyadmixsource{\Omega}^{-1}}{L}\widehat{\Omega^{\prime}})}{2}	\right) }	
-									{2^{\frac{LK}{2}}  |\frac{\identifyadmixsource{\Omega}}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}{2} \right)	},
-\label{eq:full_wishart_lnl}
-\end{equation}
+% \paragraph{Speedups}
+% Finally, in the interest of computational efficiency, we have implemented several important speed-ups to the calculation of the Wishart likelihood.  The full Wishart probability of the sample standardized covariance matrix, $\widehat{\Omega^{\prime}}$, given the projected parametric covariance matrix, $\identifyadmixsource{\Omega}$, is given below:
+% \begin{equation}
+% \mathcal{P}(\widehat{\Omega^{\prime}}(X) \; | \; \identifyadmixsource{\Omega}) = \frac{|\widehat{\Omega^{\prime}}|^{ \frac{L - K - 1}{2} } \text{exp} \left(  \frac{-\text{tr}(\frac{\identifyadmixsource{\Omega}^{-1}}{L}\widehat{\Omega^{\prime}})}{2}	\right) }	
+% 									{2^{\frac{LK}{2}}  |\frac{\identifyadmixsource{\Omega}}{L}|^{\frac{L}{2}}  \Gamma_{p}\!\left(  \frac{L}{2} \right)	},
+% \label{eq:full_wishart_lnl}
+% \end{equation}
 
-where $\text{tr}$ denotes the trace function, $\Gamma_{p}$ denotes the multivariate gamma function, $L$ the number of independent loci over which the covariance is taken, and $K$ the number of samples.  However, because we are using a Markov chain Monte Carlo approach to parameter inference, we may skip the calculation of any parts of this equation that are constant across parameter values (i.e., they do not depend on $\identifyadmixsource{\Omega}$), as these quantities will cancel out during the calculation of the Metropolis-Hastings acceptance ratio (Eqn. \eqref{eq:MH_algorithm}).  We therefore need only calculate the Wishart likelihood as follows:
+% where $\text{tr}$ denotes the trace function, $\Gamma_{p}$ denotes the multivariate gamma function, $L$ the number of independent loci over which the covariance is taken, and $K$ the number of samples.  However, because we are using a Markov chain Monte Carlo approach to parameter inference, we may skip the calculation of any parts of this equation that are constant across parameter values (i.e., they do not depend on $\identifyadmixsource{\Omega}$), as these quantities will cancel out during the calculation of the Metropolis-Hastings acceptance ratio (Eqn. \eqref{eq:MH_algorithm}).  We therefore need only calculate the Wishart likelihood as follows:
 
-\begin{equation}
-\mathcal{P}(\widehat{\Omega^{\prime}}(X) \; | \; \identifyadmixsource{\Omega}) = \frac{ \text{exp} \left(  \frac{-\text{tr}(\frac{\identifyadmixsource{\Omega}^{-1}}{L}\widehat{\Omega^{\prime}})}{2}	\right) }	
-									{  |\frac{\identifyadmixsource{\Omega}}{L}|^{\frac{L}{2}}  }.
-\label{eq:simple_wishart}
-\end{equation}
+% \begin{equation}
+% \mathcal{P}(\widehat{\Omega^{\prime}}(X) \; | \; \identifyadmixsource{\Omega}) = \frac{ \text{exp} \left(  \frac{-\text{tr}(\frac{\identifyadmixsource{\Omega}^{-1}}{L}\widehat{\Omega^{\prime}})}{2}	\right) }	
+% 									{  |\frac{\identifyadmixsource{\Omega}}{L}|^{\frac{L}{2}}  }.
+% \label{eq:simple_wishart}
+% \end{equation}
 
-We calculate the log likelihood of the standardized sample covariance given the parametric covariance matrix, so we express the log of this simplified likelihood as 
+% We calculate the log likelihood of the standardized sample covariance given the parametric covariance matrix, so we express the log of this simplified likelihood as 
 
-\begin{equation}
-\text{log}\left(	\mathcal{P}(\widehat{\Omega^{\prime}}(X) \; |
-			 \; \identifyadmixsource{\Omega}) \right) = 
-			\frac{-1}{2} \text{tr}(\identifyadmixsource{\Omega}^{-1}\widehat{\Omega^{\prime}}) - 
-									\frac{L}{2} \text{log}\left(  \left|\frac{\identifyadmixsource{\Omega}}{L}\right| \right)\text{.}
-\label{eq:log_simple_wishart}
-\end{equation}
+% \begin{equation}
+% \text{log}\left(	\mathcal{P}(\widehat{\Omega^{\prime}}(X) \; |
+% 			 \; \identifyadmixsource{\Omega}) \right) = 
+% 			\frac{-1}{2} \text{tr}(\identifyadmixsource{\Omega}^{-1}\widehat{\Omega^{\prime}}) - 
+% 									\frac{L}{2} \text{log}\left(  \left|\frac{\identifyadmixsource{\Omega}}{L}\right| \right)\text{.}
+% \label{eq:log_simple_wishart}
+% \end{equation}
 
 % %%%%%%%%% %%%%%%%%% 
 \subsection*{Simulations}
@@ -788,11 +814,11 @@ Below, we describe the specifics of our analyses of the greenish warbler dataset
 
 For each analysis,
 \begin{itemize}
-\item[1.] five independent chains were run for 5e6 MCMC iterations each in which populations were allowed to choose their own locations (but no admixture).  Population locations were initiated at the origin (i.e. - at iteration 1 of the MCMC, $G'_i = (0,0)$), and all other parameters were drawn randomly from their priors at the start of each chain.  
+\item[1.] five independent chains were run for $5\times 10^6$ MCMC iterations each in which populations were allowed to choose their own locations (but no admixture).  Population locations were initiated at the origin (i.e. - at iteration 1 of the MCMC, $G'_i = (0,0)$), and all other parameters were drawn randomly from their priors at the start of each chain.  
 %
 \item[2.]The chain with the highest posterior probability at the end of the analysis was selected and identified as the``Best Short Run".
 %
-\item[3.] A chain was initiated from the parameter values in the last iteration of the Best Short Run.  Because inference of admixture proportion and location was not allowed in the five initial runs, admixture proportions were initiated at 0 and admixture locations, \admixsource{G} were initiated at the origin.  This  chain (the ``Long Run") was run for 1e8 iterations, and sampled every 1e5 iterations for a total of 1e3 draws from the posterior.
+\item[3.] A chain was initiated from the parameter values in the last iteration of the Best Short Run.  Because inference of admixture proportion and location was not allowed in the five initial runs, admixture proportions were initiated at 0 and admixture locations, \admixsource{G} were initiated at the origin.  This  chain (the ``Long Run") was run for $10^8$ iterations, and sampled every $10^5$ iterations for a total of $1000$ draws from the posterior.
 \end{itemize}
 
 For each dataset, we ran two analyses using the observed population locations as the prior on $G'$.  Then, to assess the potential influence of the spatial prior on population locations, we ran one analysis in which random, uniformly distributed locations between, for longitude, the minimum and maximum observed longitude, and, for latitude, the minimum and maximum observed latitude were used as the prior on population locations.  For the warbler dataset, we repeated this analysis procedure, treating each sequenced individual as its own population.  For clarity and ease of interpretation, we present a full Procrustes superimposition of the inferred population locations ($G'$) and their sources of admixture ($\identifyadmixsource{G}$), using the observed latitude and longitude of the populations/individuals ($G$) to give a reference position and orientation.  As results were generally consistent across multiple runs for each dataset regardless of the prior employed we (unless stated otherwise) present only the results from the `random' prior analyses.

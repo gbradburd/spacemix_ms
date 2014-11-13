@@ -80,8 +80,12 @@ query.admix.map <- function(pop.name,add=NULL,xlim=NULL,ylim=NULL,globe_ad_obj=g
 	make.admix.map(xlim=c(0,70),ylim=c(-30,50),globe_ad_obj = globe_ad_obj)
 
 # demonstrating using the query.admix.map() function with reasonable xlim vals
-	query.admix.map(pop.name = c("Hazara","Uygur"),add=TRUE,globe_ad_obj = globe_ad_obj,xlim=c(15,70),ylim=c(-20,70))
+	query.admix.map(pop.name = c("SanKhomani"),add=FALSE,globe_ad_obj = globe_ad_obj,xlim=c(15,70),ylim=c(-20,70))
 	
 	###Zoom in on Europe/North Africa/Middle East
 	make.admix.map(xlim=c(42.5,46),ylim=c(34,37.5),globe_ad_obj = globe_ad_obj)
 	query.admix.map(pop.name = with(globe_ad_obj, pops[africa]),add=TRUE,globe_ad_obj = globe_ad_obj)
+	
+	make.admix.map(xlim=c(42.5,46),ylim=c(34,37.5),globe_ad_obj = globe_ad_obj)
+	query.admix.map(pop.name = with(globe_ad_obj, pops[africa]),add=TRUE,globe_ad_obj = globe_ad_obj)
+	

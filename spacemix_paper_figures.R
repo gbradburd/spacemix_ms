@@ -23,6 +23,38 @@ fade.admixture.source.points <- function(pop.cols,admix.proportions){
 	return(faded.colors)
 }
 
+get.credible.interval <- function(param.matrix,pop.order){
+	k <- nrow(param.matrix)
+	cred.intervals <- lapply(pop.order,FUN=function(i){quantile(param.matrix[i,],c(0.025,0.975))})
+	return(cred.intervals)
+}
+
+make.cred.bars <- function(quantile.vector,bar.width,color.vector,vert.line.width=NULL,pop.order=NULL){
+	# recover()
+	if(is.null(pop.order)){
+		pop.order <- 1:length(quantile.vector)
+	}
+	if(is.null(vert.line.width)){
+		vert.line.width <- 0.5
+	}
+	x.coord <- 1:k
+	color.vector <- color.vector[pop.order]
+	for(i in 1:length(quantile.vector)){
+		lines(x = c(x.coord[i]-bar.width/2,x.coord[i]+bar.width/2),
+				y = c(quantile.vector[[pop.order[i]]][1],quantile.vector[[pop.order[i]]][1]),col=color.vector[i])
+		lines(x = c(x.coord[i]-bar.width/2,x.coord[i]+bar.width/2),
+				y = c(quantile.vector[[pop.order[i]]][2],quantile.vector[[pop.order[i]]][2]),col=color.vector[i])
+		lines(x = c(x.coord[i],x.coord[i]),
+				y = quantile.vector[[pop.order[i]]],col=adjustcolor(color.vector[i],0.5),lwd= vert.line.width)
+	}
+}
+
+calculate.pairwise.pi <- function(ind1,ind2){
+	diff.homs = sum(ind1!=ind2 & abs(ind1-ind2)!=1 )
+	hets = sum(ind1==1 | ind2 ==1 )
+	return((diff.homs + hets/2)/length(ind1))
+}
+
 Covariance <- function(a0,aD,a2,GeoDist) {
 	covariance <- (1/a0)*exp(-(aD*GeoDist)^a2)
 	return(covariance)
@@ -104,6 +136,20 @@ dev.off()
 #	NO ADMIXTURE - RealPrior1
 ################
 load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop_spaceruns/warb_pop_no_admixture/rand_prior1/warb_pop_spaceruns_NoAd_randpr1_LongRun/warb_pop_spaceruns_NoAd_randpr1space_MCMC_output1.Robj")
+
+	pop.order <- c(22,1,3:5,6:21,2)
+	warb.pop.nugg.cred.sets <- get.credible.interval(nugget,pop.order)
+
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_NoAd_nugget.pdf",width=7,height=5)
+		#quartz(width=7,height=5)
+		plot(rowMeans(nugget)[pop.order],type='n',pch=19,ylim=c(-0.3,max(unlist(warb.pop.nugg.cred.sets))),
+				main = "Warbler Population Nuggets:\nNo Admixture",
+				xlab = "Population",
+				ylab = "Nugget Value")
+		make.cred.bars(warb.pop.nugg.cred.sets,0.5,color.vector=pop.col[pop.order],vert.line.width=1)
+		text((1:k)+0.25,rep(-0.1,k),labels= pops[pop.order],srt=90,col=pop.col[pop.order],cex=1,adj=c(1,0))
+	dev.off()
+
 	best <- which.max(Prob)
 	target.coords <- procrusteez(warbler.pop.coords,population.coordinates[[best]][1:k,],k,option=1)
 	
@@ -166,6 +212,30 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 	source.coords <- procrusteez(warbler.pop.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2)
 	pop.plot.cols <- fade.admixture.source.points(pop.col,admix.proportions[,best])
 
+	warb.pop.nugg.cred.sets <- get.credible.interval(nugget,pop.order)
+	warb.pop.adprop.cred.sets <- get.credible.interval(admix.proportions,pop.order)
+	
+	pop.order <- c(22,1,3:5,6:21,2)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_Ad_nugget.pdf",width=7,height=5)
+		#quartz(width=7,height=5)
+		plot(rowMeans(nugget)[pop.order],type='n',pch=19,ylim=c(-0.3,max(unlist(warb.pop.nugg.cred.sets))),
+				main = "Warbler Population Nuggets: Admixture",
+				xlab = "Population",
+				ylab = "Nugget Value")
+		make.cred.bars(warb.pop.nugg.cred.sets,0.5,color.vector=pop.col[pop.order],vert.line.width=1)
+		text((1:k)+0.25,rep(-0.1,k),labels= pops[pop.order],srt=90,col=pop.col[pop.order],cex=1,adj=c(1,0))
+	dev.off()
+
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_adprop.pdf",width=7,height=5)
+		#quartz(width=7,height=5)
+		plot(rowMeans(admix.proportions/2)[pop.order],type='n',pch=19,ylim=c(-0.04,max(unlist(warb.pop.adprop.cred.sets))/2),
+				main = "Warbler Population Admixture Proportions",
+				xlab = "Population",
+				ylab = "Admixture Proportions Value")
+		make.cred.bars(lapply(warb.pop.adprop.cred.sets,"/",2),0.5,color.vector=pop.col[pop.order],vert.line.width=1)
+		text((1:k)+0.25,rep(-0.015,k),labels= pops[pop.order],srt=90,col=pop.col[pop.order],cex=1,adj=c(1,0))
+	dev.off()
+
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
@@ -187,20 +257,6 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 					col= pop.plot.cols,
 					lwd=admix.proportions[,best],#last.params$admix.proportions,
 					length=0.1)
-				box(lwd=2)
-	dev.off()
-
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_no_arrows_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(68,101), #realpr1: c(68,101), realpr2: c(68,101), randpr: c(71,99)
-					ylim=c(25,55), #realpr1: c(25,55), realpr2: c(25,55), randpr: c(20.5,56)
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=pops,
-						col=pop.col,
-						font=2,cex=0.9)
 				box(lwd=2)
 	dev.off()
 
@@ -226,8 +282,8 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 						font=2,cex=0.9)
 				box(lwd=2)
 	dev.off()
-
-
+	
+	
 ################
 #	RealPrior2
 ################
@@ -425,6 +481,26 @@ dev.off()
 #	NO ADMIXTURE - RandPrior1
 ################
 load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/ind/warb_ind_spaceruns/warb_ind_no_admixture/rand_prior1/warb_ind_spaceruns_NoAd_randpr1_LongRun/warb_ind_spaceruns_NoAd_randpr1space_MCMC_output1.Robj")
+
+	
+	pop.order <- c(grep("Ni",ind.subspp),grep("Vir",ind.subspp),
+					grep("Lud",ind.subspp),grep("Tro",ind.subspp),
+					grep("Obs",ind.subspp),grep("Plu",ind.subspp))
+	warb.ind.nug.cred.sets <- get.credible.interval(nugget,pop.order)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_NoAd_nugget.pdf",width=10,height=5)
+		#quartz(width=10,height=5)
+		par(mar=c(3,5,4,2))
+		plot(rowMeans(nugget)[pop.order],ylim=c(-0.115,max(unlist(warb.ind.nug.cred.sets))),
+				main = "Warbler Individual Nuggets:\nNo Admixture",
+				xlab = "Individual",
+				ylab = "Nugget Value",type='n',
+				xaxt='n')
+			text((1:k)+0.5,rep(-0.015,k),labels= inds[pop.order],srt=90,col=inds.col[pop.order],cex=0.60,adj=c(1,0))
+			mtext("Population",side=1,padj=1)
+			make.cred.bars(warb.ind.nug.cred.sets,0.5,color.vector= inds.col,vert.line.width=1,pop.order=pop.order)
+	dev.off()
+
+
 best <- which.max(Prob)
 	target.coords <- procrusteez(warbler.ind.coords,population.coordinates[[best]][1:k,],k,option=1)
 	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_noad.pdf",width=7,height=5)
@@ -448,6 +524,54 @@ best <- which.max(Prob)
 					font=2)
 	dev.off()
 
+ind.names <- gsub(" ","",inds)
+pimat <- matrix(0,nrow=k,ncol=k)
+namemat <- matrix(0,nrow=k,ncol=k)
+colmat1 <- matrix(0,nrow=k,ncol=k)
+colmat2 <- matrix(0,nrow=k,ncol=k)
+for(i in 1:k){
+	for(j in 1:k){
+		pimat[i,j] <- calculate.pairwise.pi(warbler.ind.allele.counts[i,],
+											warbler.ind.allele.counts[j,])
+		namemat[i,j] <- paste(ind.names[i],"x",ind.names[j],sep="_")
+		colmat1[i,j] <- inds.col[i]
+		colmat2[i,j] <- inds.col[j]
+	}
+}
+
+obs.D <- fields::rdist(warbler.ind.coords)
+ind.mat <- upper.tri(obs.D,diag=TRUE)
+# plot(obs.D[ind.mat],pimat[ind.mat],pch=21,bg=colmat1[ind.mat],col=colmat2[ind.mat],lwd=1.5)
+
+tmp <- pimat
+diag(tmp) <- 1e5
+outlier.indices <- unique(c(which(tmp==min(tmp),arr.ind=TRUE)[,1],
+							which(tmp==sort(tmp)[3],arr.ind=TRUE)))
+
+pdf("~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_pairwise_pi.pdf",width=7,height=6)
+#quartz(width=7,height=6)
+plot(obs.D[ind.mat],pimat[ind.mat],type='n',
+		xlab="pairwise geographic distance",
+		ylab=expression(paste("pairwise ",pi,sep="")),
+		main = "Warbler Individuals:\nIsolation by Distance")
+	color.combos <- combn(unique(inds.col),2)
+	for(i in 1:ncol(color.combos)){
+		samp1 <- which(inds.col==color.combos[1,i])		#sample(which(inds.col==color.combos[1,i]),2)
+		samp2 <- which(inds.col==color.combos[2,i])		#sample(which(inds.col==color.combos[2,i]),2)
+
+		points(c(obs.D[samp1,samp2]),c(pimat[samp1,samp2]),col=color.combos[1,i],bg=color.combos[2,i],pch=21,lwd=1.5)
+	}
+	legend(x="bottomright",
+			pch=19,
+			col=c(unique(inds.col)),
+			legend = c("Viridanus","Nitidus",
+						"Ludlowi","Trochiloides",
+						"Obscuratus","Plumbeitarsus"),
+			title="Subspecies")
+	text(x=15,y=0.1,labels=paste("outlier pair:\n",
+									ind.names[outlier.indices[3]]," x ",
+									ind.names[outlier.indices[4]],sep=""),cex=0.8)
+dev.off()
 ################
 #	ADMIXTURE - RealPrior1
 ################
@@ -456,6 +580,63 @@ best <- which.max(Prob)
 	target.coords <- procrusteez(warbler.ind.coords,population.coordinates[[best]][1:k,],k,option=1)
 	source.coords <- procrusteez(warbler.ind.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2)
 	ind.plot.cols <- fade.admixture.source.points(inds.col,admix.proportions[,best])
+
+	target.coords.list <- vector(mode="list",length = length(which(Prob!=0)))
+	source.coords.list <- vector(mode="list",length = length(which(Prob!=0)))
+	for(i in 1:length(target.coords.list)){
+		target.coords.list[[i]] <- procrusteez(obs.locs = warbler.ind.coords,
+												target.locs = population.coordinates[[i]][1:k,],
+												k = k,
+												option = 1)
+		source.coords.list[[i]] <- procrusteez(obs.locs = warbler.ind.coords,
+												target.locs = population.coordinates[[i]][1:k,],
+												k = k,
+												source.locs = population.coordinates[[i]][(k+1):(2*k),],
+												option = 2)
+	}
+
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_inds_ad_post_map_realpr1.png",res=300,width=7*300,height=5*300)
+	#quartz(width=7,height=5,pointsize=9)
+		plot(target.coords,col=inds.col,
+			ylim=c(25,53), xlim=c(72,105),
+			ylab="Eastings",xlab="Northings",type='n',
+			main="Posterior distribution of population locations")
+		for(i in seq(1,length(target.coords.list),length.out=100)){
+			points(target.coords.list[[i]],col=adjustcolor(inds.col,0.1),pch=19)
+		}
+	dev.off()
+
+
+	pop.order <- c(grep("Ni",ind.subspp),grep("Vir",ind.subspp),
+					grep("Lud",ind.subspp),grep("Tro",ind.subspp),
+					grep("Obs",ind.subspp),grep("Plu",ind.subspp))
+	warb.ind.nug.cred.sets <- get.credible.interval(nugget,pop.order)
+	warb.ind.adprop.cred.sets <- get.credible.interval(admix.proportions,pop.order)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_Ad_nugget.pdf",width=10,height=5)
+		#quartz(width=10,height=5)
+		par(mar=c(3,5,4,2))
+		plot(rowMeans(nugget)[pop.order],ylim=c(-0.115,max(unlist(warb.ind.nug.cred.sets))),
+				main = "Warbler Individual Nuggets: Admixture",
+				xlab = "Individual",
+				ylab = "Nugget Value",type='n',
+				xaxt='n')
+			text((1:k)+0.5,rep(-0.015,k),labels= inds[pop.order],srt=90,col=inds.col[pop.order],cex=0.60,adj=c(1,0))
+			mtext("Population",side=1,padj=1)
+			make.cred.bars(warb.ind.nug.cred.sets,0.5,color.vector= inds.col,vert.line.width=1,pop.order=pop.order)
+	dev.off()
+
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_adprop.pdf",width=10,height=5)
+		#quartz(width=10,height=5)
+		par(mar=c(3,5,4,2))
+		plot(rowMeans(admix.proportions/2)[pop.order],ylim=c(-0.007,max(unlist(warb.ind.adprop.cred.sets))/2),
+				main = "Warbler Individual Admixture Proportions",
+				xlab = "Individual",
+				ylab = "Admixture Proportion Value",type='n',
+				xaxt='n')
+			text((1:k)+0.5,rep(-0.001,k),labels= inds[pop.order],srt=90,col=inds.col[pop.order],cex=0.60,adj=c(1,0))
+			mtext("Population",side=1,padj=1)
+			make.cred.bars(lapply(warb.ind.adprop.cred.sets,"/",2),0.5,color.vector= inds.col,vert.line.width=1,pop.order=pop.order)
+	dev.off()
 	
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_amped_admixture_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
@@ -554,6 +735,32 @@ best <- which.max(Prob)
 	source.coords <- procrusteez(warbler.ind.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2)
 	ind.plot.cols <- fade.admixture.source.points(inds.col,admix.proportions[,best])
 	
+	target.coords.list <- vector(mode="list",length = length(which(Prob!=0)))
+	source.coords.list <- vector(mode="list",length = length(which(Prob!=0)))
+	for(i in 1:length(target.coords.list)){
+		target.coords.list[[i]] <- procrusteez(obs.locs = warbler.ind.coords,
+												target.locs = population.coordinates[[i]][1:k,],
+												k = k,
+												option = 1)
+		source.coords.list[[i]] <- procrusteez(obs.locs = warbler.ind.coords,
+												target.locs = population.coordinates[[i]][1:k,],
+												k = k,
+												source.locs = population.coordinates[[i]][(k+1):(2*k),],
+												option = 2)
+	}
+
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_inds_ad_post_map_realpr2.png",res=300,width=7*300,height=5*300)
+	#quartz(width=7,height=5,pointsize=9)
+		plot(target.coords,col=inds.col,
+			ylim=c(25,53), xlim=c(72,105),
+			ylab="Eastings",xlab="Northings",type='n',
+			main="Posterior distribution of population locations")
+		for(i in seq(1,length(target.coords.list),length.out=100)){
+			points(target.coords.list[[i]],col=adjustcolor(inds.col,0.1),pch=19)
+		}
+	dev.off()
+
+	
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_amped_admixture_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
@@ -651,6 +858,32 @@ best <- which.max(Prob)
 	target.coords <- procrusteez(warbler.ind.coords,population.coordinates[[best]][1:k,],k,option=1)
 	source.coords <- procrusteez(warbler.ind.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2)
 	ind.plot.cols <- fade.admixture.source.points(inds.col,admix.proportions[,best])
+
+	target.coords.list <- vector(mode="list",length = length(which(Prob!=0)))
+	source.coords.list <- vector(mode="list",length = length(which(Prob!=0)))
+	for(i in 1:length(target.coords.list)){
+		target.coords.list[[i]] <- procrusteez(obs.locs = warbler.ind.coords,
+												target.locs = population.coordinates[[i]][1:k,],
+												k = k,
+												option = 1)
+		source.coords.list[[i]] <- procrusteez(obs.locs = warbler.ind.coords,
+												target.locs = population.coordinates[[i]][1:k,],
+												k = k,
+												source.locs = population.coordinates[[i]][(k+1):(2*k),],
+												option = 2)
+	}
+
+	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_inds_ad_post_map_randpr2.png",res=300,width=7*300,height=5*300)
+	#quartz(width=7,height=5,pointsize=9)
+		plot(target.coords,col=inds.col,
+			ylim=c(25,53), xlim=c(72,108),
+			ylab="Eastings",xlab="Northings",type='n',
+			main="Posterior distribution of population locations")
+		for(i in seq(1,length(target.coords.list),length.out=100)){
+			points(target.coords.list[[i]],col=adjustcolor(inds.col,0.1),pch=19)
+		}
+	dev.off()
+
 	
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_amped_admixture_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
@@ -917,7 +1150,26 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 #					legend = c("Africa","Western Eurasia","Central Eurasia","Eastern Eurasia","Oceania","Americas"),
 #					text.col = c("forestgreen","blue","purple","red","brown","orange"),cex=0.8)
 	dev.off()
-	
+
+	pop.order <- pop.order <- c(africa[order(globe.coords[africa,2])],
+					western.eurasia[order(globe.coords[western.eurasia,1])],
+					east.asia[order(globe.coords[east.asia,1])],
+					oceania[rev(order(globe.coords[oceania,2]))],
+					americas[rev(order(globe.coords[americas,2]))])
+	globe.nugg.cred.sets <- get.credible.interval(nugget,pop.order)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_NoAd_nugget.pdf",width=10,height=5)
+		#quartz(width=10,height=5)
+		par(mar=c(3,5,4,2))
+		plot(rowMeans(nugget)[pop.order],ylim=c(-0.08,max(unlist(globe.nugg.cred.sets))),
+				main = "Human Population Nuggets:\nNo Admixture",
+				xlab = "Population",
+				ylab = "Nugget Value",type='n',
+				xaxt='n')
+			text((1:k)+0.5,rep(-0.01,k),labels=pops[pop.order],srt=90,col=continent.col[pop.order],cex=0.65,adj=c(1,0))
+			mtext("Population",side=1,padj=1)
+			make.cred.bars(globe.nugg.cred.sets,0.5,color.vector= continent.col,vert.line.width=1,pop.order=pop.order)
+	dev.off()
+
 	x.min <- min(target.coords[,1]) - 5
 	x.max <- max(target.coords[,1]) + 5
 	y.min <- min(target.coords[,2]) - 5
@@ -1119,6 +1371,39 @@ globe_ad_obj <- list(africa = africa,americas = americas,continent.col = contine
 						western.eurasia = western.eurasia)
 
 save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_object.Robj")
+
+	pop.order <- pop.order <- c(africa[order(globe.coords[africa,2])],
+					western.eurasia[order(globe.coords[western.eurasia,1])],
+					east.asia[order(globe.coords[east.asia,1])],
+					oceania[rev(order(globe.coords[oceania,2]))],
+					americas[rev(order(globe.coords[americas,2]))])
+	globe.nugg.cred.sets <- get.credible.interval(nugget,pop.order)
+	globe.adprop.cred.sets <- get.credible.interval(admix.proportions,pop.order)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_nugget.pdf",width=10,height=5)
+		#quartz(width=10,height=5)
+		par(mar=c(3,5,4,2))
+		plot(rowMeans(nugget)[pop.order],ylim=c(-0.08,max(unlist(globe.nugg.cred.sets))),
+				main = "Human Population Nuggets: Admixture",
+				xlab = "Population",
+				ylab = "Nugget Value",type='n',
+				xaxt='n')
+			text((1:k)+0.5,rep(-0.01,k),labels=pops[pop.order],srt=90,col=continent.col[pop.order],cex=0.65,adj=c(1,0))
+			mtext("Population",side=1,padj=1)
+			make.cred.bars(globe.nugg.cred.sets,0.5,color.vector= continent.col[pop.order],vert.line.width=1)
+	dev.off()
+
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_adprop.pdf",width=10,height=5)
+		#quartz(width=10,height=5)
+		par(mar=c(3,5,4,2))
+		plot(rowMeans(admix.proportions/2)[pop.order],ylim=c(-0.15,max(unlist(globe.adprop.cred.sets))/2),
+				main = "Human Population Admixture Proportions",
+				xlab = "Population",
+				ylab = "Admixture Proportion Value",type='n',
+				xaxt='n')
+			text((1:k)+0.5,rep(-0.01,k),labels=pops[pop.order],srt=90,col=continent.col[pop.order],cex=0.65,adj=c(1,0))
+			mtext("Population",side=1,padj=1)
+			make.cred.bars(lapply(globe.adprop.cred.sets,'/',2),0.5,color.vector= continent.col[pop.order],vert.line.width=1)
+	dev.off()
 
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
@@ -1522,7 +1807,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_A
 	nugget.cred.sets <- lapply(pop.order,FUN=function(i){quantile(nugget[i,],c(0.025,0.975))})
 		names(nugget.cred.sets) <- pops[pop.order]
 
-	make.cred.bars <- function(quantile.vector,x.coord,bar.width,color){
+	make.cred.bars2 <- function(quantile.vector,x.coord,bar.width,color){
 		lines(x = c(x.coord-bar.width/2,x.coord+bar.width/2),
 				y = c(quantile.vector[1],quantile.vector[1]),col=color)
 		lines(x = c(x.coord-bar.width/2,x.coord+bar.width/2),
@@ -1539,7 +1824,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_A
 				ylab="admixture proportion (w)",ylim=c(0,max(unlist(admix.cred.sets))))
 		for(i in 1:k){
 			# lines(x = c(i,i),y=c(admix.cred.sets[[i]]),col=continent.col[pop.order][i])
-			make.cred.bars(admix.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
+			make.cred.bars2(admix.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
 		}
 			text(rowMeans(admix.proportions)[pop.order]/2,col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
 	dev.off()
@@ -1550,7 +1835,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_A
 				main = "Mean Population Nuggets",
 				xlab="population",ylab="nugget",ylim=c(0,max(unlist(nugget.cred.sets))))
 		for(i in 1:k){
-			make.cred.bars(nugget.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
+			make.cred.bars2(nugget.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
 			# lines(x = c(i,i),y=c(nugget.cred.sets[[i]]),col=continent.col[pop.order][i])
 		}
 			text(rowMeans(nugget)[pop.order],col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
@@ -1778,15 +2063,6 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 	nugget.cred.sets <- lapply(pop.order,FUN=function(i){quantile(nugget[i,],c(0.025,0.975))})
 		names(nugget.cred.sets) <- pops[pop.order]
 
-	make.cred.bars <- function(quantile.vector,x.coord,bar.width,color){
-		lines(x = c(x.coord-bar.width/2,x.coord+bar.width/2),
-				y = c(quantile.vector[1],quantile.vector[1]),col=color)
-		lines(x = c(x.coord-bar.width/2,x.coord+bar.width/2),
-				y = c(quantile.vector[2],quantile.vector[2]),col=color)
-		lines(x = c(x.coord,x.coord),
-				y = quantile.vector,col=adjustcolor(color,0.15),lwd=0.5)
-	}
-
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/globe_Ad_proportions.png",res=300,width=12*300,height=5*300)
 		#quartz(width=12,height=5)
 		plot(rowMeans(admix.proportions)[pop.order]/2,type='n',
@@ -1794,7 +2070,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 				ylab="admixture proportion (w)",ylim=c(0,max(unlist(admix.cred.sets))))
 		for(i in 1:k){
 			# lines(x = c(i,i),y=c(admix.cred.sets[[i]]),col=continent.col[pop.order][i])
-			make.cred.bars(admix.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
+			make.cred.bars2(admix.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
 		}
 			text(rowMeans(admix.proportions)[pop.order]/2,col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
 	dev.off()
@@ -1805,7 +2081,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 				main = "Mean Population Nuggets",
 				xlab="population",ylab="nugget",ylim=c(0,max(unlist(nugget.cred.sets))))
 		for(i in 1:k){
-			make.cred.bars(nugget.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
+			make.cred.bars2(nugget.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
 			# lines(x = c(i,i),y=c(nugget.cred.sets[[i]]),col=continent.col[pop.order][i])
 		}
 			text(rowMeans(nugget)[pop.order],col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
@@ -1997,15 +2273,6 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 	nugget.cred.sets <- lapply(pop.order,FUN=function(i){quantile(nugget[i,],c(0.025,0.975))})
 		names(nugget.cred.sets) <- pops[pop.order]
 
-	make.cred.bars <- function(quantile.vector,x.coord,bar.width,color){
-		lines(x = c(x.coord-bar.width/2,x.coord+bar.width/2),
-				y = c(quantile.vector[1],quantile.vector[1]),col=color)
-		lines(x = c(x.coord-bar.width/2,x.coord+bar.width/2),
-				y = c(quantile.vector[2],quantile.vector[2]),col=color)
-		lines(x = c(x.coord,x.coord),
-				y = quantile.vector,col=adjustcolor(color,0.15),lwd=0.5)
-	}
-
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/globe_Ad_proportions.png",res=300,width=12*300,height=5*300)
 		#quartz(width=12,height=5)
 		plot(rowMeans(admix.proportions)[pop.order]/2,type='n',
@@ -2013,7 +2280,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 				ylab="admixture proportion (w)",ylim=c(0,max(unlist(admix.cred.sets))))
 		for(i in 1:k){
 			# lines(x = c(i,i),y=c(admix.cred.sets[[i]]),col=continent.col[pop.order][i])
-			make.cred.bars(admix.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
+			make.cred.bars2(admix.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
 		}
 			text(rowMeans(admix.proportions)[pop.order]/2,col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
 	dev.off()
@@ -2024,7 +2291,7 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 				main = "Mean Population Nuggets",
 				xlab="population",ylab="nugget",ylim=c(0,max(unlist(nugget.cred.sets))))
 		for(i in 1:k){
-			make.cred.bars(nugget.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
+			make.cred.bars2(nugget.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
 			# lines(x = c(i,i),y=c(nugget.cred.sets[[i]]),col=continent.col[pop.order][i])
 		}
 			text(rowMeans(nugget)[pop.order],col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])

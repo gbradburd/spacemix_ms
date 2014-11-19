@@ -392,7 +392,7 @@ The greenish warbler (\emph{Phylloscopus trochiloides}) species complex is broad
 \label{sfig:warbler_pop}
 \end{figure}
 
-We first ran SpaceMix on the population dataset, with no admixture, setting the prior locations of the populations at random (as described above). The inferred map (Figure \ref{sfig:warbler_pop}\subref{warb_pop_noad}) largely recapitulates the geography of the sampled populations.  Populations choose locations around a large ring, with ordering similar to that of their true geographic locations.  The Turkish population (\textit{Phylloscopus trochiloides} ssp. \textit{nitidus}) clustered with the populations in the subspecies \textit{ludlowi}, but also chose a relatively high nugget parameter (see SuppMat Fig XXX), reflecting the independent drift it does not share with its \textit{ludlowi} neighbors.  The Yekat population of \textit{viridanus} individuals clusters closely with the other, less far-flung \textit{viridanus} individuals, indicating that differentiation within that subspecies is incommensurate with the amount of IBD expected for samples separated by that much distance. 
+We first ran SpaceMix on the population dataset, with no admixture, setting the prior locations of the populations at random (as described above). The inferred map (Figure \ref{sfig:warbler_pop}\subref{warb_pop_noad}) largely recapitulates the geography of the sampled populations.  Populations choose locations around a large ring, with ordering similar to that of their true geographic locations.  The Turkish population (\textit{Phylloscopus trochiloides} ssp. \textit{nitidus}) clustered with the populations in the subspecies \textit{ludlowi}, but also chose a relatively high nugget parameter (see SuppMat Fig \ref{sfig:warb_pop_NoAd_nugg}), reflecting the independent drift it does not share with its \textit{ludlowi} neighbors.  The Yekat population of \textit{viridanus} individuals clusters closely with the other, less far-flung \textit{viridanus} individuals, indicating that differentiation within that subspecies is incommensurate with the amount of IBD expected for samples separated by that much distance. 
 
 In the North, where the twin waves of expansion around the Tibetan Plateau are hypothesized to meet, the inferred geogenetic distance between populations identified as \textit{Phylloscopus trochiloides} ssp. \textit{plumbeitarsus} and ssp. \textit{viridanus} was much greater than their observed geographic separation, reflecting the reproductive isolation between these adjacent forms (see Figure \ref{sfig:warb_pop_distcomp}).  Interestingly, the ST population, which consists of six individuals sampled in Stolby, Russia, chooses a location intermediate between the \textit{plumbeitarsus} and \textit{viridanus} groups. The Stolby sample is composed of three individuals that belong to the eastern \textit{plumbeitarsus} and three individuals that belong to the western \textit{viridanus} \citep{alcaide2014genomic}. In the case where no admixture is allowed, this population is forced to adopt an intermediate position to incorporate its admixed nature.
 
@@ -400,7 +400,7 @@ In the North, where the twin waves of expansion around the Tibetan Plateau are h
 
 We then ran the method allowing admixture, and again discuss the results from the analysis using random locations as priors on $G^{\prime}$ (Figure \ref{sfig:warbler_pop}\subref{warb_pop_ad}). The Stolby population chooses the highest admixture proportion, with a mean of 0.19 (95\% credible interval: 0.146-0.238).  Multiple runs agreed well on the level of admixture of the Stolby sample (see caption of Supplementary Figure \ref{sfig:warbler_pop_compare}). What does vary across runs is whether the Stolby population chooses to locate itself by the \textit{viridanus} cluster and draw admixture from near the \textit{plumbeitarsus}  cluster or vise versa; however, this is to be expected given the 50/50 nature of the sample's makeup (Supplementary Figure \ref{sfig:warbler_pop_compare}).
 
-Because \textit{a priori} assigned population membership may be artificial (individuals from more than one population may be sampled at a single site), we repeated these analyses (with and without admixture) on an individual level (Figure \ref{sfig:warbler_ind_maps}).  In these analyses, the sample size in each `population' was 2 (for the two haplotypes in a diploid), and each individual chose its own location as well as the location of its source of admixture, the proportion of that admixture, and its nugget.  Because the analyses with and without admixture were nearly identical (individuals in the admixture analysis choose very low levels of admixture (see SuppMat Figure NNN); the population with the highest admixture proportion draws has a mean of 0.012 ($1.46 \times 10^{-4}$ to $4.73 \times 10^{-2}$)), we discuss the analysis with admixture inference.  As with the analysis on multi-sample populations, the results approximately mirror the geography of the individuals.
+Because \textit{a priori} assigned population membership may be artificial (individuals from more than one population may be sampled at a single site), we repeated these analyses (with and without admixture) on an individual level (Figure \ref{sfig:warbler_ind_maps}).  In these analyses, the sample size in each `population' was 2 (for the two haplotypes in a diploid), and each individual chose its own location as well as the location of its source of admixture, the proportion of that admixture, and its nugget.  Because the analyses with and without admixture were nearly identical (individuals in the admixture analysis choose very low levels of admixture (see SuppMat Figure \ref{sfig:warb_ind_adprops}); the population with the highest admixture proportion draws has a mean of 0.012 ($1.46 \times 10^{-4}$ to $4.73 \times 10^{-2}$)), we discuss the analysis with admixture inference.  As with the analysis on multi-sample populations, the results approximately mirror the geography of the individuals.
 
 %The order of individuals' estimated locations around the Plateau is largely concordant with their true locations, and, in most cases, individuals sampled from the same population cluster closely together, as would be expected if samples collected at a single site are draws from a population that is locally panmictic.  
 %\gb{could drop panels (A) and (B)}
@@ -419,13 +419,13 @@ Because \textit{a priori} assigned population membership may be artificial (indi
 
 There are, however, a number of obvious departures in the individual inferred geogenetic map from the observed map. The most obvious again is the clear split between \textit{viridanus} and \textit{plumbeitarsus} individuals in the north at the contact zone of the two waves of expansion.  This is clearer now than in the population-based analysis as individuals from the Stolby population have moved to near their respective \textit{viridanus} and \textit{plumbeitarsus} clusters. 
 
-Despite the fact that \textit{viridanus} and \textit{plumbeitarsus} individuals have moved away from each other in our geogenetic map, they are still closer to each other than we might expect if their drift were truly independent (e.g.\ our populations could form along a line, with \textit{viridanus} at one end and \textit{plumbeitarsus} at the other). This horseshoe, with \textit{viridanus} and \textit{plumbeitarsus} at its tips, is steady within and among runs of the MCMC and choice of position priors (see Supplementary clouds NNN).  
+Despite the fact that \textit{viridanus} and \textit{plumbeitarsus} individuals have moved away from each other in our geogenetic map, they are still closer to each other than we might expect if their drift were truly independent (e.g.\ our populations could form along a line, with \textit{viridanus} at one end and \textit{plumbeitarsus} at the other). This horseshoe, with \textit{viridanus} and \textit{plumbeitarsus} at its tips, is steady within and among runs of the MCMC and choice of position priors (see Supplementary Figures \ref{sfig:warb_ind_clouds}).  
 
 Is this biologically meaningful?  A similar horseshoe shape appears when a principal components (PC) analysis is conducted and individuals are plotted on the first two PCs \citep[][see SuppMat Figure \ref{sfig:warb_ind_PC_map}]{alcaide2014genomic}.  However, as discussed by Novembre \& Stephens (2008) such patterns in PC analysis can arise for somewhat unintuitive reasons. If populations are simulated under a one dimensional stepping stone model, then plotting individuals on the first two PCs results in a horseshoe (e.g.\ see SuppMat Figure \ref{sfig:line_scenario}\subref{line_pops_pca}) not because of gene flow connecting between the tips, but rather because of the orthogonality requirement of PCs (see Novembre \& Stephens for more discussion).  In contrast, when SpaceMix is applied to one dimensional stepping stone data, the placement of samples is consistent with a line (see SuppMat Figures \ref{sfig:line_scenario}\subref{line_pops_post}, \ref{sfig:line_scenario}\subref{line_pops_MAP}).
 
 In addition, when we run SpaceMix on the greenish warbler individuals, specifying their location priors to fall along a straight line with samples located at their approximate positions around the horseshoe, the posterior positions of the populations still curl up to form a rough horseshoe (SuppMat Figure \ref{sfig:warb_inds_on_a_line}). The proximity of \textit{viridanus} and \textit{plumbeitarsus} in geogenetic space may be due to gene flow between the tips of the horseshoe north of the Tibetan Plateau. This conclusion is in agreement with that of \citet{alcaide2014genomic}, who observed evidence of hybridization between \textit{viridanus} and \textit{plumbeitarsus} using assignment methods.
 
-A second difference between the observed and inferred maps is a pair of individuals, one identified as \textit{P. t. ludlowi} (Lud-MN3), one as \textit{P. t. trochiloides} (Tro-LN11), that choose locations very close to one another and also away from the other individuals sampled at their locations. Examining pairwise sequence divergence reveals that these two individuals show unusually recent common ancestry (see SuppMat Figure NNN), and therefore are likely expressing their shared ancestry (drift unshared with other \textit{ludlowi} and \textit{trochiloides} individuals) by choosing locations that are close to each other and far from their respective clusters of individuals that were sampled at the same sites.
+A second difference between the observed and inferred maps is a pair of individuals, one identified as \textit{P. t. ludlowi} (Lud-MN3), one as \textit{P. t. trochiloides} (Tro-LN11), that choose locations very close to one another and also away from the other individuals sampled at their locations. Examining pairwise sequence divergence reveals that these two individuals show unusually recent common ancestry (see SuppMat Figure \ref{sfig:warb_ind_pwp}), and therefore are likely expressing their shared ancestry (drift unshared with other \textit{ludlowi} and \textit{trochiloides} individuals) by choosing locations that are close to each other and far from their respective clusters of individuals that were sampled at the same sites.
 
 The SpaceMix map also diverges from the observed map in the distribution of individuals from the subspecies \textit{ludlowi}.  These samples were taken from seven sampling locations along the southwest margin of the Tibetan Plateau, but, in the SpaceMix analysis, they partition into two main clusters, one near the \textit{trochiloides} cluster, and one near the \textit{viridanus} cluster.  This break between samples from the same subspecies, which is concordant with the findings of \citet{alcaide2014genomic}, makes the \textit{ludlowi} cluster unusual compared to the estimated spatial distributions of the other subspecies (see SuppMat Figure \ref{sfig:warb_ind_distcomp}).
 
@@ -940,6 +940,54 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 \end{figure}
 
 \begin{figure}
+\centering
+	{\includegraphics[width=5in,height=3.6in]{figs/warblers/warb_pop_NoAd_nugget.pdf}}
+	\caption{Credible intervals on estimated warbler population nugget parameters in an analysis without admixture.}\label{sfig:warb_pop_noad_nugg}
+\end{figure}
+
+\begin{figure}
+\centering
+	{\includegraphics[width=5in,height=3.6in]{figs/warblers/warb_pop_Ad_nugget.pdf}}
+	\caption{Credible intervals on estimated warbler population nugget parameters in an analysis with admixture.}\label{sfig:warb_pop_ad_nugg}
+\end{figure}
+
+\begin{figure}
+\centering
+	{\includegraphics[width=5in,height=3.6in]{figs/warblers/warb_pop_adprop.pdf}}
+	\caption{Credible intervals on estimated warbler population admixture proportion parameters.}\label{sfig:warb_pop_adprop}
+\end{figure}
+
+\begin{figure}
+	\centering
+		\subcaptionbox{random location prior \label{post_map_randpr2}}
+			{\includegraphics[width=5in,height=3.6in]{figs/warblers/warb_inds_ad_post_map_randpr2.png}}
+		\subcaptionbox{random location prior \label{post_map_realpr1}}
+			{\includegraphics[width=5in,height=3.6in]{figs/warblers/warb_inds_ad_post_map_realpr1.png}}
+		\subcaptionbox{random location prior \label{post_map_realpr2}}
+			{\includegraphics[width=5in,height=3.6in]{figs/warblers/warb_inds_ad_post_map_realpr2.png}}
+	\caption{Maps of the posterior distributions on population locations in three separate SpaceMix analyses on the warbler individual dataset.}\label{sfig:warb_ind_clouds}
+\end{figure}
+
+\begin{figure}
+\centering
+	{\includegraphics[width=5in,height=2.5in]{figs/warblers/warb_ind_NoAd_nugget.pdf}}
+	\caption{Credible intervals on estimated warbler individual nugget parameters in an analysis without admixture.}\label{sfig:warb_ind_noad_nugg}
+\end{figure}
+
+
+\begin{figure}
+\centering
+	{\includegraphics[width=5in,height=2.5in]{figs/warblers/warb_ind_Ad_nugget.pdf}}
+	\caption{Credible intervals on estimated warbler individual nugget parameters in an analysis with admixture.}\label{sfig:warb_ind_ad_nugg}
+\end{figure}
+
+\begin{figure}
+\centering
+	{\includegraphics[width=5in,height=2.5in]{figs/warblers/warb_ind_adprop.pdf}}
+	\caption{Credible intervals on estimated warbler individual admixture proportion parameters.}\label{sfig:warb_ind_adprops}
+\end{figure}
+
+\begin{figure}
 	\centering
 		\subcaptionbox{All population pairs \label{warb_ind_dist_compare_allpairs}}
 			{\includegraphics[width=6in,height=3in]{figs/warblers/warb_ind_dist_compare_allpairs.png}}
@@ -948,12 +996,43 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 	\caption{Comparing observed to estimated pairwise distance between warbler individuals, (a) between and (b) within subspecies populations.}\label{sfig:warb_ind_distcomp}
 \end{figure}
 
+\begin{figure}
+\centering
+	{\includegraphics[width=5in,height=4.3in]{figs/warblers/warb_ind_pairwise_pi.pdf}}
+	\caption{Pairwise $\pi$ at polymorphic sites calculated between all pairs of individuals from different subspecies, and colored by the subspecies to which each individual in the comparison is drawn.  Note that individuals Tro-LN11 and Lud-MN3 have sequence divergence that is unusually low relative to that of other comparisons between individuals from the same two subspecies.}\label{sfig:warb_ind_pwp}
+\end{figure}
+
+\begin{figure}
+	\centering
+		\subcaptionbox{warbler individuals projected onto a line \label{warb_ind_line_setup}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/warblers/warb_inds_on_a_line_setup.pdf}}
+		\subcaptionbox{MAP estimate from SpaceMix \label{warb_inds_line_MAP}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/warblers/warb_inds_on_a_line_MAP1.pdf}}
+		\subcaptionbox{Posterior distribution of locations from SpaceMix \label{warb_inds_line_post}}
+			{\includegraphics[width=2.8in,height=2.33in]{figs/warblers/warb_inds_on_a_line_post1.pdf}}
+	\caption{SpaceMix analyses performed on a warbler individuals for which prior locations are projected onto a flat line in an order that approximately corresponds to their order around the ring: a) the setup of the analysis, in which warbler individuals are projected from their estimated locations in a previous SpaceMix run onto a flat line; b) the MAP estimate of individual locations from a SpaceMix analysis with no admixture, using the flat line locations from (a) as priors on $G^{\prime}$; c) posterior distribution of individual locations from the same analysis.  As with the other inferred maps, here, for clarity, the inferred locations have been rotated via a Procrustes superimposition around their true sampling coordinates.}
+	\label{sfig:warb_inds_on_a_line}
+\end{figure}
 
 \begin{figure}
 \centering
-	{\includegraphics[width=6in,height=2.5in]{figs/sims/example_acceptance_rates.png}}
-	\caption{Example parameter acceptance proportions for the $\alpha_2$ parameter and the nugget parameter, $\eta$, using the adaptive Metropolis-within-Gibbs proposal mechanism.}\label{sfig:example_acceptance_rates}
+	{\includegraphics[width=5in,height=2.5in]{figs/globetrotter/globe_NoAd_nugget.pdf}}
+	\caption{Credible intervals on estimated human sample nugget parameters in an analysis without admixture.}\label{sfig:globe_noad_nugg}
 \end{figure}
+
+\begin{figure}
+\centering
+	{\includegraphics[width=5in,height=2.5in]{figs/globetrotter/globe_Ad_nugget.pdf}}
+	\caption{Credible intervals on estimated human sample nugget parameters in an analysis with admixture.}\label{sfig:globe_ad_nugg}
+\end{figure}
+
+\begin{figure}
+\centering
+	{\includegraphics[width=5in,height=2.5in]{figs/globetrotter/globe_adprop.pdf}}
+	\caption{Credible intervals on estimated human sample admixture proportion parameters.}\label{sfig:globe_adprops}
+\end{figure}
+
+\clearpage
 
 \begin{figure}
 	\centering
@@ -961,6 +1040,8 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 	\caption{Comparison of observed distance to estimated distance between human populations, colored by continent from which populations were sampled (i.e.\ - two populations sampled from Africa are green).  Eurasia is divided into Western Eurasia and East Asia.}
 \label{sfig:globe_noad_distcomp}
 \end{figure}
+
+\clearpage
 
 \begin{figure}
 	\centering
@@ -978,15 +1059,11 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 
 \begin{figure}
 	\centering
-		\subcaptionbox{warbler individuals projected onto a line \label{warb_ind_line_setup}}
-			{\includegraphics[width=2.8in,height=2.33in]{figs/warblers/warb_inds_on_a_line_setup.pdf}}
-		\subcaptionbox{MAP estimate from SpaceMix \label{warb_inds_line_MAP}}
-			{\includegraphics[width=2.8in,height=2.33in]{figs/warblers/warb_inds_on_a_line_MAP1.pdf}}
-		\subcaptionbox{Posterior distribution of locations from SpaceMix \label{warb_inds_line_post}}
-			{\includegraphics[width=2.8in,height=2.33in]{figs/warblers/warb_inds_on_a_line_post1.pdf}}
-	\caption{SpaceMix analyses performed on a warbler individuals for which prior locations are projected onto a flat line in an order that approximately corresponds to their order around the ring: a) the setup of the analysis, in which warbler individuals are projected from their estimated locations in a previous SpaceMix run onto a flat line; b) the MAP estimate of individual locations from a SpaceMix analysis with no admixture, using the flat line locations from (a) as priors on $G^{\prime}$; c) posterior distribution of individual locations from the same analysis.  As with the other inferred maps, here, for clarity, the inferred locations have been rotated via a Procrustes superimposition around their true sampling coordinates.}
-	\label{sfig:warb_inds_on_a_line}
+		{\includegraphics[width=6in,height=2.5in]{figs/sims/example_acceptance_rates.png}}
+	\caption{Example parameter acceptance proportions for the $\alpha_2$ parameter and the nugget parameter, $\eta$, using the adaptive Metropolis-within-Gibbs proposal mechanism.}\label{sfig:example_acceptance_rates}
 \end{figure}
+
+\clearpage
 
 \begin{table}
 \centering

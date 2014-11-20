@@ -15,12 +15,131 @@ procrusteez <- function(obs.locs,target.locs,k,source.locs = NULL,option){
 	return(proc.pop.loc)	
 }
 
+get.procrustes.locations.posterior.list <- function(observed.coords,population.coordinates.posterior){
+	target.coords.list <- vector(mode="list",length = length(population.coordinates.posterior))
+	source.coords.list <- vector(mode="list",length = length(population.coordinates.posterior))
+	k <- nrow(observed.coords)
+	for(i in 1:length(target.coords.list)){
+		target.coords.list[[i]] <- procrusteez(obs.locs = observed.coords,
+												target.locs = population.coordinates.posterior[[i]][1:k,],
+												k = k,
+												option = 1)
+		source.coords.list[[i]] <- procrusteez(obs.locs = observed.coords,
+												target.locs = population.coordinates.posterior[[i]][1:k,],
+												k = k,
+												source.locs = population.coordinates.posterior[[i]][(k+1):(2*k),],
+												option = 2)
+	}
+	return(list(target.coords.list= target.coords.list, source.coords.list= source.coords.list))
+}
+
 fade.admixture.source.points <- function(pop.cols,admix.proportions){
 	faded.colors <- numeric(length(pop.cols))
 	for(i in 1:length(pop.cols)){
 		faded.colors[i] <- adjustcolor(pop.cols[i],admix.proportions[i])
 	}
 	return(faded.colors)
+}
+
+load_MCMC_output <- function(MCMC.output.file){
+    tmpenv <- environment()
+	tmp <- load(MCMC.output.file,envir=tmpenv)
+	mcmc.output <- lapply(tmp,get,envir=tmpenv)
+	names(mcmc.output) <- tmp
+	return(mcmc.output)
+}
+
+get.posterior.location.matrix.from.list <- function(posterior.list,population.index){
+	post.location.matrix <- matrix(unlist(
+								lapply(posterior.list,
+									FUN=function(elem){elem[population.index,]})),
+								nrow=length(posterior.list),ncol=2,byrow=TRUE)
+	return(post.location.matrix)
+}
+
+get.credible.ellipse <- function(posterior.points,quantile){
+	require(MASS)
+	require(cluster)
+	fit <- cov.mve(posterior.points, quantile.used = nrow(posterior.points) * quantile)
+	points_in_ellipse <- posterior.points[fit$best, ]
+	ellipse_boundary <- predict(ellipsoidhull(points_in_ellipse))
+	return(ellipse_boundary)
+}
+
+plot.credible.ellipse <- function(ellipse_boundary,population.color,fading=0.3){
+	polygon(ellipse_boundary,col=adjustcolor(population.color,fading),border=NA)
+}
+
+make.spacemix.map <- function(MCMC.output.file,observed.coords,name.vector,color.vector,quantile=0.95,return="silent",text=FALSE,source=TRUE,xlim=NULL,ylim=NULL){
+	MCMC.output <- load_MCMC_output(MCMC.output.file)
+		best <- which.max(MCMC.output$Prob)
+		admix.source.color.vector <- fade.admixture.source.points(color.vector,rowMeans(MCMC.output$admix.proportions))
+		k <- MCMC.output$last.params$k
+		target.coords <- procrusteez(observed.coords,MCMC.output$population.coordinates[[best]][1:k,],k,option=1)
+		source.coords <- procrusteez(observed.coords,MCMC.output$population.coordinates[[best]][1:k,],k,
+										source.locs=MCMC.output$population.coordinates[[best]][(k+1):(2*k),],option=2)
+		procrustes.coord.posterior.lists <- get.procrustes.locations.posterior.list(observed.coords= observed.coords,
+																					population.coordinates.posterior=MCMC.output$population.coordinates)
+		posterior.target.location.matrices <- lapply(1:k,get.posterior.location.matrix.from.list,posterior.list=procrustes.coord.posterior.lists$target.coords.list)
+		posterior.source.location.matrices <- lapply(1:k,get.posterior.location.matrix.from.list,posterior.list=procrustes.coord.posterior.lists$source.coords.list)
+		posterior.target.ellipses <- lapply(posterior.target.location.matrices,get.credible.ellipse,quantile)
+		posterior.source.ellipses <- lapply(posterior.source.location.matrices,get.credible.ellipse,quantile)
+		plot(target.coords,type='n',xlim=xlim,ylim=ylim,xlab="",ylab="")
+			lapply(1:k,FUN=function(i){plot.credible.ellipse(posterior.target.ellipses[[i]],color.vector[i])})
+			if(text){
+				text(target.coords,col=color.vector,font=2,labels=name.vector)
+			}
+			if(source){
+				lapply(1:k,FUN=function(i){plot.credible.ellipse(posterior.source.ellipses[[i]],admix.source.color.vector[i],fading=1)})
+				text(source.coords,col= admix.source.color.vector,font=3,labels=name.vector)
+				arrows(	x0 = source.coords[,1],
+						y0 = source.coords[,2],
+						x1 = target.coords[,1],
+						y1 = target.coords[,2],
+						col= admix.source.color.vector,
+						lwd=MCMC.output$admix.proportions[,best],
+						length=0.1)
+			}
+				box(lwd=2)
+		if(return!="silent"){
+			spacemix.map.list <- c(MCMC.output,
+									list(observed.coords=observed.coords),list(xlim=xlim),list(ylim=ylim),
+										list(name.vector=name.vector),list(color.vector=color.vector),
+										list(quantile=quantile),list(source=source),list(best = best),
+										list(admix.source.color.vector = admix.source.color.vector),
+										list(k = k),list(target.coords = target.coords),list(source.coords = source.coords),
+										list(procrustes.coord.posterior.lists = procrustes.coord.posterior.lists),
+										list(posterior.target.location.matrices = posterior.target.location.matrices),
+										list(posterior.source.location.matrices = posterior.source.location.matrices),
+										list(posterior.target.ellipses = posterior.target.ellipses),
+										list(posterior.source.ellipses = posterior.source.ellipses))
+			return(spacemix.map.list)
+		}
+}
+
+query.spacemix.map <- function(focal.pops,spacemix.map.list){
+	with(spacemix.map.list,{
+		# browser()
+		focal.indices <- grep(focal.pops,name.vector)
+			for(i in 1:length(focal.indices)){
+				plot.credible.ellipse(posterior.target.ellipses[[focal.indices[i]]],color.vector[focal.indices[i]],fading=1)
+			}
+			if(source){
+				for(i in 1:length(focal.indices)){
+					plot.credible.ellipse(posterior.source.ellipses[[focal.indices[i]]],color.vector[focal.indices[i]],fading=1)
+				}
+				text(source.coords[focal.indices,,drop=FALSE],col=1,font=3,labels=name.vector[focal.indices])
+				arrows(	x0 = source.coords[focal.indices,1],
+						y0 = source.coords[focal.indices,2],
+						x1 = target.coords[focal.indices,1],
+						y1 = target.coords[focal.indices,2],
+						col= 1,
+						lwd=1,
+						length=0.1)
+			}
+			text(target.coords[focal.indices,,drop=FALSE],col=1,font=2,labels=name.vector[focal.indices],cex=2)
+				box(lwd=2)
+	})
 }
 
 get.credible.interval <- function(param.matrix,pop.order){
@@ -1168,6 +1287,16 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 			text((1:k)+0.5,rep(-0.01,k),labels=pops[pop.order],srt=90,col=continent.col[pop.order],cex=0.65,adj=c(1,0))
 			mtext("Population",side=1,padj=1)
 			make.cred.bars(globe.nugg.cred.sets,0.5,color.vector= continent.col,vert.line.width=1,pop.order=pop.order)
+	dev.off()
+
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_NoAd_ellipses.pdf",width=9,height=5)
+		make.spacemix.map(MCMC.output.file = "~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceruns/globe_no_admixture/rand_prior1/globe_spaceruns_NoAd_randpr1_LongRun/globe_spaceruns_NoAd_randpr1space_MCMC_output1.Robj",
+							observed.coords = globe.coords,
+							xlim=c(5,105),
+							ylim=c(-42,85),
+							name.vector = NULL,
+							color.vector = continent.col,
+							quantile=0.95)
 	dev.off()
 
 	x.min <- min(target.coords[,1]) - 5

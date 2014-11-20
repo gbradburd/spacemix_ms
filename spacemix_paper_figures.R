@@ -211,6 +211,16 @@ get.transformation.matrix <- function(mean.sample.sizes){
 	return(transformation.matrix)
 }
 
+ff.text <- function ( xy, labels, rep.fact=4, attr.fact=0.2, col="black", text.cex=1, xlim, ylim, ... ) {
+    # a try at expanding labels. 
+    txy <- FFieldPtRep( xy, rep.fact=4 )
+    if (missing(xlim)) { xlim <- range(xy[,1],txy[,1]) }
+    if (missing(ylim)) { ylim <- range(xy[,2],txy[,2]) }
+    plot( xy, pch=20, col=adjustcolor(col,.5), xlim=xlim, ylim=ylim, ... )
+    text( txy, labels=pops, col=col, cex=text.cex, ... )
+    segments( x0=xy[,1], x1=txy[,1], y0=xy[,2], y1=txy[,2], lwd=2, col=adjustcolor(col,.25) )
+}
+
 ################################
 #	WARBLER POP FIGS
 ################################
@@ -271,7 +281,16 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 
 	best <- which.max(Prob)
 	target.coords <- procrusteez(warbler.pop.coords,population.coordinates[[best]][1:k,],k,option=1)
-	
+
+    # epxanded labels version
+	pdf(file="figs/warblers/warb_pop_noad_ffield.pdf",width=6.5,height=5,pointsize=10)
+            ff.text( target.coords, pops, rep.fact=4, col=pop.col,
+					xlab="Eastings",
+					ylab="Northings",
+                    font=2, text.cex=1.5 )
+            box(lwd=2)
+	dev.off()
+
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_noad.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
@@ -580,6 +599,22 @@ mean.centering.matrix <- get.transformation.matrix(apply(warbler.ind.sample.size
 mc.cov_hat <- mean.centering.matrix %*% cov_hat %*% t(mean.centering.matrix)
 pc.coords <- cbind(eigen(mc.cov_hat)$vectors[,1],eigen(mc.cov_hat)$vectors[,2])
 proc.pc.coords <- fitted(vegan::procrustes(warbler.ind.coords,pc.coords))
+
+# expanded labels version (not right yet)
+pdf(file="figs/warblers/warb_ind_PC_map_ffield.pdf",width=5,height=4,pointsize=10)
+	#quartz(width=5,height=4)
+	par(mar=c(4.5,4.5,3,1))
+    ff.text( proc.pc.coords, plot.inds, rep.fact=1, attr.fact=1, col=inds.col,
+		xlab=paste("PC1 (",
+					round(eigen(mc.cov_hat)$values[c(1)]/sum(eigen(mc.cov_hat)$values),3) * 100,
+				"%)",sep=""),
+		ylab=paste("PC2 (",
+					round(eigen(mc.cov_hat)$values[c(2)]/sum(eigen(mc.cov_hat)$values),3) * 100,
+				"%)",sep=""),
+		main="Warbler Individual PC Map",cex.axis=0.7,
+        font=2, text.cex=1.0 )
+	box(lwd=2)
+dev.off()
 
 png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_PC_map.png",res=200,width=5*200,height=4*200)
 	#quartz(width=5,height=4)

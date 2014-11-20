@@ -55,7 +55,7 @@ make.admix.map <- function(xlim=NULL,ylim=NULL,globe_ad_obj){
 #
 # if you already have a plot going, and you don't want to replot, you can use the add argument
 #	which will just add the highlighted source and target locations to the existing map
-query.admix.map <- function(pop.name,add=NULL,xlim=NULL,ylim=NULL,globe_ad_obj=globe_ad_obj){
+query.admix.map <- function(pop.name,globe_ad_obj=globe_ad_obj,add=NULL,xlim=NULL,ylim=NULL){
 	if(is.null(add)){
 		make.admix.map(xlim,ylim,globe_ad_obj)
 	}

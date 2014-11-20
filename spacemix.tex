@@ -138,7 +138,7 @@ We wish to model the covariance between populations as the result of a spatial p
 The covariance between \plr{normalized}\plrm{explain} population allele frequencies in populations $i$ and $j$ is 
 \begin{equation}
 \label{eq:spatial_covariance}
-\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right) \text{,}
+\Omega^{(P)}_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( -\alpha_1D_{i,j} \right)^{\alpha_2} \right) \text{,}
 \end{equation}
 
 where $D_{i,j}$ is the geographic distance between population $i$ and $j$ (and therefore a function of their locations, $G_i$ and $G_j$), $\alpha_0$ controls the within-population variance, or the covariance when distance between points is 0 (the sill of the covariance matrix),  $\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay. While previously we and others have used a logit link function \citep{Wasser, Bradburd}, or truncated allele frequencies at $0$ and $1$ \citep{Nicholson,Coop2010}, combined with binomial sampling to model the sample frequencies \citep{Wasser, Bradburd}, here we chose to treat these sample frequencies themselves as multivariate normal across populations \citep[]{Treemix}. To accommodate the effect of finite sample size, we introduce ``nuggets'' of population-specific variance terms on the diagonal of allelic covariance matrix, \plrm{explain nuggets with less jargon?} which accommodate the effects of both sampling and unshared genetic drift.
@@ -147,7 +147,7 @@ where $D_{i,j}$ is the geographic distance between population $i$ and $j$ (and t
 \plrm{wait, $\Omega_{i,j}$ defined twice. I infer that $\delta=0$. drop previous one.}
 \begin{equation}
 \label{eq:spatial_covariance2}
-\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right) + \delta(\bar{S}^{-1} + \eta) \text{,}
+\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( -\alpha_1D_{i,j} \right)^{\alpha_2} \right) + \delta_{i,j}(\frac{1}{\bar{S_{i}}} + \eta_{i}) \text{,}
 \end{equation} 
 \plrm{subscript on $S$ and $\eta$; write $1/S$ instead so it doesn't parse as a matrix}
 where $\delta_{i,j}$ is the indicator function $1$ if $i=j$, and $0$ otherwise. Our $\eta$ is a vector of population-specific variances, where $\eta_k$, the nugget estimated in population $k$, represents any genetic drift (or more generally excess allele frequency variance) not captured by our spatial model. Finally, $\bar{S}$ is a vector of the mean sample sizes in each population, where $\bar{S}_k$ is the mean sample size across all loci in population $k$.  
@@ -281,16 +281,16 @@ We can incorporate recent admixture directly into out inference framework.  We i
 \begin{equation}
 w_k p_{\ell,k'} + (1-w_k) p_{\ell,\identifyadmixsource{k}} \label{eqn-admixedfreq}
 \end{equation}
-We can allow each of our populations to have an independent spatial source of admixture. Our $p_{\ell,k'}$ and $p_{\ell,\identifyadmixsource{k}} $ are well defined, as, given our population allele frequency covariance matrix, equation \ref{eq:spatial_covariance}, we can get the distribution of allele frequencies at any point in space simply by plugging its spatial coordinates into our $\Omega(D(G))$.
+We can allow each of our populations to have an independent spatial source of admixture. Our $p_{\ell,k'}$ and $p_{\ell,\identifyadmixsource{k}} $ are well defined, as, given our population allele frequency covariance matrix, equation \ref{eq:spatial_covariance}, we can get the distribution of allele frequencies at any point in space simply by plugging its spatial coordinates into our $\Omega^{(P)}(D(G))$.
 
 We can then consider the resulting parametric covariance matrix that follows from the form of the population frequencies in equation \eqref{eqn-admixedfreq}. The covariance between the standardized allele frequencies of population $i$ and $j$ can be modeled as 
 \begin{alignat}{3}
 \label{eq:admixed_covariance_1}
-\identifyadmixsource{\Omega_{i,j}} = (1-w_i)(1-w_j) \Omega_{i\;,\;j\;} \; \times&\\
-(w_i)(1-w_j) \Omega_{\identifyadmixsource{i},\;j\;} \; \times   \notag&\\
-(w_j)(1-w_i) \Omega_{i\;,\;\identifyadmixsource{j}} \; \times   \notag&\\
-(w_i)(w_j) \Omega_{\identifyadmixsource{i},\;\identifyadmixsource{j}} \; +   \notag&\\
-\delta_{i,j} (\eta_i + \bar{S}^{-1}) \notag&
+\identifyadmixsource{\Omega_{i,j}} = (1-w_i)(1-w_j) \Omega^{(P)}_{i\;,\;j\;} \; \times&\\
+(w_i)(1-w_j) \Omega^{(P)}_{\identifyadmixsource{i},\;j\;} \; \times   \notag&\\
+(w_j)(1-w_i) \Omega^{(P)}_{i\;,\;\identifyadmixsource{j}} \; \times   \notag&\\
+(w_i)(w_j) \Omega^{(P)}_{\identifyadmixsource{i},\;\identifyadmixsource{j}} \; +   \notag&\\
+\delta_{i,j} (\eta_i + \frac{1}{\bar{S}}) \notag&
 \end{alignat}
 where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources from which populations $i$ and $j$ are drawing their admixture with proportions $p_i$ and $p_j$, and the spatial covariance function of population frequencies, $\Omega$, is given by \eqref{eq:spatial_covariance} (this lacks the sample-specific variance terms on the diagonal). Note that we then reintroduce the nugget, $\eta_k$, and the sample size effect, $\bar{S_k}^{-1}$, for each population, to model drift or excess variance in population $k$ on top of that predicted by the mixture of frequencies given by our spatial model.  As in equation \eqref{eq:spatial_covariance2}, $\delta_{i,j} $ is the indicator function $1$ if $i=j$, and $0$ otherwise. 
 

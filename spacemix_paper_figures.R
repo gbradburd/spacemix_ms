@@ -66,78 +66,85 @@ get.credible.ellipse <- function(posterior.points,quantile){
 	return(ellipse_boundary)
 }
 
-plot.credible.ellipse <- function(ellipse_boundary,population.color,fading=0.3){
-	polygon(ellipse_boundary,col=adjustcolor(population.color,fading),border=NA)
+plot.credible.ellipse <- function(ellipse_boundary,population.color,fading=0.3,lty=1){
+	polygon(ellipse_boundary,col=adjustcolor(population.color,fading),border=1,lty=lty)
 }
 
-make.spacemix.map <- function(MCMC.output.file,observed.coords,name.vector,color.vector,quantile=0.95,return="silent",text=FALSE,source=TRUE,xlim=NULL,ylim=NULL){
+make.spacemix.map.list <- function(MCMC.output.file,observed.coords,name.vector,color.vector,quantile=0.95){
 	MCMC.output <- load_MCMC_output(MCMC.output.file)
-		best <- which.max(MCMC.output$Prob)
-		admix.source.color.vector <- fade.admixture.source.points(color.vector,rowMeans(MCMC.output$admix.proportions))
-		k <- MCMC.output$last.params$k
-		target.coords <- procrusteez(observed.coords,MCMC.output$population.coordinates[[best]][1:k,],k,option=1)
-		source.coords <- procrusteez(observed.coords,MCMC.output$population.coordinates[[best]][1:k,],k,
-										source.locs=MCMC.output$population.coordinates[[best]][(k+1):(2*k),],option=2)
-		procrustes.coord.posterior.lists <- get.procrustes.locations.posterior.list(observed.coords= observed.coords,
-																					population.coordinates.posterior=MCMC.output$population.coordinates)
-		posterior.target.location.matrices <- lapply(1:k,get.posterior.location.matrix.from.list,posterior.list=procrustes.coord.posterior.lists$target.coords.list)
-		posterior.source.location.matrices <- lapply(1:k,get.posterior.location.matrix.from.list,posterior.list=procrustes.coord.posterior.lists$source.coords.list)
-		posterior.target.ellipses <- lapply(posterior.target.location.matrices,get.credible.ellipse,quantile)
-		posterior.source.ellipses <- lapply(posterior.source.location.matrices,get.credible.ellipse,quantile)
+	best <- which.max(MCMC.output$Prob)
+	admix.source.color.vector <- fade.admixture.source.points(color.vector,rowMeans(MCMC.output$admix.proportions))
+	k <- MCMC.output$last.params$k
+	target.coords <- procrusteez(observed.coords,MCMC.output$population.coordinates[[best]][1:k,],k,option=1)
+	source.coords <- procrusteez(observed.coords,MCMC.output$population.coordinates[[best]][1:k,],k,
+									source.locs=MCMC.output$population.coordinates[[best]][(k+1):(2*k),],option=2)
+	procrustes.coord.posterior.lists <- get.procrustes.locations.posterior.list(observed.coords= observed.coords,
+																				population.coordinates.posterior=MCMC.output$population.coordinates)
+	posterior.target.location.matrices <- lapply(1:k,get.posterior.location.matrix.from.list,posterior.list=procrustes.coord.posterior.lists$target.coords.list)
+	posterior.source.location.matrices <- lapply(1:k,get.posterior.location.matrix.from.list,posterior.list=procrustes.coord.posterior.lists$source.coords.list)
+	posterior.target.ellipses <- lapply(posterior.target.location.matrices,get.credible.ellipse,quantile)
+	posterior.source.ellipses <- lapply(posterior.source.location.matrices,get.credible.ellipse,quantile)
+	spacemix.map.list <- c(MCMC.output,
+							list(observed.coords=observed.coords),
+								list(name.vector=name.vector),list(color.vector=color.vector),
+								list(quantile=quantile),list(source=source),list(best = best),
+								list(admix.source.color.vector = admix.source.color.vector),
+								list(k = k),list(target.coords = target.coords),list(source.coords = source.coords),
+								list(procrustes.coord.posterior.lists = procrustes.coord.posterior.lists),
+								list(posterior.target.location.matrices = posterior.target.location.matrices),
+								list(posterior.source.location.matrices = posterior.source.location.matrices),
+								list(posterior.target.ellipses = posterior.target.ellipses),
+								list(posterior.source.ellipses = posterior.source.ellipses))
+	return(spacemix.map.list)
+}
+
+make.spacemix.map <- function(spacemix.map.list,text=FALSE,ellipses=TRUE,source.option=TRUE,xlim=NULL,ylim=NULL){
+	with(spacemix.map.list,{ 
 		plot(target.coords,type='n',xlim=xlim,ylim=ylim,xlab="",ylab="")
-			lapply(1:k,FUN=function(i){plot.credible.ellipse(posterior.target.ellipses[[i]],color.vector[i])})
-			if(text){
-				text(target.coords,col=color.vector,font=2,labels=name.vector)
+			if(ellipses){
+				lapply(1:k,FUN=function(i){plot.credible.ellipse(posterior.target.ellipses[[i]],color.vector[i])})
 			}
-			if(source){
-				lapply(1:k,FUN=function(i){plot.credible.ellipse(posterior.source.ellipses[[i]],admix.source.color.vector[i],fading=1)})
-				text(source.coords,col= admix.source.color.vector,font=3,labels=name.vector)
+			if(text){
+				text(target.coords,col=color.vector,font=2,labels=name.vector,cex=0.7)
+			}
+			if(source.option){
+				if(ellipses){
+					lapply(1:k,FUN=function(i){plot.credible.ellipse(posterior.source.ellipses[[i]],admix.source.color.vector[i],fading=1,lty=2)})
+				}
+				text(source.coords,col= admix.source.color.vector,font=3,labels=name.vector,cex=0.7)
 				arrows(	x0 = source.coords[,1],
 						y0 = source.coords[,2],
 						x1 = target.coords[,1],
 						y1 = target.coords[,2],
 						col= admix.source.color.vector,
-						lwd=MCMC.output$admix.proportions[,best],
+						lwd= spacemix.map.list $admix.proportions[,best],
 						length=0.1)
 			}
 				box(lwd=2)
-		if(return!="silent"){
-			spacemix.map.list <- c(MCMC.output,
-									list(observed.coords=observed.coords),list(xlim=xlim),list(ylim=ylim),
-										list(name.vector=name.vector),list(color.vector=color.vector),
-										list(quantile=quantile),list(source=source),list(best = best),
-										list(admix.source.color.vector = admix.source.color.vector),
-										list(k = k),list(target.coords = target.coords),list(source.coords = source.coords),
-										list(procrustes.coord.posterior.lists = procrustes.coord.posterior.lists),
-										list(posterior.target.location.matrices = posterior.target.location.matrices),
-										list(posterior.source.location.matrices = posterior.source.location.matrices),
-										list(posterior.target.ellipses = posterior.target.ellipses),
-										list(posterior.source.ellipses = posterior.source.ellipses))
-			return(spacemix.map.list)
-		}
+	})
 }
 
-query.spacemix.map <- function(focal.pops,spacemix.map.list){
+query.spacemix.map <- function(focal.pops,spacemix.map.list,source.option=TRUE){
 	with(spacemix.map.list,{
 		# browser()
-		focal.indices <- grep(focal.pops,name.vector)
+		focal.indices <- match(focal.pops,name.vector)
 			for(i in 1:length(focal.indices)){
 				plot.credible.ellipse(posterior.target.ellipses[[focal.indices[i]]],color.vector[focal.indices[i]],fading=1)
 			}
-			if(source){
+			if(source.option){
 				for(i in 1:length(focal.indices)){
-					plot.credible.ellipse(posterior.source.ellipses[[focal.indices[i]]],color.vector[focal.indices[i]],fading=1)
+					plot.credible.ellipse(posterior.source.ellipses[[focal.indices[i]]], admix.source.color.vector[focal.indices[i]],fading=1,lty=2)
 				}
 				text(source.coords[focal.indices,,drop=FALSE],col=1,font=3,labels=name.vector[focal.indices])
 				arrows(	x0 = source.coords[focal.indices,1],
 						y0 = source.coords[focal.indices,2],
 						x1 = target.coords[focal.indices,1],
 						y1 = target.coords[focal.indices,2],
-						col= 1,
+						col= admix.source.color.vector[focal.indices[i]],
 						lwd=1,
 						length=0.1)
 			}
-			text(target.coords[focal.indices,,drop=FALSE],col=1,font=2,labels=name.vector[focal.indices],cex=2)
+			text(target.coords[focal.indices,,drop=FALSE],col=1,font=2,labels=name.vector[focal.indices],cex=1)
 				box(lwd=2)
 	})
 }
@@ -1278,6 +1285,46 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 		continent.col[americas] <- am.loc.cols
 		continent.col[africa] <- af.loc.cols
 		continent.col[-c(africa,americas)] <- eur.loc.cols
+
+	abbreviate <- function(pop.names){
+	# recover()
+		k <- length(pop.names)
+		abbrevs <- numeric(k)
+		for(i in 1:k){
+			z <- 2
+			pop.letters <- strsplit(pop.names[i],"")[[1]]
+			pop.abbrev <- paste(pop.letters[1],pop.letters[z],sep="")
+			while(any(grep(pop.abbrev,abbrevs)) & z < length(pop.letters)){
+				z <- z + 1
+				pop.abbrev <- paste(pop.letters[1],pop.letters[z],sep="")
+			}
+			if(z > length(strsplit(pop.names[i],"")[[1]])){
+				stop("uh oh")
+			}
+			abbrevs[i] <- pop.abbrev
+		}
+		return(abbrevs)
+	}
+	abbrevs <- abbreviate(pops)
+	
+################
+#	globe PCA
+################
+cov_hat <- cov(t(globetrotter.counts/globetrotter.sample.sizes),use="pairwise.complete.obs")
+mean.centering.matrix <- get.transformation.matrix(apply(globetrotter.sample.sizes,1,get.mean.sample.size))
+mc.cov_hat <- mean.centering.matrix %*% cov_hat %*% t(mean.centering.matrix)
+pc.coords <- cbind(eigen(mc.cov_hat)$vectors[,1],eigen(mc.cov_hat)$vectors[,2])
+proc.pc.coords <- fitted(vegan::procrustes(globe.coords,pc.coords))
+	pc1.var <- eigen(mc.cov_hat)$values[1] / sum(eigen(mc.cov_hat)$values)
+	pc2.var <- eigen(mc.cov_hat)$values[2] / sum(eigen(mc.cov_hat)$values)
+	
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_PCA_map.pdf",width=6,height=6)
+		plot(proc.pc.coords,type='n',
+				main = "PCA map of Human samples",
+				xlab = paste("PC1 (",signif(100*pc1.var,3),"%)",sep=""),
+				ylab  = paste("PC2 (",signif(100*pc2.var,3),"%)",sep=""))
+		text(proc.pc.coords,col=continent.col,labels=abbrevs,font=2,cex=0.9)
+	dev.off()
 
 	best <- which.max(Prob)
 	target.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,option=1)

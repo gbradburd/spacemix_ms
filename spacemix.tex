@@ -231,9 +231,9 @@ We can then consider the parametric covariance matrix that follows from the form
 \begin{alignat}{3}
 \label{eq:admixed_covariance_1}
 \identifyadmixsource{\Omega_{i,j}} = (1-w_i)(1-w_j) \Omega^{(P)}_{i\;,\;j\;} \; \times&\\
-(w_i)(1-w_j) \Omega^{(P)}_{\identifyadmixsource{i},\;j\;} \; \times   \notag&\\
-(w_j)(1-w_i) \Omega^{(P)}_{i\;,\;\identifyadmixsource{j}} \; \times   \notag&\\
-(w_i)(w_j) \Omega^{(P)}_{\identifyadmixsource{i},\;\identifyadmixsource{j}} \; +   \notag&\\
+w_i(1-w_j) \Omega^{(P)}_{\identifyadmixsource{i},\;j\;} \; \times   \notag&\\
+w_j(1-w_i) \Omega^{(P)}_{i\;,\;\identifyadmixsource{j}} \; \times   \notag&\\
+w_i w_j \Omega^{(P)}_{\identifyadmixsource{i},\;\identifyadmixsource{j}} \; +   \notag&\\
 \delta_{i,j} (\eta_i + \frac{1}{\bar{S}_i}) \notag&
 \end{alignat}
 where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources from which populations $i$ and $j$ are drawing their admixture with proportions $p_i$ and $p_j$, and the spatial covariance function of population frequencies, $\Omega$, is given by \eqref{eq:spatial_covariance} (this lacks the sample-specific variance terms on the diagonal). Note that we then reintroduce the nugget, $\eta_k$, and the sample size effect, $1/\bar{S_k}$, for each population, to model drift or excess variance in population $k$ on top of that predicted by the mixture of frequencies given by our spatial model.  As in equation \eqref{eq:spatial_covariance2}, $\delta_{i,j} $ is the indicator function $1$ if $i=j$, and $0$ otherwise. 

@@ -2517,12 +2517,13 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 #	Simulation scenarios
 ################
 source("~/Desktop/Dropbox/space.mix/sims/spacemix_ms_sims.R")
-png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/basic_lattice.png",res=200,width=6*200,height=5*200)
-	migration.rate.graphic(x.pops = 5,y.pops = 6,migration.rate=1,jitter=0.25,labels=TRUE,colors=TRUE)
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/basic_lattice.pdf",width=6,height=5)
+	migration.rate.graphic(x.pops = 5,y.pops = 6,migration.rate=1,migration.arrows=FALSE,jitter=0.25,labels=TRUE,colors=TRUE,arrow.width=1,pop.pt.cex=2.5,pop.lab.cex=2.5)
 dev.off()
 
-png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/barrier_lattice.png",res=200,width=6*200,height=5*200)
-	migration.rate.graphic(x.pops = 5,y.pops = 6,migration.rate=1,jitter=0.25,barrier.effect=5,labels=TRUE,colors=TRUE)
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/barrier_lattice.pdf",width=6,height=5)
+	migration.rate.graphic(x.pops = 5,y.pops = 6,migration.rate=1,migration.arrows=FALSE,jitter=0.25,barrier.effect=5,labels=TRUE,colors=TRUE,pop.pt.cex=2.5,pop.lab.cex=2.5)
+	abline(v=6.2,lwd=2,lty=2)
 dev.off()
 
 parents <- c(78:88)
@@ -2534,8 +2535,8 @@ expansion.list <- vector(mode="list")
 									time.point = time.points[i])
 	}
 	
-png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/expansion_lattice.png",res=200,width=6*200,height=5*200)
-	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,jitter = 0.25,expansion.list=expansion.list,labels=TRUE,colors=TRUE,ylim=c(0,10.2),curve=0.3)
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/expansion_lattice.pdf",width=6,height=5)
+	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,migration.arrows=FALSE,jitter = 0.25,expansion.list=expansion.list,labels=TRUE,colors=TRUE,ylim=c(0,10.2),curve=0.3,pop.pt.cex=2.5,pop.lab.cex=2.5)
 dev.off()
 
 
@@ -2543,23 +2544,31 @@ expansion.list2 <- list(list(parent = 61,
 						daughters = 105,
 						time.point = 1))
 	
-png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/barr_indland_ad_lattice.png",res=200,width=6*200,height=5*200)
-	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,barrier.effect=5,jitter = 0.25,expansion.list=expansion.list2,labels=TRUE,colors=TRUE,arrow.col="green")
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/barr_indland_ad_lattice.pdf",width=6,height=5)
+	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,migration.arrows=FALSE,barrier.effect=5,jitter = 0.25,expansion.list=expansion.list2,labels=TRUE,colors=TRUE,arrow.col="green",arrow.width=0.4,pop.pt.cex=2.5,pop.lab.cex=2.5)
+	abline(v=6.2,lwd=2,lty=2)
 dev.off()
+
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/barr_indland_ad_lattice.pdf",width=6,height=5)
+	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,migration.arrows=FALSE,barrier.effect=5,jitter = 0.25,expansion.list=expansion.list2,labels=TRUE,colors=TRUE,arrow.col="green",arrow.width=0.4,pop.pt.cex=2.5,pop.lab.cex=2.5)
+	abline(v=6.2,lwd=2,lty=2)
+dev.off()
+
 
 expansion.list2.5 <- list(list(parent = 61,
 						daughters = 83,
 						time.point = 1))
 	
-png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/big_barr_ad_lattice.png",res=200,width=6*200,height=5*200)
-	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,barrier.effect=5,jitter = 0.25,expansion.list=expansion.list2.5,labels=TRUE,colors=TRUE,arrow.col="green")
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/big_barr_ad_lattice.pdf",width=6,height=5)
+	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,migration.arrows=FALSE,barrier.effect=5,jitter = 0.25,expansion.list=expansion.list2.5,labels=TRUE,colors=TRUE,arrow.col="green",arrow.width=0.8,pop.pt.cex=2.5,pop.lab.cex=2.5)
+	abline(v=6.2,lwd=2,lty=2)
 dev.off()
 
 expansion.list3 <- list(list(parent = 13,
 						daughters = 131,
 						time.point = 1))
-png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/corner_admixture_lattice.png",res=200,width=6*200,height=5*200)
-	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,jitter = 0.25,expansion.list=expansion.list3,labels=TRUE,colors=TRUE,arrow.col="green",curve=0.2)
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/corner_admixture_lattice.pdf",width=6,height=5)
+	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,migration.arrows=FALSE,jitter = 0.25,expansion.list=expansion.list3,labels=TRUE,colors=TRUE,arrow.col="green",curve=0.2,arrow.width=0.8,pop.pt.cex=2.5,pop.lab.cex=2.5)
 dev.off()
 
 
@@ -2743,13 +2752,13 @@ pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_lattice.pdf",width=6,hei
 #quartz(width=6,height=5)
 # par(mar=c(4.3,4.3,3,1))
 	par(mar=c(1,1,1,1))
-plot(target.coords,pch=1,xlim=c(0,12),ylim=c(-0.4,10),cex=3.5,
+plot(target.coords,xlim=c(0.5,11.25),ylim=c(0,9.5),cex=7,
 		# xlab="Eastings",ylab="Northings",
 		# main="Inferred Population Map:\n Simple Lattice",
 		xaxt='n',yaxt='n',
-		col=pop.cols,lwd=2)
+		col=pop.cols,lwd=2,pch=19)
 	box(lwd=2)
-	text(target.coords,labels=paste(1:k))
+	text(target.coords,labels=paste(1:k),col="white",font=2,cex=2)
 dev.off()
 
 
@@ -2811,13 +2820,13 @@ pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_barrier.pdf",width=6,hei
 #quartz(width=6,height=5)
 	par(mar=c(1,1,1,1))
 # par(mar=c(4.3,4.3,3,1))
-plot(target.coords,pch=1,xlim=c(0,12),ylim=c(-0.4,10),cex=3.5,
+plot(target.coords,pch=19,xlim=c(0.8,11.5),ylim=c(1.5,9),cex=7,
 #		xlab="Eastings",ylab="Northings",
 #		main="Inferred Population Map:\n Lattice with Barrier",
 		xaxt='n',yaxt='n',
 		col=pop.cols,lwd=2)
 	box(lwd=2)
-	text(target.coords,labels=paste(1:k))
+	text(target.coords,labels=paste(1:k),cex=2,col="white",font=2)
 dev.off()
 
 
@@ -2837,13 +2846,13 @@ pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_expansion.pdf",width=6,h
 #quartz(width=6,height=5)
 	par(mar=c(1,1,1,1))
 #par(mar=c(4.3,4.3,3,1))
-plot(target.coords,pch=1,xlim=c(1.2,9.5),ylim=c(-2,12),cex=3.5,
+plot(target.coords,pch=19,xlim=c(1.6,8.9),ylim=c(-1.3,11),cex=7,
 #		xlab="Eastings",ylab="Northings",
 #		main="Inferred Population Map:\n Lattice with Expansion",
 		xaxt='n',yaxt='n',
 		col=pop.cols,lwd=2)
 	box(lwd=2)
-	text(target.coords,labels=paste(1:k))
+	text(target.coords,labels=paste(1:k),cex=2,col="white",font=2)
 dev.off()
 
 
@@ -2867,18 +2876,18 @@ source.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 x.min <- min(target.coords[,1]) - 0.5
 x.max <- max(target.coords[,1]) + 0.5
 y.min <- min(target.coords[,2]) - 0.5
-y.max <- max(target.coords[,2]) + 1
+y.max <- max(target.coords[,2]) + 0.5
 source.coord.cols <- fade.admixture.source.points(pop.cols,admix.proportions[,best])
-png("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_corner_admixture.png",res=300,width=6*300,height=5*300,pointsize=9)
+pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_corner_admixture.pdf",width=6,height=5)
 #quartz(width=6,height=5)
 	par(mar=c(1,1,1,1))
 # par(mar=c(4.3,4.3,3,1))
-plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
+plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=19,cex=5,xaxt='n',yaxt='n',
 		# xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Admixture",
 		col=pop.cols,lwd=2)
 		points(source.coords,pch=20,col=source.coord.cols)
 	box(lwd=2)
-	text(target.coords,labels=paste(1:k))
+	text(target.coords,labels=paste(1:k),col="white",font=2,cex=1.5)
 	arrows(x0 = source.coords[,1],
 			y0 = source.coords[,2],
 			x1 = target.coords[,1],
@@ -2886,13 +2895,13 @@ plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
 			col= source.coord.cols,
 			lwd = admix.proportions[,best],
 			length=0.2)
-	legend(x = "topleft",
-			pch=c(20,rep(NA,5)),
-			lty=c(NA,rep(1,5)),
-			lwd=c(NA,0.2,0.4,0.6,0.8,1),
-			col=c(1,adjustcolor(1,0.2),adjustcolor(1,0.4),adjustcolor(1,0.6),adjustcolor(1,0.8),adjustcolor(1,1)),
-			legend = c("admixture source","w = 0.1","w = 0.2","w = 0.3","w = 0.4","w = 0.5"),
-			cex=0.9)
+	# legend(x = "topleft",
+			# pch=c(20,rep(NA,5)),
+			# lty=c(NA,rep(1,5)),
+			# lwd=c(NA,0.2,0.4,0.6,0.8,1),
+			# col=c(1,adjustcolor(1,0.2),adjustcolor(1,0.4),adjustcolor(1,0.6),adjustcolor(1,0.8),adjustcolor(1,1)),
+			# legend = c("admixture source","w = 0.1","w = 0.2","w = 0.3","w = 0.4","w = 0.5"),
+			# cex=0.9)
 dev.off()
 
 ################
@@ -2910,17 +2919,17 @@ target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 x.min <- min(target.coords[,1]) - 0.5
 x.max <- max(target.coords[,1]) + 0.5
 y.min <- min(target.coords[,2]) - 0.5
-y.max <- max(target.coords[,2]) + 1
+y.max <- max(target.coords[,2]) + 0.2
 
 pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_corner_admixture_CYOL.pdf",width=6,height=5,pointsize=9)
 #quartz(width=6,height=5)
 	par(mar=c(1,1,1,1))
 # par(mar=c(4.3,4.3,3,1))
-plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
+plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=19,cex=7,xaxt='n',yaxt='n',
 #		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Admixture",
 		col=pop.cols,lwd=2)
 	box(lwd=2)
-	text(target.coords,labels=paste(1:k))
+	text(target.coords,labels=paste(1:k),col="white",font=2,cex=2)
 dev.off()
 
 ################
@@ -2997,20 +3006,20 @@ source.coords.list <- vector(mode="list",length = length(which(Prob!=0)))
 x.min <- min(target.coords[,1]) - 0.5
 x.max <- max(target.coords[,1]) + 0.5
 y.min <- min(target.coords[,2]) - 0.5
-y.max <- max(target.coords[,2]) + 2
+y.max <- max(target.coords[,2]) + 0.5
 scalar <- 4
 source.coord.cols <- fade.admixture.source.points(pop.cols,scalar*admix.proportions[,best])
-png("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_barr_inland_admixture_1.png",res=300,width=6*300,height=5*300,pointsize=9)
+pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_barr_inland_admixture_1.pdf",width=6,height=5)
 #quartz(width=6,height=5)
 	par(mar=c(1,1,1,1))
 #par(mar=c(4.3,4.3,3,1))
-plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
+plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=19,cex=5,
 #		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Barrier and Admixture",
 		xaxt='n',yaxt='n',
 		col=pop.cols,lwd=2)
 		points(source.coords,pch=20,col=source.coord.cols)
 	box(lwd=2)
-	text(target.coords,labels=paste(1:k))
+	text(target.coords,labels=paste(1:k),col="white",font=2,cex=1.5)
 	arrows(x0 = source.coords[,1],
 			y0 = source.coords[,2],
 			x1 = target.coords[,1],
@@ -3018,18 +3027,18 @@ plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
 			col= source.coord.cols,
 			lwd = scalar*admix.proportions[,best],
 			length=0.2)
-	legend(x = "topleft",
-			pch=c(20,rep(NA,5)),
-			lty=c(NA,rep(1,5)),
-			lwd=c(NA,0.2,0.4,0.6,0.8,1),
-			col=c(1,adjustcolor(1,0.2),adjustcolor(1,0.4),adjustcolor(1,0.6),adjustcolor(1,0.8),adjustcolor(1,1)),
-			legend = c("admixture source",
-								paste("w = ",round(0.1/scalar,2),sep=""),
-								paste("w = ",round(0.2/scalar,2),sep=""),
-								paste("w = ",round(0.3/scalar,2),sep=""),
-								paste("w = ",round(0.4/scalar,2),sep=""),
-								paste("w = ",round(0.5/scalar,2),sep="")),
-			cex=0.9)
+	# legend(x = "topleft",
+			# pch=c(20,rep(NA,5)),
+			# lty=c(NA,rep(1,5)),
+			# lwd=c(NA,0.2,0.4,0.6,0.8,1),
+			# col=c(1,adjustcolor(1,0.2),adjustcolor(1,0.4),adjustcolor(1,0.6),adjustcolor(1,0.8),adjustcolor(1,1)),
+			# legend = c("admixture source",
+								# paste("w = ",round(0.1/scalar,2),sep=""),
+								# paste("w = ",round(0.2/scalar,2),sep=""),
+								# paste("w = ",round(0.3/scalar,2),sep=""),
+								# paste("w = ",round(0.4/scalar,2),sep=""),
+								# paste("w = ",round(0.5/scalar,2),sep="")),
+			# cex=0.9)
 dev.off()
 
 
@@ -3122,20 +3131,20 @@ source.coords.list <- vector(mode="list",length = length(which(Prob!=0)))
 x.min <- min(target.coords[,1]) - 0.5
 x.max <- max(target.coords[,1]) + 0.5
 y.min <- min(target.coords[,2]) - 0.5
-y.max <- max(target.coords[,2]) + 2
+y.max <- max(target.coords[,2]) + 0.5
 scalar <- 4
 source.coord.cols <- fade.admixture.source.points(pop.cols,scalar*admix.proportions[,best])
-png("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_big_barr_ad_1.png",res=300,width=6*300,height=5*300,pointsize=9)
+pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_big_barr_ad_1.pdf",width=6,height=5)
 #quartz(width=6,height=5)
 #par(mar=c(4.3,4.3,3,1))
 	par(mar=c(1,1,1,1))
-plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
+plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=19,cex=5,
 #		xlab="Eastings",ylab="Northings",main="Inferred Population Map:\n Lattice with Barrier and Admixture",
 		xaxt='n',yaxt='n',
 		col=pop.cols,lwd=2)
 		points(source.coords,pch=20,col=source.coord.cols)
 	box(lwd=2)
-	text(target.coords,labels=paste(1:k))
+	text(target.coords,labels=paste(1:k),col="white",cex=1.5,font=2)
 	arrows(x0 = source.coords[,1],
 			y0 = source.coords[,2],
 			x1 = target.coords[,1],
@@ -3143,18 +3152,18 @@ plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=1,cex=3.5,
 			col= source.coord.cols,
 			lwd = scalar*admix.proportions[,best],
 			length=0.2)
-	legend(x = "topleft",
-			pch=c(20,rep(NA,5)),
-			lty=c(NA,rep(1,5)),
-			lwd=c(NA,0.2,0.4,0.6,0.8,1),
-			col=c(1,adjustcolor(1,0.2),adjustcolor(1,0.4),adjustcolor(1,0.6),adjustcolor(1,0.8),adjustcolor(1,1)),
-			legend = c("admixture source",
-								paste("w = ",round(0.1/scalar,2),sep=""),
-								paste("w = ",round(0.2/scalar,2),sep=""),
-								paste("w = ",round(0.3/scalar,2),sep=""),
-								paste("w = ",round(0.4/scalar,2),sep=""),
-								paste("w = ",round(0.5/scalar,2),sep="")),
-			cex=0.9)
+	# legend(x = "topleft",
+			# pch=c(20,rep(NA,5)),
+			# lty=c(NA,rep(1,5)),
+			# lwd=c(NA,0.2,0.4,0.6,0.8,1),
+			# col=c(1,adjustcolor(1,0.2),adjustcolor(1,0.4),adjustcolor(1,0.6),adjustcolor(1,0.8),adjustcolor(1,1)),
+			# legend = c("admixture source",
+								# paste("w = ",round(0.1/scalar,2),sep=""),
+								# paste("w = ",round(0.2/scalar,2),sep=""),
+								# paste("w = ",round(0.3/scalar,2),sep=""),
+								# paste("w = ",round(0.4/scalar,2),sep=""),
+								# paste("w = ",round(0.5/scalar,2),sep="")),
+			# cex=0.9)
 dev.off()
 
 

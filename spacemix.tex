@@ -64,8 +64,22 @@
 \newpage
 
 \begin{abstract}
-The distribution of genetic variation in modern populations reflects the evolutionary outcome of a complex history of demographic and migrational events.  With large numbers of sampled populations over a large geographic extent, it can be difficult to infer and visually summarize the population structure produced by this history.  In this paper, we present a novel statistical method for the inference and visualization of the patterns of genetic structure and admixture in a sample of populations.  Our method, which uses genome-wide allele frequency data, is based on an assumption of isolation by distance (IBD).  We model the decay of allele frequency covariance as a function of distance, and estimate a ``geogenetic map" that describes how populations are related to one another.  Within this framework, 
-we interpret anomalously long distance covariance as evidence for genetic admixture, and we model admixture events as arrows, from a source of admixture to its target, on the inferred map.  We demonstrate the utility of this method on a circum-Tibetan sampling of the greenish warbler (\textit{Phylloscopus trochiloides}), in which we find evidence for gene flow between the adjacent, terminal populations of the ring species.  We also analyze a global sampling of human populations, for which we largely recover the geography of our sampling, with support for significant histories of admixture in some samples.  The implementation of this method, called SpaceMix, provides a valuable new resource for understanding and visualizing patterns of population structure.
+The distributions of genetic variation in modern populations 
+are the result of 
+complex demographic histories of migration and population size change,
+which can be difficult to infer and visually summarize,
+especially with a large number of geographically distributed samples.
+In this paper, we present a novel statistical method for the inference and visualization of the patterns of genetic structure and admixture in a sample of populations.  
+Our method uses genome-wide polymorphism data to build a ``geogenetic map''
+that describes how populations are related to one another
+by modeling genetic covariance as a decreasing function of distance.  
+% replacing "allele frequency" with just "genetic" since "frequency" makes people think they need to be estimating frequencies well.
+Within this framework, 
+historical admixture results in anomalously long distance covariance,
+and so we model admixture events as arrows, from a source of admixture to its target, on the inferred map.  
+We demonstrate the utility of this method on a circum-Tibetan sampling of the greenish warbler (\textit{Phylloscopus trochiloides}), in which we find evidence for gene flow between the adjacent, terminal populations of the ring species.  
+We also analyze a global sampling of human populations, for which we largely recover the geography of our sampling, with support for significant histories of admixture in some samples.  The implementation of this method, available as an R package \plr{is this true?}
+called SpaceMix, provides a valuable new resource for understanding and visualizing patterns of population structure.
 \end{abstract}
 %Genetic data can be used to illuminate that history, providing information about when and how populations have diverged, how migration connects populations, and how population sizes have fluctuated over time.  
 
@@ -76,6 +90,19 @@ we interpret anomalously long distance covariance as evidence for genetic admixt
 %
 %
 %\plr{Two bits of jargon I think we should be careful about using: ``shared drift'' and ``nugget''.}
+\plr{Notes and stylistic decisions:
+Generally, I think that the method is generally presented how we came to it,
+which isn't necessarily the most natural way for others to understand it.
+That narrative is useful, but we can save it for the Haldane's Sieve post. 
+
+Also, I shy away from so much use of "we" and "our" because when I read it I think of ownership, which is offputting.
+It also feels more personable and friendly, maybe, but on the balance I tend to read it the first way.
+At least maybe ``our'' should only refer to things already introduced,
+since when I read it I think that I should already know what it is.
+I am not attached, though.
+
+``Fig.'' or ``figure'' or ``Figure''?
+}
 
 \newpage
 %%%%%%%%% %%%%%%%%% %%%%%%%%%
@@ -84,66 +111,146 @@ we interpret anomalously long distance covariance as evidence for genetic admixt
 % Population structure and the long term demography of populations leave their mark on patterns of genetic variation and differentiation within and between populations. 
 % There are many different population genetic approaches to learn about population structure. At one end there are those approaches that focus on developing a detailed view of the migrational history of a small number of populations. There has been considerable recent progress in this area, using a variety of summaries such as the allele frequency spectrum (\citep{dadi}, Song, Excoffier), or approximations to the coalescent applied to sequence data (Song, Li and Durbin,  ). At the other end of this axis sits a broad set of approaches that focus on visualizing patterns of genetic relatedness and population structure. Such methods are usually less dependent on a particular population genetic model, and can deal with many populations or individuals as the unit of analysis. Examples of this second set of methods include cluster-based methods \citep{STRUCTURE, ADMIXTURE, FINESTRUCTURE} and reduced dimensionality representations of the data, such as Principal Components (PC) Analysis (e.g. Menozzi, Piazza, and Cavalli-Sforza 1978, Novembre et al 2008, Novembre and Stephens 2008, McVean 2009,Yang et al 2012, Yang et al 2014).
 % =======
-There are many different population genetic approaches to learn how population structure and demographic processes have left their mark on patterns of genetic variation within and between populations.  At one end there are model-based approaches that focus on developing a detailed view of the migrational history of a small number of populations. There has been considerable recent progress in this area, using a variety of summaries such as the allele frequency spectrum (\citep{dadi}, Song, Excoffier), or approximations to the coalescent applied to sequence data (Song, Li and Durbin,  ).  
+There are many different methods to learn how population structure and demographic processes have left their mark on patterns of genetic variation within and between populations.
+Model-based approaches focus on developing a detailed view of the migrational history of a small number of populations,
+often assuming one or a small number of large, randomly mating populations (i.e.\ little or no geographic structure).
+There has been considerable recent progress in this area, using a variety of summaries such as the allele frequency spectrum (\citep{dadi}, Song, Excoffier), 
+or approximations to the coalescent applied to sequence data (Song, Li and Durbin,  ).  
 
-At the other end of this axis sits a broad set of approaches that focus on visualizing patterns of genetic relatedness and population structure. Such methods are usually less dependent on a particular population genetic model, and can deal with many populations or individuals as the unit of analysis. Examples of this second set of methods include cluster-based methods \citep{STRUCTURE, ADMIXTURE, FINESTRUCTURE} and reduced dimensionality representations of the data, such as Principal Components (PC) Analysis (e.g.\ Menozzi, Piazza, and Cavalli-Sforza 1978).  
+Other approaches are designed only to visualize patterns of genetic relatedness and population structure,
+without using a particular population genetic model.
+Such methods can deal with many populations or individuals as the unit of analysis. 
+Examples of this second set of methods include cluster-based methods \citep{STRUCTURE, ADMIXTURE, FINESTRUCTURE} and reduced dimensionality representations of the data, such as Principal Components (PC) Analysis (e.g.\ Menozzi, Piazza, and Cavalli-Sforza 1978, SMARTPCA).  
 
-Between these end points, there is a set of methods for visualizing patterns of relatedness that use allele frequency data to estimate a population phylogeny of the evolutionary history shared between sampled individuals or populations.  This approach of modeling relatedness between populations within species as a tree-like structure was pioneered by Cavalli-Sforza \& Edwards,  (\&Thompson?), as were methods to test whether a tree is a good model of population history \citep{treeness} (see \citep{Felsenstein} for a review).
+Between these, there is a set of methods for visualizing patterns of relatedness that use allele frequency data to estimate a population phylogeny of the evolutionary history shared between sampled individuals or populations.  This approach of modeling relatedness between populations within species as a tree-like structure was pioneered by Cavalli-Sforza \& Edwards,  (\&Thompson?), as were methods to test whether a tree is a good model of population history \citep{treeness} (see \citep{Felsenstein} for a review).
+Tree-based approaches are appealing because trees are easy to visualize and explain,
+although interpretation can be tricky
+since the assumptions of a tree-based model
+(unstructured populations that split at discrete points in time)
+are rarely met. \plr{fair?}
  
 Recently, there has been a resurgence of interest in these tree-based methods.  Some use population trees as a null model to test and quantify the signal of admixture between samples, where admixture is defined as covariance between samples in excess of that predicted by their tree-like history (Reich and friends).  Others, such as Treemix \citep{Pickrell} and mixmapper (cite mixmapper), focus on data analysis and visualization, and fit a population model represented by a directed acyclic graph between populations.  TreeMix accommodates reticulate population structure by allowing branches on the population tree to be connected by arrows of admixture that explain excess residual covariance between populations or population `clades'.
 
-There has also been a rise in the use of dimensionality reduction approaches, especially Principal Components Analysis, for the visualization of patterns of genetic variation.  As with the tree-based methods described above, the use of PC analysis in population genetics was pioneered by Cavalli-Sforza (Cavalli-Sforza et al 1978), and, with the rise of genomic datasets of thousands of loci for tens or hundreds of samples, this approach for creating a low-dimensional visual summary of genetic data that has thousands of dimensions (one for each locus) is more popular than ever before.  Generally, the genetic variation in a genotype matrix of allele frequencies is summarized by plotting the first eigenvector of the covariance of the allele frequencies against the second (Patterson 2006); the output of this procedure is interpreted as a `map' of genetic relatedness (Novembre et al 2008).
+There has also been a rise in the use of dimensionality reduction approaches, especially Principal Components Analysis (PCA), for the visualization of patterns of genetic variation.  As with the tree-based methods described above, the use of PCA in population genetics was pioneered by Cavalli-Sforza (Cavalli-Sforza et al 1978), and, with the rise of genomic datasets of thousands of loci for tens or hundreds of samples, this approach for creating a low-dimensional visual summary of genetic data that has thousands of dimensions (one for each locus) is more popular than ever before.  Generally, the genetic variation in a genotype matrix of allele frequencies is summarized by plotting the first eigenvector of the covariance of the allele frequencies against the second (Patterson 2006); the output of this procedure is interpreted as a `map' of genetic relatedness (Novembre et al 2008).
 
-Both PCA and tree-based methods are valuable as genetic inference and visualization tools, but both also suffer from serious limitations.  Because gene flow is frequently pervasive, patterns of relatedness between samples may often be only poorly represented by a tree-based model.  PCA is more flexible; it assumes no explicit model of population-level processes, and simply describes average coalescent times between pairs of samples (McVean 2009); it can  also capture geographic patterns of genetic differentiation (e.g. Novembre et al 2008).  However, its interpretation is more difficult, as the patterns of genetic differentiation it displays in its first two axes are necessarily incomplete for any dataset with more than two samples.  In addition, the interpretation of PC biplots is not straightforward (Novembre and Stephens 2008, Yang et al 2012, Yang et al 2014), as many of the patterns it displays may be mathematical artifacts of the covariance structure, which produces eigenvectors related to sinusoidal functions.
+Both PCA and tree-based methods are valuable as genetic inference and visualization tools, but both also suffer from serious limitations.  Because gene flow is frequently pervasive, patterns of relatedness between samples may often be only poorly represented by a tree-based model.  PCA is more flexible; it assumes no explicit model of population-level processes, and simply describes average coalescent times between pairs of samples (McVean 2009); it can  also capture geographic patterns of genetic differentiation (e.g. Novembre et al 2008).  However, its interpretation is more difficult, as the patterns of genetic differentiation it displays in its first two axes are necessarily incomplete for any dataset with more than two samples.  In addition, the interpretation of PC biplots is not straightforward (Novembre and Stephens 2008, Yang et al 2012, Yang et al 2014), 
+as results are affecdted by sample sizes,
+and many of the patterns it displays may be mathematical artifacts of the covariance structure, which produces eigenvectors related to sinusoidal functions.
 
-What is desired, then, is a method for inferring and visualizing patterns of population differentiation that can recapitulate complex, non-hierarchical structures, while also admitting simple and intuitive interpretation.  Geographically continuous models, in which dispersal is spatially limited and the expected pattern of population differentiation is that of isolation by distance, offer a natural framework for such a method.  The empirical pattern of Isolation by Distance (IBD; Wright), in which genetic differentiation increases with the geographic distance between populations, is ubiquitous in nature (Meirmans 2012), and there is a rich history in population genetics on the theory of populations distributed in continuous space (Wright, Malecot, Naylaki 1978, Felsenstein 1975, Barton, Depaulis, and Etheridge 2000).  Modeling such empirical patterns in a geographically continuous framework relies only on the weak assumption that an individual's mating opportunities are spatially limited by dispersal; a large set of models, ranging from equilibrium migration-drift models to non-equilibrium models, such as recent spatial expansions of populations, give rise to the empirical pattern of isolation by distance (REF).
+What is desired, then, is a method for inferring and visualizing patterns of population differentiation that can recapitulate complex, non-hierarchical structures, while also admitting simple and intuitive interpretation.  Geographically continuous models, in which dispersal is spatially limited and the expected pattern of population differentiation is that of isolation by distance, offer a natural framework for such a method.  
+It is ubiquitous in nature that genetic differentiation increases with geographic distance \citep{meirmans2012},
+an empirical pattern termed ``Isolation by Distance'' \citep[IBD][]{wright}, 
+and there is a rich history of population genetics theory for populations distributed in continuous space (Wright, Malecot, Naylaki 1978, Felsenstein 1975, Barton, Depaulis, and Etheridge 2000).  
+Modeling such empirical patterns in a geographically continuous framework relies only on the weak assumption that an individual's mating opportunities are spatially limited by dispersal; a large set of models, ranging from equilibrium migration-drift models to non-equilibrium models, such as recent spatial expansions of populations, give rise to the empirical pattern of isolation by distance (REF).
+
 
 %As a result, the first principal axes of genetic variance (in, e.g., PC analysis) within continents or other geographically restricted areas often correspond strongly to geographic coordinates (?), which allows estimation of the location of individuals whose origin of ancestry is unknown (???)
 
-Under a spatially continuous model, ``admixture'' can be thought of as the outcome of unusually long-distance gene flow, and its signature as relatedness between a set of populations that is anomalously high given the distance that separates them.  Here, we present a statistical framework for studying the spatial distribution of genetic variation and genetic admixture based on a model of isolation by distance. Within this framework, the pattern of genetic relatedness between the samples is represented by a map, in which inferred distances between samples are proportional to their genetic differentiation.  These `geogenetic'  maps are simple, intuitive, low-dimensional summaries of population structure, and they provide a natural framework for the inference and visualization of spatial patterns of genetic variation and the signature of genetic admixture.
+
+\plr{I feel like something like the following, but maybe more exciting, should go right up near the top of the intro, before the lengthy but useful recap of other methods:}
+We build a ``geogenetic'' map in which proximity implies genomic similarity, in an isometric way.
+This map generally recapitulates the actual geographic locations of the populations,
+but distorted so that distances reflect the ease with which the organism disperses:
+nearby samples tend to be more closely related
+because dispersal of real organisms is geographically limited,
+but nearness should be measured according to ease of movement by the dispersing organism,
+not by straight-line distance.
+Added to this, ``admixture'' can be thought of as the outcome of unusually long-distance gene flow.
+It results in relatedness between populations that is anomalously high given the distance that separates them.  
+Here, we present a statistical framework for studying the spatial distribution of genetic variation and genetic admixture based on a flexible parameterization
+of the relationship of isolation by distance.
+\plr{right, so maybe merge this last sentence with the first and put this at the start of the section, not the end}
+Within this framework, the pattern of genetic relatedness between the samples is represented by a map, in which inferred distances between samples are proportional to their genetic differentiation.  These `geogenetic'  maps are simple, intuitive, low-dimensional summaries of population structure, and they provide a natural framework for the inference and visualization of spatial patterns of genetic variation and the signature of genetic admixture.
+
 
 %%%%%%%%% %%%%%%%%% %%%%%%%%%
 \section*{Results}
 
-
 \paragraph{Data}
 
 % For convenience, we use as the genetic data in our descriptions below, but we note that this method could be applied equally well to other types of data, including microsatellites.
-Our data consist of $L$ unlinked bi-allelic single nucleotide polymorphisms (SNPs) sampled across $K$ populations, as well as the geographic coordinates, denoted $G_k$ in population $k$, (latitude and longitude) at which those populations were sampled (although $G_k$ may be missing for some or all of the populations). We summarize these genetic data by the allele counts, arbitrarily choosing an allele to count at each locus, and denoting the number of the counted allele at locus $\ell$ in population $k$ as $C_{\ell,k}$ out of a total sample size of $S_{\ell,k}$ alleles.  The sample frequency of the counted allele at locus $\ell$ in population $k$ is therefore $\hat{f}_{\ell,k} = C_{\ell,k}/S_{\ell,k}$.  Our method models the covariance in these allele frequencies between populations across loci. Note that while we will refer to a sample from population $k$, this sample could consist of a single individual ($S_{\ell,k}=2$ for a diploid). 
+Our data consist of $L$ unlinked bi-allelic single nucleotide polymorphisms (SNPs) sampled across $K$ populations, 
+\plr{it's not ``our'' data, since we want the reader to apply it to their own data.}
+as well as the geographic coordinates, denoted $G_k$ in population $k$, (latitude and longitude) at which those populations were sampled (although $G_k$ may be missing for some or all of the populations). 
+\plr{I think it's better to not introduce the true locations at all until later, since the model doesn't actually use them.}
+The genetic data consist of allele counts: after arbitrarily choosing an allele to count at each locus, 
+we denote the number of counted alleles at locus $\ell$ in population $k$ as $C_{\ell,k}$,
+and the total number of alleles observed as $S_{\ell,k}$.
+The sample frequency at locus $\ell$ in population $k$ is $\hat{f}_{\ell,k} = C_{\ell,k}/S_{\ell,k}$.  
+\plrm{can we get rid of the hat on $\hat{f}$?}
+% Our method models the covariance in these allele frequencies between populations and across loci.  % don't need to foreshadow already
+Note that while we will refer to a sample from population $k$, this sample could consist of a single individual ($S_{\ell,k}=2$ for a diploid). 
 
-We standardize sample allele frequencies at locus $\ell$, to be
+We first compute standardized sample allele frequencies at locus $\ell$, by
 \begin{equation}
   \label{eq:standardized_sample_freqs}
   \hat{X}_\ell = (\hat{f}_{\ell}  - \bar{f}_{\ell})/\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}\text{,}
 \end{equation}
-where $\hat{f}_{\ell}$ is the vector of sample allele frequencies at locus $\ell$ across all $K$ samples, and $\bar{f}_{\ell}$ is the sample size-weighted sample mean frequency across the $K$ samples at locus $\ell$.  The mean-centering procedure allows us to model covariance in deviations around a global mean. Then, to give each locus equal weight, we normalize the mean-centered frequencies at each locus by the binomial variance, as others have done (e.g., Nicholson et al 2002; Patterson et al 2006).  Using the sample mean to mean-center these standardized allele frequencies has implications on their covariance structure, which we discuss in the Methods.  We proceed in our discussion of the covariance as if our $\bar{f}_{\ell}$ were a global, rather than sample, mean allele frequency at locus $\ell$.
+\plrm{below you use $\hat X$ as a matrix; add in subscript $k$'s so that it's clear which way the matrix goes}
+where $\hat{f}_{\ell}$ is the vector of sample allele frequencies at locus $\ell$ across all $K$ samples, and $\bar{f}_{\ell}$ is the sample size-weighted sample mean frequency across the $K$ samples at locus $\ell$.  
+\plr{$\bar{f}$ is the global mean frequency, no? if unclear, formula comes in methods anyhow?}
+This normalization is widely used \citep[e.g.][]{nicholson2002,patterson2006};
+roughly speaking, mean-centering removes any effect of choice of counted allele,
+and dividing by $\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}$ makes each locus have unit variance.
+Using the sample mean to mean-center these standardized allele frequencies has implications on their covariance structure, which we discuss in the Methods.  
+We proceed in our discussion of the covariance as if our $\bar{f}_{\ell}$ were a global, rather than sample, mean allele frequency at locus $\ell$.
 
 
 \paragraph{Spatial Covariance Model}
-We wish to model the distribution of allele frequencies  among populations as the result of a spatial process, in which migration rates between nearby populations are higher than those between distant ones.  Higher rates of migration between populations homogenize differentiation caused by drift; populations with higher levels of historical or ongoing migration can be thought of as having more shared population history, i.e.\ stronger covariance in their allele frequency deviations around the global mean.
+We wish to model the distribution of allele frequencies  among populations as the result of a spatial process, in which migration rates between nearby populations are higher than those between distant ones.  
+Migration between populations homogenizes differentiation caused by genetic drift; 
+populations with higher levels of historical or ongoing migration share more of their demographic history,
+and so have larger covariance in their allele frequency deviations around the global mean.
 
-We assume that our standardized sample frequencies are generated independently at each locus by a spatial Gaussian process.  This means that the standardized sample frequencies, at each locus, are distributed as multivariate normal with mean zero and a spatial covariance matrix specified by the pairwise geographic distances between samples. We choose as the form of our parametric covariance matrix a simple and flexible model with exponential decay of standardized allele frequency covariance with geographic distance (Diggle et al 1998, Wasser et al 2004, Bradburd, Ralph, and Coop 2013).
+We assume that our standardized sample frequencies are generated independently at each locus by a spatial Gaussian process.  
+\plr{don't need to say ``Gaussian'' yet, as we're just parameterizing the covariance, which makes sense regardless}
+This means that the standardized sample frequencies, at each locus, are distributed as multivariate normal with mean zero and a spatial covariance matrix specified by the pairwise geographic distances between samples. We choose as the form of our parametric covariance matrix a simple and flexible model with exponential decay of standardized allele frequency covariance with geographic distance (Diggle et al 1998, Wasser et al 2004, Bradburd, Ralph, and Coop 2013).
 
 The covariance between standardized population allele frequencies in populations $i$ and $j$ is 
+\plrm{maybe not ``is'' but ``we model as''?}
 \begin{equation}
 \label{eq:spatial_covariance}
 \Omega^{(P)}_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	-\left(\alpha_1D_{i,j} \right)^{\alpha_2} \right) \text{,}
 \end{equation}
-where $D_{i,j}$ is the geographic distance between populations $i$ and $j$ (and therefore a function of their locations, $G_i$ and $G_j$), $\alpha_0$ controls the within-population variance, or the covariance when distance between points is 0 (the sill of the covariance matrix),  $\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay.  Within population variance may vary across samples due to either noise from a finite sample size or demographic history unique to that sample (e.g. bottlenecks or endogamy).  To accommodate this heterogeneity, we introduce ``nuggets'' of population-specific variance terms on the diagonal of the standardized allelic covariance matrix, as follows:  
+\plrm{how about \eqref{eq:spatial_covariance} could be ``for $i\neq j$'' and then \eqref{eq:spatial_covariance2} could be just for $\Omega_{i,i}$, without the $\delta$?}
+where $D_{i,j}$ is the geographic distance 
+\plrm{should this be ``geogenetic distance''?}
+between populations $i$ and $j$ (and therefore a function of their locations, $G_i$ and $G_j$), $\alpha_0$ controls the within-population variance, or the covariance when distance between points is 0 
+(known as a ``sill'' in the geospatial literature),
+$\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay.  Within population variance may vary across samples due to either noise from a finite sample size or demographic history unique to that sample (e.g.\ bottlenecks or endogamy).  
+To accommodate this heterogeneity, we introduce population-specific variance terms on the diagonal of the standardized allelic covariance matrix, 
+(known as ``nuggets'')
+as follows:  
 \begin{equation}
 \label{eq:spatial_covariance2}
 \Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	-\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right) + \delta_{i,j} \big(\frac{1}{\bar{S_{i}}} + \eta_{i} \big) \text{,}
 \end{equation} 
-where $\delta_{i,j}$ is the indicator function $1$ if $i=j$, and $0$ otherwise. Our $\eta_k$ is a sample-specific variance (nugget) for sample $k$, and represents any excess allele frequency variance not captured by our spatial model. Finally, $\bar{S}$ is a vector of the mean sample sizes in each population, where $\bar{S}_k$ is the mean sample size across all loci in population $k$.  We include this sample size term to acknowledge the binomial sampling variance in estimating the population allele frequency.
+where $\delta_{i,j}$ is the indicator function $1$ if $i=j$, and $0$ otherwise. 
+Here $\eta_k$ is a sample-specific variance (nugget) for sample $k$, 
+\plr{should be consistent: ``sample'' or ``population''?}
+and represents any excess allele frequency variance not captured by the spatial model,
+and $1/\bar{S_i}$ accounts for the variance introduced by sampling within the population.
+Finally, $\bar{S}$ is a vector of mean sample sizes in each population, where $\bar{S}_k$ is the mean sample size across all loci in population $k$.  
+\plr{maybe just ``sample size'' (not ``mean'') and discuss missing data in the Methods? otherwise, confusing without having mentioned missing data.}
 
-Given the assumption of multivariate normality for our standardized sample frequencies, it follows that the sample covariance of our standardized sample frequencies calculated across loci ($ \widehat{\Omega} = (1/L)  \hat{X}\hat{X}^T$) is Wishart distributed with degrees of freedom equal to the number of loci ($L$) used to estimate the sample covariance matrix. We denote this by
+\plr{Now, we can say the distribution of the sample covariance isn't known in general,
+but the central limit theorem implies that if the number of loci is large, the sample covariance converges to Wishart.}
+Given the assumption of multivariate normality for our standardized sample frequencies, 
+it follows that the sample covariance of our standardized sample frequencies calculated across loci 
+($ \widehat{\Omega} = (1/L)  \hat{X}\hat{X}^T$) 
+is Wishart distributed with degrees of freedom equal to the number of loci ($L$) used to estimate the sample covariance matrix. 
+\plrm{this happens if each locus has variance 1, after normalization; a different normalization would give a different number of degrees of freedom}
+We denote this by
 \begin{equation}
 \label{eq:wishart_dist}
 P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left( L\widehat{\Omega} \mid \Omega,L \right)
 \end{equation}
-Therefore, the likelihood of the standardized sample frequencies across loci is the likelihood of our sample covariance matrix, as this contains all of the information about our parameters of interest.  \gb{Graham I feel like there's a way to say this last sentence better, but I'm not sure exactly what you're trying to say.} Handily, it also means that once the sample covariance matrix has been calculated, all other computations do not scale with the number of loci, making the method scalable to genome size datasets. Because we center our standardized sample frequencies ($\hat{X}$) using the mean sample frequency (equation \eqref{eq:standardized_sample_freqs}), we use a transformed version of $\widehat{\Omega} $ in our likelihood \eqref{eq:wishart_dist} to reflect this (see Methods).
-
-%\plrm{also, fact that sample covariance is a sufficient statistic for mean-centered multivariate Gaussian.}
+Therefore, the likelihood of the standardized sample frequencies across loci is the likelihood of our sample covariance matrix, as this contains all of the information about our parameters of interest.  
+\gb{Graham I feel like there's a way to say this last sentence better, but I'm not sure exactly what you're trying to say.} 
+\plr{I think you're wanting to say that if the data were Gaussian, then the sample covariance matrix is a sufficient statistic,
+so that calculating the likelihood of $\widehat \Omega$ is the same as calculating the likelihood of the data.}
+Handily, it also means that once the sample covariance matrix has been calculated, all other computations do not scale with the number of loci, making the method scalable to genome size datasets. Because we center our standardized sample frequencies ($\hat{X}$) using the mean sample frequency (equation \eqref{eq:standardized_sample_freqs}), we use a transformed version of $\widehat{\Omega} $ in our likelihood \eqref{eq:wishart_dist} to reflect this (see Methods).
+\plr{already said this last thing}
 
 %We can estimate the parameters of our simple isolation by distance model, $\alpha_0,\alpha_1, \alpha_2$, and $\eta$, by using \eqref{eq:wishart_dist} to give us the likelihood of the standardized sample frequencies across loci, as this contains all of the information about our parameters of interest.  
 %\plrm{also, fact that sample covariance is a sufficient statistic for mean-centered multivariate Gaussian.}
@@ -154,20 +261,28 @@ Therefore, the likelihood of the standardized sample frequencies across loci is 
 %%%%%%%%% %%%%%%%%% 
 \paragraph{Accommodating heterogeneous processes}
 %This model assumes that the covariance in allele frequencies between pairs of populations decays in the same way with geographic distance in all portions of the sampled range (i.e.\ that the process is homogeneous and isotropic).  However, in many cases these assumptions will not be met. 
-
+\plrm{shouldn't this go up in the intro, not in the middle of the results? Can skip directly to the next paragraph (with a different heading).}
 Non-equilibrium processes like long distance admixture, colonization, or population expansion events will distort the relationship between covariance and distance across the range, as will barriers to dispersal on the landscape. To accommodate these heterogeneous processes we infer the locations of populations on a map that reflects genetic, rather than geographic, proximity. Two populations that are sampled at distant locations but that are genetically similar (perhaps one was recently founded by a colonization event from the other) may have inferred locations that are nearby, while two populations that are sampled close together, but that are genetically dissimilar (e.g., are separated by a barrier), may have inferred locations that are farther apart. The result is a ``geogenetic" map in which the distances between populations are indicative of the way that populations perceive the distances between themselves.
 
-To generate this map, we treat populations' geographic locations as random variables and estimate them as part of our Bayesian inference procedure.  The set of coordinates where the populations were sampled is $G$, and we designate the set of location parameters (i.e.\ coordinates in the geogenetic map) for our populations as $G'$. Our parametric covariance matrix $\Omega$, as given by equation \eqref{eq:spatial_covariance2}, is a function of the pairwise matrix of distances between these inferred locations, $D(G')$, and our $\vec{\alpha}$ and $\eta$ parameters.  We acknowledge this dependence by writing $\Omega(\vec{\alpha},{D}(G'),\eta)$.  We write the posterior probability as 
+To generate this map, we treat populations' geographic locations as random variables and estimate them as part of our Bayesian inference procedure.  
+\plrm{haven't mentioned Bayesian anything yet}
+The set of coordinates where the populations were sampled is $G$, 
+and we designate the set of location parameters (i.e.\ coordinates in the geogenetic map) for our populations as $G'$. 
+\plrm{I think we can drop the notation for the true locations and use $G$ for $G'$.}
+Our parametric covariance matrix $\Omega$, as given by equation \eqref{eq:spatial_covariance2}, is a function of the pairwise matrix of distances between these inferred locations, $D(G')$, and our $\vec{\alpha}$ and $\eta$ parameters.  We acknowledge this dependence by writing $\Omega(\vec{\alpha},{D}(G'),\eta)$.  We write the posterior probability as 
 \begin{equation}
 \label{eq:cyol_prob}
 P \left( G', \vec{\alpha}, \eta \mid \widehat{\Omega}, L, G \right) \propto  
 	P \left( \widehat{\Omega}  \mid \Omega(\vec{\alpha},{D}(G'),\eta ) \right) P(\vec{\alpha}) P(G') P(\eta) \text{,}
 \end{equation}
-where the constant of proportionality is the normalization constant of the posterior. Our priors on the parameters that control the shape of the decay of covariance with distance $P(\vec{\alpha})$ are given in the Methods, as are those on $P(\eta)$.  We assume that the priors on the inferred, geogenetic locations, $P(G')$ are independent across populations.  Because the observed locations are a natural prior on where populations are positioned under the null of isolation by distance, we use a very weak prior on population $k$'s location parameter ($G'_k$) that is centered around the observed location $G_k$.
+where the constant of proportionality is the normalization constant.  
+
+Our priors on the parameters that control the shape of the decay of covariance with distance $P(\vec{\alpha})$ are given in the Methods, as are those on $P(\eta)$.  We assume that the priors on the inferred, geogenetic locations, $P(G')$ are independent across populations.  Because the observed locations are a natural prior on where populations are positioned under the null of isolation by distance, we use a very weak prior on population $k$'s location parameter ($G'_k$) that is centered around the observed location $G_k$.
 %We use a very weak prior on population $k$'s location parameter, $G'_k$: a bivariate normal spatial prior centered on the observed location $G_k$ and with a variance of half the mean pairwise distance between the observed population locations.
-  %(as well as a natural starting position for the MCMC)
-  
-This prior also encourages the resulting inferred geogenetic map to be anchored in the observed locations and to represent (informally) the minimum distortion to space necessary to satisfy the constraints placed by genetic similarities of populations.  However, we can also use random locations as the ``observed" locations ($G_k$) to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference. 
+%(as well as a natural starting position for the MCMC)
+The prior $P(G')$ on geogenetic locations
+also encourages the resulting inferred geogenetic map to be anchored in the observed locations and to represent (informally) the minimum distortion to space necessary to satisfy the constraints placed by genetic similarities of populations.  However, we can also use random locations as the ``observed" locations ($G_k$) to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference. 
+
 We then use Markov chain Monte Carlo to estimate the posterior distribution on the parameters; for more details see the Methods. 
 This method is implemented in a program called SpaceMix.
 
@@ -175,9 +290,13 @@ This method is implemented in a program called SpaceMix.
 
 %However, one concern is that if the method returns a spatial configuration that strongly resembles the observed population map, this could reflect the possibility that there is insufficient information in the data to overcome the influence of the prior, or that the MCMC has not been run long enough.  To address these concerns, we can also use random locations as the ``observed" locations ($G_k$) to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference. 
 
-\paragraph{Illustrated with Simulations.} To illustrate this inference procedure, we present Spacemix output for several scenarios simulated under the coalescent (using \textrm{ms}, (Hudson)).  In all scenarios, we simulate under a stepping stone model in which populations are arranged on a grid with symmetric nearest neighbor migration (Fig. \ref{sfig:lattice_scenarios}\subref{simple_lattice}), with 10 haploid individuals sampled from every other population at 10,000 unlinked loci (for details on all simulations, see Methods).  On all simulated datasets, we perform SpaceMix analyses in which we treat population locations as random variables to be estimated as part of the model, and randomly place the `observed' location of each population so as to remove the influence of the prior.  For clarity, we present the full Procrustes superimposition (rotation, translation, and dilation)
-%\plrm{I always forget: is full Procrustes rotation + dilation, or is it an arbitrary linear map? if the former, just say so?}
-of the inferred locations around the coordinates used to simulate the data.
+\paragraph{Illustrated with Simulations.} To illustrate this inference procedure, we present Spacemix output for several scenarios simulated under the coalescent (using \textrm{ms}, (Hudson)).  In all scenarios, we simulate under a stepping stone model in which populations are arranged on a grid with symmetric nearest neighbor migration 
+(Fig. \ref{sfig:lattice_scenarios}\subref{simple_lattice}), 
+\plrm{periods in \latex get two spaces after; escape the space after to avoid this ugly behavior}
+with 10 haploid individuals sampled from every other population at 10,000 unlinked loci (for details on all simulations, see Methods).  On all simulated datasets, we perform SpaceMix analyses in which we treat population locations as random variables to be estimated as part of the model, and randomly place the `observed' location of each population so as to remove the influence of the prior.  
+For clarity, we present inferred locations after Procrustes transformation
+(best-fit rotation, translation, and dilation) 
+to match the coordinates used to simulate the data.
 
 \begin{figure}
 	\centering

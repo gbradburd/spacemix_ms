@@ -228,6 +228,32 @@ ff.text <- function ( xy, labels, rep.fact=4, attr.fact=0.2, col="black", text.c
     segments( x0=xy[,1], x1=txy[,1], y0=xy[,2], y1=txy[,2], lwd=2, col=adjustcolor(col,.25) )
 }
 
+get.sample.covariance <- function(counts,sample.sizes){
+	sample.frequencies <- counts/sample.sizes
+	mean.sample.sizes <- rowMeans(sample.sizes)
+	mean.sample.frequencies <- matrix(apply(sample.frequencies,2,
+											get.weighted.mean.frequency,
+											mean.sample.sizes=mean.sample.sizes),
+									nrow=length(mean.sample.sizes),ncol=ncol(sample.frequencies),byrow=TRUE)
+	normalized.sample.frequencies <- sample.frequencies/sqrt(mean.sample.frequencies*(1-mean.sample.frequencies))
+	sample.covariance <- cov(t(normalized.sample.frequencies),use="pairwise.complete.obs")
+	loci <- ncol(sample.frequencies)
+	return(list("sample.covariance" = sample.covariance,
+				"mean.sample.sizes" = mean.sample.sizes,
+				"loci" = loci))
+}
+
+get.weighted.mean.frequency <- function(sample.frequencies,mean.sample.sizes){
+	na.pops <- which(is.na(sample.frequencies))
+	if(sum(na.pops) > 0){
+		sample.frequencies <- sample.frequencies[-na.pops]
+		mean.sample.sizes <- mean.sample.sizes[-na.pops]
+	}
+	weighted.sample.frequencies <- mean.sample.sizes*sample.frequencies
+	sample.frequency.weighted.mean <- sum(weighted.sample.frequencies)/sum(mean.sample.sizes)
+	return(sample.frequency.weighted.mean)
+}
+
 ################################
 #	WARBLER POP FIGS
 ################################
@@ -1306,13 +1332,89 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 		return(abbrevs)
 	}
 	abbrevs <- abbreviate(pops)
-	
+
 ################
 #	globe PCA
 ################
+mcn.cov.list <- get.sample.covariance(globetrotter.counts,globetrotter.sample.sizes)
+mcn.cov.hat <- mcn.cov.list$sample.covariance
+obs.D <- fields::rdist.earth(globe.coords)
+index.mat <- upper.tri(obs.D,diag=FALSE)
+color.mat1 <- matrix(0,nrow=k,ncol=k)
+color.mat2 <- matrix(0,nrow=k,ncol=k)
+	for(i in 1:k){
+		for(j in 1:k){
+			color.mat1[i,j] <- continent.col[i]
+			color.mat2[i,j] <- continent.col[j]
+		}
+	}
+
+
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/cov_decay_bw.pdf",width=8,height=5)
+#quartz(width=8,height=5)
+par(mar=c(5,5,2,2))
+plot(obs.D[index.mat],
+		mcn.cov.hat[index.mat],
+		pch=19,
+		xlab="pairwise geographic distance",
+		ylab="allelic covariance",
+		cex.lab=1.5,cex.axis=1.3,cex=0.7)
+	abline(lm(mcn.cov.hat[index.mat] ~ obs.D[index.mat]),col="blue",lwd=3)
+	# lines(lowess(mcn.cov.hat[index.mat] ~ obs.D[index.mat]),col="blue",lwd=2)
+dev.off()
+
+x.subplot2 <- c(5000,11500)
+y.subplot2 <- c(0.17,0.31)
+subplot2.x.coords <- c(-165,180)
+subplot2.y.coords <- c(-60,80)
+require(maps)
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/cov_decay_bw_map.pdf",width=8,height=5)
+#quartz(width=8,height=5)
+par(mar=c(5,5,2,2))
+plot(obs.D[index.mat],
+		mcn.cov.hat[index.mat],
+		pch=19,
+		xlab="pairwise geographic distance",
+		ylab="allelic covariance",
+		cex.lab=1.5,cex.axis=1.3,cex=0.7)
+	# abline(lm(mcn.cov.hat[index.mat] ~ obs.D[index.mat]),col="blue",lwd=3)
+TeachingDemos::subplot(fun = {
+						# par(mar=c(0.1,0.1,0.1,0.1)) ; 
+						plot(0,xlim=subplot2.x.coords,ylim=subplot2.y.coords,type='n',yaxt='n',xaxt='n',xlab="",ylab="")
+						map(database="world",interior=FALSE,add=TRUE,xlim=subplot2.x.coords,ylim=subplot2.y.coords,lwd=0.5); 
+						points(globe.coords,pch=20,col=continent.col,cex=1.2) ; 
+							box(lwd=1.1)
+						},
+					x=x.subplot2,y=y.subplot2)
+dev.off()
+
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/cov_decay_col_map.pdf",width=8,height=5)
+#quartz(width=8,height=5)
+par(mar=c(5,5,2,2))
+plot(obs.D[index.mat],
+		mcn.cov.hat[index.mat],
+		pch=21,
+		col=color.mat1[index.mat],
+		bg=color.mat2[index.mat],
+		xlab="pairwise geographic distance",
+		ylab="allelic covariance",
+		cex.lab=1.5,cex.axis=1.3,cex=0.7)
+
+	TeachingDemos::subplot(fun = {
+						# par(mar=c(0.1,0.1,0.1,0.1)) ; 
+						plot(0,xlim=subplot2.x.coords,ylim=subplot2.y.coords,type='n',yaxt='n',xaxt='n',xlab="",ylab="")
+						map(database="world",interior=FALSE,add=TRUE,xlim=subplot2.x.coords,ylim=subplot2.y.coords,lwd=0.5); 
+						points(globe.coords,pch=20,col=continent.col,cex=1.2) ; 
+							box(lwd=1.1)
+						},
+					x=x.subplot2,y=y.subplot2)
+dev.off()
+
+
 cov_hat <- cov(t(globetrotter.counts/globetrotter.sample.sizes),use="pairwise.complete.obs")
 mean.centering.matrix <- get.transformation.matrix(apply(globetrotter.sample.sizes,1,get.mean.sample.size))
 mc.cov_hat <- mean.centering.matrix %*% cov_hat %*% t(mean.centering.matrix)
+
 pc.coords <- cbind(eigen(mc.cov_hat)$vectors[,1],eigen(mc.cov_hat)$vectors[,2])
 proc.pc.coords <- fitted(vegan::procrustes(globe.coords,pc.coords))
 	pc1.var <- eigen(mc.cov_hat)$values[1] / sum(eigen(mc.cov_hat)$values)

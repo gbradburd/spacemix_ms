@@ -234,17 +234,17 @@ We can allow each of our populations to have an independent spatial source of ad
 We can then consider the parametric covariance matrix that follows from the form of the population frequencies in equation \eqref{eqn-admixedfreq}. The covariance between the standardized allele frequencies of population $i$ and $j$ is, by equation \eqref{eqn-admixedfreq},
 \begin{alignat}{3}
 \label{eq:admixed_covariance_1}
-\identifyadmixsource{\Omega_{i,j}} = (1-w_i)(1-w_j) \Omega^{(P)}_{i\;,\;j\;} \; \times&\\
-w_i(1-w_j) \Omega^{(P)}_{\identifyadmixsource{i},\;j\;} \; \times   \notag&\\
-w_j(1-w_i) \Omega^{(P)}_{i\;,\;\identifyadmixsource{j}} \; \times   \notag&\\
+\identifyadmixsource{\Omega_{i,j}} = (1-w_i)(1-w_j) \Omega^{(P)}_{i'\;,\;j'\;} \; \times&\\
+w_i(1-w_j) \Omega^{(P)}_{\identifyadmixsource{i},\;j'\;} \; \times   \notag&\\
+w_j(1-w_i) \Omega^{(P)}_{i'\;,\;\identifyadmixsource{j}} \; \times   \notag&\\
 w_i w_j \Omega^{(P)}_{\identifyadmixsource{i},\;\identifyadmixsource{j}} \; +   \notag&\\
 \delta_{i,j} (\eta_i + \frac{1}{\bar{S}_i}) \notag&
 \end{alignat}
-where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources from which populations $i$ and $j$ are drawing their admixture with proportions $w_i$ and $w_j$, and the spatial covariance function of population frequencies, $\Omega$, is given by \eqref{eq:spatial_covariance} (this lacks the sample-specific variance terms on the diagonal). Note that we then reintroduce the nugget, $\eta_k$, and the sample size effect, $1/\bar{S_k}$, for each population, to model drift or excess variance in population $k$ on top of that predicted by the mixture of frequencies given by our spatial model.  As in equation \eqref{eq:spatial_covariance2}, $\delta_{i,j} $ is the indicator function $1$ if $i=j$, and $0$ otherwise. 
+where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources from which populations $i$ and $j$ are drawing their admixture with proportions $w_i$ and $w_j$, $i^{\prime}$ and $j^{\prime}$ are the geogenetic locations of populations $i$ and $j$, and the spatial covariance function of population frequencies, $\Omega$, is given by \eqref{eq:spatial_covariance} (this lacks the sample-specific variance terms on the diagonal). Note that we then reintroduce the nugget, $\eta_k$, and the sample size effect, $1/\bar{S_k}$, for each population, to model drift or excess variance in population $k$ on top of that predicted by the mixture of frequencies given by our spatial model.  As in equation \eqref{eq:spatial_covariance2}, $\delta_{i,j} $ is the indicator function $1$ if $i=j$, and $0$ otherwise. 
 
 %parameterized by the pairwise geographic distances between each pair of populations, \emph{without} the population-specific variance terms on the diagonal (i.e., in equation \eqref{eq:admixed_covariance_1}, i.e.\ $\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right)$).  
 
-The admixed covariance between samples $i$ and $j$, $\identifyadmixsource{\Omega_{i,j}}$ is then a function of all the pairwise spatial covariances between populations $i$ and $j$ and the points from which they draw admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$.  Those spatial covariances in turn are a function of all combinations of pairwise distances between their locations: $G_i$, $G_j$, \kadmixsource{i}, and \kadmixsource{j}.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}.
+The admixed covariance between samples $i$ and $j$, $\identifyadmixsource{\Omega_{i,j}}$ is then a function of all the pairwise spatial covariances between the locations of populations $i$ and $j$ and the points from which they draw admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$.  Those spatial covariances in turn are a function of all combinations of pairwise distances between their locations: $G_i'$, $G_j'$, \kadmixsource{i}, and \kadmixsource{j}.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}.
 
 As we only get to observe the sample frequencies and we standardize our allele frequencies using the sample mean, our predicted admixture covariance matrix needs to be transformed to accommodate these sampling considerations. We can do this as before (see Methods), and we again treat the likelihood of our sample covariance matrix as Wishart:
 \begin{equation}

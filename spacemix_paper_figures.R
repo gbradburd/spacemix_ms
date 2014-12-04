@@ -1667,6 +1667,7 @@ proc.pc.coords <- fitted(vegan::procrustes(globe.coords,pc.coords))
 #	Admixture - rand prior
 ################
 load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceruns/rand_prior2/globe_spaceruns_randpr1_LongRun/globe_spaceruns_randpr1space_MCMC_output1.Robj")
+
 	best <- which.max(Prob)
 	target.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,option=1)
 	source.coords <- procrusteez(globe.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2) 
@@ -1817,6 +1818,102 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_A
 								col=globe.admix.plot.cols,
 								lwd=admix.proportions[,best],
 								length=0.1) ; 
+							abline(v=0,lty=2,lwd=0.5) ; 
+							box(lwd=1.1)
+						},
+					x=x.subplot1,y=y.subplot1)
+		TeachingDemos::subplot(fun = {
+						# par(mar=c(0.1,0.1,0.1,0.1)) ; 
+						plot(0,xlim=subplot2.x.coords,ylim=subplot2.y.coords,type='n',yaxt='n',xaxt='n',xlab="",ylab="")
+						map(database="world",interior=FALSE,add=TRUE,xlim=subplot2.x.coords,ylim=subplot2.y.coords,lwd=0.5); 
+						points(globe.coords,pch=20,col=continent.col,cex=0.7) ; 
+							box(lwd=1.1)
+						},
+					x=x.subplot2,y=y.subplot2)
+			box(lwd=2)
+	dev.off()
+
+	png(file="~/Desktop/globe_Ad_map_AfricaInset_EthiopianPopout.png",res=300,width=7*300,height=5*300,pointsize=9)
+		#quartz(width=7,height=5,pointsize=9)
+			plot(target.coords,type='n',
+					xlim = c(15,68),
+					ylim = c(-20,50),
+					xlab="Eastings",
+					ylab="Northings")
+				text(target.coords[c(1:k),],
+						labels=pops,
+						col=adjustcolor(continent.col,1),
+						font=2,cex=0.8)
+				text(source.coords[,1],
+						source.coords[,2],
+							labels=pops,
+							font=3,
+							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+				# points(source.coords[,1],
+						# source.coords[,2],
+							# col=globe.admix.plot.cols,
+							# pch=20)
+			arrows(	x0 = source.coords[,1],
+					y0 = source.coords[,2],
+					x1 = target.coords[,1],
+					y1 = target.coords[,2],
+					col=globe.admix.plot.cols,
+					lwd=admix.proportions[,best],
+					length=0.1)
+			text(target.coords[which(pops=="Ethiopian"),,drop=FALSE],
+					labels=pops[which(pops=="Ethiopian")],
+					col=1,
+					font=2,cex=0.8)
+			text(source.coords[which(pops=="Ethiopian"),1],
+					source.coords[which(pops=="Ethiopian"),2],
+						labels=pops[which(pops=="Ethiopian")],
+						font=3,
+						col=1,cex=0.8,family="HersheySerif")
+			arrows(	x0 = source.coords[which(pops=="Ethiopian"),1],
+					y0 = source.coords[which(pops=="Ethiopian"),2],
+					x1 = target.coords[which(pops=="Ethiopian"),1],
+					y1 = target.coords[which(pops=="Ethiopian"),2],
+					col=1,
+					lwd=1,
+					length=0.1)
+		rect(xleft = subplot1.x.coords[1]-2,ybottom = subplot1.y.coords[1],
+				xright = subplot1.x.coords[2]+1.5,ytop = subplot1.y.coords[2]+1,lty=2,border="gray",col=NA,lwd=0.6)
+		lines(x = c(subplot1.x.coords[2]+1.5,x.subplot1[1]), y = c(subplot1.y.coords[2]+1,y.subplot1[2]),lwd=0.6 , lty=2, col="gray")
+		lines(x = c(subplot1.x.coords[2]+1.5,x.subplot1[1]), y = c(subplot1.y.coords[1],y.subplot1[1]),lwd=0.6 , lty=2, col="gray")
+		TeachingDemos::subplot(fun = {
+						plot(target.coords,type='n',xlim = subplot1.x.coords,ylim = subplot1.y.coords,xlab="",ylab="",xaxt='n',yaxt='n') ; 
+						text(target.coords[c(1:k),],
+								labels=pops,
+								col=adjustcolor(continent.col,1),
+								font=2,cex=1) ; 
+						text(source.coords[,1],
+								source.coords[,2],
+								labels=pops,
+								font=3,
+								col=globe.admix.plot.cols,cex=1,family="HersheySerif") ; 
+						arrows(	x0 = source.coords[,1],
+								y0 = source.coords[,2],
+								x1 = target.coords[,1],
+								y1 = target.coords[,2],
+								col=globe.admix.plot.cols,
+								lwd=admix.proportions[,best],
+								length=0.1) ; 
+						text(target.coords[which(pops=="Ethiopian"),,drop=FALSE],
+								labels=pops[which(pops=="Ethiopian")],
+								col=1,
+								font=2,cex=1) ; 
+						text(source.coords[which(pops=="Ethiopian"),1],
+								source.coords[which(pops=="Ethiopian"),2],
+								labels=pops[which(pops=="Ethiopian")],
+								font=3,
+								col=1,cex=1,family="HersheySerif") ; 
+						arrows(	x0 = source.coords[which(pops=="Ethiopian"),1],
+								y0 = source.coords[which(pops=="Ethiopian"),2],
+								x1 = target.coords[which(pops=="Ethiopian"),1],
+								y1 = target.coords[which(pops=="Ethiopian"),2],
+								col=1,
+								lwd=1,
+								length=0.1) ; 							
 							abline(v=0,lty=2,lwd=0.5) ; 
 							box(lwd=1.1)
 						},
@@ -2661,8 +2758,9 @@ expansion.list2.5 <- list(list(parent = 61,
 						daughters = 83,
 						time.point = 1))
 	
-pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/big_barr_ad_lattice.pdf",width=6,height=5)
-	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,migration.arrows=FALSE,barrier.effect=5,jitter = 0.25,expansion.list=expansion.list2.5,labels=TRUE,colors=TRUE,arrow.col="green",arrow.width=0.8,pop.pt.cex=2.5,pop.lab.cex=2.5)
+#pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/big_barr_ad_lattice.pdf",width=6,height=5)
+pdf(file="~/Desktop/big_barr_ad_lattice.pdf",width=6,height=5)
+	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,migration.arrows=FALSE,barrier.effect=5,jitter = 0.25,expansion.list=expansion.list2.5,labels=TRUE,colors=TRUE,arrow.col="black",arrow.width=0.8,pop.pt.cex=2.5,pop.lab.cex=2.5)
 	abline(v=6.2,lwd=2,lty=2)
 dev.off()
 
@@ -2734,7 +2832,8 @@ y.min <- min(cov.hat.stationary, cov.hat.barrier, cov.hat.expansion, cov.hat.cor
 y.max <- max(cov.hat.stationary, cov.hat.barrier, cov.hat.expansion, cov.hat.cornerad)
 
 pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/sim_covariance_decays.pdf",width=6,height=11,pointsize=14)
-par(mfrow=c(4,2),mar=c(0,0,1,1) + 0.1,oma=c(6,6,0,0)+0.1)
+#quartz(width=6,height=11,pointsize=14)
+par(mfrow=c(4,2),mar=c(0,0,1,1) + 0.1,oma=c(7,6,0,0)+0.1)
 	plot(D.stationary[index.mat],
 		cov.hat.stationary[index.mat],
 		ylim=c(y.min,y.max),
@@ -2835,7 +2934,10 @@ par(mfrow=c(4,2),mar=c(0,0,1,1) + 0.1,oma=c(6,6,0,0)+0.1)
 							"with the admixed population",
 							"between admixture\n source and target"),
 				cex=0.9)
-	title(xlab="Pairwise Distance",ylab="Covariance in Allele Frequencies",outer=TRUE,cex.lab=2)
+	mtext("Inferred",side=1,padj=2.9)
+	mtext("True",side=1,adj=-0.85,padj=2.9)
+	mtext("Pairwise Distance",side=1,cex=1.5,adj=-40,padj=4)
+	title(ylab="Covariance in Allele Frequencies",outer=TRUE,cex.lab=2)
 dev.off()
 
 ################
@@ -3236,7 +3338,8 @@ y.min <- min(target.coords[,2]) - 0.5
 y.max <- max(target.coords[,2]) + 0.5
 scalar <- 4
 source.coord.cols <- fade.admixture.source.points(pop.cols,scalar*admix.proportions[,best])
-pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_big_barr_ad_1.pdf",width=6,height=5)
+#pdf("~/Desktop/Dropbox/space.mix/ms/figs/sims/GeoGenMap_big_barr_ad_1.pdf",width=6,height=5)
+pdf("~/Desktop/GeoGenMap_big_barr_ad_1.pdf",width=6,height=5)
 #quartz(width=6,height=5)
 #par(mar=c(4.3,4.3,3,1))
 	par(mar=c(1,1,1,1))
@@ -3249,7 +3352,7 @@ plot(target.coords,xlim=c(x.min,x.max),ylim=c(y.min,y.max),pch=19,cex=5,
 	text(target.coords,labels=paste(1:k),col="white",cex=1.5,font=2)
 	arrows(x0 = source.coords[,1],
 			y0 = source.coords[,2],
-			x1 = target.coords[,1],
+			x1 = target.coords[,1]+0.5,
 			y1 = target.coords[,2],
 			col= source.coord.cols,
 			lwd = scalar*admix.proportions[,best],

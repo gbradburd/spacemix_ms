@@ -109,10 +109,8 @@ I am not attached, though.
 \newpage
 %%%%%%%%% %%%%%%%%% %%%%%%%%%
 \section*{Introduction}
-% <<<<<<< HEAD
 % Population structure and the long term demography of populations leave their mark on patterns of genetic variation and differentiation within and between populations. 
 % There are many different population genetic approaches to learn about population structure. At one end there are those approaches that focus on developing a detailed view of the migrational history of a small number of populations. There has been considerable recent progress in this area, using a variety of summaries such as the allele frequency spectrum (\citep{dadi}, Song, Excoffier), or approximations to the coalescent applied to sequence data (Song, Li and Durbin,  ). At the other end of this axis sits a broad set of approaches that focus on visualizing patterns of genetic relatedness and population structure. Such methods are usually less dependent on a particular population genetic model, and can deal with many populations or individuals as the unit of analysis. Examples of this second set of methods include cluster-based methods \citep{STRUCTURE, ADMIXTURE, FINESTRUCTURE} and reduced dimensionality representations of the data, such as Principal Components (PC) Analysis (e.g. Menozzi, Piazza, and Cavalli-Sforza 1978, Novembre et al 2008, Novembre and Stephens 2008, McVean 2009,Yang et al 2012, Yang et al 2014).
-% =======
 There are many different methods to learn how population structure and demographic processes have left their mark on patterns of genetic variation within and between populations.
 Model-based approaches focus on developing a detailed view of the migrational history of a small number of populations,
 often assuming one or a small number of large, randomly mating populations (i.e.\ little or no geographic structure).
@@ -393,12 +391,12 @@ To incorporate recent admixture,
 we imagine that population $k$ draws the majority of its ancestry from $G^{\prime}_{k}$, but that a proportion $0 \leq w_k \leq 0.5$ of its ancestry comes from another location \kadmixsource{k}, which we refer to as its source of admixture. 
 \plr{instead of ``draws ancestry'', say what this means unambiguously (including a note that admixture could be independent between loci or not)}
 The mean standardized population allele frequency at locus $\ell$ in population $k$ 
-is a weighted average of the standardized allele frequencies at the geographic location of the sampled population chooses for itself ($p_{\ell,k'}$) 
-and those at the coordinates of the source ($p_{\ell,\identifyadmixsource{k}}$) from which the observed population draws admixture:
+is a weighted average of the standardized allele frequencies at the geographic location of the sampled population chooses for itself ($X_{\ell,k'}$) 
+and those at the coordinates of the source ($X_{\ell,\identifyadmixsource{k}}$) from which the observed population draws admixture:
 \begin{equation}
-w_k p_{\ell,k'} + (1-w_k) p_{\ell,\identifyadmixsource{k}} . \label{eqn-admixedfreq}
+w_k X_{\ell,k'} + (1-w_k) X_{\ell,\identifyadmixsource{k}} . \label{eqn-admixedfreq}
 \end{equation}
-We can allow each of our populations to have an independent spatial source of admixture. The standardized frequencies $p_{\ell,k'}$ and $p_{\ell,\identifyadmixsource{k}} $ are 
+We can allow each of our populations to have an independent spatial source of admixture. The standardized frequencies $X_{\ell,k'}$ and $X_{\ell,\identifyadmixsource{k}} $ are 
 defined as above.
 % well defined, as, given the population standardized allele frequency covariance matrix, equation \ref{eq:spatial_covariance}, we can get the distribution of allele frequencies at any point in space simply by plugging its spatial coordinates into $\Omega(D(G^{\prime}))$.
 \plr{make up notation for \eqref{eqn-admixedfreq} and use it in \eqref{eq:admixed_covariance_1}. or, well, \eqref{eq:admixed_covariance_1} is about the equivalent of $X$, so maybe \eqref{eqn-admixedfreq} should talk about $X$-equivalents.}
@@ -413,7 +411,7 @@ w_j(1-w_i) \Omega^{(P)}_{i\;,\;\identifyadmixsource{j}} \; \times   \notag&\\
 w_i w_j \Omega^{(P)}_{\identifyadmixsource{i},\;\identifyadmixsource{j}} \; +   \notag&\\
 \delta_{i,j} (\eta_i + \frac{1}{\bar{S}_i}) \notag&
 \end{alignat}
-where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources from which populations $i$ and $j$ are drawing their admixture with proportions $p_i$ and $p_j$, 
+where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources from which populations $i$ and $j$ are drawing their admixture with proportions $w_i$ and $w_j$, 
 \plr{$i*$ and $j*$ aren't sources, they are indices.  oh: now $\Omega^{(P)}$ is a $2n \times 2n$ matrix; need to say so, else we risk confusion, for instance that admixture locations have to be already sampled locations.}
 and the spatial covariance function of population frequencies, $\Omega$, is given by \eqref{eq:spatial_covariance} (this lacks the sample-specific variance terms on the diagonal). 
 \plr{Oh, ok.  I was confused about this distinction above.}
@@ -448,7 +446,7 @@ and are heavily weighted towards small values to be conservative with respect to
 \begin{figure}[htp!]
 	\centering
 	\includegraphics[width=2in,height=2in]{figs/admix_cov_fig.pdf}
-	\caption{An illustration of the form of the admixed covariance given in equations \eqref{eq:admixed_covariance_1}.  Populations $i$ and $j$ are drawing admixture in proportions $p_i$ and $p_j$ from their respective sources of admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$, and all pairwise spatial covariances (the $\Omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $\identifyadmixsource{j}$ than $i$ is from its source $\identifyadmixsource{i}$ (i.e., $p_j > p_i$).
+	\caption{An illustration of the form of the admixed covariance given in equations \eqref{eq:admixed_covariance_1}.  Populations $i$ and $j$ (at locations $i^{\prime}$ and $j^{\prime}$) are drawing admixture in proportions $w_i$ and $w_j$ from their respective sources of admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$, and all pairwise spatial covariances (the $\Omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $\identifyadmixsource{j}$ than $i$ is from its source $\identifyadmixsource{i}$ (i.e., $w_j > w_i$).
     }
 \label{sfig:admixed_cov_diagram}
 \end{figure}
@@ -469,7 +467,7 @@ is shown Fig.\ \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_scenario}).
 The resulting SpaceMix map (Fig.\ \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_inference}), 
 separates of the east and west sides of the grid to accommodate the effect of the barrier,
 and the admixed population (population 23) chooses admixture from very close to its true source (population 13), 
-and in close to the correct amount ($\bar{p}_{(23)} = 0.05; 95\% \text{ credible interval} = 0.02-0.08$). 
+and in close to the correct amount ($\bar{w}_{(23)} = 0.05; 95\% \text{ credible interval} = 0.02-0.08$). 
 \plr{maybe we should note that we aren't simulating under the model, so it's not so bad that 0.1 falls outside the credible interval. 
 I guess if we simulated a continuous population and knew the right funcitonal form for the covariance then we should expect to get it right.}
 

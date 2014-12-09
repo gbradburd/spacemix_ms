@@ -21,7 +21,7 @@
 % see http://en.wikibooks.org/wiki/LaTeX/Footnotes_and_Margin_Notes
 \usepackage[inner=0.5in,outer=2.2in,marginparwidth=2.0in,marginparsep=.2in]{geometry}
 \usepackage{todonotes}
-\newcommand{\plrm}[1]{\todo[color=green!20]{#1}}
+\newcommand{\plrm}[1]{\todo[color=purple!20]{#1}}
 % \usepackage{marginnote}
 % \newcommand{\mnote}[1]{\marginnote{#1}}
 \else
@@ -39,7 +39,7 @@
 \newcommand{\kadmixsource}[1]{{$G^{*}_{#1}$}}
 \newcommand{\identifyadmixsource}[1]{{#1^{*}}}
 \newcommand{\gb}[1]{{\it\color{magenta}{(#1)}}}
-\newcommand{\plr}[1]{{\it\color{green}{(#1)}}}
+\newcommand{\plr}[1]{{\it\color{purple}{(#1)}}}
 \newcommand{\gc}[1]{{\it\color{blue}{(#1)}}}
 
 
@@ -70,52 +70,26 @@ complex demographic histories of migration and population size change,
 which can be difficult to infer and visually summarize,
 especially with a large number of geographically distributed samples.
 In this paper, we present a novel statistical method for the inference and visualization of the patterns of genetic structure and admixture in a sample of populations.  
-Our method uses genome-wide polymorphism data to build a ``geogenetic map''
+This method uses genome-wide polymorphism data to build a ``geogenetic map''
 that describes how populations are related to one another
 by modeling genetic covariance as a decreasing function of distance.  
-% replacing "allele frequency" with just "genetic" since "frequency" makes people think they need to be estimating frequencies well.
 Within this framework, 
 historical admixture results in anomalously long distance covariance,
 and so we model admixture events as arrows, from a source of admixture to its target, on the inferred map.  
 We demonstrate the utility of this method on a circum-Tibetan sampling of the greenish warbler (\textit{Phylloscopus trochiloides}), in which we find evidence for gene flow between the adjacent, terminal populations of the ring species.  
-We also analyze a global sampling of human populations, for which we largely recover the geography of our sampling, with support for significant histories of admixture in some samples.  The implementation of this method, available as an R package \plr{is this true?}
+We also analyze a global sampling of human populations, for which we largely recover the geography of the sampling, with support for significant histories of admixture in some samples.  The implementation of this method, 
 called SpaceMix, provides a valuable new resource for understanding and visualizing patterns of population structure.
 \end{abstract}
-%Genetic data can be used to illuminate that history, providing information about when and how populations have diverged, how migration connects populations, and how population sizes have fluctuated over time.  
-
-% Many methods have been developed to visualize and infer aspects of population history from genetic data to illuminate how populations have diverged, been connected by gene flow, and how population sizes have fluctuated over time.  One popular set of methods focus on estimating a population phylogeny, using allele frequency covariances, in which shared branch length on a tree represents shared evolutionary history between a pair of populations sampled in the modern day. There has been renewed interest in such methods as a null model to detect gene flow (admixture) between disprate parts of the population phylogeny by looking for anomolously patterns of allele frequency covariance. However, patterns of population differentiation are rarely tree-like, as migration and colonization continuously re-shape patterns of relatedness between populations.  Isolation by distance (IBD), in which the covariance of allele frequencies between pairs of populations decreases with the distance between populations, may offer a more natural null hypothesis.  Here, we present a novel analytical framework, SpaceMix, for the study of spatial genetic variation and genetic admixture under a model of isolation by distance. The method uses a simple spatial-statistical model of the decay of allele frequency covariance with geographical distance to estimate a visual geogenetic map on which populations are located in such a way as to maximize the posterior probability of the allele frequencies given their geogenetic distances to each other. In this framework we model admixture as unusually high covariance in allele frequencies between locations given their geographic (geogenetic) distance to each other. We estimate the admixture proportion and geogenetic source of admixture for each sample, and visualize these admixture events through arrows added to the geogenetic map. To illustrate the strengths and pitfalls of Spacemix we applied the method to data from Green Warblers and Human populations.  
-
-%The patterns of genetic variation observed in modern populations are the product of a complex demographic and evolutionary history.  Genetic data can be used to illuminate that history, providing %information about when and how populations have diverged, how migration connects populations, and how population sizes have fluctuated over time.  Work in this area has largely focused on estimating a population phylogeny, in which shared branch length on a tree represents shared evolutionary history between a pair of populations sampled in the modern day.  However, patterns of population differentiation are rarely tree-like, as migration and colonization continuously re-shape patterns of relatedness between populations.  Isolation by distance (IBD), in which population differentiation increases with the distance between them, may offer a more natural null hypothesis.  Here, we present a novel analytical framework, SpaceMix, for the study of spatial genetic variation and genetic admixture.
-%\plr{I think too much of the abstract is about time and history, when we don't explicitly model time; shouldn't it focus on visualization (of, say, historical relationships)?}
-%
-%
-%\plr{Two bits of jargon I think we should be careful about using: ``shared drift'' and ``nugget''.}
-\plr{Notes and stylistic decisions:
-Generally, I think that the method is generally presented how we came to it,
-which isn't necessarily the most natural way for others to understand it.
-That narrative is useful, but we can save it for the Haldane's Sieve post. 
-I'd vote for saying "we want to build a map that reflects genetic relationships, which is geography distorted by demography"
-rather than "infer the map" and, later, "by the way, this won't be quite the geographic map".
-
-Also, I shy away from so much use of "we" and "our" because when I read it I think of ownership, which is offputting.
-It also feels more personable and friendly, maybe, but on the balance I tend to read it the first way.
-At least maybe ``our'' should only refer to things already introduced,
-since when I read it I think that I should already know what it is.
-I am not attached, though.
-
-``Fig.'' or ``figure'' or ``Figure''?  SuppMat is Supplementary?
-}
 
 \newpage
 %%%%%%%%% %%%%%%%%% %%%%%%%%%
 \section*{Introduction}
-% Population structure and the long term demography of populations leave their mark on patterns of genetic variation and differentiation within and between populations. 
-% There are many different population genetic approaches to learn about population structure. At one end there are those approaches that focus on developing a detailed view of the migrational history of a small number of populations. There has been considerable recent progress in this area, using a variety of summaries such as the allele frequency spectrum (\citep{dadi}, Song, Excoffier), or approximations to the coalescent applied to sequence data (Song, Li and Durbin,  ). At the other end of this axis sits a broad set of approaches that focus on visualizing patterns of genetic relatedness and population structure. Such methods are usually less dependent on a particular population genetic model, and can deal with many populations or individuals as the unit of analysis. Examples of this second set of methods include cluster-based methods \citep{STRUCTURE, ADMIXTURE, FINESTRUCTURE} and reduced dimensionality representations of the data, such as Principal Components (PC) Analysis (e.g. Menozzi, Piazza, and Cavalli-Sforza 1978, Novembre et al 2008, Novembre and Stephens 2008, McVean 2009,Yang et al 2012, Yang et al 2014).
-There are many different methods to learn how population structure and demographic processes have left their mark on patterns of genetic variation within and between populations.
+There are many different methods to learn how population structure and demographic processes have left their mark on 
+patterns of genetic variation within and between populations.
 Model-based approaches focus on developing a detailed view of the migrational history of a small number of populations,
 often assuming one or a small number of large, randomly mating populations (i.e.\ little or no geographic structure).
 There has been considerable recent progress in this area, using a variety of summaries such as the allele frequency spectrum (\citep{dadi}, Song, Excoffier), 
-or approximations to the coalescent applied to sequence data (Song, Li and Durbin,  ).  
+or approximations to the coalescent applied to sequence data (Song, Li and Durbin).  
 
 Other approaches are designed only to visualize patterns of genetic relatedness and population structure,
 without using a particular population genetic model.
@@ -124,17 +98,17 @@ Examples of this second set of methods include cluster-based methods \citep{STRU
 
 Between these, there is a set of methods for visualizing patterns of relatedness that use allele frequency data to estimate a population phylogeny of the evolutionary history shared between sampled individuals or populations.  This approach of modeling relatedness between populations within species as a tree-like structure was pioneered by Cavalli-Sforza \& Edwards,  (\&Thompson?), as were methods to test whether a tree is a good model of population history \citep{treeness} (see \citep{Felsenstein} for a review).
 Tree-based approaches are appealing because trees are easy to visualize and explain,
-although interpretation can be tricky
-since the assumptions of a tree-based model
+but interpretation can be tricky,
+as the assumptions of a tree-based model
 (unstructured populations that split at discrete points in time)
-are rarely met. \plr{fair?}
+are rarely met.
  
 Recently, there has been a resurgence of interest in these tree-based methods.  Some use population trees as a null model to test and quantify the signal of admixture between samples, where admixture is defined as covariance between samples in excess of that predicted by their tree-like history (Reich and friends).  Others, such as Treemix \citep{Pickrell} and mixmapper (cite mixmapper), focus on data analysis and visualization, and fit a population model represented by a directed acyclic graph between populations.  TreeMix accommodates reticulate population structure by allowing branches on the population tree to be connected by arrows of admixture that explain excess residual covariance between populations or population `clades'.
 
 There has also been a rise in the use of dimensionality reduction approaches, especially Principal Components Analysis (PCA), for the visualization of patterns of genetic variation.  As with the tree-based methods described above, the use of PCA in population genetics was pioneered by Cavalli-Sforza (Cavalli-Sforza et al 1978), and, with the rise of genomic datasets of thousands of loci for tens or hundreds of samples, this approach for creating a low-dimensional visual summary of genetic data that has thousands of dimensions (one for each locus) is more popular than ever before.  Generally, the genetic variation in a genotype matrix of allele frequencies is summarized by plotting the first eigenvector of the covariance of the allele frequencies against the second (Patterson 2006); the output of this procedure is interpreted as a `map' of genetic relatedness (Novembre et al 2008).
 
 Both PCA and tree-based methods are valuable as genetic inference and visualization tools, but both also suffer from serious limitations.  Because gene flow is frequently pervasive, patterns of relatedness between samples may often be only poorly represented by a tree-based model.  PCA is more flexible; it assumes no explicit model of population-level processes, and simply describes average coalescent times between pairs of samples (McVean 2009); it can  also capture geographic patterns of genetic differentiation (e.g. Novembre et al 2008).  However, its interpretation is more difficult, as the patterns of genetic differentiation it displays in its first two axes are necessarily incomplete for any dataset with more than two samples.  In addition, the interpretation of PC biplots is not straightforward (Novembre and Stephens 2008, Yang et al 2012, Yang et al 2014), 
-as results are affecdted by sample sizes,
+as results are affected by sample sizes,
 and many of the patterns it displays may be mathematical artifacts of the covariance structure, which produces eigenvectors related to sinusoidal functions.
 
 What is desired, then, is a method for inferring and visualizing patterns of population differentiation that can recapitulate complex, non-hierarchical structures, while also admitting simple and intuitive interpretation.  Geographically continuous models, in which dispersal is spatially limited and the expected pattern of population differentiation is that of isolation by distance, offer a natural framework for such a method.  
@@ -177,9 +151,8 @@ This is related to the triangular configuration seen in the warblers.
 
 \paragraph{Data}
 
-% For convenience, we use as the genetic data in our descriptions below, but we note that this method could be applied equally well to other types of data, including microsatellites.
-Our data consist of $L$ unlinked bi-allelic single nucleotide polymorphisms (SNPs) sampled across $K$ populations, 
-\plr{it's not ``our'' data, since we want the reader to apply it to their own data.}
+
+The data modeled by this method consist of $L$ unlinked bi-allelic single nucleotide polymorphisms (SNPs) sampled across $K$ populations, 
 as well as the geographic coordinates, denoted $G_k$ in population $k$, (latitude and longitude) at which those populations were sampled (although $G_k$ may be missing for some or all of the populations). 
 \plr{I think it's better to not introduce the true locations at all until later, since the model doesn't actually use them.}
 The genetic data consist of allele counts: after arbitrarily choosing an allele to count at each locus, 
@@ -187,16 +160,14 @@ we denote the number of counted alleles at locus $\ell$ in population $k$ as $C_
 and the total number of alleles observed as $S_{\ell,k}$.
 The sample frequency at locus $\ell$ in population $k$ is $\hat{f}_{\ell,k} = C_{\ell,k}/S_{\ell,k}$.  
 \plrm{can we get rid of the hat on $\hat{f}$?}
-% Our method models the covariance in these allele frequencies between populations and across loci.  % don't need to foreshadow already
 Note that while we will refer to a sample from population $k$, this sample could consist of a single individual ($S_{\ell,k}=2$ for a diploid). 
 
-We first compute standardized sample allele frequencies at locus $\ell$, by
+We first compute standardized sample allele frequencies at locus $\ell$ in population $k$, by
 \begin{equation}
   \label{eq:standardized_sample_freqs}
-  \hat{X}_\ell = (\hat{f}_{\ell}  - \bar{f}_{\ell})/\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}\text{,}
+  \hat{X}_{\ell,k} = (\hat{f}_{\ell,k}  - \bar{f}_{\ell})/\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}\text{,}
 \end{equation}
-\plrm{below you use $\hat X$ as a matrix; add in subscript $k$'s so that it's clear which way the matrix goes}
-where $\hat{f}_{\ell}$ is the vector of sample allele frequencies at locus $\ell$ across all $K$ samples, and $\bar{f}_{\ell}$ is the sample size-weighted sample mean frequency across the $K$ samples at locus $\ell$.  
+where $\hat{f}_{\ell,k}$ is sample allele frequency at locus $\ell$ in population $k$, and $\bar{f}_{\ell}$ is the global mean frequency across the $K$ samples at locus $\ell$.  
 \plr{$\bar{f}$ is the global mean frequency, no? if unclear, formula comes in methods anyhow?}
 This normalization is widely used \citep[e.g.][]{nicholson2002,patterson2006};
 roughly speaking, mean-centering removes any effect of choice of counted allele,
@@ -211,74 +182,54 @@ Migration between populations homogenizes differentiation caused by genetic drif
 populations with higher levels of historical or ongoing migration share more of their demographic history,
 and so have larger covariance in their allele frequency deviations around the global mean.
 
-We assume that our standardized sample frequencies are generated independently at each locus by a spatial Gaussian process.  
-\plr{don't need to say ``Gaussian'' yet, as we're just parameterizing the covariance, which makes sense regardless}
-This means that the standardized sample frequencies, at each locus, are distributed as multivariate normal with mean zero and a spatial covariance matrix specified by the pairwise geographic distances between samples. We choose as the form of our parametric covariance matrix a simple and flexible model with exponential decay of standardized allele frequency covariance with geographic distance (Diggle et al 1998, Wasser et al 2004, Bradburd, Ralph, and Coop 2013).
+We assume that the standardized sample frequencies are generated independently at each locus by a spatial process.  
+This means that the standardized sample frequencies, at each locus, are distributed as multivariate normal with mean zero and a spatial covariance matrix specified by the pairwise geographic distances between samples. We choose as the form of the parametric covariance matrix a simple and flexible model with exponential decay of standardized allele frequency covariance with geographic distance (Diggle et al 1998, Wasser et al 2004, Bradburd, Ralph, and Coop 2013).
 
-The covariance between standardized population allele frequencies in populations $i$ and $j$ is 
-\plrm{maybe not ``is'' but ``we model as''?}
+The functional form of the covariance in standardized population allele frequencies between populations $i$ and $j$ is given by 
 \begin{equation}
 \label{eq:spatial_covariance}
-\Omega^{(P)}_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	-\left(\alpha_1D_{i,j} \right)^{\alpha_2} \right) \text{,}
+F(D_{i,j}) = \frac{1}{\alpha_0} \text{exp} \left(	-\left(\alpha_1D_{i,j} \right)^{\alpha_2} \right) \text{,}
 \end{equation}
-\plrm{how about \eqref{eq:spatial_covariance} could be ``for $i\neq j$'' and then \eqref{eq:spatial_covariance2} could be just for $\Omega_{i,i}$, without the $\delta$?}
 where $D_{i,j}$ is the geographic distance 
-\plrm{should this be ``geogenetic distance''?}
 between populations $i$ and $j$ (and therefore a function of their locations, $G_i$ and $G_j$), $\alpha_0$ controls the within-population variance, or the covariance when distance between points is 0 
 (known as a ``sill'' in the geospatial literature),
-$\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay.  Within population variance may vary across samples due to either noise from a finite sample size or demographic history unique to that sample (e.g.\ bottlenecks or endogamy).  
+$\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay.  Within population variance may vary across samples due to either noise from a finite sample size or demographic history unique to that sample (e.g.,\ bottlenecks or endogamy).  
 To accommodate this heterogeneity, we introduce population-specific variance terms on the diagonal of the standardized allelic covariance matrix, 
 (known as ``nuggets'')
 as follows:  
 \begin{equation}
 \label{eq:spatial_covariance2}
-\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	-\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right) + \delta_{i,j} \big(\frac{1}{\bar{S_{i}}} + \eta_{i} \big) \text{,}
+\Omega_{i,j} =F(D_{i,j}) + \delta_{i,j} \big(\frac{1}{\bar{S_{i}}} + \eta_{i} \big) \text{,}
 \end{equation} 
 where $\delta_{i,j}$ is the indicator function $1$ if $i=j$, and $0$ otherwise. 
 Here $\eta_k$ is a sample-specific variance (nugget) for sample $k$, 
-\plr{should be consistent: ``sample'' or ``population''?}
 and represents any excess allele frequency variance not captured by the spatial model,
 and $1/\bar{S_i}$ accounts for the variance introduced by sampling within the population.
-Finally, $\bar{S}$ is a vector of mean sample sizes in each population, where $\bar{S}_k$ is the mean sample size across all loci in population $k$.  
-\plr{maybe just ``sample size'' (not ``mean'') and discuss missing data in the Methods? otherwise, confusing without having mentioned missing data.}
+Finally, $\bar{S}$ is a vector of sample sizes in each population, where $\bar{S}_k$ is the mean sample size across all loci in population $k$.  
 
-\plr{Now, we can say the distribution of the sample covariance isn't known in general,
-but the central limit theorem implies that if the number of loci is large, the sample covariance converges to Wishart.}
-Given the assumption of multivariate normality for our standardized sample frequencies, 
-it follows that the sample covariance of our standardized sample frequencies calculated across loci 
+The distribution of the sample covariance is not known in general,
+but the central limit theorem implies that if the number of loci is large, the sample covariance converges to Wishart.
+That is, the sample covariance of the standardized sample frequencies calculated across loci 
 ($ \widehat{\Omega} = (1/L)  \hat{X}\hat{X}^T$) 
 is Wishart distributed with degrees of freedom equal to the number of loci ($L$) used to estimate the sample covariance matrix. 
-\plrm{this happens if each locus has variance 1, after normalization; a different normalization would give a different number of degrees of freedom}
+This is the case if each locus has unit variance after normalization; a different normalization would give a different number of degrees of freedom.
 We denote this by
 \begin{equation}
 \label{eq:wishart_dist}
 P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left( L\widehat{\Omega} \mid \Omega,L \right)
 \end{equation}
-Therefore, the likelihood of the standardized sample frequencies across loci is the likelihood of our sample covariance matrix, as this contains all of the information about our parameters of interest.  
-\gb{Graham I feel like there's a way to say this last sentence better, but I'm not sure exactly what you're trying to say.} 
-\plr{I think you're wanting to say that if the data were Gaussian, then the sample covariance matrix is a sufficient statistic,
-so that calculating the likelihood of $\widehat \Omega$ is the same as calculating the likelihood of the data.}
-Handily, it also means that once the sample covariance matrix has been calculated, all other computations do not scale with the number of loci, making the method scalable to genome size datasets. Because we center our standardized sample frequencies ($\hat{X}$) using the mean sample frequency (equation \eqref{eq:standardized_sample_freqs}), we use a transformed version of $\widehat{\Omega} $ in our likelihood \eqref{eq:wishart_dist} to reflect this (see Methods).
-\plr{already said this last thing}
-
-%We can estimate the parameters of our simple isolation by distance model, $\alpha_0,\alpha_1, \alpha_2$, and $\eta$, by using \eqref{eq:wishart_dist} to give us the likelihood of the standardized sample frequencies across loci, as this contains all of the information about our parameters of interest.  
-%\plrm{also, fact that sample covariance is a sufficient statistic for mean-centered multivariate Gaussian.}
-
-%We use a Bayesian approach to estimating parameter values, and we place priors on the $\vec{\alpha}$ parameters as well as independent priors on the nugget in each population. These priors are detailed in Table \ref{tab:param_prior_tab}, and for more details on our inference procedure, please see the Methods.  
-
+If the standardized sample frequencies are Gaussian, then the sample covariance matrix is a sufficient statistic,
+so that calculating the likelihood of $\widehat \Omega$ is the same as calculating the likelihood of the data up to a constant proportion.
+Handily, it also means that once the sample covariance matrix has been calculated, all other computations do not scale with the number of loci, making the method scalable to genome size datasets. 
 
 %%%%%%%%% %%%%%%%%% 
 \paragraph{Accommodating heterogeneous processes}
-%This model assumes that the covariance in allele frequencies between pairs of populations decays in the same way with geographic distance in all portions of the sampled range (i.e.\ that the process is homogeneous and isotropic).  However, in many cases these assumptions will not be met. 
-\plrm{shouldn't this go up in the intro, not in the middle of the results? Can skip directly to the next paragraph (with a different heading).}
-Non-equilibrium processes like long distance admixture, colonization, or population expansion events will distort the relationship between covariance and distance across the range, as will barriers to dispersal on the landscape. To accommodate these heterogeneous processes we infer the locations of populations on a map that reflects genetic, rather than geographic, proximity. Two populations that are sampled at distant locations but that are genetically similar (perhaps one was recently founded by a colonization event from the other) may have inferred locations that are nearby, while two populations that are sampled close together, but that are genetically dissimilar (e.g., are separated by a barrier), may have inferred locations that are farther apart. The result is a ``geogenetic" map in which the distances between populations are indicative of the way that populations perceive the distances between themselves.
+Non-equilibrium processes like long distance admixture, colonization, or population expansion events will distort the relationship between covariance and distance across the range, as will barriers to dispersal on the landscape. To accommodate these heterogeneous processes we infer the locations of populations on a map that reflects genetic, rather than geographic, proximity. Two populations that are sampled at distant locations but that are genetically similar (perhaps one was recently founded by a colonization event from the other) may have inferred locations that are nearby, while two populations that are sampled close together, but that are genetically dissimilar (e.g., are separated by a barrier), may have inferred locations that are farther apart. The result is a ``geogenetic" map in which the distances between populations are effective distances, indicative of the way that populations perceive the distances between themselves.
 
-To generate this map, we treat populations' geographic locations as random variables and estimate them as part of our Bayesian inference procedure.  
-\plr{haven't mentioned Bayesian anything yet; explain.  also, seems funny to me to say we ``estimate random variables'' -- I think we ``estimate parameters'' or ``put priors on the parameters and evaluate their posterior distribution''.}
+To generate this map, we treat populations' geographic locations as parameters to be estimated as part of the model, and we implement a Bayesian inference procedure (described in the Methods) for doing so.
 The set of coordinates where the populations were sampled is $G$, 
-and we designate the set of location parameters (i.e.\ coordinates in the geogenetic map) for our populations as $G'$. 
-\plrm{I think we can drop the notation for the true locations and use $G$ for $G'$.}
-Our parametric covariance matrix $\Omega$, as given by equation \eqref{eq:spatial_covariance2}, is a function of the pairwise matrix of distances between these inferred locations, $D(G')$, and our $\vec{\alpha}$ and $\eta$ parameters.  We acknowledge this dependence by writing $\Omega(\vec{\alpha},{D}(G'),\eta)$.  We write the posterior probability as 
+and we designate the set of location parameters (i.e.\ coordinates in the geogenetic map) for the populations as $G'$. 
+The parametric covariance matrix $\Omega$, as given by equation \eqref{eq:spatial_covariance2}, is a function of the pairwise matrix of distances between these inferred locations, $D(G')$, and the $\vec{\alpha}$ and $\eta$ parameters.  We acknowledge this dependence by writing $\Omega(\vec{\alpha},{D}(G'),\eta)$.  We write the posterior probability as 
 \begin{equation}
 \label{eq:cyol_prob}
 P \left( G', \vec{\alpha}, \eta \mid \widehat{\Omega}, L, G \right) \propto  
@@ -286,29 +237,20 @@ P \left( G', \vec{\alpha}, \eta \mid \widehat{\Omega}, L, G \right) \propto
 \end{equation}
 where the constant of proportionality is the normalization constant.  
 
-Our priors on the parameters that control the shape of the decay of covariance with distance $P(\vec{\alpha})$ are given in the Methods, as are those on $P(\eta)$.  We assume that the priors on the inferred, geogenetic locations, $P(G')$ are independent across populations.  Because the observed locations are a natural prior on where populations are positioned under the null of isolation by distance, we use a very weak prior on population $k$'s location parameter ($G'_k$) that is centered around the observed location $G_k$.
-%We use a very weak prior on population $k$'s location parameter, $G'_k$: a bivariate normal spatial prior centered on the observed location $G_k$ and with a variance of half the mean pairwise distance between the observed population locations.
-%(as well as a natural starting position for the MCMC)
+The priors on the parameters that control the shape of the decay of covariance with distance $P(\vec{\alpha})$ are given in the Methods, as are those on $P(\eta)$.  We assume that the priors on the inferred, geogenetic locations, $P(G')$ are independent across populations.  Because the observed locations are a natural prior on where populations are positioned under the null of isolation by distance, we use a very weak prior on population $k$'s location parameter ($G'_k$) that is centered around the observed location $G_k$.
 The prior $P(G')$ on geogenetic locations
 also encourages the resulting inferred geogenetic map to be anchored in the observed locations and to represent (informally) the minimum distortion to space necessary to satisfy the constraints placed by genetic similarities of populations.  However, we can also use random locations as the ``observed" locations ($G_k$) to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference. 
 
 We then use Markov chain Monte Carlo to estimate the posterior distribution on the parameters; for more details see the Methods. 
 This method is implemented in a program called SpaceMix.
 
-%The probability of the sample covariance matrix, $P(\widehat{\Omega} |\Omega (\vec{\alpha}\pmb{D}(\pmb{G'}) )$, is as before the Wishart likelihood of the sample covariance matrix of our standardized frequencies, and our priors on $\pmb{\vec{\alpha}}$ are as before. 
-
-%However, one concern is that if the method returns a spatial configuration that strongly resembles the observed population map, this could reflect the possibility that there is insufficient information in the data to overcome the influence of the prior, or that the MCMC has not been run long enough.  To address these concerns, we can also use random locations as the ``observed" locations ($G_k$) to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference. 
-
 \paragraph{Illustrated with Simulations.} To illustrate this inference procedure, we present Spacemix output for several scenarios simulated under the coalescent (using the program \textrm{ms}, (Hudson)).  In all scenarios, we simulate under a stepping stone model in which populations are arranged on a grid with symmetric migration 
 to nearest neighbors (eight neigbors, including diagonals)
 with 10 haploid individuals sampled from every other population at 10,000 unlinked loci (for details on all simulations, see Methods).  
-The basic scenario is shown in Fig. \ref{sfig:lattice_scenarios}\subref{simple_lattice}, 
-\plrm{periods in latex get two spaces after; escape the space after to avoid this ugly behavior}
-on which we then test various admixture scenarios.
-On all simulated datasets, we perform SpaceMix analyses in which we treat population locations as random variables to be estimated as part of the model, 
-\plr{again, estimating random variables}
-and randomly place the `observed' location of each population so as to remove the influence of the prior.  
-\plr{calling these ``observed'' locations risks confusion with the Procrustes step: just say we center the priors at random locations?}
+The basic scenario is shown in Fig.\ \ref{sfig:lattice_scenarios}\subref{simple_lattice}, 
+on which we then test various alternative scenarios.
+On all simulated datasets, we perform SpaceMix analyses in which we treat population locations as parameters to be estimated as part of the model, 
+and we center the prior on each population's location at a random point, to remove the influence of the sampling scheme on inference via the prior.  
 For clarity, we present inferred locations after Procrustes transformation
 (best-fit rotation, translation, and dilation) 
 to match the coordinates used to simulate the data.
@@ -321,46 +263,34 @@ to match the coordinates used to simulate the data.
 			{\includegraphics[width=1.8in,height=1.5in]{figs/sims/barrier_lattice.pdf}}
 		\subcaptionbox{expansion scenario \label{expansion_lattice}}
 			{\includegraphics[width=1.8in,height=1.5in]{figs/sims/expansion_lattice.pdf}}
-		\subcaptionbox{homogeneous inference \label{lattice_inference}}
+		\subcaptionbox{homogeneous geogenetic map \label{lattice_inference}}
 			{\includegraphics[width=1.8in,height=1.5in]{figs/sims/GeoGenMap_lattice.pdf}}
-		\subcaptionbox{barrier inference\label{barrier_inference}}
+		\subcaptionbox{barrier geogenetic map\label{barrier_inference}}
 			{\includegraphics[width=1.8in,height=1.5in]{figs/sims/GeoGenMap_barrier.pdf}}
-		\subcaptionbox{expansion inference  \label{expansion_inference}}
+		\subcaptionbox{expansion geogenetic map  \label{expansion_inference}}
 			{\includegraphics[width=1.8in,height=1.5in]{figs/sims/GeoGenMap_expansion.pdf}}
 
 	\caption{
-    Simulation scenarios and SpaceMix inference.  a) configuration of simulated populations on a simple lattice with spatially homogeneous migration rates; b) inference of population locations under the scenario in \ref{sfig:lattice_scenarios}\subref{simple_lattice};  c) a lattice with a barrier along the center line of longitude, across which migration rates are reduced by a factor of 5; d) inference of population locations under the scenario in \ref{sfig:lattice_scenarios}\subref{barrier_lattice}; e) a lattice with recent expansion on the eastern margin; f) inference of population locations under the scenario in \ref{sfig:lattice_scenarios}\subref{expansion_lattice}.
-    \plr{mention in caption that small dots are unsampled populations, and make barrier more obvious? also, what are ``inferences'' -- samples from the posterior?}
+    Simulation scenarios and and their corresponding geogenetic maps estimated with SpaceMix.  The smaller, white dots in the simulation scenarios represent unsampled populations.  a) configuration of simulated populations on a simple lattice with spatially homogeneous migration rates; b) the maximum \textit{a posteriori} (MAP) estimate from the posterior distribution of population locations under the scenario in \ref{sfig:lattice_scenarios}\subref{simple_lattice};  c) a lattice with a barrier along the center line of longitude, across which migration rates are reduced by a factor of 5; d) MAP estimate of population locations under the scenario in \ref{sfig:lattice_scenarios}\subref{barrier_lattice}; e) a lattice with recent expansion on the eastern margin; f) MAP estimate of population locations under the scenario in \ref{sfig:lattice_scenarios}\subref{expansion_lattice}.
     }\label{sfig:lattice_scenarios}
 \end{figure}
 
 The lattice scenarios, illustrated in Figure \ref{sfig:lattice_scenarios}, are: homogeneous migration rates across the grid; a longitudinal barrier across the center of the grid; a series of recent expansion events; and an admixture event between opposite corners of the lattice.  In the simple lattice scenario with homogeneous migration rates (Figs. \ref{sfig:lattice_scenarios}\subref{simple_lattice} and \ref{sfig:lattice_scenarios}\subref{lattice_inference}), SpaceMix recovers the lattice structure used to simulate the data (i.e., populations are correctly choosing their nearest neighbors).  
-After adding a longitudinal barrier to dispersal across which migration rates are reduced by a factor of 5 (Fig. \ref{sfig:lattice_scenarios}\subref{barrier_lattice}), 
+After adding a longitudinal barrier to dispersal across which migration rates are reduced by a factor of 5 (Fig.\ \ref{sfig:lattice_scenarios}\subref{barrier_lattice}), 
 the two halves of the map are pushed farther away from one another, 
-reflecting the increased effective distance between them.  
-\plr{haven't said ``effective distance'' before\dots}
-In the expansion scenario, in which all populations in the last five columns of the grid have expanded in the recent past from the nearest population in their row (Fig. \ref{sfig:lattice_scenarios}\subref{expansion_lattice}), 
-\plr{how recently? all at once or gradually?}
+reflecting the increased effective distance between them.
+
+In the expansion scenario, in which all populations in the last five columns of the grid have expanded simultaneously in the immediate past from the nearest population in their row (Fig.\ \ref{sfig:lattice_scenarios}\subref{expansion_lattice}), 
 the daughter populations of the expansion event cluster with their parent populations, reflecting the higher relatedness (per unit of geographic separation) between them.  
 In all scenarios, populations at the corners of the lattice are pulled in somewhat
 because these have the least amount of data informing their relative placements.
 In SuppMat Figs \ref{sfig:sim_covariance_decays}, we show the relationship between genetic covariance, geographic distance, and inferred geogenetic distance for these simulations.
 
-%In the first scenario (output illustrated in Fig.\ \ref{sfig:lattice_scenarios}\subref{lattice_inference}), we simulate a stepping stone model at migration-drift equilibrium with homogeneous migration rates across the grid. In Figure \ref{sfig:lattice_scenarios}\subref{lattice_inference}, the reader can see that the configuration estimated for the populations by SpaceMix matches the lattice structure used to simulate the data, and that populations are correctly choosing their nearest neighbors.  Populations at the edge of the lattice have the least amount of data informing their exact placement, and are therefore pulled in somewhat.
-
-%In our second scenario (Fig.\ \ref{sfig:barrier_scenarios}\subref{barrier_inference}), we simulate under the same stepping stone model, but introduce a longitudinal barrier to dispersal (between populations 11--15 and 16--20), across which migration rates are attenuated by a factor of 5.  In Figure \ref{sfig:barrier_scenarios}\subref{barrier_inference}, the population configuration matches that of the lattice used to simulate the data, but due to the influence of the barrier, the two halves of the map have pushed farther away from one another.  This gap between populations on either side of the barrier reflects the way those populations perceive the increased effective distance between them.
-
-%In the third scenario (Fig.\ \ref{sfig:expansion_scenarios}\subref{expansion_inference}), we simulate an expansion event in which all populations in the last five columns of the grid have expanded in the recent past from the nearest population in their row (e.g., populations 25 and 30, as well as the three unsampled populations that bracket them, have all expanded at the same point in the recent past from population 20). In the scenario of recent expansion (Fig.\ \ref{sfig:expansion_scenarios}\subref{expansion_inference}), the daughter populations of the expansion event cluster with their parent populations, reflecting the higher relatedness (per unit of geographic separation) between them.  
-
-%If genetic relatedness has been determined by local migration, then (1) a population's genetic makeup should be well predicted by that of its neighbors, and (2) populations should not show excess covariance with distant populations. Violation of either of these two points will result in a poor fit of a simple isolation by distance model, and particularly a violation of point (2) may indicate that long distance admixture has taken place.  
-
-We them simulated a long-distance admixture event, on the same grid,
-by sampling half of the alleles of each individual in the northeast corner population from the southwest corner population (Fig. \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}).  We then ran a SpaceMix analysis in which the locations of these populations were estimated (Fig. \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}).
+We next simulated a long-distance admixture event, on the same grid,
+by sampling half of the alleles of each individual in the northeast corner population from the southwest corner population (Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}).  We then ran a SpaceMix analysis in which the locations of these populations were estimated (Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}).
 This creates excess covariance over anomalously long distances, which is clearly difficult to accommodate by a two-dimensional geogenetic map.
-Figure \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}, shows the torturous lengths to which the method goes to fit a good geogenetic map: the admixed population 30 is between population 1, the source of its admixture, and populations 24, 25, and 29, the nearest neighbors to the location of its non-admixed portion.  
+Figure \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}, shows the torturous lengths to which the method goes to fit a good geogenetic map: the admixed population 30 is between population 1, the source of its admixture, and populations 24, 25, and 29, the nearest neighbors to the location of its non-admixed portion.
 However, this warping of space is difficult to interpret, and would be even more so in empirical data for which a researcher does not know the true demographic history.  
-It would therefore be of great utility to directly model the action of admixture on spatial patterns of genetic variation.
-\plrm{No need to be coy, the reader already knows we do admixture.  Merge this with the next section.}
 
 \begin{figure}
 	\centering
@@ -370,7 +300,7 @@ It would therefore be of great utility to directly model the action of admixture
 			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_corner_admixture_CYOL.pdf}}
 		\subcaptionbox{location and admixture inference  \label{corner_admix_inference}}
 			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_corner_admixture.pdf}}
-	\caption{Simulation scenarios and SpaceMix inference.  a) a lattice with recent admixture event between population 1 in the southwest corner and population 30 in the northeast corner, so that population 30 is drawing half of its ancestry from population 1; b) inference of population locations under this scenario; c) inference of population locations and their sources of admixture under this scenario.}\label{sfig:corner_admix_scenarios}
+	\caption{Simulation scenarios and SpaceMix inference.  a) a lattice with recent admixture event between population 1 in the southwest corner and population 30 in the northeast corner, so that population 30 is drawing half of its ancestry from population 1; b) the MAP estimate of population locations under this scenario; c) the MAP estimate of population locations and their sources of admixture under this scenario.}\label{sfig:corner_admix_scenarios}
 \end{figure}
 
 
@@ -378,66 +308,41 @@ It would therefore be of great utility to directly model the action of admixture
 %%%%%%%%% %%%%%%%%% 
 \subsection*{Inference of Spatial Admixture}
 
-\plr{
-It's unclear if you're talking about transformed frequencies or not here.
-That said, I think that here we can actually talk about just plain (untransformed) frequencies:
-since the global mean frequency is estimated the same regardless of admixture,
-transforming and admixing commute,
-so it's equivalent to say that the (untransformed) admixed frequencies are weighted averages of the original ones.
-So, can delete ``mean standardized'' below.
-}
-
-To incorporate recent admixture,
-we imagine that population $k$ draws the majority of its ancestry from $G^{\prime}_{k}$, but that a proportion $0 \leq w_k \leq 0.5$ of its ancestry comes from another location \kadmixsource{k}, which we refer to as its source of admixture. 
-\plr{instead of ``draws ancestry'', say what this means unambiguously (including a note that admixture could be independent between loci or not)}
-The mean standardized population allele frequency at locus $\ell$ in population $k$ 
-is a weighted average of the standardized allele frequencies at the geographic location of the sampled population chooses for itself ($X_{\ell,k'}$) 
-and those at the coordinates of the source ($X_{\ell,\identifyadmixsource{k}}$) from which the observed population draws admixture:
+To incorporate recent admixture, we allow
+each allele sampled in population $k$ to have a probability $w$ ($0 \leq w_k \leq 0.5$ ) of being sampled from location $G^{\prime}_k$ 
+and a probability $1-w$ of being sampled from location $G^{*}_k$, 
+which we refer to as population $k$'s source of admixture.  
+With no nugget, each allele is sampled independently, but the nugget introduces correlations between the alleles sampled in each individual.
+The population allele frequencies in population $k$ 
+are then modeled as a weighted average of the allele frequencies at the geographic location the sampled population chooses for itself ($f_{k^{\prime}}$) 
+and those at the coordinates of the source ($f_{\identifyadmixsource{k}}$) from which the observed population draws admixture.
 \begin{equation}
-w_k X_{\ell,k'} + (1-w_k) X_{\ell,\identifyadmixsource{k}} . \label{eqn-admixedfreq}
+f_k = w_k f_{k^{\prime}} + (1-w_k) f_{\identifyadmixsource{k}}  \label{eqn-admixedfreq}
 \end{equation}
-We can allow each of our populations to have an independent spatial source of admixture. The standardized frequencies $X_{\ell,k'}$ and $X_{\ell,\identifyadmixsource{k}} $ are 
-defined as above.
-% well defined, as, given the population standardized allele frequency covariance matrix, equation \ref{eq:spatial_covariance}, we can get the distribution of allele frequencies at any point in space simply by plugging its spatial coordinates into $\Omega(D(G^{\prime}))$.
-\plr{make up notation for \eqref{eqn-admixedfreq} and use it in \eqref{eq:admixed_covariance_1}. or, well, \eqref{eq:admixed_covariance_1} is about the equivalent of $X$, so maybe \eqref{eqn-admixedfreq} should talk about $X$-equivalents.}
+We allow each of our populations an independent spatial source of admixture, as well as independent admixture proportions.
 
-We can then consider the parametric covariance matrix that follows from the form of the population frequencies in equation \eqref{eqn-admixedfreq}. The covariance between the standardized allele frequencies of population $i$ and $j$ is, by equation \eqref{eqn-admixedfreq},
-\plr{the superscript P was not there in \eqref{eq:spatial_covariance2}. error?}
+We can then consider the parametric covariance matrix of the standardized allele frequencies that follows from the form of the population frequencies in equation \eqref{eqn-admixedfreq}.  The admixed covariance between samples $i$ and $j$, $\identifyadmixsource{\Omega_{i,j}}$ is a function of all the pairwise spatial covariances between the locations of populations $i$ and $j$ and the points from which they draw admixture.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}. This admixed covariance in the standardized allele frequencies between population $i$ and $j$ is, by equation \eqref{eqn-admixedfreq},
 \begin{alignat}{3}
 \label{eq:admixed_covariance_1}
-\identifyadmixsource{\Omega_{i,j}} = (1-w_i)(1-w_j) \Omega^{(P)}_{i'\;,\;j'\;} \; \times&\\
-w_i(1-w_j) \Omega^{(P)}_{\identifyadmixsource{i},\;j'\;} \; \times   \notag&\\
-w_j(1-w_i) \Omega^{(P)}_{i'\;,\;\identifyadmixsource{j}} \; \times   \notag&\\
-w_i w_j \Omega^{(P)}_{\identifyadmixsource{i},\;\identifyadmixsource{j}} \; +   \notag&\\
+\identifyadmixsource{\Omega_{i,j}} = (1-w_i)(1-w_j) F(D_{i'\;,\;j'\;}) \; +&\\
+w_i(1-w_j) F(D_{\identifyadmixsource{i},\;j'\;}) \; +   \notag&\\
+w_j(1-w_i) F(D_{i'\;,\;\identifyadmixsource{j}}) \; +   \notag&\\
+w_i w_j F(D_{\identifyadmixsource{i},\;\identifyadmixsource{j}}) \; +   \notag&\\
 \delta_{i,j} (\eta_i + \frac{1}{\bar{S}_i}) \notag&
 \end{alignat}
-<<<<<<< HEAD
-where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources from which populations $i$ and $j$ are drawing their admixture with proportions $w_i$ and $w_j$, $i^{\prime}$ and $j^{\prime}$ are the geogenetic locations of populations $i$ and $j$, and the spatial covariance function of population frequencies, $\Omega$, is given by \eqref{eq:spatial_covariance} (this lacks the sample-specific variance terms on the diagonal). Note that we then reintroduce the nugget, $\eta_k$, and the sample size effect, $1/\bar{S_k}$, for each population, to model drift or excess variance in population $k$ on top of that predicted by the mixture of frequencies given by our spatial model.  As in equation \eqref{eq:spatial_covariance2}, $\delta_{i,j} $ is the indicator function $1$ if $i=j$, and $0$ otherwise. 
 
-%parameterized by the pairwise geographic distances between each pair of populations, \emph{without} the population-specific variance terms on the diagonal (i.e., in equation \eqref{eq:admixed_covariance_1}, i.e.\ $\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right)$).  
+where $D$, dimension $2k \; \times \; 2k$, is a matrix of pairwise distances between all inferred locations (indexed by $\prime$) and all sources of admixture (indexed by *), and for readability, we denote, e.g., $F(D(G^{\prime}_i,\identifyadmixsource{G}_i))$, as $F(D_{i'\;,\;\identifyadmixsource{j}})$.
+The spatial covariance, $F(D)$, is as given in Eqn.\ \eqref{eq:spatial_covariance}, and we reintroduce the nugget, $\eta_k$, and the sample size effect, $1/\bar{S_k}$, for each population as above in Eqn. \eqref{eq:spatial_covariance2}.
 
-The admixed covariance between samples $i$ and $j$, $\identifyadmixsource{\Omega_{i,j}}$ is then a function of all the pairwise spatial covariances between the locations of populations $i$ and $j$ and the points from which they draw admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$.  Those spatial covariances in turn are a function of all combinations of pairwise distances between their locations: $G_i'$, $G_j'$, \kadmixsource{i}, and \kadmixsource{j}.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}.
-=======
-where $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$ are the sources from which populations $i$ and $j$ are drawing their admixture with proportions $w_i$ and $w_j$, 
-\plr{$i*$ and $j*$ aren't sources, they are indices.  oh: now $\Omega^{(P)}$ is a $2n \times 2n$ matrix; need to say so, else we risk confusion, for instance that admixture locations have to be already sampled locations.}
-and the spatial covariance function of population frequencies, $\Omega$, is given by \eqref{eq:spatial_covariance} (this lacks the sample-specific variance terms on the diagonal). 
-\plr{Oh, ok.  I was confused about this distinction above.}
-Note that we then reintroduce the nugget, $\eta_k$, and the sample size effect, $1/\bar{S_k}$, for each population, 
-\plr{can just say something like ``as above''}
-to model drift or excess variance in population $k$ on top of that predicted by the mixture of frequencies given by our spatial model.  As in equation \eqref{eq:spatial_covariance2}, $\delta_{i,j} $ is the indicator function $1$ if $i=j$, and $0$ otherwise. 
-
-%parameterized by the pairwise geographic distances between each pair of populations, \emph{without} the population-specific variance terms on the diagonal (i.e., in equation \eqref{eq:admixed_covariance_1}, i.e.\ $\Omega_{i,j} = \frac{1}{\alpha_0} \text{exp} \left(	\left( \alpha_1D_{i,j} \right)^{\alpha_2} \right)$).  
-
-\plr{delete this paragraph? or insert at start of previous one.}
-The covariance between admixed samples $i$ and $j$, $\identifyadmixsource{\Omega_{i,j}}$ is then a function of all the pairwise spatial covariances between populations $i$ and $j$ and the points from which they draw admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$.  Those spatial covariances in turn are a function of all combinations of pairwise distances between their locations: $G_i$, $G_j$, \kadmixsource{i}, and \kadmixsource{j}.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}.
-
-As we only get to observe the sample frequencies and we standardize our allele frequencies using the sample mean, our predicted admixture covariance matrix needs to be transformed to accommodate these sampling considerations. We can do this as before (see Methods), and we again treat the likelihood of our sample covariance matrix as Wishart:
+We proceed in our inference procedure as before, but now with additional locations and admixture proportions to infer.
+The likelihood of our sample covariance matrix is Wishart:
 \begin{equation}
 \label{eq:wishart_dist_admixed}
 P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}) = 
-	\mathcal{W}\left(L \widehat{\Omega} \mid \identifyadmixsource{\Omega} \left( G',\identifyadmixsource{G}, w,\vec{\alpha},\eta \right),L \right)	\text{.}
+	\mathcal{W}\left(L \widehat{\Omega} \mid \identifyadmixsource{\Omega} \left( G',\identifyadmixsource{G}, w,\vec{\alpha},\eta \right),L \right)
 \end{equation}
-As before $G'$, $\vec{\alpha}$, $\eta$ are treated as random variables to be estimated. Now the set of $K$ admixture sources $\identifyadmixsource{G}$ are also parameters to be estimated, along with the vector of $K$ admixture proportions, $w$. The posterior probability of these parameters can be expressed as a function of this parametric admixed covariance, $\identifyadmixsource{\Omega}$,
+
+The posterior probability of these parameters can be expressed as a function of this parametric admixed covariance, $\identifyadmixsource{\Omega}$,
 \begin{equation}
 \label{eq:admixed_post_prob}
 P(G',\identifyadmixsource{G}, w,\vec{\alpha}, \eta \mid \widehat{\Omega}, L,G) 
@@ -445,10 +350,10 @@ P(G',\identifyadmixsource{G}, w,\vec{\alpha}, \eta \mid \widehat{\Omega}, L,G)
 		P(\widehat{\Omega}  \mid \identifyadmixsource{\Omega}) P(\vec{\alpha}) P(G') P(\identifyadmixsource{G}) P(w) P(\eta) 
 \end{equation}
 %
-as specified by the parameters $w$, $\identifyadmixsource{G}$, $\vec{\alpha}$, and $\eta$, and the observed locations, $G$.  We place the same priors as stated above on $G^{\prime}$, $\vec{\alpha}$, $\eta$, and we now specify priors on $w$ and $\identifyadmixsource{G}$.  
-\plr{no need to repeat; just say ``proceed as before, with additional locations and admixture proportions to infer'' instead of text before this point}
-We place a weak spatial prior on the sources of admixture, $\identifyadmixsource{G}$ around the centroid of the sampled locations, $G$. The admixture proportions, $w$, are capped at 0.5, to ensure identifiability, %prevent populations from swapping identities with their source of admixture, 
-and are heavily weighted towards small values to be conservative with respect to admixture inference.  These priors are detailed in Table \ref{tab:param_prior_tab}.
+as specified by the parameters $w$, $\identifyadmixsource{G}$, $\vec{\alpha}$, and $\eta$, and the observed locations, $G$.  
+We place a weak spatial prior on the sources of admixture, $\identifyadmixsource{G}$ around the centroid of the sampled locations, $G$. The admixture proportions, $w$, are capped at 0.5, to ensure identifiability,
+and are heavily weighted towards small values to be conservative with respect to admixture inference.  
+These priors are detailed in Table \ref{tab:param_prior_tab}.
 
 \begin{figure}[htp!]
 	\centering
@@ -468,7 +373,7 @@ Allowing admixture gives sensible results for the scenario of Figure \ref{sfig:c
 in the resulting map,
 the only population that draws substantial admixture is the one that is actually admixed (population 30), 
 and it draws admixture from the correct location.
-
+\gb{MOVE TO SUPPMAT AND REFERENCE THE ISSUE IN DISCO}
 A more subtle simulated admixture scenario, with admixture proportion = 10\% across a geographic barrier, 
 is shown Fig.\ \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_scenario}).  
 The resulting SpaceMix map (Fig.\ \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_inference}), 
@@ -538,7 +443,7 @@ consisting of 95 individuals sampled at 22 distinct locations and sequenced at 2
 			{\includegraphics[width=2.4in,height=2in]{figs/warblers/warb_pop_noad.png}}
 		\subcaptionbox{Warbler population map, with admixture \label{warb_pop_ad}}
 			{\includegraphics[width=2.4in,height=2in]{figs/warblers/population_warbler_map_randpr1.png}}
-\caption{Inferred population maps with population labels colored as in Fig. \ref{sfig:empirical_maps}\subref{irwin_map}: a) the map inferred with no admixture inference; b) the map inferred with admixture inference.}
+\caption{Inferred population maps with population labels colored as in Fig.\ \ref{sfig:empirical_maps}\subref{irwin_map}: a) the map inferred with no admixture inference; b) the map inferred with admixture inference.}
 \label{sfig:warbler_pop}
 \end{figure}
 
@@ -1126,7 +1031,7 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 
 \newpage
 \section*{Appendix}
-A natural concern is whether all of the parameters in the SpaceMix are separately identifiable, most notably whether population locations, admixture locations, and proportions can be estimated. That is, if a population has received some level of admixture from another population, what is to stop it from simply moving toward that population in geogenetic space to satisfy its increased resemblance to that population, rather than choosing admixture from that location?  We build and illustrate an intuition for why admixture is identifiable in our model below (Fig. \ref{sfig:toy_admixture}).
+A natural concern is whether all of the parameters in the SpaceMix are separately identifiable, most notably whether population locations, admixture locations, and proportions can be estimated. That is, if a population has received some level of admixture from another population, what is to stop it from simply moving toward that population in geogenetic space to satisfy its increased resemblance to that population, rather than choosing admixture from that location?  We build and illustrate an intuition for why admixture is identifiable in our model below (Fig.\ \ref{sfig:toy_admixture}).
 
 Admixture is identifiable in our model because there are covariance relationships among populations that cannot simply be satisfied by shifting population locations around (as demonstrated by the tortured nature of Figure \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}). Consider the simple spatial admixture scenario shown in Figure \ref{sfig:toy_admixture}. Our populations A-D are spatially arrayed  along a line, and their allele frequencies are specified by a simple isolation by distance model, but there is recent admixture from D into B (such that 40\% of the alleles in B are drawn from D).  The lines show the expected covariance under IBD that each population (A, C, or D, as indicated by line color) has with a putative population at a given distance.  The dots show the admixed covariance between B and the three other populations, as well as B's variance with itself (B-B) as specified by equation \eqref{eq:admixed_covariance_1}, with no nugget or sampling effect.
 

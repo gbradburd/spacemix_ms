@@ -2722,7 +2722,7 @@ dev.off()
 
 pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/barrier_lattice.pdf",width=6,height=5)
 	migration.rate.graphic(x.pops = 5,y.pops = 6,migration.rate=1,migration.arrows=FALSE,jitter=0.25,barrier.effect=5,labels=TRUE,colors=TRUE,pop.pt.cex=2.5,pop.lab.cex=2.5)
-	abline(v=6.2,lwd=2,lty=2)
+	abline(v=6.2,lwd=6,lty=2)
 dev.off()
 
 parents <- c(78:88)
@@ -2743,25 +2743,19 @@ expansion.list2 <- list(list(parent = 61,
 						daughters = 105,
 						time.point = 1))
 	
-pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/barr_indland_ad_lattice.pdf",width=6,height=5)
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/barr_inland_ad_lattice.pdf",width=6,height=5)
 	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,migration.arrows=FALSE,barrier.effect=5,jitter = 0.25,expansion.list=expansion.list2,labels=TRUE,colors=TRUE,arrow.col="green",arrow.width=0.4,pop.pt.cex=2.5,pop.lab.cex=2.5)
-	abline(v=6.2,lwd=2,lty=2)
+	abline(v=6.2,lwd=6,lty=2)
 dev.off()
-
-pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/barr_indland_ad_lattice.pdf",width=6,height=5)
-	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,migration.arrows=FALSE,barrier.effect=5,jitter = 0.25,expansion.list=expansion.list2,labels=TRUE,colors=TRUE,arrow.col="green",arrow.width=0.4,pop.pt.cex=2.5,pop.lab.cex=2.5)
-	abline(v=6.2,lwd=2,lty=2)
-dev.off()
-
 
 expansion.list2.5 <- list(list(parent = 61,
 						daughters = 83,
 						time.point = 1))
 	
-#pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/big_barr_ad_lattice.pdf",width=6,height=5)
-pdf(file="~/Desktop/big_barr_ad_lattice.pdf",width=6,height=5)
-	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,migration.arrows=FALSE,barrier.effect=5,jitter = 0.25,expansion.list=expansion.list2.5,labels=TRUE,colors=TRUE,arrow.col="black",arrow.width=0.8,pop.pt.cex=2.5,pop.lab.cex=2.5)
-	abline(v=6.2,lwd=2,lty=2)
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/big_barr_ad_lattice.pdf",width=6,height=5)
+#pdf(file="~/Desktop/big_barr_ad_lattice.pdf",width=6,height=5)
+	migration.rate.graphic(x.pop=5,y.pops=6,migration.rate=1,migration.arrows=FALSE,barrier.effect=5,jitter = 0.25,expansion.list=expansion.list2.5,labels=TRUE,colors=TRUE,arrow.col="green",arrow.width=0.8,pop.pt.cex=2.5,pop.lab.cex=2.5)
+	abline(v=6.2,lwd=6,lty=2)
 dev.off()
 
 expansion.list3 <- list(list(parent = 13,

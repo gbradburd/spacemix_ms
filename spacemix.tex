@@ -177,7 +177,7 @@ We proceed in our discussion of the covariance as if our $\bar{f}_{\ell}$ were a
 
 
 \paragraph{Spatial Covariance Model}
-We wish to model the distribution of allele frequencies  among populations as the result of a spatial process, in which migration rates between nearby populations are higher than those between distant ones.  
+We wish to model the distribution of allele frequencies among populations as the result of a spatial process, in which migration rates between nearby populations are higher than those between distant ones.  
 Migration between populations homogenizes differentiation caused by genetic drift; 
 populations with higher levels of historical or ongoing migration share more of their demographic history,
 and so have larger covariance in their allele frequency deviations around the global mean.
@@ -203,9 +203,9 @@ as follows:
 \end{equation} 
 where $\delta_{i,j}$ is the indicator function $1$ if $i=j$, and $0$ otherwise. 
 Here $\eta_k$ is a sample-specific variance (nugget) for sample $k$, 
-and represents any excess allele frequency variance not captured by the spatial model,
-and $1/\bar{S_i}$ accounts for the variance introduced by sampling within the population.
-Finally, $\bar{S}$ is a vector of sample sizes in each population, where $\bar{S}_k$ is the mean sample size across all loci in population $k$.  
+and represents any excess allele frequency variance not captured by the spatial model.
+Finally, $\bar{S}$ is a vector of sample sizes in each population, where $\bar{S}_k$ is the mean sample size across all loci in population $k$,
+so that $1/\bar{S_k}$ accounts for the variance introduced by sampling within the population.
 
 The distribution of the sample covariance is not known in general,
 but the central limit theorem implies that if the number of loci is large, the sample covariance converges to Wishart.
@@ -288,7 +288,7 @@ In SuppMat Figs \ref{sfig:sim_covariance_decays}, we show the relationship betwe
 
 We next simulated a long-distance admixture event, on the same grid,
 by sampling half of the alleles of each individual in the northeast corner population from the southwest corner population (Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}).  We then ran a SpaceMix analysis in which the locations of these populations were estimated (Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}).
-This creates excess covariance over anomalously long distances, which is clearly difficult to accommodate by a two-dimensional geogenetic map.
+This creates excess covariance over anomalously long distances, which is clearly difficult to accommodate with a two-dimensional geogenetic map.
 Figure \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}, shows the torturous lengths to which the method goes to fit a good geogenetic map: the admixed population 30 is between population 1, the source of its admixture, and populations 24, 25, and 29, the nearest neighbors to the location of its non-admixed portion.
 However, this warping of space is difficult to interpret, and would be even more so in empirical data for which a researcher does not know the true demographic history.  
 
@@ -300,7 +300,7 @@ However, this warping of space is difficult to interpret, and would be even more
 			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_corner_admixture_CYOL.pdf}}
 		\subcaptionbox{location and admixture inference  \label{corner_admix_inference}}
 			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_corner_admixture.pdf}}
-	\caption{Simulation scenarios and SpaceMix inference.  a) a lattice with recent admixture event between population 1 in the southwest corner and population 30 in the northeast corner, so that population 30 is drawing half of its ancestry from population 1; b) the MAP estimate of population locations under this scenario; c) the MAP estimate of population locations and their sources of admixture under this scenario.}\label{sfig:corner_admix_scenarios}
+	\caption{Simulation scenarios and SpaceMix inference.  a) a lattice with recent admixture event between population 1 in the southwest corner and population 30 in the northeast corner, so that population 30 is drawing half of its ancestry from population 1; b) the MAP estimate of population locations under this scenario; c) the MAP estimate of population locations and their sources of admixture under this scenario.  In panel (c), the width and opacity of the admixture arrows are drawn proportional the admixture proportions.}\label{sfig:corner_admix_scenarios}
 \end{figure}
 
 
@@ -309,19 +309,19 @@ However, this warping of space is difficult to interpret, and would be even more
 \subsection*{Inference of Spatial Admixture}
 
 To incorporate recent admixture, we allow
-each allele sampled in population $k$ to have a probability $w$ ($0 \leq w_k \leq 0.5$ ) of being sampled from location $G^{\prime}_k$ 
-and a probability $1-w$ of being sampled from location $G^{*}_k$, 
-which we refer to as population $k$'s source of admixture.  
+each allele sampled in population $k$ to have a probability $w$ ($0 \leq w_k \leq 0.5$ ) of being sampled from location $\identifyadmixsource{G}_k$,
+which we refer to as population $k$'s source of admixture,
+and a probability $1-w$ of being sampled from location $G^{\prime}_k$.
 With no nugget, each allele is sampled independently, but the nugget introduces correlations between the alleles sampled in each individual.
 The population allele frequencies in population $k$ 
 are then modeled as a weighted average of the allele frequencies at the geographic location the sampled population chooses for itself ($f_{k^{\prime}}$) 
 and those at the coordinates of the source ($f_{\identifyadmixsource{k}}$) from which the observed population draws admixture.
 \begin{equation}
-f_k = w_k f_{k^{\prime}} + (1-w_k) f_{\identifyadmixsource{k}}  \label{eqn-admixedfreq}
+f_k = w_k f_{\identifyadmixsource{k}} + (1-w_k)f_{k^{\prime}}   \label{eqn-admixedfreq}
 \end{equation}
 We allow each of our populations an independent spatial source of admixture, as well as independent admixture proportions.
 
-We can then consider the parametric covariance matrix of the standardized allele frequencies that follows from the form of the population frequencies in equation \eqref{eqn-admixedfreq}.  The admixed covariance between samples $i$ and $j$, $\identifyadmixsource{\Omega_{i,j}}$ is a function of all the pairwise spatial covariances between the locations of populations $i$ and $j$ and the points from which they draw admixture.  This parametric covariance form is illustrated in Figure \ref{sfig:admixed_cov_diagram}. This admixed covariance in the standardized allele frequencies between population $i$ and $j$ is, by equation \eqref{eqn-admixedfreq},
+We can then consider the parametric covariance matrix of the standardized allele frequencies that follows from the form of the population frequencies in equation \eqref{eqn-admixedfreq}.  The admixed covariance between samples $i$ and $j$, $\identifyadmixsource{\Omega_{i,j}}$, is a function of all the pairwise spatial covariances between the locations of populations $i$ and $j$ and the points from which they draw admixture (illustrated in Figure \ref{sfig:admixed_cov_diagram}); by Equation \eqref{eqn-admixedfreq}, this form is as follows
 \begin{alignat}{3}
 \label{eq:admixed_covariance_1}
 \identifyadmixsource{\Omega_{i,j}} = (1-w_i)(1-w_j) F(D_{i'\;,\;j'\;}) \; +&\\
@@ -334,7 +334,7 @@ w_i w_j F(D_{\identifyadmixsource{i},\;\identifyadmixsource{j}}) \; +   \notag&\
 where $D$, dimension $2k \; \times \; 2k$, is a matrix of pairwise distances between all inferred locations (indexed by $\prime$) and all sources of admixture (indexed by *), and for readability, we denote, e.g., $F(D(G^{\prime}_i,\identifyadmixsource{G}_i))$, as $F(D_{i'\;,\;\identifyadmixsource{j}})$.
 The spatial covariance, $F(D)$, is as given in Eqn.\ \eqref{eq:spatial_covariance}, and we reintroduce the nugget, $\eta_k$, and the sample size effect, $1/\bar{S_k}$, for each population as above in Eqn. \eqref{eq:spatial_covariance2}.
 
-We proceed in our inference procedure as before, but now with additional locations and admixture proportions to infer.
+We proceed in our inference procedure as before, but now with the locations of the sources of admixture and the admixture proportions to infer.
 The likelihood of our sample covariance matrix is Wishart:
 \begin{equation}
 \label{eq:wishart_dist_admixed}

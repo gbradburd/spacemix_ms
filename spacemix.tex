@@ -3,7 +3,8 @@
 \usepackage{float}
 \usepackage{subcaption}
 % \usepackage{url}
-\usepackage[hidelinks]{hyperref}
+\usepackage{hyperref}
+%\hypersetup{colorlinks,urlcolor=blue}
 \usepackage{mathtools}
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage[authoryear]{natbib}
@@ -84,6 +85,19 @@ called SpaceMix, provides a valuable new resource for understanding and visualiz
 \newpage
 %%%%%%%%% %%%%%%%%% %%%%%%%%%
 \section*{Introduction}
+In this paper, we introduce a statistical method for inferring, for a set of sequenced samples, 
+a map in which the distances between population locations reflect genetic, rather than geographic, proximity.  
+Two populations that are sampled at distant locations but that are genetically similar 
+(perhaps one was recently founded by a colonization event from the other) 
+may have inferred locations that are nearby, while two populations that are sampled close together, 
+but that are genetically dissimilar (e.g., are separated by a barrier), may have inferred locations that are farther apart.   
+The result is a ÒgeogeneticÓ map in which the distances between populations are effective distances, 
+indicative of the way that populations perceive the distances between themselves: the ``organism's-eye view" of the world.  
+Added to this, ``admixture'' can be thought of as the outcome of unusually long-distance gene flow; 
+it results in relatedness between populations that is anomalously high given the distance that separates them.
+We summarize the effect of admixture as arrows, from a source of admixture to its target, on the inferred map.
+The inferred map, which we call a `geogenetic'  map, is an intuitive and information-rich visual summary of patterns of population structure.
+
 There are many different methods to learn how population structure and demographic processes have left their mark on 
 patterns of genetic variation within and between populations.
 Model-based approaches focus on developing a detailed view of the migrational history of a small number of populations,
@@ -120,31 +134,21 @@ Modeling such empirical patterns in a geographically continuous framework relies
 
 %As a result, the first principal axes of genetic variance (in, e.g., PC analysis) within continents or other geographically restricted areas often correspond strongly to geographic coordinates (?), which allows estimation of the location of individuals whose origin of ancestry is unknown (???)
 
+%\plr{I feel like something like the following, but maybe more exciting, should go right up near the top of the intro, before the lengthy but useful recap of other methods:}
+%We build a ``geogenetic'' map in which proximity implies genomic similarity, in an isometric way.
+%This map generally recapitulates the actual geographic locations of the populations,
+%but distorted so that distances reflect the ease with which the organism disperses:
+%nearby samples tend to be more closely related
+%because dispersal of real organisms is geographically limited,
+%but nearness should be measured according to ease of movement by the dispersing organism,
+%not by straight-line distance.
+%Added to this, ``admixture'' can be thought of as the outcome of unusually long-distance gene flow.
+%It results in relatedness between populations that is anomalously high given the distance that separates them.  
 
-\plr{I feel like something like the following, but maybe more exciting, should go right up near the top of the intro, before the lengthy but useful recap of other methods:}
-We build a ``geogenetic'' map in which proximity implies genomic similarity, in an isometric way.
-This map generally recapitulates the actual geographic locations of the populations,
-but distorted so that distances reflect the ease with which the organism disperses:
-nearby samples tend to be more closely related
-because dispersal of real organisms is geographically limited,
-but nearness should be measured according to ease of movement by the dispersing organism,
-not by straight-line distance.
-Added to this, ``admixture'' can be thought of as the outcome of unusually long-distance gene flow.
-It results in relatedness between populations that is anomalously high given the distance that separates them.  
 Here, we present a statistical framework for studying the spatial distribution of genetic variation and genetic admixture based on a flexible parameterization
 of the relationship of isolation by distance.
-\plr{right, so maybe merge this last sentence with the first and put this at the start of the section, not the end}
-Within this framework, the pattern of genetic relatedness between the samples is represented by a map, in which inferred distances between samples are proportional to their genetic differentiation.  These `geogenetic'  maps are simple, intuitive, low-dimensional summaries of population structure, and they provide a natural framework for the inference and visualization of spatial patterns of genetic variation and the signature of genetic admixture.
-
-\plr{
-How about a paragraph summarizing the advantages over PCA and structure up here?  
-Structure: we make maps.  
-PCA: we allow admixture and are not constrained to linear relationships between allele and location.
-With four populations in a line, if drift is sufficently stronger than migration,
-PCA will use three PCs to separate them, and will put them at the corners of a tetrahedron;
-SpaceMix should get the linear arrangement right.
-This is related to the triangular configuration seen in the warblers.
-}
+Within this framework, the pattern of genetic relatedness between the samples is represented by a map, in which inferred distances between samples are proportional to their genetic differentiation, and long distance relatedness (in excess of that predicted by the map) is modeled as genetic admixture.
+These `geogenetic'  maps are simple, intuitive, low-dimensional summaries of population structure, and they provide a natural framework for the inference and visualization of spatial patterns of genetic variation and the signature of genetic admixture.  The implementation of this method, SpaceMix, is available at \href{https://github.com/gbradburd/SpaceMix}{https://github.com/gbradburd/SpaceMix}.
 
 %%%%%%%%% %%%%%%%%% %%%%%%%%%
 \section*{Results}
@@ -152,15 +156,15 @@ This is related to the triangular configuration seen in the warblers.
 \paragraph{Data}
 
 
-The data modeled by this method consist of $L$ unlinked bi-allelic single nucleotide polymorphisms (SNPs) sampled across $K$ populations, 
-as well as the geographic coordinates, denoted $G_k$ in population $k$, (latitude and longitude) at which those populations were sampled (although $G_k$ may be missing for some or all of the populations). 
-\plr{I think it's better to not introduce the true locations at all until later, since the model doesn't actually use them.}
+The data modeled by this method consist of $L$ unlinked bi-allelic single nucleotide polymorphisms (SNPs) sampled across $K$ populations.
+%as well as the geographic coordinates, denoted $G_k$ in population $k$, (latitude and longitude) at which those populations were sampled (although $G_k$ may be missing for some or all of the populations). 
+%\plr{I think it's better to not introduce the true locations at all until later, since the model doesn't actually use them.}
 The genetic data consist of allele counts: after arbitrarily choosing an allele to count at each locus, 
 we denote the number of counted alleles at locus $\ell$ in population $k$ as $C_{\ell,k}$,
 and the total number of alleles observed as $S_{\ell,k}$.
 The sample frequency at locus $\ell$ in population $k$ is $\hat{f}_{\ell,k} = C_{\ell,k}/S_{\ell,k}$.  
-\plrm{can we get rid of the hat on $\hat{f}$?}
-Note that while we will refer to a sample from population $k$, this sample could consist of a single individual ($S_{\ell,k}=2$ for a diploid). 
+Note that while we will refer to a sample from population $k$, this sample could consist of a single individual ($S_{\ell,k}=2$ for a diploid).
+We assume that these samples can be represented as coordinates on a map; however, the method does not require user-specified sampling locations.
 
 We first compute standardized sample allele frequencies at locus $\ell$ in population $k$, by
 \begin{equation}
@@ -168,7 +172,6 @@ We first compute standardized sample allele frequencies at locus $\ell$ in popul
   \hat{X}_{\ell,k} = (\hat{f}_{\ell,k}  - \bar{f}_{\ell})/\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}\text{,}
 \end{equation}
 where $\hat{f}_{\ell,k}$ is sample allele frequency at locus $\ell$ in population $k$, and $\bar{f}_{\ell}$ is the global mean frequency across the $K$ samples at locus $\ell$.  
-\plr{$\bar{f}$ is the global mean frequency, no? if unclear, formula comes in methods anyhow?}
 This normalization is widely used \citep[e.g.][]{nicholson2002,patterson2006};
 roughly speaking, mean-centering removes any effect of choice of counted allele,
 and dividing by $\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}$ makes each locus have unit variance.
@@ -223,23 +226,19 @@ so that calculating the likelihood of $\widehat \Omega$ is the same as calculati
 Handily, it also means that once the sample covariance matrix has been calculated, all other computations do not scale with the number of loci, making the method scalable to genome size datasets. 
 
 %%%%%%%%% %%%%%%%%% 
-\paragraph{Accommodating heterogeneous processes}
-Non-equilibrium processes like long distance admixture, colonization, or population expansion events will distort the relationship between covariance and distance across the range, as will barriers to dispersal on the landscape. To accommodate these heterogeneous processes we infer the locations of populations on a map that reflects genetic, rather than geographic, proximity. Two populations that are sampled at distant locations but that are genetically similar (perhaps one was recently founded by a colonization event from the other) may have inferred locations that are nearby, while two populations that are sampled close together, but that are genetically dissimilar (e.g., are separated by a barrier), may have inferred locations that are farther apart. The result is a ``geogenetic" map in which the distances between populations are effective distances, indicative of the way that populations perceive the distances between themselves.
-
-To generate this map, we treat populations' geographic locations as parameters to be estimated as part of the model, and we implement a Bayesian inference procedure (described in the Methods) for doing so.
-The set of coordinates where the populations were sampled is $G$, 
-and we designate the set of location parameters (i.e.\ coordinates in the geogenetic map) for the populations as $G'$. 
-The parametric covariance matrix $\Omega$, as given by equation \eqref{eq:spatial_covariance2}, is a function of the pairwise matrix of distances between these inferred locations, $D(G')$, and the $\vec{\alpha}$ and $\eta$ parameters.  We acknowledge this dependence by writing $\Omega(\vec{\alpha},{D}(G'),\eta)$.  We write the posterior probability as 
+\paragraph{Location Inference} Non-equilibrium processes like long distance admixture, colonization, or population expansion events will distort the relationship between covariance and distance across the range, as will barriers to dispersal on the landscape. To accommodate these heterogeneous processes we infer the locations of populations on a map that reflects genetic, rather than geographic, proximity.  To generate this map, we treat populations' geographic locations as parameters to be estimated as part of the model, and we implement a Bayesian inference procedure (described in the Methods) for doing so.
+We designate the set of location parameters (i.e.\ coordinates in the geogenetic map) for the populations as $G$. 
+The parametric covariance matrix $\Omega$, as given by equation \eqref{eq:spatial_covariance2}, is a function of the pairwise matrix of distances between these inferred locations, $D(G)$, and the $\vec{\alpha}$ and $\eta$ parameters.  We acknowledge this dependence by writing $\Omega(\vec{\alpha},{D}(G),\eta)$.  We write the posterior probability as 
 \begin{equation}
 \label{eq:cyol_prob}
-P \left( G', \vec{\alpha}, \eta \mid \widehat{\Omega}, L, G \right) \propto  
-	P \left( \widehat{\Omega}  \mid \Omega(\vec{\alpha},{D}(G'),\eta ) \right) P(\vec{\alpha}) P(G') P(\eta) \text{,}
+P \left( G, \vec{\alpha}, \eta \mid \widehat{\Omega}, L \right) \propto  
+	P \left( \widehat{\Omega}  \mid \Omega(\vec{\alpha},{D}(G),\eta ) \right) P(\vec{\alpha}) P(G) P(\eta) \text{,}
 \end{equation}
 where the constant of proportionality is the normalization constant.  
 
-The priors on the parameters that control the shape of the decay of covariance with distance $P(\vec{\alpha})$ are given in the Methods, as are those on $P(\eta)$.  We assume that the priors on the inferred, geogenetic locations, $P(G')$ are independent across populations.  Because the observed locations are a natural prior on where populations are positioned under the null of isolation by distance, we use a very weak prior on population $k$'s location parameter ($G'_k$) that is centered around the observed location $G_k$.
-The prior $P(G')$ on geogenetic locations
-also encourages the resulting inferred geogenetic map to be anchored in the observed locations and to represent (informally) the minimum distortion to space necessary to satisfy the constraints placed by genetic similarities of populations.  However, we can also use random locations as the ``observed" locations ($G_k$) to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference. 
+The priors on the parameters that control the shape of the decay of covariance with distance $P(\vec{\alpha})$ are given in the Methods, as are those on $P(\eta)$.  We assume that the priors on the inferred, geogenetic locations, $P(G)$ are independent across populations.  Because the observed locations are a natural prior on where populations are positioned under the null of isolation by distance, we use a very weak prior on population $k$'s location parameter ($G_k$) that is centered around the observed location.
+The prior $P(G)$ on geogenetic locations
+also encourages the resulting inferred geogenetic map to be anchored in the observed locations and to represent (informally) the minimum distortion to space necessary to satisfy the constraints placed by genetic similarities of populations.  However, we can also use random locations as the ``observed" locations to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference. 
 
 We then use Markov chain Monte Carlo to estimate the posterior distribution on the parameters; for more details see the Methods. 
 This method is implemented in a program called SpaceMix.
@@ -296,11 +295,11 @@ However, this warping of space is difficult to interpret, and would be even more
 	\centering
 		\subcaptionbox{simulated lattice with admixture \label{corner_admixture_lattice}}
 			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/corner_admixture_lattice.pdf}}
-		\subcaptionbox{location inference \label{corner_admix_inference_CYOL}}
+		\subcaptionbox{geogenetic map without admixture inference \label{corner_admix_inference_CYOL}}
 			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_corner_admixture_CYOL.pdf}}
-		\subcaptionbox{location and admixture inference  \label{corner_admix_inference}}
+		\subcaptionbox{geogenetic map with admixture inference  \label{corner_admix_inference}}
 			{\includegraphics[width=2.8in,height=2.33in]{figs/sims/GeoGenMap_corner_admixture.pdf}}
-	\caption{Simulation scenarios and SpaceMix inference.  a) a lattice with recent admixture event between population 1 in the southwest corner and population 30 in the northeast corner, so that population 30 is drawing half of its ancestry from population 1; b) the MAP estimate of population locations under this scenario; c) the MAP estimate of population locations and their sources of admixture under this scenario.  In panel (c), the width and opacity of the admixture arrows are drawn proportional the admixture proportions.}\label{sfig:corner_admix_scenarios}
+	\caption{Simulation scenarios and SpaceMix inference.  a) a lattice with recent admixture event between population 1 in the southwest corner and population 30 in the northeast corner, so that population 30 is drawing half of its ancestry from population 1; b) the MAP estimate of population locations under this scenario; c) the MAP estimate of population locations and their sources of admixture under this scenario.  The 95\% credible interval on $w_{30}$ is 0.36 - 0.40. In panel (c), the width and opacity of the admixture arrows are drawn proportional the admixture proportions.}\label{sfig:corner_admix_scenarios}
 \end{figure}
 
 
@@ -311,27 +310,27 @@ However, this warping of space is difficult to interpret, and would be even more
 To incorporate recent admixture, we allow
 each allele sampled in population $k$ to have a probability $w$ ($0 \leq w_k \leq 0.5$ ) of being sampled from location $\identifyadmixsource{G}_k$,
 which we refer to as population $k$'s source of admixture,
-and a probability $1-w$ of being sampled from location $G^{\prime}_k$.
+and a probability $1-w$ of being sampled from location $G_k$.
 With no nugget, each allele is sampled independently, but the nugget introduces correlations between the alleles sampled in each individual.
 The population allele frequencies in population $k$ 
-are then modeled as a weighted average of the allele frequencies at the geographic location the sampled population chooses for itself ($f_{k^{\prime}}$) 
+are then modeled as a weighted average of the allele frequencies at the geographic location the sampled population chooses for itself ($f_{k}$) 
 and those at the coordinates of the source ($f_{\identifyadmixsource{k}}$) from which the observed population draws admixture.
 \begin{equation}
-f_k = w_k f_{\identifyadmixsource{k}} + (1-w_k)f_{k^{\prime}}   \label{eqn-admixedfreq}
+f^{\text{(pop)}}_k = w_k f_{\identifyadmixsource{k}} + (1-w_k)f_{k}   \label{eqn-admixedfreq}
 \end{equation}
 We allow each of our populations an independent spatial source of admixture, as well as independent admixture proportions.
 
 We can then consider the parametric covariance matrix of the standardized allele frequencies that follows from the form of the population frequencies in equation \eqref{eqn-admixedfreq}.  The admixed covariance between samples $i$ and $j$, $\identifyadmixsource{\Omega_{i,j}}$, is a function of all the pairwise spatial covariances between the locations of populations $i$ and $j$ and the points from which they draw admixture (illustrated in Figure \ref{sfig:admixed_cov_diagram}); by Equation \eqref{eqn-admixedfreq}, this form is as follows
 \begin{alignat}{3}
 \label{eq:admixed_covariance_1}
-\identifyadmixsource{\Omega_{i,j}} = (1-w_i)(1-w_j) F(D_{i'\;,\;j'\;}) \; +&\\
-w_i(1-w_j) F(D_{\identifyadmixsource{i},\;j'\;}) \; +   \notag&\\
-w_j(1-w_i) F(D_{i'\;,\;\identifyadmixsource{j}}) \; +   \notag&\\
+\identifyadmixsource{\Omega_{i,j}} = (1-w_i)(1-w_j) F(D_{i\;,\;j\;}) \; +&\\
+w_i(1-w_j) F(D_{\identifyadmixsource{i},\;j\;}) \; +   \notag&\\
+w_j(1-w_i) F(D_{i\;,\;\identifyadmixsource{j}}) \; +   \notag&\\
 w_i w_j F(D_{\identifyadmixsource{i},\;\identifyadmixsource{j}}) \; +   \notag&\\
 \delta_{i,j} (\eta_i + \frac{1}{\bar{S}_i}) \notag&
 \end{alignat}
 
-where $D$, dimension $2k \; \times \; 2k$, is a matrix of pairwise distances between all inferred locations (indexed by $\prime$) and all sources of admixture (indexed by *), and for readability, we denote, e.g., $F(D(G^{\prime}_i,\identifyadmixsource{G}_i))$, as $F(D_{i'\;,\;\identifyadmixsource{j}})$.
+where $D$, dimension $2k \; \times \; 2k$, is a matrix of pairwise distances between all inferred locations and all sources of admixture (indexed by *), and for readability, we denote, e.g., $F(D(G_i,\identifyadmixsource{G}_j))$, as $F(D_{i\;,\;\identifyadmixsource{j}})$.
 The spatial covariance, $F(D)$, is as given in Eqn.\ \eqref{eq:spatial_covariance}, and we reintroduce the nugget, $\eta_k$, and the sample size effect, $1/\bar{S_k}$, for each population as above in Eqn. \eqref{eq:spatial_covariance2}.
 
 We proceed in our inference procedure as before, but now with the locations of the sources of admixture and the admixture proportions to infer.
@@ -339,83 +338,76 @@ The likelihood of our sample covariance matrix is Wishart:
 \begin{equation}
 \label{eq:wishart_dist_admixed}
 P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}) = 
-	\mathcal{W}\left(L \widehat{\Omega} \mid \identifyadmixsource{\Omega} \left( G',\identifyadmixsource{G}, w,\vec{\alpha},\eta \right),L \right)
+	\mathcal{W}\left(L \widehat{\Omega} \mid \identifyadmixsource{\Omega} \left( G,\identifyadmixsource{G}, w,\vec{\alpha},\eta \right),L \right)
 \end{equation}
 
 The posterior probability of these parameters can be expressed as a function of this parametric admixed covariance, $\identifyadmixsource{\Omega}$,
 \begin{equation}
 \label{eq:admixed_post_prob}
-P(G',\identifyadmixsource{G}, w,\vec{\alpha}, \eta \mid \widehat{\Omega}, L,G) 
+P(G,\identifyadmixsource{G}, w,\vec{\alpha}, \eta \mid \widehat{\Omega}, L) 
 	\propto  
-		P(\widehat{\Omega}  \mid \identifyadmixsource{\Omega}) P(\vec{\alpha}) P(G') P(\identifyadmixsource{G}) P(w) P(\eta) 
+		P(\widehat{\Omega}  \mid \identifyadmixsource{\Omega}) P(\vec{\alpha}) P(G) P(\identifyadmixsource{G}) P(w) P(\eta) 
 \end{equation}
 %
-as specified by the parameters $w$, $\identifyadmixsource{G}$, $\vec{\alpha}$, and $\eta$, and the observed locations, $G$.  
-We place a weak spatial prior on the sources of admixture, $\identifyadmixsource{G}$ around the centroid of the sampled locations, $G$. The admixture proportions, $w$, are capped at 0.5, to ensure identifiability,
+as specified by the parameters $w$, $\identifyadmixsource{G}$, $\vec{\alpha}$, and $\eta$, and the inferred locations, $G$.  
+We place a weak spatial prior on the sources of admixture, $\identifyadmixsource{G}$ around the centroid of the observed locations. The admixture proportions, $w$, are capped at 0.5, to ensure identifiability,
 and are heavily weighted towards small values to be conservative with respect to admixture inference.  
 These priors are detailed in Table \ref{tab:param_prior_tab}.
 
 \begin{figure}[htp!]
 	\centering
 	\includegraphics[width=2in,height=2in]{figs/admix_cov_fig.pdf}
-	\caption{An illustration of the form of the admixed covariance given in equations \eqref{eq:admixed_covariance_1}.  Populations $i$ and $j$ (at locations $i^{\prime}$ and $j^{\prime}$) are drawing admixture in proportions $w_i$ and $w_j$ from their respective sources of admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$, and all pairwise spatial covariances (the $\Omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $\identifyadmixsource{j}$ than $i$ is from its source $\identifyadmixsource{i}$ (i.e., $w_j > w_i$).
+	\caption{An illustration of the form of the admixed covariance given in equations \eqref{eq:admixed_covariance_1}.  Populations $i$ and $j$ are drawing admixture in proportions $w_i$ and $w_j$ from their respective sources of admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$, and all pairwise spatial covariances (the $\Omega$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $\identifyadmixsource{j}$ than $i$ is from its source $\identifyadmixsource{i}$ (i.e., $w_j > w_i$).
     }
 \label{sfig:admixed_cov_diagram}
 \end{figure}
 
 %We treat the location of the source of admixture for population $k$, $\identifyadmixsource{G_k}$, and the population's admixture proportion, $p_k$, as random variables and jointly estimate them as part of our inference procedure. 
 
-\plr{this paragraph shouldn't be so buried, I think. also, do we have anything useful to say about why one might want to run a more constrained model?}
-The models described above may be used in various combinations.  In the simplest model, populations do not choose their own locations, nor are they allowed to draw admixture, and the only parameters to be estimated are those of the spatial covariance function given in equation \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_i$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  
+The models described above may be used in various combinations.  In the simplest model, populations do not choose their own locations, nor are they allowed to draw admixture, and the only parameters to be estimated are those of the spatial covariance function given in equation \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_i$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  Users may wish to employ the more constrained models (e.g., fixing the locations or admixture proportions for some or all specimens) in a model selection framework to test specific hypotheses.
 % We discuss the identifiability of these models in the Methods.
 
-Allowing admixture gives sensible results for the scenario of Figure \ref{sfig:corner_admix_scenarios}:
+Allowing admixture gives sensible results for the scenario of Figure \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}:
 in the resulting map,
-the only population that draws substantial admixture is the one that is actually admixed (population 30), 
-and it draws admixture from the correct location.
-\gb{MOVE TO SUPPMAT AND REFERENCE THE ISSUE IN DISCO}
+the only population that draws substantial admixture is the one that is actually admixed, 
+and it draws admixture (95\% CI: 0.36 - 0.40) from the correct location (Figure \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference}).
+
 A more subtle simulated admixture scenario, with admixture proportion = 10\% across a geographic barrier, 
 is shown Fig.\ \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_scenario}).  
 The resulting SpaceMix map (Fig.\ \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_inference}), 
 separates of the east and west sides of the grid to accommodate the effect of the barrier,
 and the admixed population (population 23) chooses admixture from very close to its true source (population 13), 
-and in close to the correct amount ($\bar{w}_{(23)} = 0.05; 95\% \text{ credible interval} = 0.02-0.08$). 
-\plr{maybe we should note that we aren't simulating under the model, so it's not so bad that 0.1 falls outside the credible interval. 
-I guess if we simulated a continuous population and knew the right funcitonal form for the covariance then we should expect to get it right.}
+and in close to the correct amount ($\bar{w}_{(23)} = 0.05; 95\% \text{CI} = 0.02-0.08$). 
 
 Another difficult scenario is shown in Figure \ref{barr_inland_ad}\subref{big_barr_ad_scenario},
 where 40\% admixture has occurred between two populations immediately adjacent to each other on either side of a barrier.  
-Here, the admixed population 23 is the only population that chooses a non-negligible proportion of admixture, 
-but rather than drawing this admixture from its true source (population 13), 
-it draws admixture from a location on the far margin of the half of the grid on its own side of the barrier.  
-The sampling scheme here illustrates more fully the example laid out in Figure \ref{sfig:toy_admixture}: because there is no sampled intervening population between admixed population 23 and its source of admixture 13, there is nothing to stop 23 from explaining its higher covariance with 13 via its chosen location $G_{(23)}^{\prime}$ rather than via that of its source of admixture $\identifyadmixsource{G}_{(23)}$.  
-However, 23 still has a lower variance than the other populations, and therefore must choose a proportion of admixture to accommodate that fact.  This analysis is a somewhat artificial example, as the biological interpretation of ``admixture" (defined in our spatial framework as anomalously long distance covariance) between near neighbors is unclear.
-\plr{Is it possible the likelihood surface here has two humps, and it got stuck on the wrong one here?
-Currently, it's overestimating the admixture proportion (as like 60\% instead of 40\%, and as a result, has to push the source population further away,
-rather than keeping it on the right side of 23. Also, I wish this one worked, since then I wouldn't feel dishonest wanting to drop it since it's pretty similar to the first one.}
+Here, the admixed population 23 is correctly identified as admixed, 
+but it explains its intermediate genetic relationships by taking a location close to its true admixture source (population 13), 
+and drawing admixture (95\% CI: XXX - XXX) from a location on the far margin of the half of the grid on its own side of the barrier.
+Because there is no sampled intervening population between admixed population 23 and its source of admixture 13, there is nothing to stop 23 from explaining its higher covariance with 13 via its chosen location $G_{(23)}$ rather than via that of its source of admixture $\identifyadmixsource{G}_{(23)}$.  
+%However, 23 still has a lower variance than the other populations, and therefore must choose a proportion of admixture to accommodate that fact.  This analysis is a somewhat artificial example, as the biological interpretation of ``admixture" (defined in our spatial framework as anomalously long distance covariance) between near neighbors is unclear.
+\gb{In each of these scenarios, the estimated admixture proportion is less than that used to simulate the data.  This is due to the stringent prior we place against admixture.  We discuss these examples further in the discussion.}
 
 \begin{figure}[htp!]
 	\centering
 		\subcaptionbox{`inland' admixture\label{barr_inland_ad_scenario}}
 			{\includegraphics[width=2in,height=1.66in]{figs/sims/barr_inland_ad_lattice.pdf}}
-		\subcaptionbox{inference \label{barr_inland_ad_inference}}
+		\subcaptionbox{`inland' geogenetic map \label{barr_inland_ad_inference}}
 			{\includegraphics[width=2in,height=1.66in]{figs/sims/GeoGenMap_barr_inland_admixture_1.pdf}}
 		\subcaptionbox{`neighbor' admixture \label{big_barr_ad_scenario}}
 			{\includegraphics[width=2in,height=1.66in]{figs/sims/big_barr_ad_lattice.pdf}}
-		\subcaptionbox{inference \label{big_barr_ad_inference}}
+		\subcaptionbox{`neighbor' geogenetic map \label{big_barr_ad_inference}}
 			{\includegraphics[width=2in,height=1.66in]{figs/sims/GeoGenMap_big_barr_ad_1.pdf}}
 	\caption{
-    Simulation scenarios and inferred population maps for two different admixture scenarios: a) lattice with a barrier and an admixture event (10\%) across the barrier to an `inland' population; b) the inferred population map for the scenario in (a); c) lattice with a barrier and an admixture event (40\%) across the barrier to a `neighbor' population on the border of the barrier; (d) the inferred population map for the scenario in (c).
-    \plr{what are inferred admxiture strengths?}
+    Simulation scenarios and inferred population maps for two different admixture scenarios: a) lattice with a barrier and an admixture event (10\%) across the barrier to an `inland' population; b) the inferred population map for the scenario in (a), where the admixed population 23 is the only population drawing non-negligible admixture (95\% CI: 0.02-0.08) ; c) lattice with a barrier and an admixture event (40\%) across the barrier to a `neighbor' population on the border of the barrier; (d) the inferred population map for the scenario in (c), where the admixed population 18 is the only population drawing non-negligible admixture (95\% CI: XXX-XXX).
 }\label{sfig:barr_inland_ad}
 \end{figure}
 
 
 \section*{Empirical Applications}
 To demonstrate the applications of this novel method, we analyzed population genomic data from two systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.  Maps showing our sampling in these two systems are shown in Figure \ref{sfig:empirical_maps}, and information on the specific populations included is given in the Supplementary Materials, Tables \ref{tab:warbler_data_table} and \ref{tab:globe_data_table}.  
-\plr{say this more succinctly:}
-To minimize the potential influence of the spatial prior on population locations, for each empirical analysis, we performed a SpaceMix run in which random, uniformly distributed locations between, for longitude, the minimum and maximum observed longitude, and, for latitude, the minimum and maximum observed latitude, were used as the prior on population locations (in addition to two runs for which the observed locations are used as priors).  
-For clarity and ease of interpretation, we then present a full Procrustes superimposition of the inferred population locations ($G'$) and their sources of admixture ($\identifyadmixsource{G}$), using the observed latitude and longitude of the populations/individuals ($G$) to give a reference position and orientation.  As results were generally consistent across multiple runs for each dataset regardless of the prior employed, unless stated otherwise we present only the results from the `random' prior analyses.
+For all analyses presented below, we used random `observed' locations as the priors on population locations.
+For clarity and ease of interpretation, we then present a full Procrustes superimposition of the inferred population locations ($G$) and their sources of admixture ($\identifyadmixsource{G}$), using the observed latitude and longitude of the populations/individuals to give a reference position and orientation.
 
 \begin{figure}
 	\centering
@@ -619,7 +611,17 @@ and producing powerful visualizations of genetic structure on a map (like PCA, S
 
 
 %%%%%%%% %%%%%%%%%%%%
-\subsection*{Caveats}
+\subsection*{Discussion}
+
+\plr{
+How about a paragraph summarizing the advantages over PCA and structure up here?  
+Structure: we make maps.  
+PCA: we allow admixture and are not constrained to linear relationships between allele and location.
+With four populations in a line, if drift is sufficently stronger than migration,
+PCA will use three PCs to separate them, and will put them at the corners of a tetrahedron;
+SpaceMix should get the linear arrangement right.
+This is related to the triangular configuration seen in the warblers.
+}
 
 The patterns of genetic variation observed in modern populations are the product of a complex history of demographic processes.  We choose to model those patterns as the outcome of a process of spatially determined migration, 
 \plr{sort of, although we don't actually model migration.}

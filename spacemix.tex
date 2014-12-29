@@ -613,49 +613,97 @@ and producing powerful visualizations of genetic structure on a map (like PCA, S
 %%%%%%%% %%%%%%%%%%%%
 \subsection*{Discussion}
 
-\plr{
-How about a paragraph summarizing the advantages over PCA and structure up here?  
-Structure: we make maps.  
-PCA: we allow admixture and are not constrained to linear relationships between allele and location.
-With four populations in a line, if drift is sufficently stronger than migration,
-PCA will use three PCs to separate them, and will put them at the corners of a tetrahedron;
-SpaceMix should get the linear arrangement right.
-This is related to the triangular configuration seen in the warblers.
-}
-
-The patterns of genetic variation observed in modern populations are the product of a complex history of demographic processes.  We choose to model those patterns as the outcome of a process of spatially determined migration, 
-\plr{sort of, although we don't actually model migration.}
+The patterns of genetic variation observed in modern populations are the product of a complex history of demographic processes.  We choose to model those patterns as the outcome of a spatial process of spatially determined migration, 
 and, although we have included statistical elements to accommodate deviations from spatial expectations 
-(by, e.g., estimating population locations, allowing population-specific drift effects in the nugget parameters, and allowing the inference of admixture), 
-\plr{I wouldn't put ``estimating locations'' here -- we don't expect the map to look just like geography.  if it did, we wouldn't need the method, since we already have that map.}
 the true history of a sample of real individuals is vastly more complex than any low-dimensional summary,
 and, as with any summary of population genetic data, 
 SpaceMix results should be interpreted with this in mind.
+Furthermore, our ``admixture'' events are shorthands for demographic relationships
+that occurred over possibly substantial lengths of time and regions of the globe;
+approximating this by a single point in space is certainly an oversimplification.
+Aspects of population history that are better described as a population phylogeny, will lead to difficult to interpret results using Spacemix 
+(and may be better suited to visualization with clustering-based methods or treemix).  
+There is obviously no one best approach to studying and visualization population structure, 
+and that investigators should try and range of appropriate methods to identify those that provide insight. \gc{this prolly needs to be less preachy}
 
-Three factors in particular stand out as potential sources of difficulty for the model.  The first is that there may be empirical datasets for which the assumption of isolation by distance is inappropriate.  In taxa that migrate from their sampled locations and breed more or less panmictically elsewhere,
-or for some broadcast spawners, 
-a geogenetic map inferred by SpaceMix may bear no relation to the observed sample locations, and thus may be difficult to parse.  However, cases in which there is little or no concordance between the observed and inferred geography may also prove the most interesting and informative.
+%\plr{
+%How about a paragraph summarizing the advantages over PCA and structure up here?  
+%Structure: we make maps.  
+%PCA: we allow admixture and are not constrained to linear relationships between allele and location.
+%With four populations in a line, if drift is sufficently stronger than migration,
+%PCA will use three PCs to separate them, and will put them at the corners of a tetrahedron;
+%SpaceMix should get the linear arrangement right.
+%This is related to the triangular configuration seen in the warblers.
+%}
 
-The second caveat is that, as currently implemented, SpaceMix allows each population to have only a single source of admixture.  
+Like PCA our method is well suited to describing population structure in a continuous fashion. 
+Our approach offers much of the flexibility of PCA, but with a number of advantages. 
+When isolation by distance holds, the first (one or) two PCs often correspond to some simple rotation of latitude and longitude, 
+however, these first two PCs explain a relatively small part of the variance. Due to the linearity of PCs, many higher order PCs 
+have to correspond to higher order functions of positional information under isolation by distance, 
+and are needed to explain the bulk of the variance \citep{NovembreStephens}. 
+These higher order PCs can be hard to interpret (see discussion in the warbler section).
+In our approach, if isolation by distance holds then (nearly) all of the variance will be captured by our infered geogenetic positions (to the extent to which our parametric form of the covariance is flexible enough to capture the empirical decay of covariance with distance). 
+The recently introduced SPA approach \citep{blah} also has this advantage, 
+but only really makes use of loci that conform to particular spatial patterns so it is necessarily making use of less of the data and is less flexible (although we note that PCA and SPA both have significant speed advantages over our approach).  
+The application of our approach to humans nicely illustrates the utility of our approach, the first two PCs of this dataset resemble a boomerang, with its arms corresponding to the Africa/Non-Africa split and the spread of populations across Eurasia. In contrast, while our map is dominated by the out of Africa drift, it also contains much more detail than is contained in the first two PCs (ref Eurasia figure). An advantage of PCA is that can explain more complex patterns of populaiton structure by allowing up to $K$ different axes, our approach can easily be extended to more than two dimensions, simply by allowing $G_i$ to describe the location of a sample in $d$ dimensions. However, the interpretation and visualization of these higher dimensions would prove difficult, and so for the moment we stick with two dimensions.
+
+%(by, e.g., estimating population locations, allowing population-specific drift effects in the nugget parameters, and allowing the inference of admixture), 
+%\plr{I wouldn't put ``estimating locations'' here -- we don't expect the map to look just like geography.  if it did, we wouldn't need the method, since we already have that map.}
+
+Another strong advantage of our approach over PCA is our introduction of admixture arrows. PCs can be intepreted in light of simple admixture events \cite{Gil}, 
+while \citep{SPAmix} locates the admixed ancestry of out of sample individuals. In contrast, 
+our approach explicitly models admixture between multiple geographically distant locations.  
+Assigment methods are explicitly designed to deal with many admixed samples, however, 
+we feel that an isolation by distance null model is more appropriate for testing for admixture when we have many geographically densely samples. 
+As such, Spacemix offers a useful tool to understand and visualize spatial patterns of genetic relatedness when many samples are admixed. 
+
+
+As currently implemented, SpaceMix allows each population to have only a single source of admixture.  
 Some modern populations draw substantial proportions of their ancestry from more than two geographically distant regions.
 In such cases the inferred source of admixture may fall between the true locations of the parental populations.  
 Although it is statistically and computationally possible to allow each population to choose more than one source of admixture, we were concerned about both the identifiability and the interpretability of such a model, but there may be empirical datasets in which such a modeling scheme is required to effectively map patterns of population structure.
+In addition we've assume that only single populations are admixed, when in fact it is likely that particular admixture events may affect multiple samples.
 
-Third, the landscape of allele frequencies on which the sources of admixture for the sampled populations are estimated is entirely informed by the placement of those modern samples.  
+One concern is that the multiple admixed samples (from a single admixture event) may simply choose to cluster close to each other, 
+and not need to draw admixture from elsewhere due to the fact that their frequencies are well described by their proximity to other admixed populations.  
+Along these lines, it is noticible that our European samples draw little admixture from elsewhere \citep[a fact also noted by][ using a different approach]{Hellenthral}, 
+despite evidence of substantial admixture \citep{Reichs3europeanpaper}, 
+this may reflect the fact that all of the European samples are affected by the admixture events, and are relatively over-represented in our sample. 
+However, this may also simply reflect the fact that admixture is ancient, and the ancient individuals used as proxy sources of these 
+events are not well respresented by our extant samples. Reassuringly, we see multiple cases where similarly admixed populations (Central Asians, Middle Easten and North African) populations 
+are separately identified as admixed. This suggests that this is not a huge concern (at least in some cases). 
+The method could in theory be modified to allow geogenetically proximal populations to draw from the same admixture event,
+however, this may be difficult to make fully automated. 
+
+%Three factors in particular stand out as potential sources of difficulty for the model.  %The first is that there may be empirical datasets for which the assumption of isolation by distance is inappropriate.  
+
+%In taxa that migrate from their sampled locations and breed more or less panmictically elsewhere,
+%or for some broadcast spawners, 
+%a geogenetic map inferred by SpaceMix may bear no relation to the observed sample locations, and thus may be difficult to parse.  However, cases in which there is little or no concordance between the observed and inferred geography may also prove the most interesting and informative.
+
+In this paper we have resticted our attention on the covariance among alleles at the same locus, 
+however, linkage disequilibrium (covariance of alleles among loci) holds rich information about the timing and source of admixture events \citep[e.g.][]{Chakaborti, ,Reich, Myers, Gravel} 
+as well as information about isolation by distance \citep{RalphandCoop}.
+Just as population graph approaches have been extended to incorporate information from LD \citep{Mixmapper, others}, 
+a spatial covariance approach could be taken to LD. A null model inspired by models of LD under isolation by distance models \citep{blah} 
+could be fitted, allowing the covariance among alleles to decay with their geographic distance and the recombination distance between the loci. Sources and time-scales of admixture could be identified through unusually long-distance LD among geographically separated populations. 
+
+The landscape of allele frequencies on which the samples, and sources of admixture for the sampled populations, are estimated is entirely informed by the placement of other modern samples.  
 This immediately leads to the caveat that instead of ``location of the parental population'',
-we should instead refer to ``location of the most immediate descendants of the parental population''.
-Furthermore,
-``population admixture'' is shorthand for demographic relationships
-that occurred over possibly substantial lengths of time and regions of the globe;
-approximating this by a single point in space is certainly an oversimplification.
+we should instead refer to ``location of the closest descendants of the parental population''.
 The increased sequencing of ancient DNA (skoglund, jakobsson, etc.) promises an interesting way forward on that front 
 (and it will also be exciting to learn where ancient individuals fall on modern maps, 
 as well as how the inclusion of ancient individuals changes the configuration of those maps).
+The inclusion of ancient DNA samples in the analyzed sample offers an intriguing way forward in getting better representation of the ancestral populations from which the ancestors of modern samples received their admixture.  However, it is also possible to model genetic drift as a spatiotemporal Gaussian process, in which covariance in allele frequencies decays with distance both in space and in time \citep[see][]{Mattias}.  We are currently exploring using 
+ancient DNA samples to `calibrate' allele frequency landscapes at points in the past, 
+so that modern day samples may draw admixture from estimated coordinates in space-time.
+
 
 
 \section*{Future Directions}
 
-As noted in the third caveat above, the ancestral populations that have donated to the genetic makeup of modern day samples will not be among the samples in the current analysis, and therefore the inferred geography of admixture may only coarsely approximate the truth (depending on the complexity of the demographic history and the extent to which daughter populations of that ancestral admixture source both resemble their parents and have stayed put, geographically).  The inclusion of ancient DNA samples in the analyzed sample offers an intriguing way forward in getting better representation of the ancestral populations from which the ancestors of modern samples received their admixture.  However, it is also possible to model genetic drift as a spatiotemporal Gaussian process, in which covariance in allele frequencies decays with distance both in space and in time.  In this model, which we are currently developing, ancient DNA samples can `calibrate' allele frequency landscapes at points in the past, and modern day samples may draw admixture from estimated coordinates in space-time.
+%As noted in the third caveat above, the ancestral populations that have donated to the genetic makeup of modern day samples will not be among the samples in the current analysis, and therefore the inferred geography of admixture may only coarsely approximate the truth (depending on the complexity of the demographic history and the extent to which daughter populations of that ancestral admixture source both resemble their parents and have stayed put, geographically).  The inclusion of ancient DNA samples in the analyzed sample offers an intriguing way forward in getting better representation of the ancestral populations from which the ancestors of modern samples received their admixture.  However, it is also possible to model genetic drift as a spatiotemporal Gaussian process, in which covariance in allele frequencies decays with distance both in space and in time.  In this model, which we are currently developing, ancient DNA samples can `calibrate' allele frequency landscapes at points in the past, and modern day samples may draw admixture from estimated coordinates in space-time.
 
 \newpage
 

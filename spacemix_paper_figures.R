@@ -3300,10 +3300,13 @@ dev.off()
 #	Barrier w/ Admixture - Nearest Neighbor
 ################
 
-load("~/Desktop/Dropbox/space.mix/sims/big_barr_ad/big_barr_ad_spacemix/rand_prior1/big_barr_ad_randpr_1_LongRun/big_barr_ad_randpr_1space_MCMC_output1.Robj")
-load("~/Desktop/Dropbox/space.mix/sims/big_barr_ad/big_barr_ad_spacemix/rand_prior1/sim_big_barr_ad_dataset.Robj")
+load("~/Desktop/Dropbox/space.mix/sims/big_barr_ad/spacemix/rand_pr1/big_barr_ad_randpr_1_LongRun/big_barr_ad_randpr_1space_MCMC_output1.Robj")
+load("~/Desktop/Dropbox/space.mix/sims/big_barr_ad/spacemix/rand_pr1/sim_big_barr_ad_dataset.Robj")
 k <- last.params$k
 best <- which.max(Prob)
+pop.cols <- rainbow(k,start=4/6,end=6/6)[as.numeric(cut(spacemix.dataset$population.coordinates[,1],k))]
+plot(rowMeans(admix.proportions[,250:1000])/2,col=pop.cols)
+quantile(admix.proportions[18,]/2,c(0.025,0.975))
 target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 							target.locs = population.coordinates[[best]][1:k,],
 							k = k,

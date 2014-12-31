@@ -1,4 +1,4 @@
-\begin{thebibliography}{2}
+\begin{thebibliography}{22}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -22,5 +22,196 @@ Ryan~N. Gutenkunst, Ryan~D. Hernandez, Scott~H. Williamson, and Carlos~D.
 \newblock \emph{PLoS Genet}, 5\penalty0 (10):\penalty0 e1000695, 10 2009.
 \newblock \doi{10.1371/journal.pgen.1000695}.
 \newblock URL \url{http://dx.doi.org/10.1371%2Fjournal.pgen.1000695}.
+
+\bibitem[Harpending and Rogers(2000)]{Harpending_Rogers_2000}
+H.~Harpending and A.~Rogers.
+\newblock {{G}enetic perspectives on human origins and differentiation}.
+\newblock \emph{Annu Rev Genomics Hum Genet}, 1:\penalty0 361--385, 2000.
+
+\bibitem[Hellenthal et~al.(2014)Hellenthal, Busby, Band, Wilson, Capelli,
+  Falush, and Myers]{Hellenthal}
+G.~Hellenthal, G.~B. Busby, G.~Band, J.~F. Wilson, C.~Capelli, D.~Falush, and
+  S.~Myers.
+\newblock {{A} genetic atlas of human admixture history}.
+\newblock \emph{Science}, 343\penalty0 (6172):\penalty0 747--751, Feb 2014.
+
+\bibitem[Henn et~al.(2012)Henn, Botigué, Gravel, Wang, Brisbin, Byrnes,
+  Fadhlaoui-Zid, Zalloua, Moreno-Estrada, Bertranpetit, Bustamante, and
+  Comas]{henn_genomic_2012}
+Brenna~M. Henn, Laura~R. Botigué, Simon Gravel, Wei Wang, Abra Brisbin,
+  Jake~K. Byrnes, Karima Fadhlaoui-Zid, Pierre~A. Zalloua, Andres
+  Moreno-Estrada, Jaume Bertranpetit, Carlos~D. Bustamante, and David Comas.
+\newblock Genomic ancestry of north africans supports back-to-africa
+  migrations.
+\newblock \emph{{PLoS} Genet}, 8\penalty0 (1):\penalty0 e1002397, January 2012.
+\newblock \doi{10.1371/journal.pgen.1002397}.
+\newblock URL \url{http://dx.doi.org/10.1371/journal.pgen.1002397}.
+
+\bibitem[Hodgson et~al.(2014)Hodgson, Mulligan, Al-Meeri, and
+  Raaum]{hodgson_early_2014}
+Jason~A. Hodgson, Connie~J. Mulligan, Ali Al-Meeri, and Ryan~L. Raaum.
+\newblock Early back-to-africa migration into the horn of africa.
+\newblock \emph{{PLoS} Genet}, 10\penalty0 (6):\penalty0 e1004393, June 2014.
+\newblock \doi{10.1371/journal.pgen.1004393}.
+\newblock URL \url{http://dx.doi.org/10.1371/journal.pgen.1004393}.
+
+\bibitem[Li et~al.(2008)Li, Absher, Tang, Southwick, Casto, Ramachandran, Cann,
+  Barsh, Feldman, Cavalli-Sforza, and Myers]{li_worldwide_2008}
+Jun~Z. Li, Devin~M. Absher, Hua Tang, Audrey~M. Southwick, Amanda~M. Casto,
+  Sohini Ramachandran, Howard~M. Cann, Gregory~S. Barsh, Marcus Feldman,
+  Luigi~L. Cavalli-Sforza, and Richard~M. Myers.
+\newblock Worldwide human relationships inferred from genome-wide patterns of
+  variation.
+\newblock \emph{Science (New York, N.Y.)}, 319\penalty0 (5866):\penalty0
+  1100--1104, February 2008.
+\newblock ISSN 1095-9203.
+\newblock \doi{10.1126/science.1153717}.
+
+\bibitem[Loh et~al.(2013)Loh, Lipson, Patterson, Moorjani, Pickrell, Reich, and
+  Berger]{Loh:13}
+P.~R. Loh, M.~Lipson, N.~Patterson, P.~Moorjani, J.~K. Pickrell, D.~Reich, and
+  B.~Berger.
+\newblock {{I}nferring admixture histories of human populations using linkage
+  disequilibrium}.
+\newblock \emph{Genetics}, 193\penalty0 (4):\penalty0 1233--1254, Apr 2013.
+
+\bibitem[Moorjani et~al.(2011)Moorjani, Patterson, Hirschhorn, Keinan, Hao,
+  Atzmon, Burns, Ostrer, Price, and Reich]{moorjani_history_2011}
+Priya Moorjani, Nick Patterson, Joel~N. Hirschhorn, Alon Keinan, Li~Hao, Gil
+  Atzmon, Edward Burns, Harry Ostrer, Alkes~L. Price, and David Reich.
+\newblock The history of african gene flow into southern europeans, levantines,
+  and jews.
+\newblock \emph{{PLoS} Genet}, 7\penalty0 (4):\penalty0 e1001373, April 2011.
+\newblock \doi{10.1371/journal.pgen.1001373}.
+\newblock URL \url{http://dx.doi.org/10.1371/journal.pgen.1001373}.
+
+\bibitem[Moorjani et~al.(2013)Moorjani, Thangaraj, Patterson, Lipson, Loh,
+  Govindaraj, Berger, Reich, and Singh]{moorjani_india_2013}
+Priya Moorjani, Kumarasamy Thangaraj, Nick Patterson, Mark Lipson, Po-Ru Loh,
+  Periyasamy Govindaraj, Bonnie Berger, David Reich, and Lalji Singh.
+\newblock Genetic evidence for recent population mixture in india.
+\newblock \emph{American Journal of Human Genetics}, 93\penalty0 (3):\penalty0
+  422--438, September 2013.
+\newblock ISSN 0002-9297.
+\newblock \doi{10.1016/j.ajhg.2013.07.006}.
+\newblock URL \url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3769933/}.
+
+\bibitem[Patterson et~al.(2012)Patterson, Moorjani, Luo, Mallick, Rohland,
+  Zhan, Genschoreck, Webster, and Reich]{patterson_ancient_2012}
+Nick Patterson, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland,
+  Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich.
+\newblock Ancient admixture in human history.
+\newblock \emph{Genetics}, 192\penalty0 (3):\penalty0 1065--1093, November
+  2012.
+\newblock ISSN 0016-6731.
+\newblock \doi{10.1534/genetics.112.145037}.
+\newblock URL \url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3522152/}.
+
+\bibitem[Pickrell and Pritchard(2012)]{Treemix}
+J.~K. Pickrell and J.~K. Pritchard.
+\newblock {{I}nference of population splits and mixtures from genome-wide
+  allele frequency data}.
+\newblock \emph{PLoS Genet.}, 8\penalty0 (11):\penalty0 e1002967, 2012.
+
+\bibitem[Pickrell and Reich(2014)]{pickrell_reich:14}
+J.~K. Pickrell and D.~Reich.
+\newblock {{T}oward a new history and geography of human genes informed by
+  ancient {D}{N}{A}}.
+\newblock \emph{Trends Genet.}, 30\penalty0 (9):\penalty0 377--389, Sep 2014.
+
+\bibitem[Pickrell et~al.(2012)Pickrell, Patterson, Barbieri, Berthold, Gerlach,
+  Guldemann, Kure, Mpoloka, Nakagawa, Naumann, Lipson, Loh, Lachance, Mountain,
+  Bustamante, Berger, Tishkoff, Henn, Stoneking, Reich, and
+  Pakendorf]{Pickrell:12}
+J.~K. Pickrell, N.~Patterson, C.~Barbieri, F.~Berthold, L.~Gerlach,
+  T.~Guldemann, B.~Kure, S.~W. Mpoloka, H.~Nakagawa, C.~Naumann, M.~Lipson,
+  P.~R. Loh, J.~Lachance, J.~Mountain, C.~D. Bustamante, B.~Berger, S.~A.
+  Tishkoff, B.~M. Henn, M.~Stoneking, D.~Reich, and B.~Pakendorf.
+\newblock {{T}he genetic prehistory of southern {A}frica}.
+\newblock \emph{Nat Commun}, 3:\penalty0 1143, 2012.
+
+\bibitem[Pickrell et~al.(2014)Pickrell, Patterson, Loh, Lipson, Berger,
+  Stoneking, Pakendorf, and Reich]{Pickrell:14}
+J.~K. Pickrell, N.~Patterson, P.~R. Loh, M.~Lipson, B.~Berger, M.~Stoneking,
+  B.~Pakendorf, and D.~Reich.
+\newblock {{A}ncient west {E}urasian ancestry in southern and eastern
+  {A}frica}.
+\newblock \emph{Proc. Natl. Acad. Sci. U.S.A.}, 111\penalty0 (7):\penalty0
+  2632--2637, Feb 2014.
+
+\bibitem[Prugnolle et~al.(2005)Prugnolle, Manica, and
+  Balloux]{prugnolle_geography_2005}
+Franck Prugnolle, Andrea Manica, and François Balloux.
+\newblock Geography predicts neutral genetic diversity of human populations.
+\newblock \emph{Current biology : {CB}}, 15\penalty0 (5):\penalty0 R159--R160,
+  March 2005.
+\newblock ISSN 0960-9822.
+\newblock \doi{10.1016/j.cub.2005.02.038}.
+\newblock URL \url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1800886/}.
+
+\bibitem[Ramachandran et~al.(2005)Ramachandran, Deshpande, Roseman, Rosenberg,
+  Feldman, and Cavalli-Sforza]{Ramachandran:05}
+S.~Ramachandran, O.~Deshpande, C.~C. Roseman, N.~A. Rosenberg, M.~W. Feldman,
+  and L.~L. Cavalli-Sforza.
+\newblock {{S}upport from the relationship of genetic and geographic distance
+  in human populations for a serial founder effect originating in {A}frica}.
+\newblock \emph{Proc. Natl. Acad. Sci. U.S.A.}, 102\penalty0 (44):\penalty0
+  15942--15947, Nov 2005.
+
+\bibitem[Reich et~al.(2009)Reich, Thangaraj, Patterson, Price, and
+  Singh]{reich_india_2009}
+David Reich, Kumarasamy Thangaraj, Nick Patterson, Alkes~L. Price, and Lalji
+  Singh.
+\newblock Reconstructing indian population history.
+\newblock \emph{Nature}, 461\penalty0 (7263):\penalty0 489--494, September
+  2009.
+\newblock ISSN 1476-4687.
+\newblock \doi{10.1038/nature08365}.
+
+\bibitem[Rosenberg et~al.(2002)Rosenberg, Pritchard, Weber, Cann, Kidd,
+  Zhivotovsky, and Feldman]{rosenberg_genetic_2002}
+Noah~A. Rosenberg, Jonathan~K. Pritchard, James~L. Weber, Howard~M. Cann,
+  Kenneth~K. Kidd, Lev~A. Zhivotovsky, and Marcus~W. Feldman.
+\newblock Genetic structure of human populations.
+\newblock \emph{Science (New York, N.Y.)}, 298\penalty0 (5602):\penalty0
+  2381--2385, December 2002.
+\newblock ISSN 1095-9203.
+\newblock \doi{10.1126/science.1078311}.
+
+\bibitem[Schlebusch et~al.(2012)Schlebusch, Skoglund, Sjödin, Gattepaille,
+  Hernandez, Jay, Li, De~Jongh, Singleton, Blum, Soodyall, and
+  Jakobsson]{Jakobsson_genomic_2012}
+Carina~M. Schlebusch, Pontus Skoglund, Per Sjödin, Lucie~M. Gattepaille, Dena
+  Hernandez, Flora Jay, Sen Li, Michael De~Jongh, Andrew Singleton, Michael
+  G.~B. Blum, Himla Soodyall, and Mattias Jakobsson.
+\newblock Genomic variation in seven khoe-san groups reveals adaptation and
+  complex african history.
+\newblock \emph{Science (New York, N.Y.)}, 338\penalty0 (6105):\penalty0
+  374--379, October 2012.
+\newblock ISSN 1095-9203.
+\newblock \doi{10.1126/science.1227721}.
+
+\bibitem[Skoglund et~al.(2014)Skoglund, Sjödin, Skoglund, Lascoux, and
+  Jakobsson]{skoglund_investigating_2014}
+Pontus Skoglund, Per Sjödin, Tobias Skoglund, Martin Lascoux, and Mattias
+  Jakobsson.
+\newblock Investigating population history using temporal genetic
+  differentiation.
+\newblock \emph{Molecular Biology and Evolution}, 31\penalty0 (9):\penalty0
+  2516--2527, September 2014.
+\newblock ISSN 0737-4038.
+\newblock \doi{10.1093/molbev/msu192}.
+\newblock URL \url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4137715/}.
+
+\bibitem[Xu and Jin(2008)]{xu_genome-wide_2008}
+Shuhua Xu and Li~Jin.
+\newblock A genome-wide analysis of admixture in uyghurs and a high-density
+  admixture map for disease-gene discovery.
+\newblock \emph{The American Journal of Human Genetics}, 83\penalty0
+  (3):\penalty0 322--336, September 2008.
+\newblock ISSN 0002-9297.
+\newblock \doi{10.1016/j.ajhg.2008.08.001}.
+\newblock URL
+  \url{http://www.sciencedirect.com/science/article/pii/S0002929708004394}.
 
 \end{thebibliography}

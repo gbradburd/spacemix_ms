@@ -1030,34 +1030,10 @@ We ran our simulations using a coalescent framework in the program \textit{ms} (
 
 To simulate a barrier event, we divided the migration rate between neighbors separated by the longitudinal barrier by a factor of 5.  To simulate an expansion event, we used the \textbf{-ej} option to move all lineages from each daughter population to its parent population at a very recent point in the past.  For admixture events, we used the \textbf{-es} and \textbf{-ej} options to first (again, going backward in time) split the admixed population into itself and a new subpopulation of index $k + 1$, and second, to move all lineages in the $(k^{\text{th}} + 1)$ into the source of admixture.  Forward in time, this procedure corresponds to cloning the population that is the source of admixture, then merging it, in some admixture proportion, with the (now) admixed population.  The command line arguments used to call ms for a single locus for each simulation are included in the Appendix.
 
-\subsection*{Empirical Applications}
-Below, we describe the specifics of our analyses of the greenish warbler dataset and the global human dataset.  The analysis procedure for each dataset is given here:
 
-For each analysis,
-\begin{itemize}
-\item[1.] Five independent chains were run for $5\times 10^6$ MCMC iterations each in which populations were allowed to choose their own locations (but no admixture).  Population locations were initiated at the origin (i.e.\ - at iteration 1 of the MCMC, $G_i = (0,0)$), and all other parameters were drawn randomly from their priors at the start of each chain.  
-%
-\item[2.]The chain with the highest posterior probability at the end of the analysis was selected and identified as the``Best Short Run".
-%
-\item[3.] A chain was initiated from the parameter values in the last iteration of the Best Short Run.  Because inference of admixture proportion and location was not allowed in the five initial runs, admixture proportions were initiated at 0 and admixture locations, \admixsource{G} were initiated at the origin.  This  chain (the ``Long Run") was run for $10^8$ iterations, and sampled every $10^5$ iterations for a total of $1000$ draws from the posterior.
-\end{itemize}
-
-For each dataset, we ran two analyses using the observed population locations as the prior on $G$.  
-Then, to assess the potential influence of the spatial prior on population locations, 
-we ran one analysis in which random, uniformly distributed locations between, 
-for longitude, the minimum and maximum observed longitude, 
-and, for latitude, the minimum and maximum observed latitude were used as the prior on population locations.  
-For the warbler dataset, we repeated this analysis procedure, treating each sequenced individual as its own population.  
-For clarity and ease of interpretation, we present a full Procrustes superimposition of the inferred population locations ($G$) 
-and their sources of admixture ($\identifyadmixsource{G}$), 
-using the observed latitude and longitude of the populations/individuals ($G$) to give a reference position and orientation.  
-As results were generally consistent across multiple runs for each dataset regardless of the prior employed, 
-we (unless stated otherwise) present only the results from the `random' prior analyses.
-
-Finally, we compared the SpaceMix map to a map derived from a Principal Components Analysis (Patterson and Reich 2006).  For this analysis, we calculated the eigendecomposition of the mean-centered allelic covariance matrix, then plotted individuals' coordinates on the first two eigenvectors (e.g.\ Novembre et al 2008).  For consistency of presentation, we show the full Procrustes superimposition of the PC coordinate space around the geographic sampling locations.
-
-\newpage
-\section*{Appendix}
+%%GRAHAM MOVED THIS HERE AND RENAMED. PLOS doesn't do appendices, and otherwise it'll just end up as a supplement (which seems like it'll be lost).
+%\newpage
+\gc{\subsection*{Intuition as to why the admixture parameters are identifiable}}
 A natural concern is whether all of the parameters in the SpaceMix are separately identifiable, most notably whether population locations, admixture locations, and proportions can be estimated. That is, if a population has received some level of admixture from another population, what is to stop it from simply moving toward that population in geogenetic space to satisfy its increased resemblance to that population, rather than choosing admixture from that location?  We build and illustrate an intuition for why admixture is identifiable in our model below (Fig.\ \ref{sfig:toy_admixture}).
 
 Admixture is identifiable in our model because there are covariance relationships among populations that cannot simply be satisfied by shifting population locations around (as demonstrated by the tortured nature of Figure \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}). Consider the simple spatial admixture scenario shown in Figure \ref{sfig:toy_admixture}. Our populations A-D are spatially arrayed  along a line, and their allele frequencies are specified by a simple isolation by distance model, but there is recent admixture from D into B (such that 40\% of the alleles in B are drawn from D).  The lines show the expected covariance under IBD that each population (A, C, or D, as indicated by line color) has with a putative population at a given distance.  The dots show the admixed covariance between B and the three other populations, as well as B's variance with itself (B-B) as specified by equation \eqref{eq:admixed_covariance_1}, with no nugget or sampling effect.
@@ -1086,6 +1062,34 @@ rather than with their admixture source,
 is that we place a very harsh prior against admixture inference Table \ref{tab:param_prior_tab}.
 The prior is designed to make inference conservative with respect to admixture,
 but it has the side effect of skewing the posterior probability toward lower admixture proportions.
+
+
+\subsection*{Empirical Applications}
+Below, we describe the specifics of our analyses of the greenish warbler dataset and the global human dataset.  The analysis procedure for each dataset is given here:
+
+For each analysis,
+\begin{itemize}
+\item[1.] Five independent chains were run for $5\times 10^6$ MCMC iterations each in which populations were allowed to choose their own locations (but no admixture).  Population locations were initiated at the origin (i.e.\ - at iteration 1 of the MCMC, $G_i = (0,0)$), and all other parameters were drawn randomly from their priors at the start of each chain.  
+%
+\item[2.]The chain with the highest posterior probability at the end of the analysis was selected and identified as the``Best Short Run".
+%
+\item[3.] A chain was initiated from the parameter values in the last iteration of the Best Short Run.  Because inference of admixture proportion and location was not allowed in the five initial runs, admixture proportions were initiated at 0 and admixture locations, \admixsource{G} were initiated at the origin.  This  chain (the ``Long Run") was run for $10^8$ iterations, and sampled every $10^5$ iterations for a total of $1000$ draws from the posterior.
+\end{itemize}
+
+For each dataset, we ran two analyses using the observed population locations as the prior on $G$.  
+Then, to assess the potential influence of the spatial prior on population locations, 
+we ran one analysis in which random, uniformly distributed locations between, 
+for longitude, the minimum and maximum observed longitude, 
+and, for latitude, the minimum and maximum observed latitude were used as the prior on population locations.  
+For the warbler dataset, we repeated this analysis procedure, treating each sequenced individual as its own population.  
+For clarity and ease of interpretation, we present a full Procrustes superimposition of the inferred population locations ($G$) 
+and their sources of admixture ($\identifyadmixsource{G}$), 
+using the observed latitude and longitude of the populations/individuals ($G$) to give a reference position and orientation.  
+As results were generally consistent across multiple runs for each dataset regardless of the prior employed, 
+we (unless stated otherwise) present only the results from the `random' prior analyses.
+
+Finally, we compared the SpaceMix map to a map derived from a Principal Components Analysis (Patterson and Reich 2006).  For this analysis, we calculated the eigendecomposition of the mean-centered allelic covariance matrix, then plotted individuals' coordinates on the first two eigenvectors (e.g.\ Novembre et al 2008).  For consistency of presentation, we show the full Procrustes superimposition of the PC coordinate space around the geographic sampling locations.
+
 
 \newpage
 

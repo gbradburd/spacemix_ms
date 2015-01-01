@@ -64,40 +64,46 @@
 
 \newpage
 
+%%GRAHAM REMOVED: there's only so many times we can satIn this paper, we present a statistical method for the inference and visualization of the patterns of genetic structure and admixture in a sample of populations.  
+
 \begin{abstract}
 The distributions of genetic variation in modern populations 
 are the result of 
 complex demographic histories of migration and population size change,
 which can be difficult to infer and visually summarize,
 especially with a large number of geographically distributed samples.
-In this paper, we present a novel statistical method for the inference and visualization of the patterns of genetic structure and admixture in a sample of populations.  
-This method uses genome-wide polymorphism data to build a ``geogenetic map''
-that describes how populations are related to one another
-by modeling genetic covariance as a decreasing function of distance.  
+\gc{Under a broad set of models of isolation by distance 
+populations should be genetically more closely related to geographical populations than to distant ones.
+We use genome-wide polymorphism data to build a ``geogenetic map''
+that visualizes how populations are located with respect to one another under of isolation by distance, genetic covariance as a decreasing function of geogenetic distance.  }
 Within this framework, 
 historical admixture results in anomalously long distance covariance,
 and so we model admixture events as arrows, from a source of admixture to its target, on the inferred map.  
 We demonstrate the utility of this method on a circum-Tibetan sampling of the greenish warbler (\textit{Phylloscopus trochiloides}), in which we find evidence for gene flow between the adjacent, terminal populations of the ring species.  
-We also analyze a global sampling of human populations, for which we largely recover the geography of the sampling, with support for significant histories of admixture in some samples.  The implementation of this method, 
+We also analyze a global sampling of human populations, for which we largely recover the geography of the sampling, with support for significant histories of admixture in \gc{many} samples.  The implementation of this method, 
 called SpaceMix, provides a valuable new resource for understanding and visualizing patterns of population structure.
 \end{abstract}
 
 \newpage
 %%%%%%%%% %%%%%%%%% %%%%%%%%%
-\section*{Introduction}
+
+%%GRAHAM PLOS genetics papers have a summary, and I think that this works well as that.
+\gc{\section*{Summary}}
 In this paper, we introduce a statistical method for inferring, for a set of sequenced samples, 
 a map in which the distances between population locations reflect genetic, rather than geographic, proximity.  
 Two populations that are sampled at distant locations but that are genetically similar 
 (perhaps one was recently founded by a colonization event from the other) 
 may have inferred locations that are nearby, while two populations that are sampled close together, 
 but that are genetically dissimilar (e.g., are separated by a barrier), may have inferred locations that are farther apart.   
-The result is a “geogenetic” map in which the distances between populations are effective distances, 
+The result is a ``geogenetic'' map in which the distances between populations are effective distances, 
 indicative of the way that populations perceive the distances between themselves: the ``organism's-eye view" of the world.  
 Added to this, ``admixture'' can be thought of as the outcome of unusually long-distance gene flow; 
 it results in relatedness between populations that is anomalously high given the distance that separates them.
 We summarize the effect of admixture as arrows, from a source of admixture to its target, on the inferred map.
 The inferred map, which we call a `geogenetic'  map, is an intuitive and information-rich visual summary of patterns of population structure.
 
+
+\section*{Introduction}
 There are many different methods to learn how population structure and demographic processes have left their mark on 
 patterns of genetic variation within and between populations.
 Model-based approaches focus on developing a detailed view of the migrational history of a small number of populations,
@@ -115,15 +121,17 @@ Tree-based approaches are appealing because trees are easy to visualize and expl
 but interpretation can be tricky,
 as the assumptions of a tree-based model
 (unstructured populations that split at discrete points in time)
-are rarely met.
+are \gc{often not} met.
  
 Recently, there has been a resurgence of interest in these tree-based methods.  Some use population trees as a null model to test and quantify the signal of admixture between samples, where admixture is defined as covariance between samples in excess of that predicted by their tree-like history (Reich and friends).  Others, such as Treemix \citep{Pickrell} and mixmapper (cite mixmapper), focus on data analysis and visualization, and fit a population model represented by a directed acyclic graph between populations.  TreeMix accommodates reticulate population structure by allowing branches on the population tree to be connected by arrows of admixture that explain excess residual covariance between populations or population `clades'.
 
-There has also been a rise in the use of dimensionality reduction approaches, especially Principal Components Analysis (PCA), for the visualization of patterns of genetic variation.  As with the tree-based methods described above, the use of PCA in population genetics was pioneered by Cavalli-Sforza (Cavalli-Sforza et al 1978), and, with the rise of genomic datasets of thousands of loci for tens or hundreds of samples, this approach for creating a low-dimensional visual summary of genetic data that has thousands of dimensions (one for each locus) is more popular than ever before.  Generally, the genetic variation in a genotype matrix of allele frequencies is summarized by plotting the first eigenvector of the covariance of the allele frequencies against the second (Patterson 2006); the output of this procedure is interpreted as a `map' of genetic relatedness (Novembre et al 2008).
+There has also been \gc{renewed interest} in the use of dimensionality reduction approaches, especially Principal Components Analysis (PCA), for the visualization of patterns of genetic variation \citep{patterson_PCA_2006}.  As with the tree-based methods described above, the use of PCA in population genetics was pioneered by Cavalli-Sforza (Cavalli-Sforza et al 1978), and, with the rise of genomic datasets of thousands of loci for tens or hundreds of samples, this approach for creating a low-dimensional visual summary of genetic data that has thousands of dimensions (one for each locus) is more popular than ever before.  Generally, the genetic variation in a genotype matrix of allele frequencies is summarized by plotting the first eigenvector of the covariance of the allele frequencies against the second. %; the output of this procedure is \gc{often} interpreted as a `map' of genetic relatedness (Novembre et al 2008).
 
-Both PCA and tree-based methods are valuable as genetic inference and visualization tools, but both also suffer from serious limitations.  Because gene flow is frequently pervasive, patterns of relatedness between samples may often be only poorly represented by a tree-based model.  PCA is more flexible; it assumes no explicit model of population-level processes, and simply describes average coalescent times between pairs of samples (McVean 2009); it can  also capture geographic patterns of genetic differentiation (e.g. Novembre et al 2008).  However, its interpretation is more difficult, as the patterns of genetic differentiation it displays in its first two axes are necessarily incomplete for any dataset with more than two samples.  In addition, the interpretation of PC biplots is not straightforward (Novembre and Stephens 2008, Yang et al 2012, Yang et al 2014), 
-as results are affected by sample sizes,
-and many of the patterns it displays may be mathematical artifacts of the covariance structure, which produces eigenvectors related to sinusoidal functions.
+Both PCA and tree-based methods are valuable as genetic inference and visualization tools, but both also suffer from serious limitations.  Because gene flow is frequently pervasive, patterns of relatedness between samples may often be only poorly represented by a tree-based model.  PCA is more flexible; it assumes no explicit model of population-genetic processes, and simply describes \gc{the axes of greatest variance in the average coalescent times between pairs of samples \citep{mcvean_genealogical_2009}. This allows PCA to capture more continuous patterns of population, with PCA analysis within continents often resulting in a close correspondance between PC and geographic axes \citep[e.g.][]{novembre_genes_2008,wang_quantitative_2012}.  However, the interpretation of PCA is more difficult, as the results can be strong affected by sample size and design, and the linearity and orthogonality of requirements of the PC axes can lead to counter intuitive results \citep{novembre_interpreting_2008}. }
+
+%the patterns of genetic differentiation it displays in its first two axes are necessarily incomplete for any dataset with more than two samples.  In addition, the interpretation of PC biplots is not straightforward \citep{novembre_interpreting_2008} (Novembre and Stephens 2008, Yang et al 2012, Yang et al 2014), 
+%as results are affected by sample sizes,
+%and many of the patterns it displays may be mathematical artifacts of the covariance structure, which produces eigenvectors related to sinusoidal functions.
 
 What is desired, then, is a method for inferring and visualizing patterns of population differentiation that can recapitulate complex, non-hierarchical structures, while also admitting simple and intuitive interpretation.  Geographically continuous models, in which dispersal is spatially limited and the expected pattern of population differentiation is that of isolation by distance, offer a natural framework for such a method.  
 It is ubiquitous in nature that genetic differentiation increases with geographic distance \citep{meirmans2012},

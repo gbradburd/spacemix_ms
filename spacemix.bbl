@@ -1,4 +1,4 @@
-\begin{thebibliography}{33}
+\begin{thebibliography}{36}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -207,6 +207,24 @@ John Novembre and Matthew Stephens.
 \newblock \doi{10.1038/ng.139}.
 \newblock URL \url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3989108/}.
 
+\bibitem[Novembre et~al.(2008)Novembre, Johnson, Bryc, Kutalik, Boyko, Auton,
+  Indap, King, Bergmann, Nelson, Stephens, and Bustamante]{novembre_genes_2008}
+John Novembre, Toby Johnson, Katarzyna Bryc, Zoltán Kutalik, Adam~R. Boyko,
+  Adam Auton, Amit Indap, Karen~S. King, Sven Bergmann, Matthew~R. Nelson,
+  Matthew Stephens, and Carlos~D. Bustamante.
+\newblock Genes mirror geography within europe.
+\newblock \emph{Nature}, 456\penalty0 (7218):\penalty0 98--101, November 2008.
+\newblock ISSN 0028-0836.
+\newblock \doi{10.1038/nature07331}.
+\newblock URL \url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2735096/}.
+
+\bibitem[Patterson et~al.(2006)Patterson, Price, and Reich]{patterson_PCA_2006}
+Nick Patterson, Alkes~L Price, and David Reich.
+\newblock Population structure and eigenanalysis.
+\newblock \emph{{PLoS} Genet}, 2\penalty0 (12):\penalty0 e190, December 2006.
+\newblock \doi{10.1371/journal.pgen.0020190}.
+\newblock URL \url{http://dx.plos.org/10.1371/journal.pgen.0020190}.
+
 \bibitem[Patterson et~al.(2012)Patterson, Moorjani, Luo, Mallick, Rohland,
   Zhan, Genschoreck, Webster, and Reich]{patterson_ancient_2012}
 Nick Patterson, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland,
@@ -327,6 +345,15 @@ Pontus Skoglund, Per Sjödin, Tobias Skoglund, Martin Lascoux, and Mattias
 \newblock ISSN 0737-4038.
 \newblock \doi{10.1093/molbev/msu192}.
 \newblock URL \url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4137715/}.
+
+\bibitem[Wang et~al.(2012)Wang, Zöllner, and
+  Rosenberg]{wang_quantitative_2012}
+Chaolong Wang, Sebastian Zöllner, and Noah~A. Rosenberg.
+\newblock A quantitative comparison of the similarity between genes and
+  geography in worldwide human populations.
+\newblock \emph{{PLoS} Genet}, 8\penalty0 (8):\penalty0 e1002886, August 2012.
+\newblock \doi{10.1371/journal.pgen.1002886}.
+\newblock URL \url{http://dx.doi.org/10.1371/journal.pgen.1002886}.
 
 \bibitem[Xu and Jin(2008)]{xu_genome-wide_2008}
 Shuhua Xu and Li~Jin.

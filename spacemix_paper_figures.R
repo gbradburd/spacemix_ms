@@ -377,8 +377,8 @@ par(mfrow=c(1,2))
 	legend(x="bottomleft",col=legend.pop.cols,pch=19,
 			legend=subspp,cex=0.8,bg="white")
 	plot(obs.D[index.mat],par.D[index.mat],pch=20,col="gray",
-			xlab="Observed Pairwise Distance",
-			ylab="Inferred Pairwise Distance")
+			xlab="Geographic Pairwise Distance",
+			ylab="Geogenetic Pairwise Distance")
 if(FALSE){
 	for(i in 1:length(unique(pop.col))){
 		use.these <- pop.col==unique(pop.col)[i]
@@ -428,7 +428,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 			legend=subspp,cex=0.8,bg="white")
 	dev.off()
 
-	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_adprop.pdf",width=7,height=5)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_adprop_realpr1.pdf",width=7,height=5)
 		#quartz(width=7,height=5)
 		plot(rowMeans(admix.proportions/2)[pop.order],type='n',pch=19,ylim=c(-0.04,max(unlist(warb.pop.adprop.cred.sets))/2),
 				main = "Warbler Population Admixture Proportions",
@@ -643,6 +643,21 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 		box(lwd=2)
 	dev.off()
 
+	warb.pop.adprop.cred.sets <- get.credible.interval(admix.proportions,pop.order)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_adprop.pdf",width=7,height=5)
+		#quartz(width=7,height=5)
+		plot(rowMeans(admix.proportions/2)[pop.order],type='n',pch=19,ylim=c(-0.04,max(unlist(warb.pop.adprop.cred.sets))/2),
+				main = "Warbler Population Admixture Proportions",
+				xlab = "Population",
+				ylab = "Admixture Proportions Value")
+		make.cred.bars(lapply(warb.pop.adprop.cred.sets,"/",2),0.5,color.vector=pop.col[pop.order],vert.line.width=1)
+		text((1:k)+0.25,rep(-0.015,k),labels= pops[pop.order],srt=90,col=pop.col[pop.order],cex=1,adj=c(1,0))
+		box(lwd=2)
+		legend(x="topleft",col=legend.pop.cols,pch=19,
+			legend=subspp,cex=0.8,bg="white")
+	dev.off()
+
+
 ################################
 #	WARBLER IND FIGS
 ################################
@@ -671,6 +686,9 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/ind/warb_ind_sp
 		plot.inds <- gsub(c("Obs-"),"",plot.inds)
 		plot.inds <- gsub(c("vi"),"",plot.inds)
 
+	legend.pop.cols <- unique(inds.col)[c(2,1,3:7)]
+	subspp <- c("Nitidus","Viridanus","Ludlowi","Trochiloides","Obscuratus","Plumbeitarsus")
+
 ################
 #	PCA Map
 ################
@@ -697,7 +715,7 @@ pdf(file="figs/warblers/warb_ind_PC_map_ffield.pdf",width=5,height=4,pointsize=1
 	box(lwd=2)
 dev.off()
 
-png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_PC_map.png",res=200,width=5*200,height=4*200)
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_PC_map.pdf",width=5,height=4)
 	#quartz(width=5,height=4)
 	par(mar=c(4.5,4.5,3,1))
 	plot(proc.pc.coords,type='n',
@@ -709,6 +727,8 @@ png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_PC_map.png",res=
 				"%)",sep=""),
 		main="Warbler Individual PC Map",cex.axis=0.7)
 	text(proc.pc.coords,col=adjustcolor(inds.col,0.8),labels=plot.inds,cex=0.5,font=2)
+	legend(x="bottomright",col=legend.pop.cols,pch=19,
+					legend=subspp,cex=0.6,bg="white")
 	box(lwd=2)
 dev.off()
 
@@ -733,6 +753,9 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/ind/warb_ind_sp
 			text((1:k)+0.5,rep(-0.015,k),labels= inds[pop.order],srt=90,col=inds.col[pop.order],cex=0.60,adj=c(1,0))
 			mtext("Population",side=1,padj=1)
 			make.cred.bars(warb.ind.nug.cred.sets,0.5,color.vector= inds.col,vert.line.width=1,pop.order=pop.order)
+		legend(x="topleft",col=legend.pop.cols,pch=19,
+				legend=subspp,cex=1.0,bg="white")
+		box(lwd=2)
 	dev.off()
 
 
@@ -741,22 +764,26 @@ best <- which.max(Prob)
 	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_noad.pdf",width=7,height=5)
 	#quartz(width=7,height=5,pointsize=9)
 	plot(target.coords,type='n',
-			ylab="Eastings",xlab="Northings")
+			xlab="Eastings",ylab="Northings")
 		text(target.coords,
 				labels=plot.inds,
 				col=inds.col,
 				font=2)
+		legend(x="bottomleft",col=legend.pop.cols,pch=19,
+					legend=subspp,cex=1,bg="white")
+		box(lwd=2)
 	dev.off()
 
 	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_noad_closeup.pdf",width=7,height=5)
 	# quartz(width=7,height=5,pointsize=9)
 		plot(target.coords,type='n',
-				ylab="Eastings",xlab="Northings",
+				xlab="Eastings",ylab="Northings",
 				xlim=c(74,103),ylim=c(26,51))
 			text(target.coords,
 					labels=plot.inds,
 					col=inds.col,
 					font=2)
+		box(lwd=2)
 	dev.off()
 
 ind.names <- gsub(" ","",inds)
@@ -830,136 +857,107 @@ best <- which.max(Prob)
 												option = 2)
 	}
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_inds_ad_post_map_realpr1.png",res=300,width=7*300,height=5*300)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_inds_ad_post_map_realpr1.pdf",width=7,height=5)
 	#quartz(width=7,height=5,pointsize=9)
 		plot(target.coords,col=inds.col,
 			ylim=c(25,53), xlim=c(72,105),
-			ylab="Eastings",xlab="Northings",type='n',
+			xlab="Eastings",ylab="Northings",type='n',
 			main="Posterior distribution of population locations")
 		for(i in seq(1,length(target.coords.list),length.out=100)){
 			points(target.coords.list[[i]],col=adjustcolor(inds.col,0.1),pch=19)
 		}
-	dev.off()
-
-
-	pop.order <- c(grep("Ni",ind.subspp),grep("Vir",ind.subspp),
-					grep("Lud",ind.subspp),grep("Tro",ind.subspp),
-					grep("Obs",ind.subspp),grep("Plu",ind.subspp))
-	warb.ind.nug.cred.sets <- get.credible.interval(nugget,pop.order)
-	warb.ind.adprop.cred.sets <- get.credible.interval(admix.proportions,pop.order)
-	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_Ad_nugget.pdf",width=10,height=5)
-		#quartz(width=10,height=5)
-		par(mar=c(3,5,4,2))
-		plot(rowMeans(nugget)[pop.order],ylim=c(-0.115,max(unlist(warb.ind.nug.cred.sets))),
-				main = "Warbler Individual Nuggets: Admixture",
-				xlab = "Individual",
-				ylab = "Nugget Value",type='n',
-				xaxt='n')
-			text((1:k)+0.5,rep(-0.015,k),labels= inds[pop.order],srt=90,col=inds.col[pop.order],cex=0.60,adj=c(1,0))
-			mtext("Population",side=1,padj=1)
-			make.cred.bars(warb.ind.nug.cred.sets,0.5,color.vector= inds.col,vert.line.width=1,pop.order=pop.order)
-	dev.off()
-
-	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_adprop.pdf",width=10,height=5)
-		#quartz(width=10,height=5)
-		par(mar=c(3,5,4,2))
-		plot(rowMeans(admix.proportions/2)[pop.order],ylim=c(-0.007,max(unlist(warb.ind.adprop.cred.sets))/2),
-				main = "Warbler Individual Admixture Proportions",
-				xlab = "Individual",
-				ylab = "Admixture Proportion Value",type='n',
-				xaxt='n')
-			text((1:k)+0.5,rep(-0.001,k),labels= inds[pop.order],srt=90,col=inds.col[pop.order],cex=0.60,adj=c(1,0))
-			mtext("Population",side=1,padj=1)
-			make.cred.bars(lapply(warb.ind.adprop.cred.sets,"/",2),0.5,color.vector= inds.col,vert.line.width=1,pop.order=pop.order)
+		box(lwd=2)
 	dev.off()
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_amped_admixture_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(min(target.coords[,1],source.coords[,1]),
-							max(target.coords[,1],source.coords[,1])),
-					ylim=c(min(target.coords[,2],source.coords[,2]),
-							max(target.coords[,2],source.coords[,2])),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=plot.inds,
-						col=adjustcolor(inds.col,0.8),
-						font=2,cex=0.9)
-				points(source.coords,
-							col=fade.admixture.source.points(inds.col,admix.proportions[,best]*10),
-							pch=20)
-			arrows(	x0 = source.coords[,1],
-					y0 = source.coords[,2],
-					x1 = target.coords[,1],
-					y1 = target.coords[,2],
-					col= inds.col,
-					lwd=admix.proportions[,best]*10,
-					length=0.1)
-	dev.off()
+	# pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_amped_admixture_realpr1.pdf",width=7,height=5,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim=c(min(target.coords[,1],source.coords[,1]),
+							# max(target.coords[,1],source.coords[,1])),
+					# ylim=c(min(target.coords[,2],source.coords[,2]),
+							# max(target.coords[,2],source.coords[,2])),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=plot.inds,
+						# col=adjustcolor(inds.col,0.8),
+						# font=2,cex=0.9)
+				# points(source.coords,
+							# col=fade.admixture.source.points(inds.col,admix.proportions[,best]*10),
+							# pch=20)
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col= inds.col,
+					# lwd=admix.proportions[,best]*10,
+					# length=0.1)
+		# box(lwd=2)
+	# dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(min(target.coords[,1],source.coords[,1]),
-							max(target.coords[,1],source.coords[,1])),
-					ylim=c(min(target.coords[,2],source.coords[,2]),
-							max(target.coords[,2],source.coords[,2])),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=plot.inds,
-						col=adjustcolor(inds.col,0.8),
-						font=2,cex=0.9)
-				points(source.coords,
-							col=ind.plot.cols,
-							pch=20)
-			arrows(	x0 = source.coords[,1],
-					y0 = source.coords[,2],
-					x1 = target.coords[,1],
-					y1 = target.coords[,2],
-					col= inds.col,
-					lwd=admix.proportions[,best],
-					length=0.1)
-	dev.off()
+	# pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_realpr1.pdf",width=7,height=5,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim=c(min(target.coords[,1],source.coords[,1]),
+							# max(target.coords[,1],source.coords[,1])),
+					# ylim=c(min(target.coords[,2],source.coords[,2]),
+							# max(target.coords[,2],source.coords[,2])),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=plot.inds,
+						# col=adjustcolor(inds.col,0.8),
+						# font=2,cex=0.9)
+				# points(source.coords,
+							# col=ind.plot.cols,
+							# pch=20)
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col= inds.col,
+					# lwd=admix.proportions[,best],
+					# length=0.1)
+		# box(lwd=2)
+	# dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(min(target.coords[,1]),max(target.coords[,1])+2),
-					ylim=c(min(target.coords[,2]),max(target.coords[,2])),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=plot.inds,
-						col=adjustcolor(inds.col,0.8),
-						font=2,cex=0.9)
-	dev.off()
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim=c(min(target.coords[,1]),max(target.coords[,1])+2),
+					# ylim=c(min(target.coords[,2]),max(target.coords[,2])),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=plot.inds,
+						# col=adjustcolor(inds.col,0.8),
+						# font=2,cex=0.9)
+	# dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
-					ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[-c(which(plot.inds=="TU")),],
-						labels=plot.inds[-c(which(plot.inds=="TU"))],
-						col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
-						font=2,cex=0.9)
-	dev.off()
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
+					# ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[-c(which(plot.inds=="TU")),],
+						# labels=plot.inds[-c(which(plot.inds=="TU"))],
+						# col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
+						# font=2,cex=0.9)
+	# dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_nugget_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
-					ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
-					xlab="Eastings",
-					ylab="Northings")
-				points(target.coords[-c(which(plot.inds=="TU")),],
-						col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
-						cex=last.params$nugget*5,lwd=1.5)
-	dev.off()
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_nugget_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
+					# ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# points(target.coords[-c(which(plot.inds=="TU")),],
+						# col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
+						# cex=last.params$nugget*5,lwd=1.5)
+	# dev.off()
 ################
 #	RealPrior2
 ################
@@ -984,105 +982,106 @@ best <- which.max(Prob)
 												option = 2)
 	}
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_inds_ad_post_map_realpr2.png",res=300,width=7*300,height=5*300)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_inds_ad_post_map_realpr2.pdf",width=7,height=5)
 	#quartz(width=7,height=5,pointsize=9)
 		plot(target.coords,col=inds.col,
 			ylim=c(25,53), xlim=c(72,105),
-			ylab="Eastings",xlab="Northings",type='n',
+			xlab="Eastings",ylab="Northings",type='n',
 			main="Posterior distribution of population locations")
 		for(i in seq(1,length(target.coords.list),length.out=100)){
 			points(target.coords.list[[i]],col=adjustcolor(inds.col,0.1),pch=19)
 		}
+		box(lwd=2)
 	dev.off()
 
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_amped_admixture_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(min(target.coords[,1],source.coords[,1]),
-							max(target.coords[,1],source.coords[,1])),
-					ylim=c(min(target.coords[,2],source.coords[,2]),
-							max(target.coords[,2],source.coords[,2])),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=plot.inds,
-						col=adjustcolor(inds.col,0.8),
-						font=2,cex=0.9)
-				points(source.coords,
-							col=fade.admixture.source.points(inds.col,admix.proportions[,best]*10),
-							pch=20)
-			arrows(	x0 = source.coords[,1],
-					y0 = source.coords[,2],
-					x1 = target.coords[,1],
-					y1 = target.coords[,2],
-					col= inds.col,
-					lwd=admix.proportions[,best]*10,
-					length=0.1)
-	dev.off()
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_amped_admixture_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim=c(min(target.coords[,1],source.coords[,1]),
+							# max(target.coords[,1],source.coords[,1])),
+					# ylim=c(min(target.coords[,2],source.coords[,2]),
+							# max(target.coords[,2],source.coords[,2])),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=plot.inds,
+						# col=adjustcolor(inds.col,0.8),
+						# font=2,cex=0.9)
+				# points(source.coords,
+							# col=fade.admixture.source.points(inds.col,admix.proportions[,best]*10),
+							# pch=20)
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col= inds.col,
+					# lwd=admix.proportions[,best]*10,
+					# length=0.1)
+	# dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(min(target.coords[,1],source.coords[,1]),
-							max(target.coords[,1],source.coords[,1])),
-					ylim=c(min(target.coords[,2],source.coords[,2]),
-							max(target.coords[,2],source.coords[,2])),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=plot.inds,
-						col=adjustcolor(inds.col,0.8),
-						font=2,cex=0.9)
-				points(source.coords,
-							col=ind.plot.cols,
-							pch=20)
-			arrows(	x0 = source.coords[,1],
-					y0 = source.coords[,2],
-					x1 = target.coords[,1],
-					y1 = target.coords[,2],
-					col= inds.col,
-					lwd=admix.proportions[,best],
-					length=0.1)
-	dev.off()
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim=c(min(target.coords[,1],source.coords[,1]),
+							# max(target.coords[,1],source.coords[,1])),
+					# ylim=c(min(target.coords[,2],source.coords[,2]),
+							# max(target.coords[,2],source.coords[,2])),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=plot.inds,
+						# col=adjustcolor(inds.col,0.8),
+						# font=2,cex=0.9)
+				# points(source.coords,
+							# col=ind.plot.cols,
+							# pch=20)
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col= inds.col,
+					# lwd=admix.proportions[,best],
+					# length=0.1)
+	# dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(min(target.coords[,1]),max(target.coords[,1])+2),
-					ylim=c(min(target.coords[,2]),max(target.coords[,2])),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=plot.inds,
-						col=adjustcolor(inds.col,0.8),
-						font=2,cex=0.9)
-	dev.off()
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim=c(min(target.coords[,1]),max(target.coords[,1])+2),
+					# ylim=c(min(target.coords[,2]),max(target.coords[,2])),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=plot.inds,
+						# col=adjustcolor(inds.col,0.8),
+						# font=2,cex=0.9)
+	# dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
-					ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[-c(which(plot.inds=="TU")),],
-						labels=plot.inds[-c(which(plot.inds=="TU"))],
-						col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
-						font=2,cex=0.9)
-	dev.off()
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
+					# ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[-c(which(plot.inds=="TU")),],
+						# labels=plot.inds[-c(which(plot.inds=="TU"))],
+						# col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
+						# font=2,cex=0.9)
+	# dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_nugget_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
-					ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
-					xlab="Eastings",
-					ylab="Northings")
-				points(target.coords[-c(which(plot.inds=="TU")),],
-						col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
-						cex=last.params$nugget*5,lwd=1.5)
-	dev.off()
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_noarrows_closeup_nugget_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim=c(min(target.coords[-c(which(plot.inds=="TU")),1]),max(target.coords[-c(which(plot.inds=="TU")),1])),
+					# ylim=c(min(target.coords[-c(which(plot.inds=="TU")),2]),max(target.coords[-c(which(plot.inds=="TU")),2])),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# points(target.coords[-c(which(plot.inds=="TU")),],
+						# col=adjustcolor(inds.col[-c(which(plot.inds=="TU"))],0.8),
+						# cex=last.params$nugget*5,lwd=1.5)
+	# dev.off()
 
 ################
 #	RandPrior2
@@ -1108,44 +1107,45 @@ best <- which.max(Prob)
 												option = 2)
 	}
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_inds_ad_post_map_randpr2.png",res=300,width=7*300,height=5*300)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_inds_ad_post_map_randpr2.pdf",width=7,height=5)
 	#quartz(width=7,height=5,pointsize=9)
 		plot(target.coords,col=inds.col,
 			ylim=c(25,53), xlim=c(72,108),
-			ylab="Eastings",xlab="Northings",type='n',
+			xlab="Eastings",ylab="Northings",type='n',
 			main="Posterior distribution of population locations")
 		for(i in seq(1,length(target.coords.list),length.out=100)){
 			points(target.coords.list[[i]],col=adjustcolor(inds.col,0.1),pch=19)
 		}
+		box(lwd=2)
 	dev.off()
 
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_amped_admixture_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(min(target.coords[,1],source.coords[,1]),
-							max(target.coords[,1],source.coords[,1])),
-					ylim=c(min(target.coords[,2],source.coords[,2]),
-							max(target.coords[,2],source.coords[,2])),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=plot.inds,
-						col=adjustcolor(inds.col,0.8),
-						font=2,cex=0.9)
-				points(source.coords,
-							col=fade.admixture.source.points(inds.col,admix.proportions[,best]*10),
-							pch=20)
-			arrows(	x0 = source.coords[,1],
-					y0 = source.coords[,2],
-					x1 = target.coords[,1],
-					y1 = target.coords[,2],
-					col= inds.col,
-					lwd=admix.proportions[,best]*10,
-					length=0.1)
-	dev.off()
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_amped_admixture_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim=c(min(target.coords[,1],source.coords[,1]),
+							# max(target.coords[,1],source.coords[,1])),
+					# ylim=c(min(target.coords[,2],source.coords[,2]),
+							# max(target.coords[,2],source.coords[,2])),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=plot.inds,
+						# col=adjustcolor(inds.col,0.8),
+						# font=2,cex=0.9)
+				# points(source.coords,
+							# col=fade.admixture.source.points(inds.col,admix.proportions[,best]*10),
+							# pch=20)
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col= inds.col,
+					# lwd=admix.proportions[,best]*10,
+					# length=0.1)
+	# dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_randpr1.pdf",width=7,height=5,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[,1],source.coords[,1]),
@@ -1165,12 +1165,15 @@ best <- which.max(Prob)
 					y0 = source.coords[,2],
 					x1 = target.coords[,1],
 					y1 = target.coords[,2],
-					col= inds.col,
+					col= fade.admixture.source.points(inds.col,admix.proportions[,best]),
 					lwd=admix.proportions[,best],
 					length=0.1)
+		legend(x="bottomleft",col=legend.pop.cols,pch=19,
+					legend=subspp,cex=1.2,bg="white")
+		box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_randpr1_closeup.png",res=300,width=7*300,height=5*300,pointsize=9)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_randpr1_closeup.pdf",width=7,height=5,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(75,102),
@@ -1188,10 +1191,47 @@ best <- which.max(Prob)
 					y0 = source.coords[,2],
 					x1 = target.coords[,1],
 					y1 = target.coords[,2],
-					col= inds.col,
+					col= fade.admixture.source.points(inds.col,admix.proportions[,best]),
 					lwd=admix.proportions[,best],
 					length=0.1)
+		box(lwd=2)
 	dev.off()
+	
+		pop.order <- c(grep("Ni",ind.subspp),grep("Vir",ind.subspp),
+					grep("Lud",ind.subspp),grep("Tro",ind.subspp),
+					grep("Obs",ind.subspp),grep("Plu",ind.subspp))
+	warb.ind.nug.cred.sets <- get.credible.interval(nugget,pop.order)
+	warb.ind.adprop.cred.sets <- get.credible.interval(admix.proportions,pop.order)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_Ad_nugget.pdf",width=10,height=5)
+		#quartz(width=10,height=5)
+		par(mar=c(3,5,4,2))
+		plot(rowMeans(nugget)[pop.order],ylim=c(-0.115,max(unlist(warb.ind.nug.cred.sets))),
+				main = "Warbler Individual Nuggets: Admixture",
+				xlab = "Individual",
+				ylab = "Nugget Value",type='n',
+				xaxt='n')
+			text((1:k)+0.5,rep(-0.015,k),labels= inds[pop.order],srt=90,col=inds.col[pop.order],cex=0.60,adj=c(1,0))
+			mtext("Population",side=1,padj=1)
+			make.cred.bars(warb.ind.nug.cred.sets,0.5,color.vector= inds.col,vert.line.width=1,pop.order=pop.order)
+		box(lwd=2)
+	dev.off()
+
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_adprop.pdf",width=10,height=5)
+		#quartz(width=10,height=5)
+		par(mar=c(3,5,4,2))
+		plot(rowMeans(admix.proportions/2)[pop.order],ylim=c(-0.007,max(unlist(warb.ind.adprop.cred.sets))/2),
+				main = "Warbler Individual Admixture Proportions",
+				xlab = "Individual",
+				ylab = "Admixture Proportion Value",type='n',
+				xaxt='n')
+			text((1:k)+0.5,rep(-0.001,k),labels= inds[pop.order],srt=90,col=inds.col[pop.order],cex=0.60,adj=c(1,0))
+			mtext("Population",side=1,padj=1)
+			make.cred.bars(lapply(warb.ind.adprop.cred.sets,"/",2),0.5,color.vector= inds.col,vert.line.width=1,pop.order=pop.order)
+		legend(x="topright",col=legend.pop.cols,pch=19,
+					legend=subspp,cex=1,bg="white")
+		box(lwd=2)
+	dev.off()
+
 
 ################
 #	warb inds on a line

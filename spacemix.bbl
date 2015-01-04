@@ -1,4 +1,4 @@
-\begin{thebibliography}{76}
+\begin{thebibliography}{79}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -120,8 +120,6 @@ Arkendra De and Richard Durrett.
 \newblock Stepping-stone spatial structure causes slow decay of linkage
   disequilibrium and shifts the site frequency spectrum.
 \newblock \emph{Genetics}, 176\penalty0 (2):\penalty0 969--981, 2007.
-\newblock \doi{10.1534/genetics.107.071464}.
-\newblock URL \url{http://www.genetics.org/content/176/2/969.abstract}.
 
 \bibitem[Diggle et~al.(1998)Diggle, Tawn, and Moyeed]{Diggle1998}
 P~J Diggle, J~A Tawn, and R~A Moyeed.
@@ -157,8 +155,6 @@ Olivier Fran�ois, Mathias Currat, Nicolas Ray, Eunjung Han, Laurent Excoffier,
   expansion and admixture.
 \newblock \emph{Molecular Biology and Evolution}, 27\penalty0 (6):\penalty0
   1257--1268, 2010.
-\newblock \doi{10.1093/molbev/msq010}.
-\newblock URL \url{http://mbe.oxfordjournals.org/content/27/6/1257.abstract}.
 
 \bibitem[Gravel(2012)]{gravel_population_2012}
 Simon Gravel.
@@ -430,7 +426,6 @@ Desislava Petkova, John Novembre, and Matthew Stephens.
 \newblock Visualizing spatial population structure with estimated effective
   migration surfaces.
 \newblock \emph{bioRxiv}, 2014.
-\newblock \doi{10.1101/011809}.
 
 \bibitem[Pickrell and Pritchard(2012)]{Treemix}
 J.~K. Pickrell and J.~K. Pritchard.
@@ -505,6 +500,23 @@ David Reich, Kumarasamy Thangaraj, Nick Patterson, Alkes~L. Price, and Lalji
 \newblock \emph{Nature}, 461\penalty0 (7263):\penalty0 489--494, September
   2009.
 
+\bibitem[Roberts et~al.(1997)Roberts, Gelman, and Gilks]{Roberts1997}
+G.~O. Roberts, A.~Gelman, and W.~R. Gilks.
+\newblock {Weak convergence and optimal scaling of random walk Metropolis
+  algorithms}.
+\newblock \emph{Annals of Applied Probability}, 7:\penalty0 110--120, 1997.
+
+\bibitem[Roberts and Rosenthal(2001)]{Roberts2001}
+Gareth~O. Roberts and Jeffrey~S. Rosenthal.
+\newblock Optimal scaling for various {M}etropolis-{H}astings algorithms.
+\newblock \emph{Statist. Sci.}, 16\penalty0 (4):\penalty0 351--367, 2001.
+
+\bibitem[Roberts and Rosenthal(2009)]{roberts2009examples}
+Gareth~O Roberts and Jeffrey~S Rosenthal.
+\newblock Examples of adaptive mcmc.
+\newblock \emph{Journal of Computational and Graphical Statistics}, 18\penalty0
+  (2):\penalty0 349--367, 2009.
+
 \bibitem[Rosenberg et~al.(2002)Rosenberg, Pritchard, Weber, Cann, Kidd,
   Zhivotovsky, and Feldman]{rosenberg_genetic_2002}
 Noah~A. Rosenberg, Jonathan~K. Pritchard, James~L. Weber, Howard~M. Cann,
@@ -512,6 +524,14 @@ Noah~A. Rosenberg, Jonathan~K. Pritchard, James~L. Weber, Howard~M. Cann,
 \newblock Genetic structure of human populations.
 \newblock \emph{Science (New York, N.Y.)}, 298\penalty0 (5602):\penalty0
   2381--2385, December 2002.
+
+\bibitem[Rosenthal(2011)]{rosenthal2010_optimal}
+Jeffrey~S. Rosenthal.
+\newblock {Optimal Proposal Distributions and Adaptive MCMC}.
+\newblock In Steve Brooks, Andrew Gelman, Galin~L. Jones, and Xiao-Li Meng,
+  editors, \emph{Handbook of Markov Chain Monte Carlo}, Handbooks of Modern
+  Statistical Methods, chapter~4. Chapman \& Hall, CRC, Florida, USA, first
+  edition, 2011.
 
 \bibitem[Schlebusch et~al.(2012)Schlebusch, Skoglund, Sjödin, Gattepaille,
   Hernandez, Jay, Li, De~Jongh, Singleton, Blum, Soodyall, and
@@ -585,23 +605,12 @@ Wen-Yun Yang, John Novembre, Eleazar Eskin, and Eran Halperin.
   data.
 \newblock \emph{Nature genetics}, 44\penalty0 (6):\penalty0 725--731, May 2012.
 
-\bibitem[Yang et~al.(2014{\natexlab{a}})Yang, Platt, Chiang, Eskin, Novembre,
-  and Pasaniuc]{Yang_2014_SPA}
-Wen-Yun Yang, Alexander Platt, Charleston Wen-Kai Chiang, Eleazar Eskin, John
-  Novembre, and Bogdan Pasaniuc.
-\newblock Spatial localization of recent ancestors for admixed individuals.
-\newblock \emph{G3 (Bethesda, Md.)}, 4\penalty0 (12):\penalty0 2505—2518,
-  2014{\natexlab{a}}.
-\newblock ISSN 2160-1836.
-\newblock \doi{10.1534/g3.114.014274}.
-\newblock URL \url{http://europepmc.org/articles/PMC4267945}.
-
-\bibitem[Yang et~al.(2014{\natexlab{b}})Yang, Platt, Chiang, Eskin, Novembre,
-  and Pasaniuc]{yang_spatial_2014}
+\bibitem[Yang et~al.(2014)Yang, Platt, Chiang, Eskin, Novembre, and
+  Pasaniuc]{yang_spatial_2014}
 Wen-Yun Yang, Alexander Platt, Charleston Wen-Kai Chiang, Eleazar Eskin, John
   Novembre, and Bogdan Pasaniuc.
 \newblock Spatial localization of recent ancestors for admixed individuals.
 \newblock \emph{G3: Genes{\textbar}Genomes{\textbar}Genetics}, 4\penalty0
-  (12):\penalty0 2505--2518, December 2014{\natexlab{b}}.
+  (12):\penalty0 2505--2518, December 2014.
 
 \end{thebibliography}

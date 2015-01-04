@@ -1419,13 +1419,22 @@ pc.coords <- cbind(eigen(mc.cov_hat)$vectors[,1],eigen(mc.cov_hat)$vectors[,2])
 proc.pc.coords <- fitted(vegan::procrustes(globe.coords,pc.coords))
 	pc1.var <- eigen(mc.cov_hat)$values[1] / sum(eigen(mc.cov_hat)$values)
 	pc2.var <- eigen(mc.cov_hat)$values[2] / sum(eigen(mc.cov_hat)$values)
-	
+subplot2.x.coords <- c(-165,180)
+subplot2.y.coords <- c(-60,80)
 	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_PCA_map.pdf",width=6,height=6)
+		#quartz(width=6,height=6)
 		plot(proc.pc.coords,type='n',
-				main = "PCA map of Human samples",
+				main = "PCA map of human samples",
 				xlab = paste("PC1 (",signif(100*pc1.var,3),"%)",sep=""),
 				ylab  = paste("PC2 (",signif(100*pc2.var,3),"%)",sep=""))
 		text(proc.pc.coords,col=continent.col,labels=abbrevs,font=2,cex=0.9)
+			TeachingDemos::subplot(fun = {
+									plot(0,xlim=subplot2.x.coords,ylim=subplot2.y.coords,type='n',yaxt='n',xaxt='n',xlab="",ylab="")
+									map(database="world",interior=FALSE,add=TRUE,xlim=subplot2.x.coords,ylim=subplot2.y.coords,lwd=0.5,col="gray"); 
+									text(globe.coords,labels=abbrevs,col=continent.col,cex=0.7) ; 
+									box(lwd=1.1)
+									}, x = c(40,75),y = c(-25,10))
+	box(lwd=2)
 	dev.off()
 
 	best <- which.max(Prob)

@@ -268,6 +268,23 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 	pop.col[match(c("YK","TL","AB"),pops)] <- "dodgerblue2"		#"slateblue4"
 	pop.col[match(c("ST","UY","IL","AN","BK","TA","SL"),pops)] <- "red"
 	pop.col[match(c("TU"),pops)] <- "slateblue4"
+	pop.order <- c(22,1,3:5,6:21,2)
+	legend.pop.cols <- unique(pop.col[pop.order])
+	subspp <- c("Nitidus","Viridanus","Ludlowi","Trochiloides","Obscuratus","Plumbeitarsus")
+
+################
+#	Sampling Map
+################
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warbler_sampling_map.pdf",width=6,height=4)
+	#quartz(width=6,height=4)
+		par(mar=c(3,3,1,1))
+		plot(warbler.pop.coords,type='n',xlim=c(40,120),ylim=c(23,62))
+			map(database="world",add=TRUE,col="gray")
+			text(warbler.pop.coords,col=pop.col,labels=pops,font=2,cex=1.2)
+			legend(x="bottomleft",col=legend.pop.cols,pch=19,
+					legend=subspp,cex=0.9,bg="white")
+		box(lwd=2)
+	dev.off()
 
 ################
 #	PCA Map
@@ -279,7 +296,7 @@ mc.cov_hat <- mean.centering.matrix %*% cov_hat %*% t(mean.centering.matrix)
 pc.coords <- cbind(eigen(mc.cov_hat)$vectors[,1],eigen(mc.cov_hat)$vectors[,2])
 proc.pc.coords <- fitted(vegan::procrustes(warbler.pop.coords,pc.coords))
 
-png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_PC_map.png",res=200,width=5*200,height=4*200)
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_PC_map.pdf",width=5,height=4)
 	#quartz(width=5,height=4)
 	par(mar=c(4.5,4.5,3,1))
 	plot(proc.pc.coords,type='n',
@@ -291,11 +308,13 @@ png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_PC_map.png",res=
 				"%)",sep=""),
 		main="Warbler Population PC Map",cex.axis=0.7)
 	text(proc.pc.coords,col=pop.col,labels=pops,cex=0.7,font=2)
+			legend(x="bottomleft",col=legend.pop.cols,pch=19,
+					legend=subspp,cex=0.75,bg="white")
 	box(lwd=2)
 dev.off()
 
 ################
-#	NO ADMIXTURE - RealPrior1
+#	NO ADMIXTURE - RandPrior1
 ################
 load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop_spaceruns/warb_pop_no_admixture/rand_prior1/warb_pop_spaceruns_NoAd_randpr1_LongRun/warb_pop_spaceruns_NoAd_randpr1space_MCMC_output1.Robj")
 
@@ -310,6 +329,9 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 				ylab = "Nugget Value")
 		make.cred.bars(warb.pop.nugg.cred.sets,0.5,color.vector=pop.col[pop.order],vert.line.width=1)
 		text((1:k)+0.25,rep(-0.1,k),labels= pops[pop.order],srt=90,col=pop.col[pop.order],cex=1,adj=c(1,0))
+		legend(x="topright",col=legend.pop.cols,pch=19,
+				legend=subspp,cex=0.9,bg="white")
+		box(lwd=2)
 	dev.off()
 
 	best <- which.max(Prob)
@@ -324,7 +346,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
             box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_noad.png",res=300,width=7*300,height=5*300,pointsize=9)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_noad.pdf",width=7,height=5,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 #					xlim=c(68,116), #realpr1: c(68,115), realpr2: c(53,101), randpr: c(71,114)
@@ -335,6 +357,8 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 						labels=pops,
 						col=pop.col,
 						font=2,cex=1.5)
+		legend(x="bottomleft",col=legend.pop.cols,pch=19,
+				legend=subspp,cex=1.3,bg="white")
 				box(lwd=2)
 	dev.off()
 
@@ -343,12 +367,15 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 	index.mat <- upper.tri(obs.D)
 	color.combos <- combn(unique(pop.col),2)
 
-png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_dist_compare.png",res=200,width=10*200,height=5*200)
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_dist_compare.pdf",width=10,height=5)
 #quartz(width=10,height=5)
 par(mfrow=c(1,2))
 	plot(warbler.pop.coords,pch=19,cex=2,col=pop.col,
 			xlab="Longitude",
 			ylab="Latitude")
+	box(lwd=2)
+	legend(x="bottomleft",col=legend.pop.cols,pch=19,
+			legend=subspp,cex=0.8,bg="white")
 	plot(obs.D[index.mat],par.D[index.mat],pch=20,col="gray",
 			xlab="Observed Pairwise Distance",
 			ylab="Inferred Pairwise Distance")
@@ -371,6 +398,7 @@ if(FALSE){
 			lines(lowess(par.D[1:k,1:k][use.these1,use.these2] ~ obs.D[use.these1,use.these2]),col=color.combos[2,i],lty=3,lwd=4)
 		}
 	}
+	box(lwd=2)
 dev.off()
 
 
@@ -387,7 +415,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 	warb.pop.adprop.cred.sets <- get.credible.interval(admix.proportions,pop.order)
 	
 	pop.order <- c(22,1,3:5,6:21,2)
-	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_Ad_nugget.pdf",width=7,height=5)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_Ad_nugget_realpr1.pdf",width=7,height=5)
 		#quartz(width=7,height=5)
 		plot(rowMeans(nugget)[pop.order],type='n',pch=19,ylim=c(-0.3,max(unlist(warb.pop.nugg.cred.sets))),
 				main = "Warbler Population Nuggets: Admixture",
@@ -395,6 +423,9 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 				ylab = "Nugget Value")
 		make.cred.bars(warb.pop.nugg.cred.sets,0.5,color.vector=pop.col[pop.order],vert.line.width=1)
 		text((1:k)+0.25,rep(-0.1,k),labels= pops[pop.order],srt=90,col=pop.col[pop.order],cex=1,adj=c(1,0))
+		box(lwd=2)
+		legend(x="topright",col=legend.pop.cols,pch=19,
+			legend=subspp,cex=0.8,bg="white")
 	dev.off()
 
 	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_adprop.pdf",width=7,height=5)
@@ -405,9 +436,12 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 				ylab = "Admixture Proportions Value")
 		make.cred.bars(lapply(warb.pop.adprop.cred.sets,"/",2),0.5,color.vector=pop.col[pop.order],vert.line.width=1)
 		text((1:k)+0.25,rep(-0.015,k),labels= pops[pop.order],srt=90,col=pop.col[pop.order],cex=1,adj=c(1,0))
+		box(lwd=2)
+		legend(x="topleft",col=legend.pop.cols,pch=19,
+			legend=subspp,cex=0.8,bg="white")
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_realpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_realpr1.pdf",width=7,height=5,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(68,116), #realpr1: c(68,115), realpr2: c(53,101), randpr: c(71,114)
@@ -428,10 +462,12 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 					col= pop.plot.cols,
 					lwd=admix.proportions[,best],#last.params$admix.proportions,
 					length=0.1)
+		legend(x="bottomleft",col=legend.pop.cols,pch=19,
+			legend=subspp,cex=1,bg="white")
 				box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_admix_values_nugget_realpr1.png",res=300,width=4.5*300,height=5*300,pointsize=9)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_admix_values_nugget_realpr1.pdf",width=4.5,height=5,pointsize=9)
 		#quartz(width=5,height=5,pointsize=9)
 		order <- c(1,3:15,2,16:22)
 		par(mfrow=c(2,1),mar=c(1,4,0,1),oma=c(1,1,1,1))
@@ -456,7 +492,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 	
 	
 ################
-#	RealPrior2
+#	Admixture - RealPrior2
 ################
 load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop_spaceruns/real_prior2/warb_pop_spaceruns_realpr2_LongRun/warb_pop_spaceruns_realpr2space_MCMC_output1.Robj")
 	best <- which.max(Prob)
@@ -464,7 +500,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 	source.coords <- procrusteez(warbler.pop.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2)
 	pop.plot.cols <- fade.admixture.source.points(pop.col,admix.proportions[,best])
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_realpr2.pdf",width=7,height=5,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(53,101), #realpr1: c(68,115), realpr2: c(53,101), randpr: c(71,114)
@@ -488,21 +524,21 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 				box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_no_arrows_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(68,101), #realpr1: c(68,101), realpr2: c(68,101), randpr: c(71,99)
-					ylim=c(25,55), #realpr1: c(25,55), realpr2: c(25,55), randpr: c(20.5,56)
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=pops,
-						col=pop.col,
-						font=2,cex=0.9)
-				box(lwd=2)
-	dev.off()
+	# pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_no_arrows_realpr2.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim=c(68,101), #realpr1: c(68,101), realpr2: c(68,101), randpr: c(71,99)
+					# ylim=c(25,55), #realpr1: c(25,55), realpr2: c(25,55), randpr: c(20.5,56)
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=pops,
+						# col=pop.col,
+						# font=2,cex=0.9)
+				# box(lwd=2)
+	# dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_admix_values_nugget_realpr2.png",res=300,width=4.5*300,height=5*300,pointsize=9)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_admix_values_nugget_realpr2.pdf",width=4.5,height=5,pointsize=9)
 		#quartz(width=5,height=5,pointsize=9)
 		order <- c(1,3:15,2,16:22)
 		par(mfrow=c(2,1),mar=c(1,4,0,1),oma=c(1,1,1,1))
@@ -526,7 +562,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 	dev.off()
 
 ################
-#	RandPrior1
+#	Admixture - RandPrior1
 ################
 load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop_spaceruns/rand_prior1/warb_pop_spaceruns_randpr1_LongRun/warb_pop_spaceruns_randpr1space_MCMC_output1.Robj")
 	best <- which.max(Prob)
@@ -534,7 +570,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 	source.coords <- procrusteez(warbler.pop.coords,population.coordinates[[best]][1:k,],k,source.locs=population.coordinates[[best]][(k+1):(2*k),],option=2)
 	pop.plot.cols <- fade.admixture.source.points(pop.col,admix.proportions[,best])
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_ad_map_randpr1.pdf",width=7,height=5,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
 			plot(target.coords,type='n',
 					xlim=c(71,114), #realpr1: c(68,115), realpr2: c(53,101), randpr: c(71,114)
@@ -558,43 +594,55 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 				box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_no_arrows_randpr1.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim=c(71,99), #realpr1: c(68,101), realpr2: c(68,101), randpr: c(71,99)
-					ylim=c(20.5,56), #realpr1: c(25,55), realpr2: c(25,55), randpr: c(20.5,56)
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=pops,
-						col=pop.col,
-						font=2,cex=0.9)
-				box(lwd=2)
+	# pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_map_no_arrows_randpr1.pdf",width=7,height=5,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim=c(71,99), #realpr1: c(68,101), realpr2: c(68,101), randpr: c(71,99)
+					# ylim=c(20.5,56), #realpr1: c(25,55), realpr2: c(25,55), randpr: c(20.5,56)
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=pops,
+						# col=pop.col,
+						# font=2,cex=0.9)
+				# box(lwd=2)
+	# dev.off()
+
+	# pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_admix_values_nugget_randpr1.pdf",width=4.5,height=5,pointsize=9)
+		# #quartz(width=5,height=5,pointsize=9)
+		# order <- c(1,3:15,2,16:22)
+		# par(mfrow=c(2,1),mar=c(1,4,0,1),oma=c(1,1,1,1))
+			# plot(admix.proportions[order,best]/2,type='n',
+					# xlab="",
+					# xaxt='n',
+					# ylab="estimated adxmiture proportion")
+				# text(admix.proportions[order,best]/2,
+						# labels=pops[order],
+						# col=pop.col[order],
+						# font=2,cex=0.9)
+				# box(lwd=2)
+			# plot(nugget[order,best],type='n',
+					# xaxt='n',
+					# ylab="estimated population nugget")
+				# text(nugget[order,best],
+						# labels=pops[order],
+						# col=pop.col[order],
+						# font=2,cex=0.9)
+				# box(lwd=2)
+	# dev.off()
+	pop.order <- c(22,1,3:5,6:21,2)
+		warb.pop.nugg.cred.sets <- get.credible.interval(nugget,pop.order)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_Ad_nugget.pdf",width=7,height=5)
+		#quartz(width=7,height=5)
+		plot(rowMeans(nugget)[pop.order],type='n',pch=19,ylim=c(-0.3,max(unlist(warb.pop.nugg.cred.sets))),
+				main = "Warbler Population Nuggets: Admixture",
+				xlab = "Population",
+				ylab = "Nugget Value")
+		make.cred.bars(warb.pop.nugg.cred.sets,0.5,color.vector=pop.col[pop.order],vert.line.width=1)
+		text((1:k)+0.25,rep(-0.1,k),labels= pops[pop.order],srt=90,col=pop.col[pop.order],cex=1,adj=c(1,0))
+		box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_admix_values_nugget_randpr1.png",res=300,width=4.5*300,height=5*300,pointsize=9)
-		#quartz(width=5,height=5,pointsize=9)
-		order <- c(1,3:15,2,16:22)
-		par(mfrow=c(2,1),mar=c(1,4,0,1),oma=c(1,1,1,1))
-			plot(admix.proportions[order,best]/2,type='n',
-					xlab="",
-					xaxt='n',
-					ylab="estimated adxmiture proportion")
-				text(admix.proportions[order,best]/2,
-						labels=pops[order],
-						col=pop.col[order],
-						font=2,cex=0.9)
-				box(lwd=2)
-			plot(nugget[order,best],type='n',
-					xaxt='n',
-					ylab="estimated population nugget")
-				text(nugget[order,best],
-						labels=pops[order],
-						col=pop.col[order],
-						font=2,cex=0.9)
-				box(lwd=2)
-	dev.off()
-	
 ################################
 #	WARBLER IND FIGS
 ################################
@@ -1453,9 +1501,9 @@ subplot2.y.coords <- c(-60,80)
 #					text.col = c("forestgreen","blue","purple","red","brown","orange"),cex=0.8)
 	dev.off()
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_world_map_text.png",res=300,width=9*300,height=5.5*300)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_world_map_text.pdf",width=9,height=5.5)
 	#quartz(width=9,height=5.5)
-	map("world",interior=FALSE,lwd=0.5,ylim=c(-60,85),xlim=c(-130,180))
+	map("world",interior=FALSE,lwd=0.5,ylim=c(-60,85),xlim=c(-130,180),col="gray")
 		box(lwd=2)
 		text(globe.coords,pops,col=continent.col,cex=0.8,font=2)
 #			legend(x = -175,y=-10,

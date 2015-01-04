@@ -156,7 +156,7 @@ where $\hat{f}_{\ell,k}$ is sample allele frequency at locus $\ell$ in populatio
 This normalization is widely used \citep[e.g.][]{nicholson2002,Patterson2006};
 roughly speaking, mean-centering removes any effect of choice of counted allele,
 and dividing by $\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}$ makes each locus have unit variance.
-Using the sample mean to mean-center these standardized allele frequencies has implications on their covariance structure, which we discuss in the Methods.  
+Using the sample mean to mean-center these standardized allele frequencies has implications on their covariance structure, which we discuss in the Methods \gc{Section XXX}.  
 We proceed in our discussion of the covariance as if our $\bar{f}_{\ell}$ were a global, rather than sample, mean allele frequency at locus $\ell$.
 
 \paragraph{Spatial Covariance Model}
@@ -389,10 +389,10 @@ For clarity and ease of interpretation, we then present a full Procrustes superi
 \begin{figure}
 	\centering
 		\subcaptionbox{Warbler subspecies distribution map \label{irwin_map}}
-			{\includegraphics[width=2in,height=1.66in]{figs/warblers/Irwin_warbler_map_figure.png}}
+			{\includegraphics[width=4in,height=2.67in]{figs/warblers/warbler_sampling_map.pdf}}
 		\subcaptionbox{Human sample distribution map \label{human_map}}
-			{\includegraphics[width=4in,height=2.4in]{figs/globetrotter/globe_world_map_text.png}}
-            \caption{Sampling maps of both empirical systems analyzed.  (a) greenish warbler subspecies distributions of all 22 sampled populations (breeding grounds), consisting of 95 individuals; (b) sampling map for human dataset, consisting of 1,490 individuals from 95 sampling locations.}
+			{\includegraphics[width=6in,height=3.6in]{figs/globetrotter/globe_world_map_text.pdf}}
+            \caption{Sampling maps of both empirical systems analyzed.  (a) greenish warbler subspecies distributions of all 22 sampled populations (breeding grounds), consisting of 95 individuals and colored by subspecies; (b) sampling map for human dataset, consisting of 1,490 individuals from 95 sampling locations.}
 \label{sfig:empirical_maps}
 \end{figure}
 
@@ -411,9 +411,9 @@ The libraries were prepared using a genotype-by-sequencing protocol and were run
 \begin{figure}
 	\centering
 		\subcaptionbox{Warbler population map, no admixture \label{warb_pop_noad}}
-			{\includegraphics[width=2.4in,height=2in]{figs/warblers/warb_pop_noad.png}}
+			{\includegraphics[width=2.4in,height=2in]{figs/warblers/warb_pop_noad.pdf}}
 		\subcaptionbox{Warbler population map, with admixture \label{warb_pop_ad}}
-			{\includegraphics[width=2.4in,height=2in]{figs/warblers/population_warbler_map_randpr1.png}}
+			{\includegraphics[width=2.4in,height=2in]{figs/warblers/population_warbler_map_randpr1.pdf}}
 \caption{Inferred population maps with population labels colored as in Figure  \ref{sfig:empirical_maps}\subref{irwin_map}: a) the map inferred with no admixture inference; b) the map inferred with admixture inference.}
 \label{sfig:warbler_pop}
 \end{figure}
@@ -919,29 +919,21 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 
 \begin{figure}
 \centering
-	{\includegraphics[width=6in,height=2.5in]{figs/warblers/warb_pop_dist_compare.png}}
+	{\includegraphics[width=6in,height=3in]{figs/warblers/warb_pop_dist_compare.pdf}}
 	\caption{
-    Comparing observed to estimated pairwise distance between warbler populations: a) observed population coordinates; b) pairwise geographic (great-circle) distance between populations compared to that between their inferred locations.  The highlighted points show distances between populations from the \textit{plumbeitarsus} and \textit{viridanus} subspecies.  Notice that, regardless of their observed distance, their inferred separations are roughly constant, and much larger than their observed distance.
-    \plr{maybe instead of ``observed'' and ``inferred'', should be ``geographic'' and ``geogenetic''?}
+    Comparing geographic to geogenetic pairwise distance between warbler populations: a) observed population coordinates; b) pairwise geographic (great-circle) distance between populations compared to that between their geogenetic locations.  The highlighted points show distances between populations from the \textit{plumbeitarsus} and \textit{viridanus} subspecies.  Notice that, regardless of their observed distance, their geogenetic separations are roughly constant, and much larger than the geographic distance between them.
     }
 	\label{sfig:warb_pop_distcomp}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics[width=2.4in,height=2in]{figs/warblers/warb_ind_PC_map.png}
-	\caption{The map of warbler individuals derived from a Principal Components analysis.}
-	\label{sfig:warb_ind_PC_map}
-\end{figure}
-
-\begin{figure}
-	\centering
 		\subcaptionbox{\label{warb_pop_realpr1}}
-			{\includegraphics[width=1.85in,height=1.54in]{figs/warblers/population_warbler_map_realpr1.png}}
+			{\includegraphics[width=1.85in,height=1.54in]{figs/warblers/population_warbler_map_realpr1.pdf}}
 		\subcaptionbox{\label{warb_pop_realpr2}}			
-			{\includegraphics[width=1.85in,height=1.54in]{figs/warblers/population_warbler_map_realpr2.png}}
+			{\includegraphics[width=1.85in,height=1.54in]{figs/warblers/population_warbler_map_realpr2.pdf}}
 		\subcaptionbox{\label{warb_pop_randpr1}}
-			{\includegraphics[width=1.85in,height=1.54in]{figs/warblers/population_warbler_map_randpr1.png}}
+			{\includegraphics[width=1.85in,height=1.54in]{figs/warblers/population_warbler_map_randpr1.pdf}}
 	\caption{Comparison of inferred maps from three independent analyses.  (a,b) Results from analysis using observed locations as priors on population locations.  (c) Results from analysis using random, uniformly distributed locations within the observed range of latitude and longitude as priors on population locations.}\label{sfig:warbler_pop_compare}
 \end{figure}
 
@@ -956,20 +948,30 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 
 \begin{figure}
 \centering
-	{\includegraphics[width=5in,height=3.6in]{figs/warblers/warb_pop_NoAd_nugget.pdf}}
-	\caption{Credible intervals on estimated warbler population nugget parameters in an analysis without admixture.}\label{sfig:warb_pop_noad_nugg}
+	\subcaptionbox{\label{warb_pop_noad_nugg}}
+		{\includegraphics[width=4in,height=2.89in]{figs/warblers/warb_pop_NoAd_nugget.pdf}}
+	\subcaptionbox{\label{warb_pop_ad_nugg}}
+			{\includegraphics[width=4in,height=2.89in]{figs/warblers/warb_pop_Ad_nugget.pdf}}
+	\caption{Credible intervals on estimated warbler population nugget parameters. a) analysis without admixture; b) analysis with admixture.}\label{sfig:warb_pop_nugg}
 \end{figure}
 
-\begin{figure}
-\centering
-	{\includegraphics[width=5in,height=3.6in]{figs/warblers/warb_pop_Ad_nugget.pdf}}
-	\caption{Credible intervals on estimated warbler population nugget parameters in an analysis with admixture.}\label{sfig:warb_pop_ad_nugg}
-\end{figure}
+%\begin{figure}
+%\centering
+%	{\includegraphics[width=5in,height=3.6in]{figs/warblers/warb_pop_Ad_nugget.pdf}}
+%	\caption{Credible intervals on estimated warbler population nugget parameters in an analysis with admixture.}\label{sfig:warb_pop_ad_nugg}
+%\end{figure}
 
 \begin{figure}
 \centering
 	{\includegraphics[width=5in,height=3.6in]{figs/warblers/warb_pop_adprop.pdf}}
 	\caption{Credible intervals on estimated warbler population admixture proportion parameters.}\label{sfig:warb_pop_adprop}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=2.4in,height=2in]{figs/warblers/warb_ind_PC_map.png}
+	\caption{The map of warbler individuals derived from a Principal Components analysis.}
+	\label{sfig:warb_ind_PC_map}
 \end{figure}
 
 \begin{figure}
@@ -1064,7 +1066,7 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 
 \begin{figure}
 	\centering
-		{\includegraphics[width=4in,height=4in]{figs/globetrotter/globe_PCA_map.pdf}}
+		{\includegraphics[width=5.5in,height=5.5in]{figs/globetrotter/globe_PCA_map.pdf}}
 	\caption{PCA map of human samples used in SpaceMix analyses.  The PC coordinates have undergone a full Procrustes transformation around the actual sampling coordinates (shown in the inset map).}
 \label{sfig:globe_PCA_map}
 \end{figure}

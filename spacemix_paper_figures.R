@@ -348,11 +348,12 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 
 	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_noad.pdf",width=7,height=5,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
+			par(mar=c(4.5,4.5,3,1))
 			plot(target.coords,type='n',
 #					xlim=c(68,116), #realpr1: c(68,115), realpr2: c(53,101), randpr: c(71,114)
 #					ylim=c(26,53), #realpr1: c(26,53), realpr2: c(25,54), randpr: c(71,114)
 					xlab="Eastings",
-					ylab="Northings")
+					ylab="Northings",cex.lab=1.7)
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=pop.col,
@@ -572,11 +573,12 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 
 	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/population_warbler_ad_map_randpr1.pdf",width=7,height=5,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
+			par(mar=c(4.5,4.5,3,1))
 			plot(target.coords,type='n',
 					xlim=c(71,114), #realpr1: c(68,115), realpr2: c(53,101), randpr: c(71,114)
 					ylim=c(23,55), #realpr1: c(26,53), realpr2: c(25,54), randpr: c(23,55)
 					xlab="Eastings",
-					ylab="Northings")
+					ylab="Northings",cex.lab=1.7)
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=pop.col,
@@ -763,8 +765,9 @@ best <- which.max(Prob)
 	target.coords <- procrusteez(warbler.ind.coords,population.coordinates[[best]][1:k,],k,option=1)
 	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_ind_noad.pdf",width=7,height=5)
 	#quartz(width=7,height=5,pointsize=9)
+	par(mar=c(4.5,4.5,3,1))
 	plot(target.coords,type='n',
-			xlab="Eastings",ylab="Northings")
+			xlab="Eastings",ylab="Northings",cex.lab=1.7)
 		text(target.coords,
 				labels=plot.inds,
 				col=inds.col,
@@ -1145,15 +1148,16 @@ best <- which.max(Prob)
 					# length=0.1)
 	# dev.off()
 
-	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_randpr1.pdf",width=7,height=5,pointsize=9)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_randpr2.pdf",width=7,height=5,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
+			par(mar=c(4.5,4.5,3,1))
 			plot(target.coords,type='n',
 					xlim=c(min(target.coords[,1],source.coords[,1]),
 							max(target.coords[,1],source.coords[,1])),
 					ylim=c(min(target.coords[,2],source.coords[,2]),
 							max(target.coords[,2],source.coords[,2])),
 					xlab="Eastings",
-					ylab="Northings")
+					ylab="Northings",cex.lab=1.7)
 				text(target.coords[c(1:k),],
 						labels=plot.inds,
 						col=adjustcolor(inds.col,0.8),
@@ -1173,13 +1177,14 @@ best <- which.max(Prob)
 		box(lwd=2)
 	dev.off()
 
-	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_randpr1_closeup.pdf",width=7,height=5,pointsize=9)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/individual_warbler_map_arrows_randpr2_closeup.pdf",width=7,height=5,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
+			par(mar=c(4.5,4.5,3,1))
 			plot(target.coords,type='n',
 					xlim=c(75,102),
 					ylim=c(26,51),
 					xlab="Eastings",
-					ylab="Northings")
+					ylab="Northings",cex.lab=1.7)
 				text(target.coords[c(1:k),],
 						labels=plot.inds,
 						col=adjustcolor(inds.col,1),
@@ -1567,7 +1572,7 @@ subplot2.y.coords <- c(-60,80)
 				xaxt='n')
 			text((1:k)+0.5,rep(-0.01,k),labels=pops[pop.order],srt=90,col=continent.col[pop.order],cex=0.65,adj=c(1,0))
 			mtext("Population",side=1,padj=1)
-			make.cred.bars(globe.nugg.cred.sets,0.5,color.vector= continent.col,vert.line.width=1,pop.order=pop.order)
+			make.cred.bars(globe.nugg.cred.sets,0.8,color.vector= continent.col,vert.line.width=1.3,pop.order=pop.order)
 	dev.off()
 
 	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_NoAd_ellipses.pdf",width=9,height=5)
@@ -1578,6 +1583,7 @@ subplot2.y.coords <- c(-60,80)
 							name.vector = NULL,
 							color.vector = continent.col,
 							quantile=0.95)
+		box(lwd=2)
 	dev.off()
 
 	x.min <- min(target.coords[,1]) - 5
@@ -1585,13 +1591,14 @@ subplot2.y.coords <- c(-60,80)
 	y.min <- min(target.coords[,2]) - 5
 	y.max <- max(target.coords[,2]) + 5
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_NoAd_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_NoAd_map.pdf",width=7,height=5,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
+			par(mar=c(5.1, 5.1, 4.1, 2.1))
 			plot(target.coords,type='n',
 					xlim=c(x.min,x.max),
 					ylim=c(y.min,y.max),
 					xlab="Eastings",
-					ylab="Northings")
+					ylab="Northings",cex.lab=1.7)
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=adjustcolor(continent.col,0.8),
@@ -1663,13 +1670,16 @@ subplot2.y.coords <- c(-60,80)
 	x.max <- max(eurasia.target.coords[,1]) + 2
 	y.min <- min(eurasia.target.coords[,2]) - 2
 	y.max <- max(eurasia.target.coords[,2]) + 2
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Eurasia_NoAd_map_indproc.png",res=300,width=7*300,height=5*300,pointsize=9)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Eurasia_NoAd_map_indproc.pdf",width=7,height=5,pointsize=9)
+		par(mar=c(5.1, 5.1, 4.1, 2.1))
 		#quartz(width=7,height=5,pointsize=9)
 			plot(eurasia.target.coords,type='n',
 					xlim=c(x.min,x.max),
 					ylim=c(y.min,y.max),
+					xaxt='n',
+					yaxt='n',
 					xlab="Eastings",
-					ylab="Northings")
+					ylab="Northings",cex.lab=1.7)
 				text(eurasia.target.coords,
 						labels=pops[eurasia],
 						col=adjustcolor(continent.col[eurasia],0.8),
@@ -1686,13 +1696,13 @@ subplot2.y.coords <- c(-60,80)
 	obs.D <- fields::rdist.earth(globe.coords)
 	par.D <- fields::rdist.earth(target.coords)
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_NoAd_dist_compare.png",res=200,height=5*200,width=12*200)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_NoAd_dist_compare.pdf",height=5,width=12)
 		#quartz(height=5,width=12)
-		par(mfrow=c(1,2),mar=c(4,4,2,2))
+		par(mfrow=c(1,2),mar=c(5,5,2,2))
 		plot(obs.D,par.D,col="gray",pch=20,
 #			xlim=c(0,5500),ylim=c(0,4500),
-			ylab="estimated distance",
-			xlab="observed distance",cex=0.7)
+			ylab="geographic distance",
+			xlab="geogenetic distance",cex=0.7,cex.lab=1.7)
 			for(i in 1:length(clusters)){
 				use.these <- clusters[[i]]
 				#points(obs.D[use.these,use.these],par.D[use.these,use.these],col=1,pch=20,cex=0.73)
@@ -1712,7 +1722,7 @@ subplot2.y.coords <- c(-60,80)
 		plot(obs.D,par.D,col="gray",pch=20,
 			xlim=c(0,5500),ylim=c(0,4500),
 			ylab="",
-			xlab="observed distance",cex=0.7)
+			xlab="geographic distance",cex=0.7,cex.lab=1.7)
 			for(i in 1:length(clusters)){
 				use.these <- clusters[[i]]
 				points(obs.D[use.these,use.these],par.D[use.these,use.these],col=1,pch=20,cex=0.73)
@@ -1736,13 +1746,13 @@ subplot2.y.coords <- c(-60,80)
 				row.names(centroids)[i] <- names(clusters[[i]])
 			mean.dist.from.africa[i] <- fields::rdist.earth(africa.centroid,centroids[i,,drop=FALSE])
 		}
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_NoAd_dist_decay.png",res=200,height=5*200,width=12*200)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_NoAd_dist_decay.pdf",height=5,width=12)
 		#quartz(height=5,width=12)
-		par(mfrow=c(1,2),mar=c(4,4,2,2))
+		par(mfrow=c(1,2),mar=c(5,5,2,2))
 		plot(obs.D,par.D,col="gray",pch=20,
 #			xlim=c(0,5500),ylim=c(0,4500),
-			ylab="estimated distance",
-			xlab="observed distance",cex=0.7)
+			ylab="geogenetic distance",
+			xlab="geographic distance",cex=0.7,cex.lab=1.4)
 			for(i in 1:length(clusters)){
 				use.these <- clusters[[i]]
 				abline(line.obs[[i]],col=cluster.cols[i],lwd=2)
@@ -1751,8 +1761,8 @@ subplot2.y.coords <- c(-60,80)
 			}
 		box(lwd=2)
 		plot(mean.dist.from.africa,line.coeffs,col=cluster.cols,pch=19,cex=3,
-			ylab="slope of observed vs. estimated distance",
-			xlab="observed distance from Africa")
+			ylab="slope of geographic vs.\ngeogenetic distance",
+			xlab="geographic distance from Africa",cex.lab=1.2)
 			legend(x = "topright",pch=NA,
 					legend = c("Africa","Western Eurasia","East Asia","Oceania","Americas"),
 					text.col = c("forestgreen","purple4","red","brown","orange"),
@@ -1800,7 +1810,8 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_A
 				xaxt='n')
 			text((1:k)+0.5,rep(-0.01,k),labels=pops[pop.order],srt=90,col=continent.col[pop.order],cex=0.65,adj=c(1,0))
 			mtext("Population",side=1,padj=1)
-			make.cred.bars(globe.nugg.cred.sets,0.5,color.vector= continent.col[pop.order],vert.line.width=1)
+			make.cred.bars(globe.nugg.cred.sets,0.8,color.vector= continent.col,vert.line.width=1.3,pop.order=pop.order)
+		box(lwd=2)
 	dev.off()
 
 	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_adprop.pdf",width=10,height=5)
@@ -1813,16 +1824,18 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_A
 				xaxt='n')
 			text((1:k)+0.5,rep(-0.01,k),labels=pops[pop.order],srt=90,col=continent.col[pop.order],cex=0.65,adj=c(1,0))
 			mtext("Population",side=1,padj=1)
-			make.cred.bars(lapply(globe.adprop.cred.sets,'/',2),0.5,color.vector= continent.col[pop.order],vert.line.width=1)
+			make.cred.bars(lapply(globe.adprop.cred.sets,'/',2),0.8,color.vector= continent.col[pop.order],vert.line.width=1.3)
+			box(lwd=2)
 	dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_map.pdf",width=7,height=5,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
+		par(mar=c(5,5,4,2))
 			plot(target.coords,type='n',
 					xlim = c(18,68),
 					ylim = c(-20,50),
 					xlab="Eastings",
-					ylab="Northings")
+					ylab="Northings",cex.lab=1.7)
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=adjustcolor(continent.col,1),
@@ -1866,13 +1879,14 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_A
 	subplot2.x.coords <- c(-165,180)
 	subplot2.y.coords <- c(-60,80)
 	#rect(xleft = x.subplot2[1],ybottom = y.subplot2[1],xright = x.subplot2[2],ytop = y.subplot2[2])
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_map_AfricaInset.png",res=300,width=7*300,height=5*300,pointsize=9)
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_map_AfricaInset.pdf",width=7,height=5,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
+			par(mar=c(5,5,4,2))
 			plot(target.coords,type='n',
 					xlim = c(15,68),
 					ylim = c(-20,50),
 					xlab="Eastings",
-					ylab="Northings")
+					ylab="Northings",cex.lab=1.7)
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=adjustcolor(continent.col,1),
@@ -2095,6 +2109,7 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_A
 	
 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
+			par(mar=c(5,5,4,2))
 			plot(target.coords,type='n',
 					xlim = c(42.5,52.5),
 					ylim = c(33.5,40),
@@ -2133,16 +2148,16 @@ save(globe_ad_obj,file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_A
 	x.max <- 125	#max(eurasia.target.coords[,1], eurasia.source.coords[,1]) + 5
 	y.min <- 14.5		#min(eurasia.target.coords[,2], eurasia.source.coords[,2]) - 5
 	y.max <- 54.5		#max(eurasia.target.coords[,2], eurasia.source.coords[,2]) + 5
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/eurasia_Ad_map_indproc.png",res=300,width=7*300,height=5*300)#,pointsize=9
-		par(mar=c(1,1,1,1))
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/eurasia_Ad_map_indproc.pdf",width=7,height=5,pointsize=9)#,pointsize=9
 		#quartz(width=7,height=5,pointsize=9)
+			par(mar=c(5,5,4,2))
 			plot(eurasia.target.coords,type='n',
 					yaxt='n',
 					xaxt='n',
 					xlim = c(x.min,x.max),
 					ylim = c(y.min,y.max),
-					xlab="",
-					ylab="")
+					xlab="Eastings",
+					ylab="Northings",cex.lab=1.7)
 				text(eurasia.target.coords,
 						labels=pops[eurasia],
 						col=adjustcolor(continent.col[eurasia],1),
@@ -2391,13 +2406,24 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 
 	globe.admix.plot.cols <- fade.admixture.source.points(continent.col,admix.proportions[,best])
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/globe_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	x.subplot1 <- c(43,95)
+	y.subplot1 <- c(-18,20.5)
+	x.subplot2 <- c(15,32.5)
+	y.subplot2 <- c(25.5,44)
+	subplot1.x.coords <- c(-4,25)
+	subplot1.y.coords <- c(-15,6)
+	subplot2.x.coords <- c(-165,180)
+	subplot2.y.coords <- c(-60,80)
+
+
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_map_AfricaInset_realpr3.pdf",width=7,height=5,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
+			par(mar=c(5,5,4,2))
 			plot(target.coords,type='n',
-					xlim = c(-6,80),
-					ylim = c(-16,60),
+					xlim = c(-10,100),
+					ylim = c(-20,60),
 					xlab="Eastings",
-					ylab="Northings")
+					ylab="Northings",cex.lab=1.7)
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=adjustcolor(continent.col,1),
@@ -2418,147 +2444,228 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 					col=globe.admix.plot.cols,
 					lwd=admix.proportions[,best],
 					length=0.1)
+		rect(xleft = subplot1.x.coords[1]-2,ybottom = subplot1.y.coords[1],
+				xright = subplot1.x.coords[2]+1.5,ytop = subplot1.y.coords[2]+1,lty=2,border="gray",col=NA,lwd=0.6)
+		lines(x = c(subplot1.x.coords[2]+1.5,x.subplot1[1]), y = c(subplot1.y.coords[2]+1,y.subplot1[2]),lwd=0.6 , lty=2, col="gray")
+		lines(x = c(subplot1.x.coords[2]+1.5,x.subplot1[1]), y = c(subplot1.y.coords[1],y.subplot1[1]),lwd=0.6 , lty=2, col="gray")
+		TeachingDemos::subplot(fun = {
+						plot(target.coords,type='n',xlim = subplot1.x.coords,ylim = subplot1.y.coords,xlab="",ylab="",xaxt='n',yaxt='n') ; 
+						text(target.coords[c(1:k),],
+								labels=pops,
+								col=adjustcolor(continent.col,1),
+								font=2,cex=1) ; 
+						text(source.coords[,1],
+								source.coords[,2],
+								labels=pops,
+								font=3,
+								col=globe.admix.plot.cols,cex=1,family="HersheySerif") ; 
+						arrows(	x0 = source.coords[,1],
+								y0 = source.coords[,2],
+								x1 = target.coords[,1],
+								y1 = target.coords[,2],
+								col=globe.admix.plot.cols,
+								lwd=admix.proportions[,best],
+								length=0.1) ; 
+							#abline(v=0,lty=2,lwd=0.5) ; 
+							box(lwd=1.1)
+						},
+					x=x.subplot1,y=y.subplot1)
+		# TeachingDemos::subplot(fun = {
+						# # par(mar=c(0.1,0.1,0.1,0.1)) ; 
+						# plot(0,xlim=subplot2.x.coords,ylim=subplot2.y.coords,type='n',yaxt='n',xaxt='n',xlab="",ylab="")
+						# map(database="world",interior=FALSE,add=TRUE,xlim=subplot2.x.coords,ylim=subplot2.y.coords,lwd=0.5); 
+						# points(globe.coords,pch=20,col=continent.col,cex=0.7) ; 
+							# box(lwd=1.1)
+						# },
+					# x=x.subplot2,y=y.subplot2)
 			box(lwd=2)
-#			legend(x = "bottomright",pch=NA,
-#					legend = c("Africa","Western Eurasia","Central Eurasia","Eastern Eurasia","Oceania","Americas","population","source of admixture"),
-#					text.col = c("forestgreen","blue","purple","red","brown","orange",1,1),
-#					text.font = c(rep(1,6),2,3),family=c())
-			legend(x="topleft",
-					lwd = c(1,0.5,0.1),
-					col = c(adjustcolor(1,1),adjustcolor(1,0.5),adjustcolor(1,0.1)),
-					legend = c("w = 0.5","w = 0.25","w = 0.05"),
-					title = "Admixture proportions")
 	dev.off()
+	
+	eurasia.target.coords <- procrusteez(globe.coords[eurasia,],population.coordinates[[best]][1:k,][eurasia,],k=length(eurasia),option=1)
+	eurasia.source.coords <- procrusteez(globe.coords[eurasia,],population.coordinates[[best]][1:k,][eurasia,],k=length(eurasia),population.coordinates[[best]][(k+1):(2*k),][eurasia,],option=2)
+	n.africa.target.coords <- procrusteez(globe.coords[eurasia,],population.coordinates[[best]][1:k,][eurasia,],k=length(africa),population.coordinates[[best]][1:k,][africa,],option=2)
+	n.africa.source.coords <- procrusteez(globe.coords[eurasia,],population.coordinates[[best]][1:k,][eurasia,],k=length(africa),population.coordinates[[best]][(k+1):(2*k),][africa,],option=2)
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/subsaharan_africa_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	x.min <- -10	#min(eurasia.target.coords[,1], eurasia.source.coords[,1]) - 5
+	x.max <- 125		#max(eurasia.target.coords[,1], eurasia.source.coords[,1]) + 5
+	y.min <- 10		#min(eurasia.target.coords[,2], eurasia.source.coords[,2]) - 5
+	y.max <- 60		#max(eurasia.target.coords[,2], eurasia.source.coords[,2]) + 5
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/eurasia_Ad_map_indproc_realpr3.pdf",width=7,height=5,pointsize=9)#,pointsize=9
 		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim = c(-2,18),
-					ylim = c(-19,6),
+			par(mar=c(5,5,4,2))
+			plot(eurasia.target.coords,type='n',
+					yaxt='n',
+					xaxt='n',
+					xlim = c(x.min,x.max),
+					ylim = c(y.min,y.max),
 					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=pops,
-						col=adjustcolor(continent.col,1),
+					ylab="Northings",cex.lab=1.7)
+				text(eurasia.target.coords,
+						labels=pops[eurasia],
+						col=adjustcolor(continent.col[eurasia],1),
 						font=2,cex=0.8)
-				text(source.coords[,1],
-						source.coords[,2],
-							labels=pops,
+				text(n.africa.target.coords,
+						labels=pops[africa],
+						col=adjustcolor(continent.col[africa],1),
+						font=2,cex=0.8)
+				text(eurasia.source.coords[,1],
+						eurasia.source.coords[,2],
+							labels=pops[eurasia],
 							font=3,
-							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
-			arrows(	x0 = source.coords[,1],
-					y0 = source.coords[,2],
-					x1 = target.coords[,1],
-					y1 = target.coords[,2],
-					col=globe.admix.plot.cols,
-					lwd=admix.proportions[,best],
+							col=globe.admix.plot.cols[eurasia],	#continent.col[eurasia],
+							cex=0.8,family="HersheySerif")
+				text(n.africa.source.coords[,1],
+						n.africa.source.coords[,2],
+							labels=pops[africa],
+							font=3,
+							col=globe.admix.plot.cols[africa],	#continent.col[eurasia],
+							cex=0.8,family="HersheySerif")
+			arrows(	x0 = eurasia.source.coords[,1],
+					y0 = eurasia.source.coords[,2],
+					x1 = eurasia.target.coords[,1],
+					y1 = eurasia.target.coords[,2],
+					col=globe.admix.plot.cols[eurasia], #continent.col[eurasia],
+					lwd=admix.proportions[eurasia,best],
 					length=0.1)
-			box(lwd=2)
-	dev.off()
-
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/eurasia_plus_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim = c(34.5,72),
-					ylim = c(23,52),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=pops,
-						col=adjustcolor(continent.col,1),
-						font=2,cex=0.8)
-				text(source.coords[,1],
-						source.coords[,2],
-							labels=pops,
-							font=3,
-							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
-			arrows(	x0 = source.coords[,1],
-					y0 = source.coords[,2],
-					x1 = target.coords[,1],
-					y1 = target.coords[,2],
-					col=globe.admix.plot.cols,
-					lwd=admix.proportions[,best],
+			arrows(	x0 = n.africa.source.coords[,1],
+					y0 = n.africa.source.coords[,2],
+					x1 = n.africa.target.coords[,1],
+					y1 = n.africa.target.coords[,2],
+					col=globe.admix.plot.cols[africa], #continent.col[eurasia],
+					lwd=admix.proportions[africa,best],
 					length=0.1)
 			box(lwd=2)
 	dev.off()
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim = c(38,55),
-					ylim = c(26,45),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=pops,
-						col=adjustcolor(continent.col,1),
-						font=2,cex=0.8)
-				text(source.coords[,1],
-						source.coords[,2],
-							labels=pops,
-							font=3,
-							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
-			arrows(	x0 = source.coords[,1],
-					y0 = source.coords[,2],
-					x1 = target.coords[,1],
-					y1 = target.coords[,2],
-					col=globe.admix.plot.cols,
-					lwd=admix.proportions[,best],
-					length=0.1)
-			box(lwd=2)
-	dev.off()
-	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/western_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim = c(44.3,48),
-					ylim = c(29,35),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=pops,
-						col=adjustcolor(continent.col,1),
-						font=2,cex=0.8)
-				text(source.coords[,1],
-						source.coords[,2],
-							labels=pops,
-							font=3,
-							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
-			arrows(	x0 = source.coords[,1],
-					y0 = source.coords[,2],
-					x1 = target.coords[,1],
-					y1 = target.coords[,2],
-					col=globe.admix.plot.cols,
-					lwd=admix.proportions[,best],
-					length=0.1)
-			box(lwd=2)
-	dev.off()
+# # 	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/subsaharan_africa_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim = c(-2,18),
+					# ylim = c(-19,6),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=pops,
+						# col=adjustcolor(continent.col,1),
+						# font=2,cex=0.8)
+				# text(source.coords[,1],
+						# source.coords[,2],
+							# labels=pops,
+							# font=3,
+							# col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col=globe.admix.plot.cols,
+					# lwd=admix.proportions[,best],
+					# length=0.1)
+			# box(lwd=2)
+	# dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/eastern_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim = c(48,54),
-					ylim = c(38,42),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=pops,
-						col=adjustcolor(continent.col,1),
-						font=2,cex=0.8)
-				text(source.coords[,1],
-						source.coords[,2],
-							labels=pops,
-							font=3,
-							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
-			arrows(	x0 = source.coords[,1],
-					y0 = source.coords[,2],
-					x1 = target.coords[,1],
-					y1 = target.coords[,2],
-					col=globe.admix.plot.cols,
-					lwd=admix.proportions[,best],
-					length=0.1)
-			box(lwd=2)
-	dev.off()
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/eurasia_plus_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim = c(34.5,72),
+					# ylim = c(23,52),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=pops,
+						# col=adjustcolor(continent.col,1),
+						# font=2,cex=0.8)
+				# text(source.coords[,1],
+						# source.coords[,2],
+							# labels=pops,
+							# font=3,
+							# col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col=globe.admix.plot.cols,
+					# lwd=admix.proportions[,best],
+					# length=0.1)
+			# box(lwd=2)
+	# dev.off()
+	
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim = c(38,55),
+					# ylim = c(26,45),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=pops,
+						# col=adjustcolor(continent.col,1),
+						# font=2,cex=0.8)
+				# text(source.coords[,1],
+						# source.coords[,2],
+							# labels=pops,
+							# font=3,
+							# col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col=globe.admix.plot.cols,
+					# lwd=admix.proportions[,best],
+					# length=0.1)
+			# box(lwd=2)
+	# dev.off()
+	
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/western_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim = c(44.3,48),
+					# ylim = c(29,35),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=pops,
+						# col=adjustcolor(continent.col,1),
+						# font=2,cex=0.8)
+				# text(source.coords[,1],
+						# source.coords[,2],
+							# labels=pops,
+							# font=3,
+							# col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col=globe.admix.plot.cols,
+					# lwd=admix.proportions[,best],
+					# length=0.1)
+			# box(lwd=2)
+	# dev.off()
+
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior3/eastern_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim = c(48,54),
+					# ylim = c(38,42),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=pops,
+						# col=adjustcolor(continent.col,1),
+						# font=2,cex=0.8)
+				# text(source.coords[,1],
+						# source.coords[,2],
+							# labels=pops,
+							# font=3,
+							# col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col=globe.admix.plot.cols,
+					# lwd=admix.proportions[,best],
+					# length=0.1)
+			# box(lwd=2)
+	# dev.off()
 	
 	pop.order <- c(africa[order(globe.coords[africa,2])],
 					western.eurasia[order(globe.coords[western.eurasia,1])],
@@ -2614,13 +2721,24 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 
 	globe.admix.plot.cols <- fade.admixture.source.points(continent.col,admix.proportions[,best])
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/globe_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	x.subplot1 <- c(37,65)
+	y.subplot1 <- c(-18,10.5)
+	x.subplot2 <- c(15,32.5)
+	y.subplot2 <- c(25.5,44)
+	subplot1.x.coords <- c(5,18)
+	subplot1.y.coords <- c(-15,0)
+	subplot2.x.coords <- c(-165,180)
+	subplot2.y.coords <- c(-60,80)
+
+
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/globe_Ad_map_AfricaInset_realpr2.pdf",width=7,height=5,pointsize=9)
 		#quartz(width=7,height=5,pointsize=9)
+			par(mar=c(5,5,4,2))
 			plot(target.coords,type='n',
 					xlim = c(0,70),
-					ylim = c(-16,48),
+					ylim = c(-20,50),
 					xlab="Eastings",
-					ylab="Northings")
+					ylab="Northings",cex.lab=1.7)
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=adjustcolor(continent.col,1),
@@ -2630,6 +2748,10 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 							labels=pops,
 							font=3,
 							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+				# points(source.coords[,1],
+						# source.coords[,2],
+							# col=globe.admix.plot.cols,
+							# pch=20)
 			arrows(	x0 = source.coords[,1],
 					y0 = source.coords[,2],
 					x1 = target.coords[,1],
@@ -2637,172 +2759,288 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 					col=globe.admix.plot.cols,
 					lwd=admix.proportions[,best],
 					length=0.1)
+		rect(xleft = subplot1.x.coords[1]-2,ybottom = subplot1.y.coords[1],
+				xright = subplot1.x.coords[2]+1.5,ytop = subplot1.y.coords[2]+1,lty=2,border="gray",col=NA,lwd=0.6)
+		lines(x = c(subplot1.x.coords[2]+1.5,x.subplot1[1]), y = c(subplot1.y.coords[2]+1,y.subplot1[2]),lwd=0.6 , lty=2, col="gray")
+		lines(x = c(subplot1.x.coords[2]+1.5,x.subplot1[1]), y = c(subplot1.y.coords[1],y.subplot1[1]),lwd=0.6 , lty=2, col="gray")
+		TeachingDemos::subplot(fun = {
+						plot(target.coords,type='n',xlim = subplot1.x.coords,ylim = subplot1.y.coords,xlab="",ylab="",xaxt='n',yaxt='n') ; 
+						text(target.coords[c(1:k),],
+								labels=pops,
+								col=adjustcolor(continent.col,1),
+								font=2,cex=1) ; 
+						text(source.coords[,1],
+								source.coords[,2],
+								labels=pops,
+								font=3,
+								col=globe.admix.plot.cols,cex=1,family="HersheySerif") ; 
+						arrows(	x0 = source.coords[,1],
+								y0 = source.coords[,2],
+								x1 = target.coords[,1],
+								y1 = target.coords[,2],
+								col=globe.admix.plot.cols,
+								lwd=admix.proportions[,best],
+								length=0.1) ; 
+							#abline(v=0,lty=2,lwd=0.5) ; 
+							box(lwd=1.1)
+						},
+					x=x.subplot1,y=y.subplot1)
+		# TeachingDemos::subplot(fun = {
+						# # par(mar=c(0.1,0.1,0.1,0.1)) ; 
+						# plot(0,xlim=subplot2.x.coords,ylim=subplot2.y.coords,type='n',yaxt='n',xaxt='n',xlab="",ylab="")
+						# map(database="world",interior=FALSE,add=TRUE,xlim=subplot2.x.coords,ylim=subplot2.y.coords,lwd=0.5); 
+						# points(globe.coords,pch=20,col=continent.col,cex=0.7) ; 
+							# box(lwd=1.1)
+						# },
+					# x=x.subplot2,y=y.subplot2)
 			box(lwd=2)
 	dev.off()
+	
+	eurasia.target.coords <- procrusteez(globe.coords[eurasia,],population.coordinates[[best]][1:k,][eurasia,],k=length(eurasia),option=1)
+	eurasia.source.coords <- procrusteez(globe.coords[eurasia,],population.coordinates[[best]][1:k,][eurasia,],k=length(eurasia),population.coordinates[[best]][(k+1):(2*k),][eurasia,],option=2)
+	n.africa.target.coords <- procrusteez(globe.coords[eurasia,],population.coordinates[[best]][1:k,][eurasia,],k=length(africa),population.coordinates[[best]][1:k,][africa,],option=2)
+	n.africa.source.coords <- procrusteez(globe.coords[eurasia,],population.coordinates[[best]][1:k,][eurasia,],k=length(africa),population.coordinates[[best]][(k+1):(2*k),][africa,],option=2)
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/subsaharan_africa_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+	x.min <- -12	#min(eurasia.target.coords[,1], eurasia.source.coords[,1]) - 5
+	x.max <- 125		#max(eurasia.target.coords[,1], eurasia.source.coords[,1]) + 5
+	y.min <- 0		#min(eurasia.target.coords[,2], eurasia.source.coords[,2]) - 5
+	y.max <- 60		#max(eurasia.target.coords[,2], eurasia.source.coords[,2]) + 5
+	pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/eurasia_Ad_map_indproc_realpr2.pdf",width=7,height=5,pointsize=9)#,pointsize=9
 		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim = c(7,17),
-					ylim = c(-15,0),
+			par(mar=c(5,5,4,2))
+			plot(eurasia.target.coords,type='n',
+					yaxt='n',
+					xaxt='n',
+					xlim = c(x.min,x.max),
+					ylim = c(y.min,y.max),
 					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=pops,
-						col=adjustcolor(continent.col,1),
+					ylab="Northings",cex.lab=1.7)
+				text(eurasia.target.coords,
+						labels=pops[eurasia],
+						col=adjustcolor(continent.col[eurasia],1),
 						font=2,cex=0.8)
-				text(source.coords[,1],
-						source.coords[,2],
-							labels=pops,
+				text(n.africa.target.coords,
+						labels=pops[africa],
+						col=adjustcolor(continent.col[africa],1),
+						font=2,cex=0.8)
+				text(eurasia.source.coords[,1],
+						eurasia.source.coords[,2],
+							labels=pops[eurasia],
 							font=3,
-							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
-			arrows(	x0 = source.coords[,1],
-					y0 = source.coords[,2],
-					x1 = target.coords[,1],
-					y1 = target.coords[,2],
-					col=globe.admix.plot.cols,
-					lwd=admix.proportions[,best],
+							col=globe.admix.plot.cols[eurasia],	#continent.col[eurasia],
+							cex=0.8,family="HersheySerif")
+				text(n.africa.source.coords[,1],
+						n.africa.source.coords[,2],
+							labels=pops[africa],
+							font=3,
+							col=globe.admix.plot.cols[africa],	#continent.col[eurasia],
+							cex=0.8,family="HersheySerif")
+			arrows(	x0 = eurasia.source.coords[,1],
+					y0 = eurasia.source.coords[,2],
+					x1 = eurasia.target.coords[,1],
+					y1 = eurasia.target.coords[,2],
+					col=globe.admix.plot.cols[eurasia], #continent.col[eurasia],
+					lwd=admix.proportions[eurasia,best],
 					length=0.1)
-			box(lwd=2)
-	dev.off()
-
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/eurasia_plus_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim = c(41,60),
-					ylim = c(29,46),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=pops,
-						col=adjustcolor(continent.col,1),
-						font=2,cex=0.8)
-				text(source.coords[,1],
-						source.coords[,2],
-							labels=pops,
-							font=3,
-							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
-			arrows(	x0 = source.coords[,1],
-					y0 = source.coords[,2],
-					x1 = target.coords[,1],
-					y1 = target.coords[,2],
-					col=globe.admix.plot.cols,
-					lwd=admix.proportions[,best],
+			arrows(	x0 = n.africa.source.coords[,1],
+					y0 = n.africa.source.coords[,2],
+					x1 = n.africa.target.coords[,1],
+					y1 = n.africa.target.coords[,2],
+					col=globe.admix.plot.cols[africa], #continent.col[eurasia],
+					lwd=admix.proportions[africa,best],
 					length=0.1)
 			box(lwd=2)
 	dev.off()
 	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim = c(46,51),
-					ylim = c(30,39),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=pops,
-						col=adjustcolor(continent.col,1),
-						font=2,cex=0.8)
-				text(source.coords[,1],
-						source.coords[,2],
-							labels=pops,
-							font=3,
-							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
-			arrows(	x0 = source.coords[,1],
-					y0 = source.coords[,2],
-					x1 = target.coords[,1],
-					y1 = target.coords[,2],
-					col=globe.admix.plot.cols,
-					lwd=admix.proportions[,best],
-					length=0.1)
-			box(lwd=2)
-	dev.off()
-	
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/western_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim = c(46.2,49),
-					ylim = c(32,35),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=pops,
-						col=adjustcolor(continent.col,1),
-						font=2,cex=0.8)
-				text(source.coords[,1],
-						source.coords[,2],
-							labels=pops,
-							font=3,
-							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
-			arrows(	x0 = source.coords[,1],
-					y0 = source.coords[,2],
-					x1 = target.coords[,1],
-					y1 = target.coords[,2],
-					col=globe.admix.plot.cols,
-					lwd=admix.proportions[,best],
-					length=0.1)
-			box(lwd=2)
-	dev.off()
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/globe_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim = c(0,70),
+					# ylim = c(-16,48),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=pops,
+						# col=adjustcolor(continent.col,1),
+						# font=2,cex=0.8)
+				# text(source.coords[,1],
+						# source.coords[,2],
+							# labels=pops,
+							# font=3,
+							# col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col=globe.admix.plot.cols,
+					# lwd=admix.proportions[,best],
+					# length=0.1)
+			# box(lwd=2)
+	# dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/eastern_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
-		#quartz(width=7,height=5,pointsize=9)
-			plot(target.coords,type='n',
-					xlim = c(47.5,50.7),
-					ylim = c(36.8,38.8),
-					xlab="Eastings",
-					ylab="Northings")
-				text(target.coords[c(1:k),],
-						labels=pops,
-						col=adjustcolor(continent.col,1),
-						font=2,cex=0.8)
-				text(source.coords[,1],
-						source.coords[,2],
-							labels=pops,
-							font=3,
-							col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
-			arrows(	x0 = source.coords[,1],
-					y0 = source.coords[,2],
-					x1 = target.coords[,1],
-					y1 = target.coords[,2],
-					col=globe.admix.plot.cols,
-					lwd=admix.proportions[,best],
-					length=0.1)
-			box(lwd=2)
-	dev.off()
-	
-	pop.order <- c(africa[order(globe.coords[africa,2])],
-					western.eurasia[order(globe.coords[western.eurasia,1])],
-					east.asia[order(globe.coords[east.asia,1])],
-					oceania[rev(order(globe.coords[oceania,2]))],
-					americas[rev(order(globe.coords[americas,2]))])
-	admix.cred.sets <- lapply(pop.order,FUN=function(i){quantile(admix.proportions[i,]/2,c(0.025,0.975))})
-		names(admix.cred.sets) <- pops[pop.order]
-	nugget.cred.sets <- lapply(pop.order,FUN=function(i){quantile(nugget[i,],c(0.025,0.975))})
-		names(nugget.cred.sets) <- pops[pop.order]
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/subsaharan_africa_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim = c(7,17),
+					# ylim = c(-15,0),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=pops,
+						# col=adjustcolor(continent.col,1),
+						# font=2,cex=0.8)
+				# text(source.coords[,1],
+						# source.coords[,2],
+							# labels=pops,
+							# font=3,
+							# col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col=globe.admix.plot.cols,
+					# lwd=admix.proportions[,best],
+					# length=0.1)
+			# box(lwd=2)
+	# dev.off()
 
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/globe_Ad_proportions.png",res=300,width=12*300,height=5*300)
-		#quartz(width=12,height=5)
-		plot(rowMeans(admix.proportions)[pop.order]/2,type='n',
-				main = "Mean Admixture Proportions",xlab="population",
-				ylab="admixture proportion (w)",ylim=c(0,max(unlist(admix.cred.sets))))
-		for(i in 1:k){
-			# lines(x = c(i,i),y=c(admix.cred.sets[[i]]),col=continent.col[pop.order][i])
-			make.cred.bars2(admix.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
-		}
-			text(rowMeans(admix.proportions)[pop.order]/2,col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
-	dev.off()
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/eurasia_plus_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim = c(41,60),
+					# ylim = c(29,46),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=pops,
+						# col=adjustcolor(continent.col,1),
+						# font=2,cex=0.8)
+				# text(source.coords[,1],
+						# source.coords[,2],
+							# labels=pops,
+							# font=3,
+							# col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col=globe.admix.plot.cols,
+					# lwd=admix.proportions[,best],
+					# length=0.1)
+			# box(lwd=2)
+	# dev.off()
+	
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim = c(46,51),
+					# ylim = c(30,39),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=pops,
+						# col=adjustcolor(continent.col,1),
+						# font=2,cex=0.8)
+				# text(source.coords[,1],
+						# source.coords[,2],
+							# labels=pops,
+							# font=3,
+							# col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col=globe.admix.plot.cols,
+					# lwd=admix.proportions[,best],
+					# length=0.1)
+			# box(lwd=2)
+	# dev.off()
+	
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/western_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim = c(46.2,49),
+					# ylim = c(32,35),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=pops,
+						# col=adjustcolor(continent.col,1),
+						# font=2,cex=0.8)
+				# text(source.coords[,1],
+						# source.coords[,2],
+							# labels=pops,
+							# font=3,
+							# col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col=globe.admix.plot.cols,
+					# lwd=admix.proportions[,best],
+					# length=0.1)
+			# box(lwd=2)
+	# dev.off()
+
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/eastern_eurasia_Ad_map.png",res=300,width=7*300,height=5*300,pointsize=9)
+		# #quartz(width=7,height=5,pointsize=9)
+			# plot(target.coords,type='n',
+					# xlim = c(47.5,50.7),
+					# ylim = c(36.8,38.8),
+					# xlab="Eastings",
+					# ylab="Northings")
+				# text(target.coords[c(1:k),],
+						# labels=pops,
+						# col=adjustcolor(continent.col,1),
+						# font=2,cex=0.8)
+				# text(source.coords[,1],
+						# source.coords[,2],
+							# labels=pops,
+							# font=3,
+							# col=globe.admix.plot.cols,cex=0.8,family="HersheySerif")
+			# arrows(	x0 = source.coords[,1],
+					# y0 = source.coords[,2],
+					# x1 = target.coords[,1],
+					# y1 = target.coords[,2],
+					# col=globe.admix.plot.cols,
+					# lwd=admix.proportions[,best],
+					# length=0.1)
+			# box(lwd=2)
+	# dev.off()
+	
+	# pop.order <- c(africa[order(globe.coords[africa,2])],
+					# western.eurasia[order(globe.coords[western.eurasia,1])],
+					# east.asia[order(globe.coords[east.asia,1])],
+					# oceania[rev(order(globe.coords[oceania,2]))],
+					# americas[rev(order(globe.coords[americas,2]))])
+	# admix.cred.sets <- lapply(pop.order,FUN=function(i){quantile(admix.proportions[i,]/2,c(0.025,0.975))})
+		# names(admix.cred.sets) <- pops[pop.order]
+	# nugget.cred.sets <- lapply(pop.order,FUN=function(i){quantile(nugget[i,],c(0.025,0.975))})
+		# names(nugget.cred.sets) <- pops[pop.order]
+
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/globe_Ad_proportions.png",res=300,width=12*300,height=5*300)
+		# #quartz(width=12,height=5)
+		# plot(rowMeans(admix.proportions)[pop.order]/2,type='n',
+				# main = "Mean Admixture Proportions",xlab="population",
+				# ylab="admixture proportion (w)",ylim=c(0,max(unlist(admix.cred.sets))))
+		# for(i in 1:k){
+			# # lines(x = c(i,i),y=c(admix.cred.sets[[i]]),col=continent.col[pop.order][i])
+			# make.cred.bars2(admix.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
+		# }
+			# text(rowMeans(admix.proportions)[pop.order]/2,col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
+	# dev.off()
 								
-	png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/globe_Ad_nugget.png",res=300,width=12*300,height=5*300)
-		#quartz(width=12,height=5)
-		plot(rowMeans(nugget)[pop.order],type='n',
-				main = "Mean Population Nuggets",
-				xlab="population",ylab="nugget",ylim=c(0,max(unlist(nugget.cred.sets))))
-		for(i in 1:k){
-			make.cred.bars2(nugget.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
-			# lines(x = c(i,i),y=c(nugget.cred.sets[[i]]),col=continent.col[pop.order][i])
-		}
-			text(rowMeans(nugget)[pop.order],col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
-	dev.off()
+	# png(file="~/Desktop/Dropbox/space.mix/ms/figs/globetrotter/other_globe_runs/real_prior2/globe_Ad_nugget.png",res=300,width=12*300,height=5*300)
+		# #quartz(width=12,height=5)
+		# plot(rowMeans(nugget)[pop.order],type='n',
+				# main = "Mean Population Nuggets",
+				# xlab="population",ylab="nugget",ylim=c(0,max(unlist(nugget.cred.sets))))
+		# for(i in 1:k){
+			# make.cred.bars2(nugget.cred.sets[[i]],i,0.5,col=continent.col[pop.order][i])
+			# # lines(x = c(i,i),y=c(nugget.cred.sets[[i]]),col=continent.col[pop.order][i])
+		# }
+			# text(rowMeans(nugget)[pop.order],col=continent.col[pop.order],cex=0.5,labels=pops[pop.order])
+	# dev.off()
 
 
 ################################
@@ -3600,12 +3838,12 @@ dev.off()
 ################
 #	Acceptance rate figs
 ################
-load("~/Desktop/Dropbox/space.mix/sims/big_barr_ad/big_barr_ad_spacemix/rand_prior1/big_barr_ad_randpr_1_LongRun/big_barr_ad_randpr_1space_MCMC_output1.Robj")
+load("~/Desktop/Dropbox/space.mix/sims/big_barr_ad/spacemix/rand_pr1/big_barr_ad_randpr_1_LongRun/big_barr_ad_randpr_1space_MCMC_output1.Robj")
 load("~/Desktop/Dropbox/space.mix/sims/big_barr_ad/sim_big_barr_ad_dataset.Robj")
 k <- last.params$k
 pop.cols <- rainbow(k,start=4/6,end=6/6)[as.numeric(cut(spacemix.dataset$population.coordinates[,1],k))]
 
-png(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/example_acceptance_rates.png",res=300,width=12*300,height=5*300)
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/example_acceptance_rates.pdf",width=12,height=5)
 #quartz(width=12,height=5)
 par(mfrow=c(1,2))
 	plot(accept_rates$a2_accept_rate,

@@ -1,0 +1,614 @@
+\begin{thebibliography}{79}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Alcaide et~al.(2014)Alcaide, Scordato, Price, and
+  Irwin]{alcaide2014genomic}
+Miguel Alcaide, Elizabeth S.~C. Scordato, Trevor~D. Price, and Darren~E. Irwin.
+\newblock Genomic divergence in a ring species complex.
+\newblock \emph{Nature}, 511\penalty0 (7507), July 2014.
+
+\bibitem[Alexander et~al.(2009)Alexander, Novembre, and Lange]{ADMIXTURE}
+David~H. Alexander, John Novembre, and Kenneth Lange.
+\newblock Fast model-based estimation of ancestry in unrelated individuals.
+\newblock \emph{Genome Research}, 19\penalty0 (9):\penalty0 1655--1664, 2009.
+
+\bibitem[Atzmon et~al.(2010)Atzmon, Hao, Pe'er, Velez, Pearlman, Palamara,
+  Morrow, Friedman, Oddoux, Burns, and Ostrer]{Atzmon2010}
+Gil Atzmon, Li~Hao, Itsik Pe'er, Christopher Velez, Alexander Pearlman,
+  Pier~Francesco Palamara, Bernice Morrow, Eitan Friedman, Carole Oddoux,
+  Edward Burns, and Harry Ostrer.
+\newblock Abraham's children in the genome era: Major jewish diaspora
+  populations comprise distinct genetic clusters with shared middle eastern
+  ancestry.
+\newblock \emph{The American Journal of Human Genetics}, 86\penalty0
+  (6):\penalty0 850 -- 859, 2010.
+
+\bibitem[Barton et~al.(2013)Barton, Etheridge, Kelleher, and
+  V√©ber]{Barton2013}
+N.H. Barton, A.M. Etheridge, J.~Kelleher, and A.~V√©ber.
+\newblock Inference in two dimensions: Allele frequencies versus lengths of
+  shared sequence blocks.
+\newblock \emph{Theoretical Population Biology}, 87\penalty0 (0):\penalty0 105
+  -- 119, 2013.
+\newblock Coalescent Theory.
+
+\bibitem[Barton et~al.(2002)Barton, Depaulis, and
+  Etheridge]{barton-depaulis-etheridge}
+Nick~H. Barton, Frantz Depaulis, and Alison~M. Etheridge.
+\newblock Neutral evolution in spatially continuous populations.
+\newblock \emph{Theoretical Population Biology}, 61\penalty0 (1):\penalty0
+  31--48, February 2002.
+
+\bibitem[Beall et~al.(2010)Beall, Cavalleri, Deng, Elston, Gao, Knight, Li, Li,
+  Liang, McCormack, Montgomery, Pan, Robbins, Shianna, Tam, Tsering, Veeramah,
+  Wang, Wangdui, Weale, Xu, Xu, Yang, Zaman, Zeng, Zhang, Zhang, Zhaxi, and
+  Zheng]{Beall2010}
+Cynthia~M. Beall, Gianpiero~L. Cavalleri, Libin Deng, Robert~C. Elston, Yang
+  Gao, Jo~Knight, Chaohua Li, Jiang~Chuan Li, Yu~Liang, Mark McCormack, Hugh~E.
+  Montgomery, Hao Pan, Peter~A. Robbins, Kevin~V. Shianna, Siu~Cheung Tam,
+  Ngodrop Tsering, Krishna~R. Veeramah, Wei Wang, Puchung Wangdui, Michael~E.
+  Weale, Yaomin Xu, Zhe Xu, Ling Yang, M.~Justin Zaman, Changqing Zeng,
+  Li~Zhang, Xianglong Zhang, Pingcuo Zhaxi, and Yong~Tang Zheng.
+\newblock Natural selection on epas1 (hif2?) associated with low hemoglobin
+  concentration in tibetan highlanders.
+\newblock \emph{Proceedings of the National Academy of Sciences}, 107\penalty0
+  (25):\penalty0 11459--11464, 2010.
+
+\bibitem[Bhaskar et~al.(2014)Bhaskar, Wang, and Song]{Bhaskar2014}
+Anand Bhaskar, Y.X.~Rachel Wang, and Yun~S. Song.
+\newblock Efficient inference of population size histories and locus-specific
+  mutation rates from large-sample genomic variation data.
+\newblock \emph{bioRxiv}, 2014.
+
+\bibitem[Bigham et~al.(2010)Bigham, Bauchet, Pinto, Mao, Akey, Mei, Scherer,
+  Julian, Wilson, L√≥pez~Herr√°ez, Brutsaert, Parra, Moore, and
+  Shriver]{Bigham2010}
+Abigail Bigham, Marc Bauchet, Dalila Pinto, Xianyun Mao, Joshua~M. Akey, Rui
+  Mei, Stephen~W. Scherer, Colleen~G. Julian, Megan~J. Wilson, David
+  L√≥pez~Herr√°ez, Tom Brutsaert, Esteban~J. Parra, Lorna~G. Moore, and Mark~D.
+  Shriver.
+\newblock Identifying signatures of natural selection in tibetan and andean
+  populations using dense genome scan data.
+\newblock \emph{PLoS Genet}, 6\penalty0 (9):\penalty0 e1001116, 09 2010.
+
+\bibitem[Botigu√© et~al.(2013)Botigu√©, Henn, Gravel, Maples, Gignoux, Corona,
+  Atzmon, Burns, Ostrer, Flores, Bertranpetit, Comas, and
+  Bustamante]{botigue_gene_2013}
+Laura~R. Botigu√©, Brenna~M. Henn, Simon Gravel, Brian~K. Maples,
+  Christopher~R. Gignoux, Erik Corona, Gil Atzmon, Edward Burns, Harry Ostrer,
+  Carlos Flores, Jaume Bertranpetit, David Comas, and Carlos~D. Bustamante.
+\newblock Gene flow from north africa contributes to differential human genetic
+  diversity in southern europe.
+\newblock \emph{Proceedings of the National Academy of Sciences of the United
+  States of America}, 110\penalty0 (29):\penalty0 11791--11796, July 2013.
+
+\bibitem[Bradburd et~al.(2013)Bradburd, Ralph, and Coop]{Bradburd2013}
+Gideon~S. Bradburd, Peter~L. Ralph, and Graham~M. Coop.
+\newblock Disentangling the effects of geographic and ecological isolation on
+  genetic differentiation.
+\newblock \emph{Evolution}, 67\penalty0 (11):\penalty0 3258--3273, 2013.
+
+\bibitem[Cavalli-Sforza and Edwards(1967)]{cavallisforza_edwards1967}
+L.~L. Cavalli-Sforza and A.~W.~F. Edwards.
+\newblock Phylogenetic analysis: Models and estimation procedures.
+\newblock \emph{Evolution}, 21\penalty0 (3):\penalty0 pp. 550--570, 1967.
+
+\bibitem[Cavalli-Sforza and Piazza(1975)]{CavalliSforza1975}
+L.L. Cavalli-Sforza and A.~Piazza.
+\newblock Analysis of evolution: Evolutionary rates, independence and treeness.
+\newblock \emph{Theoretical Population Biology}, 8\penalty0 (2):\penalty0 127
+  -- 165, 1975.
+
+\bibitem[Chakraborty and Weiss(1988)]{chakraborty_admixture_1988}
+R~Chakraborty and K~M Weiss.
+\newblock Admixture as a tool for finding linked genes and detecting that
+  difference from allelic association between loci.
+\newblock \emph{Proceedings of the National Academy of Sciences of the United
+  States of America}, 85\penalty0 (23):\penalty0 9119--9123, December 1988.
+
+\bibitem[Coyne(2004)]{coyne_orr_speciation}
+H.~Allen Orr Jerry~A. Coyne.
+\newblock \emph{Speciation}.
+\newblock Sinauer Associates, Sunderland, Mass, 2004.
+
+\bibitem[De and Durrett(2007)]{Arkendra2007}
+Arkendra De and Richard Durrett.
+\newblock Stepping-stone spatial structure causes slow decay of linkage
+  disequilibrium and shifts the site frequency spectrum.
+\newblock \emph{Genetics}, 176\penalty0 (2):\penalty0 969--981, 2007.
+
+\bibitem[Diggle et~al.(1998)Diggle, Tawn, and Moyeed]{Diggle1998}
+P~J Diggle, J~A Tawn, and R~A Moyeed.
+\newblock {Model-based geostatistics}.
+\newblock \emph{Jounal of the Royal Statistical Society. Series C (Applied
+  Statistics)}, 47\penalty0 (3):\penalty0 299--350, 1998.
+
+\bibitem[Excoffier et~al.(2013)Excoffier, Dupanloup, Huerta-Sanchez, Sousa, and
+  Foll]{Excoffier2013}
+Laurent Excoffier, Isabelle Dupanloup, Emilia Huerta-Sanchez, Vitor~C. Sousa,
+  and Matthieu Foll.
+\newblock Robust demographic inference from genomic and snp data.
+\newblock \emph{PLoS Genet}, 9\penalty0 (10):\penalty0 e1003905, 10 2013.
+
+\bibitem[Felsenstein(1975)]{felsensten1975pain}
+Joseph Felsenstein.
+\newblock A pain in the torus: Some difficulties with models of isolation by
+  distance.
+\newblock \emph{The American Naturalist}, 109\penalty0 (967):\penalty0
+  359--368, 1975.
+
+\bibitem[Felsenstein(1982)]{Felsenstein1982}
+Joseph Felsenstein.
+\newblock How can we infer geography and history from gene frequencies?
+\newblock \emph{Journal of Theoretical Biology}, 96\penalty0 (1):\penalty0 9 --
+  20, 1982.
+
+\bibitem[François et~al.(2010)François, Currat, Ray, Han, Excoffier, and
+  Novembre]{Francois_2010_surfing}
+Olivier François, Mathias Currat, Nicolas Ray, Eunjung Han, Laurent Excoffier,
+  and John Novembre.
+\newblock Principal component analysis under population genetic models of range
+  expansion and admixture.
+\newblock \emph{Molecular Biology and Evolution}, 27\penalty0 (6):\penalty0
+  1257--1268, 2010.
+
+\bibitem[Gravel(2012)]{gravel_population_2012}
+Simon Gravel.
+\newblock Population genetics models of local ancestry.
+\newblock \emph{Genetics}, 191\penalty0 (2):\penalty0 607--619, June 2012.
+
+\bibitem[Gutenkunst et~al.(2009)Gutenkunst, Hernandez, Williamson, and
+  Bustamante]{dadi}
+Ryan~N. Gutenkunst, Ryan~D. Hernandez, Scott~H. Williamson, and Carlos~D.
+  Bustamante.
+\newblock Inferring the joint demographic history of multiple populations from
+  multidimensional snp frequency data.
+\newblock \emph{PLoS Genet}, 5\penalty0 (10):\penalty0 e1000695, 10 2009.
+
+\bibitem[Harpending and Rogers(2000)]{Harpending_Rogers_2000}
+H.~Harpending and A.~Rogers.
+\newblock {{G}enetic perspectives on human origins and differentiation}.
+\newblock \emph{Annu Rev Genomics Hum Genet}, 1:\penalty0 361--385, 2000.
+
+\bibitem[Hellenthal et~al.(2014)Hellenthal, Busby, Band, Wilson, Capelli,
+  Falush, and Myers]{Hellenthal}
+G.~Hellenthal, G.~B. Busby, G.~Band, J.~F. Wilson, C.~Capelli, D.~Falush, and
+  S.~Myers.
+\newblock {{A} genetic atlas of human admixture history}.
+\newblock \emph{Science}, 343\penalty0 (6172):\penalty0 747--751, Feb 2014.
+
+\bibitem[Henn et~al.(2012)Henn, Botigu√©, Gravel, Wang, Brisbin, Byrnes,
+  Fadhlaoui-Zid, Zalloua, Moreno-Estrada, Bertranpetit, Bustamante, and
+  Comas]{henn_genomic_2012}
+Brenna~M. Henn, Laura~R. Botigu√©, Simon Gravel, Wei Wang, Abra Brisbin,
+  Jake~K. Byrnes, Karima Fadhlaoui-Zid, Pierre~A. Zalloua, Andres
+  Moreno-Estrada, Jaume Bertranpetit, Carlos~D. Bustamante, and David Comas.
+\newblock Genomic ancestry of north africans supports back-to-africa
+  migrations.
+\newblock \emph{{PLoS} Genet}, 8\penalty0 (1):\penalty0 e1002397, January 2012.
+
+\bibitem[Hodgson et~al.(2014)Hodgson, Mulligan, Al-Meeri, and
+  Raaum]{hodgson_early_2014}
+Jason~A. Hodgson, Connie~J. Mulligan, Ali Al-Meeri, and Ryan~L. Raaum.
+\newblock Early back-to-africa migration into the horn of africa.
+\newblock \emph{{PLoS} Genet}, 10\penalty0 (6):\penalty0 e1004393, June 2014.
+
+\bibitem[Hudson(2002)]{Hudson2002}
+Richard~R Hudson.
+\newblock {Generating samples under a Wright-Fisher neutral model of genetic
+  variation}.
+\newblock \emph{Bioinformatics}, 18\penalty0 (2):\penalty0 337--338, 2002.
+
+\bibitem[Irwin et~al.(2008)Irwin, Thimgan, and Irwin]{Irwin2008}
+D.~E. Irwin, M.~P. Thimgan, and J.~H. Irwin.
+\newblock {Call divergence is correlated with geographic and genetic distance
+  in greenish warblers (\textit{Phylloscopus trochiloides}): a strong role for
+  stochasticity in signal evolution?}
+\newblock \emph{Journal of Evolutionary Biology}, 21\penalty0 (2):\penalty0
+  435--448, 2008.
+
+\bibitem[Irwin et~al.(2001)Irwin, Bensch, and Price]{Irwin2001}
+Darren~E. Irwin, Staffan Bensch, and Trevor~D. Price.
+\newblock Speciation in a ring.
+\newblock \emph{Nature}, 409\penalty0 (6818):\penalty0 333--337, January 2001.
+
+\bibitem[Irwin et~al.(2005)Irwin, Staffan, Irwin~Jessica, and Price]{Irwin2005}
+Darren~E. Irwin, Bensch Staffan, H~Irwin~Jessica, and D~Price, Trevor.
+\newblock {Speciation by distance in a ring species}.
+\newblock \emph{Science}, 307\penalty0 (5708):\penalty0 414--416, January 2005.
+
+\bibitem[Lawson et~al.(2012)Lawson, Hellenthal, Myers, and
+  Falush]{FINESTRUCTURE}
+Daniel~John Lawson, Garrett Hellenthal, Simon Myers, and Daniel Falush.
+\newblock Inference of population structure using dense haplotype data.
+\newblock \emph{PLoS Genet}, 8\penalty0 (1):\penalty0 e1002453, 01 2012.
+
+\bibitem[Lazaridis et~al.(2014)Lazaridis, Patterson, Mittnik, Renaud, Mallick,
+  Kirsanow, Sudmant, Schraiber, Castellano, Lipson, Berger, Economou,
+  Bollongino, Fu, Bos, Nordenfelt, Li, de~Filippo, Pr√ºfer, Sawyer, Posth,
+  Haak, Hallgren, Fornander, Rohland, Delsate, Francken, Guinet, Wahl, Ayodo,
+  Babiker, Bailliet, Balanovska, Balanovsky, Barrantes, Bedoya, Ben-Ami, Bene,
+  Berrada, Bravi, Brisighelli, Busby, Cali, Churnosov, Cole, Corach, Damba, van
+  Driem, Dryomov, Dugoujon, Fedorova, Gallego~Romero, Gubina, Hammer, Henn,
+  Hervig, Hodoglugil, Jha, Karachanak-Yankova, Khusainova, Khusnutdinova,
+  Kittles, Kivisild, Klitz, Kuƒçinskas, Kushniarevich, Laredj, Litvinov,
+  Loukidis, Mahley, Melegh, Metspalu, Molina, Mountain, N√§kk√§l√§j√§rvi,
+  Nesheva, Nyambo, Osipova, Parik, Platonov, Posukh, Romano, Rothhammer, Rudan,
+  Ruizbakiev, Sahakyan, Sajantila, Salas, Starikovskaya, Tarekegn, Toncheva,
+  Turdikulova, Uktveryte, Utevska, Vasquez, Villena, Voevoda, Winkler,
+  Yepiskoposyan, Zalloua, Zemunik, Cooper, Capelli, Thomas, Ruiz-Linares,
+  Tishkoff, Singh, Thangaraj, Villems, Comas, Sukernik, Metspalu, Meyer,
+  Eichler, Burger, Slatkin, P√§√§bo, Kelso, Reich, and
+  Krause]{lazaridis_ancient_2014}
+Iosif Lazaridis, Nick Patterson, Alissa Mittnik, Gabriel Renaud, Swapan
+  Mallick, Karola Kirsanow, Peter~H. Sudmant, Joshua~G. Schraiber, Sergi
+  Castellano, Mark Lipson, Bonnie Berger, Christos Economou, Ruth Bollongino,
+  Qiaomei Fu, Kirsten~I. Bos, Susanne Nordenfelt, Heng Li, Cesare de~Filippo,
+  Kay Pr√ºfer, Susanna Sawyer, Cosimo Posth, Wolfgang Haak, Fredrik Hallgren,
+  Elin Fornander, Nadin Rohland, Dominique Delsate, Michael Francken,
+  Jean-Michel Guinet, Joachim Wahl, George Ayodo, Hamza~A. Babiker, Graciela
+  Bailliet, Elena Balanovska, Oleg Balanovsky, Ramiro Barrantes, Gabriel
+  Bedoya, Haim Ben-Ami, Judit Bene, Fouad Berrada, Claudio~M. Bravi, Francesca
+  Brisighelli, George B.~J. Busby, Francesco Cali, Mikhail Churnosov, David
+  E.~C. Cole, Daniel Corach, Larissa Damba, George van Driem, Stanislav
+  Dryomov, Jean-Michel Dugoujon, Sardana~A. Fedorova, Irene Gallego~Romero,
+  Marina Gubina, Michael Hammer, Brenna~M. Henn, Tor Hervig, Ugur Hodoglugil,
+  Aashish~R. Jha, Sena Karachanak-Yankova, Rita Khusainova, Elza Khusnutdinova,
+  Rick Kittles, Toomas Kivisild, William Klitz, Vaidutis Kuƒçinskas, Alena
+  Kushniarevich, Leila Laredj, Sergey Litvinov, Theologos Loukidis, Robert~W.
+  Mahley, B√©la Melegh, Ene Metspalu, Julio Molina, Joanna Mountain, Klemetti
+  N√§kk√§l√§j√§rvi, Desislava Nesheva, Thomas Nyambo, Ludmila Osipova, J√ºri
+  Parik, Fedor Platonov, Olga Posukh, Valentino Romano, Francisco Rothhammer,
+  Igor Rudan, Ruslan Ruizbakiev, Hovhannes Sahakyan, Antti Sajantila, Antonio
+  Salas, Elena~B. Starikovskaya, Ayele Tarekegn, Draga Toncheva, Shahlo
+  Turdikulova, Ingrida Uktveryte, Olga Utevska, Ren√© Vasquez, Mercedes
+  Villena, Mikhail Voevoda, Cheryl~A. Winkler, Levon Yepiskoposyan, Pierre
+  Zalloua, Tatijana Zemunik, Alan Cooper, Cristian Capelli, Mark~G. Thomas,
+  Andres Ruiz-Linares, Sarah~A. Tishkoff, Lalji Singh, Kumarasamy Thangaraj,
+  Richard Villems, David Comas, Rem Sukernik, Mait Metspalu, Matthias Meyer,
+  Evan~E. Eichler, Joachim Burger, Montgomery Slatkin, Svante P√§√§bo, Janet
+  Kelso, David Reich, and Johannes Krause.
+\newblock Ancient human genomes suggest three ancestral populations for
+  present-day europeans.
+\newblock \emph{Nature}, 513\penalty0 (7518):\penalty0 409--413, September
+  2014.
+
+\bibitem[Li and Durbin(2011)]{Li_Durbin2011}
+Heng Li and Richard Durbin.
+\newblock Inference of human population history from individual whole-genome
+  sequences.
+\newblock \emph{Nature}, 475\penalty0 (7357):\penalty0 493--496, July 2011.
+\newblock \doi{10.1038/nature10231}.
+
+\bibitem[Li et~al.(2008)Li, Absher, Tang, Southwick, Casto, Ramachandran, Cann,
+  Barsh, Feldman, Cavalli-Sforza, and Myers]{li_worldwide_2008}
+Jun~Z. Li, Devin~M. Absher, Hua Tang, Audrey~M. Southwick, Amanda~M. Casto,
+  Sohini Ramachandran, Howard~M. Cann, Gregory~S. Barsh, Marcus Feldman,
+  Luigi~L. Cavalli-Sforza, and Richard~M. Myers.
+\newblock Worldwide human relationships inferred from genome-wide patterns of
+  variation.
+\newblock \emph{Science (New York, N.Y.)}, 319\penalty0 (5866):\penalty0
+  1100--1104, February 2008.
+
+\bibitem[Lipson et~al.(2013)Lipson, Loh, Levin, Reich, Patterson, and
+  Berger]{lipson_mixmapper_2013}
+Mark Lipson, Po-Ru Loh, Alex Levin, David Reich, Nick Patterson, and Bonnie
+  Berger.
+\newblock Efficient moment-based inference of admixture parameters and sources
+  of gene flow.
+\newblock \emph{Molecular Biology and Evolution}, 30\penalty0 (8):\penalty0
+  1788--1802, August 2013.
+
+\bibitem[Loh et~al.(2013)Loh, Lipson, Patterson, Moorjani, Pickrell, Reich, and
+  Berger]{Loh:13}
+P.~R. Loh, M.~Lipson, N.~Patterson, P.~Moorjani, J.~K. Pickrell, D.~Reich, and
+  B.~Berger.
+\newblock {{I}nferring admixture histories of human populations using linkage
+  disequilibrium}.
+\newblock \emph{Genetics}, 193\penalty0 (4):\penalty0 1233--1254, Apr 2013.
+
+\bibitem[Luca et~al.(1994)Luca, Menozzi, and Piazza]{cavallisforza1994}
+Luca, Paolo Menozzi, and Alberto Piazza.
+\newblock \emph{The History and Geography of Human Genes}.
+\newblock Princeton University Press, Princeton, NJ, 1994.
+
+\bibitem[Mal\'{e}cot(1975)]{Malecot1975}
+Gustave Mal\'{e}cot.
+\newblock {Heterozygosity and relationship in regularly subdivided
+  populations}.
+\newblock \emph{Theoretical Population Biology}, 8\penalty0 (2):\penalty0
+  212--241, 1975.
+
+\bibitem[Mayr(1970)]{Mayr1970}
+Ernst Mayr.
+\newblock \emph{Populations, species, and evolution; an abridgment of Animal
+  species and evolution}.
+\newblock Belknap Press of Harvard University Press Cambridge, Mass, 1970.
+
+\bibitem[Mayr(1999)]{Mayr1942}
+Ernst Mayr.
+\newblock \emph{{Systematics and the origin of species, from the viewpoint of a
+  zoologist}}.
+\newblock Harvard University Press, October 1999.
+
+\bibitem[McVean(2009)]{mcvean_genealogical_2009}
+Gil McVean.
+\newblock A genealogical interpretation of principal components analysis.
+\newblock \emph{{PLoS} Genet}, 5\penalty0 (10):\penalty0 e1000686, October
+  2009.
+
+\bibitem[Meirmans(2012)]{meirmans2012}
+Patrick~G. Meirmans.
+\newblock The trouble with isolation by distance.
+\newblock \emph{Molecular Ecology}, 21\penalty0 (12):\penalty0 2839--2846,
+  2012.
+
+\bibitem[Menozzi et~al.(1978)Menozzi, Piazza, and
+  Cavalli-Sforza]{menozzi1978synthetic}
+P~Menozzi, A~Piazza, and L~Cavalli-Sforza.
+\newblock Synthetic maps of human gene frequencies in {Europeans}.
+\newblock \emph{Science}, 201\penalty0 (4358):\penalty0 786--792, September
+  1978.
+
+\bibitem[Moorjani et~al.(2011)Moorjani, Patterson, Hirschhorn, Keinan, Hao,
+  Atzmon, Burns, Ostrer, Price, and Reich]{moorjani_history_2011}
+Priya Moorjani, Nick Patterson, Joel~N. Hirschhorn, Alon Keinan, Li~Hao, Gil
+  Atzmon, Edward Burns, Harry Ostrer, Alkes~L. Price, and David Reich.
+\newblock The history of african gene flow into southern europeans, levantines,
+  and jews.
+\newblock \emph{{PLoS} Genet}, 7\penalty0 (4):\penalty0 e1001373, April 2011.
+
+\bibitem[Moorjani et~al.(2013)Moorjani, Thangaraj, Patterson, Lipson, Loh,
+  Govindaraj, Berger, Reich, and Singh]{moorjani_india_2013}
+Priya Moorjani, Kumarasamy Thangaraj, Nick Patterson, Mark Lipson, Po-Ru Loh,
+  Periyasamy Govindaraj, Bonnie Berger, David Reich, and Lalji Singh.
+\newblock Genetic evidence for recent population mixture in india.
+\newblock \emph{American Journal of Human Genetics}, 93\penalty0 (3):\penalty0
+  422--438, September 2013.
+
+\bibitem[Nagylaki(1978)]{nagylaki1978diffusion}
+Thomas Nagylaki.
+\newblock A diffusion model for geographically structured populations.
+\newblock \emph{Journal of Mathematical Biology}, 6\penalty0 (4):\penalty0
+  375--382, 1978.
+
+\bibitem[Nicholson et~al.(2002)Nicholson, Smith, Jónsson, Gústafsson,
+  Stefánsson, and Donnelly]{nicholson2002}
+George Nicholson, Albert~V. Smith, Frosti Jónsson, Ómar Gústafsson, Kári
+  Stefánsson, and Peter Donnelly.
+\newblock Assessing population differentiation and isolation from
+  single-nucleotide polymorphism data.
+\newblock \emph{Journal Of The Royal Statistical Society Series B}, 64\penalty0
+  (4):\penalty0 695–715, 2002.
+
+\bibitem[Novembre and Stephens(2008)]{novembre_interpreting_2008}
+John Novembre and Matthew Stephens.
+\newblock Interpreting principal component analyses of spatial population
+  genetic variation.
+\newblock \emph{Nature genetics}, 40\penalty0 (5):\penalty0 646--649, May 2008.
+
+\bibitem[Novembre et~al.(2008)Novembre, Johnson, Bryc, Kutalik, Boyko, Auton,
+  Indap, King, Bergmann, Nelson, Stephens, and Bustamante]{novembre_genes_2008}
+John Novembre, Toby Johnson, Katarzyna Bryc, Zolt√°n Kutalik, Adam~R. Boyko,
+  Adam Auton, Amit Indap, Karen~S. King, Sven Bergmann, Matthew~R. Nelson,
+  Matthew Stephens, and Carlos~D. Bustamante.
+\newblock Genes mirror geography within europe.
+\newblock \emph{Nature}, 456\penalty0 (7218):\penalty0 98--101, November 2008.
+
+\bibitem[Patterson et~al.(2006)Patterson, Price, and Reich]{Patterson2006}
+Nick Patterson, Alkes~L Price, and David Reich.
+\newblock Population structure and eigenanalysis.
+\newblock \emph{PLoS Genet}, 2\penalty0 (12):\penalty0 e190, 12 2006.
+
+\bibitem[Patterson et~al.(2012)Patterson, Moorjani, Luo, Mallick, Rohland,
+  Zhan, Genschoreck, Webster, and Reich]{patterson_ancient_2012}
+Nick Patterson, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland,
+  Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich.
+\newblock Ancient admixture in human history.
+\newblock \emph{Genetics}, 192\penalty0 (3):\penalty0 1065--1093, November
+  2012.
+
+\bibitem[Paul et~al.(2011)Paul, Steinrücken, and Song]{Paul_Song2011}
+Joshua~S. Paul, Matthias Steinrücken, and Yun~S. Song.
+\newblock An accurate sequentially markov conditional sampling distribution for
+  the coalescent with recombination.
+\newblock \emph{Genetics}, 2011.
+
+\bibitem[Petkova et~al.(2014)Petkova, Novembre, and
+  Stephens]{Petkova_2014_EEMS}
+Desislava Petkova, John Novembre, and Matthew Stephens.
+\newblock Visualizing spatial population structure with estimated effective
+  migration surfaces.
+\newblock \emph{bioRxiv}, 2014.
+
+\bibitem[Pickrell and Pritchard(2012)]{Treemix}
+J.~K. Pickrell and J.~K. Pritchard.
+\newblock {{I}nference of population splits and mixtures from genome-wide
+  allele frequency data}.
+\newblock \emph{PLoS Genet.}, 8\penalty0 (11):\penalty0 e1002967, 2012.
+
+\bibitem[Pickrell and Reich(2014)]{pickrell_reich:14}
+J.~K. Pickrell and D.~Reich.
+\newblock {{T}oward a new history and geography of human genes informed by
+  ancient {D}{N}{A}}.
+\newblock \emph{Trends Genet.}, 30\penalty0 (9):\penalty0 377--389, Sep 2014.
+
+\bibitem[Pickrell et~al.(2012)Pickrell, Patterson, Barbieri, Berthold, Gerlach,
+  Guldemann, Kure, Mpoloka, Nakagawa, Naumann, Lipson, Loh, Lachance, Mountain,
+  Bustamante, Berger, Tishkoff, Henn, Stoneking, Reich, and
+  Pakendorf]{Pickrell:12}
+J.~K. Pickrell, N.~Patterson, C.~Barbieri, F.~Berthold, L.~Gerlach,
+  T.~Guldemann, B.~Kure, S.~W. Mpoloka, H.~Nakagawa, C.~Naumann, M.~Lipson,
+  P.~R. Loh, J.~Lachance, J.~Mountain, C.~D. Bustamante, B.~Berger, S.~A.
+  Tishkoff, B.~M. Henn, M.~Stoneking, D.~Reich, and B.~Pakendorf.
+\newblock {{T}he genetic prehistory of southern {A}frica}.
+\newblock \emph{Nat Commun}, 3:\penalty0 1143, 2012.
+
+\bibitem[Pickrell et~al.(2014)Pickrell, Patterson, Loh, Lipson, Berger,
+  Stoneking, Pakendorf, and Reich]{Pickrell:14}
+J.~K. Pickrell, N.~Patterson, P.~R. Loh, M.~Lipson, B.~Berger, M.~Stoneking,
+  B.~Pakendorf, and D.~Reich.
+\newblock {{A}ncient west {E}urasian ancestry in southern and eastern
+  {A}frica}.
+\newblock \emph{Proc. Natl. Acad. Sci. U.S.A.}, 111\penalty0 (7):\penalty0
+  2632--2637, Feb 2014.
+
+\bibitem[Price et~al.(2006)Price, Patterson, Plenge, Weinblatt, Shadick, and
+  Reich]{price2006eigenstrat}
+A~L Price, N~J Patterson, R~M Plenge, M~E Weinblatt, N~A Shadick, and D~Reich.
+\newblock Principal components analysis corrects for stratification in
+  genome-wide association studies.
+\newblock \emph{Nat Genet}, 38\penalty0 (8):\penalty0 904--909, August 2006.
+
+\bibitem[Pritchard et~al.(2000)Pritchard, Stephens, and Donnelly]{STRUCTURE}
+Jonathan~K. Pritchard, Matthew Stephens, and Peter Donnelly.
+\newblock Inference of population structure using multilocus genotype data.
+\newblock \emph{Genetics}, 155\penalty0 (2):\penalty0 945--959, June 2000.
+
+\bibitem[Prugnolle et~al.(2005)Prugnolle, Manica, and
+  Balloux]{prugnolle_geography_2005}
+Franck Prugnolle, Andrea Manica, and Fran√ßois Balloux.
+\newblock Geography predicts neutral genetic diversity of human populations.
+\newblock \emph{Current biology : {CB}}, 15\penalty0 (5):\penalty0 R159--R160,
+  March 2005.
+
+\bibitem[Ralph and Coop(2013)]{ralph2013geography}
+Peter Ralph and Graham Coop.
+\newblock The geography of recent genetic ancestry across {Europe}.
+\newblock \emph{PLoS Biol}, 11\penalty0 (5):\penalty0 e1001555, 05 2013.
+
+\bibitem[Ramachandran et~al.(2005)Ramachandran, Deshpande, Roseman, Rosenberg,
+  Feldman, and Cavalli-Sforza]{Ramachandran:05}
+S.~Ramachandran, O.~Deshpande, C.~C. Roseman, N.~A. Rosenberg, M.~W. Feldman,
+  and L.~L. Cavalli-Sforza.
+\newblock {{S}upport from the relationship of genetic and geographic distance
+  in human populations for a serial founder effect originating in {A}frica}.
+\newblock \emph{Proc. Natl. Acad. Sci. U.S.A.}, 102\penalty0 (44):\penalty0
+  15942--15947, Nov 2005.
+
+\bibitem[Reich et~al.(2009)Reich, Thangaraj, Patterson, Price, and
+  Singh]{reich_india_2009}
+David Reich, Kumarasamy Thangaraj, Nick Patterson, Alkes~L. Price, and Lalji
+  Singh.
+\newblock Reconstructing indian population history.
+\newblock \emph{Nature}, 461\penalty0 (7263):\penalty0 489--494, September
+  2009.
+
+\bibitem[Roberts et~al.(1997)Roberts, Gelman, and Gilks]{Roberts1997}
+G.~O. Roberts, A.~Gelman, and W.~R. Gilks.
+\newblock {Weak convergence and optimal scaling of random walk Metropolis
+  algorithms}.
+\newblock \emph{Annals of Applied Probability}, 7:\penalty0 110--120, 1997.
+
+\bibitem[Roberts and Rosenthal(2001)]{Roberts2001}
+Gareth~O. Roberts and Jeffrey~S. Rosenthal.
+\newblock Optimal scaling for various {M}etropolis-{H}astings algorithms.
+\newblock \emph{Statist. Sci.}, 16\penalty0 (4):\penalty0 351--367, 2001.
+
+\bibitem[Roberts and Rosenthal(2009)]{roberts2009examples}
+Gareth~O Roberts and Jeffrey~S Rosenthal.
+\newblock Examples of adaptive mcmc.
+\newblock \emph{Journal of Computational and Graphical Statistics}, 18\penalty0
+  (2):\penalty0 349--367, 2009.
+
+\bibitem[Rosenberg et~al.(2002)Rosenberg, Pritchard, Weber, Cann, Kidd,
+  Zhivotovsky, and Feldman]{rosenberg_genetic_2002}
+Noah~A. Rosenberg, Jonathan~K. Pritchard, James~L. Weber, Howard~M. Cann,
+  Kenneth~K. Kidd, Lev~A. Zhivotovsky, and Marcus~W. Feldman.
+\newblock Genetic structure of human populations.
+\newblock \emph{Science (New York, N.Y.)}, 298\penalty0 (5602):\penalty0
+  2381--2385, December 2002.
+
+\bibitem[Rosenthal(2011)]{rosenthal2010_optimal}
+Jeffrey~S. Rosenthal.
+\newblock {Optimal Proposal Distributions and Adaptive MCMC}.
+\newblock In Steve Brooks, Andrew Gelman, Galin~L. Jones, and Xiao-Li Meng,
+  editors, \emph{Handbook of Markov Chain Monte Carlo}, Handbooks of Modern
+  Statistical Methods, chapter~4. Chapman \& Hall, CRC, Florida, USA, first
+  edition, 2011.
+
+\bibitem[Schlebusch et~al.(2012)Schlebusch, Skoglund, Sj√∂din, Gattepaille,
+  Hernandez, Jay, Li, De~Jongh, Singleton, Blum, Soodyall, and
+  Jakobsson]{Jakobsson_genomic_2012}
+Carina~M. Schlebusch, Pontus Skoglund, Per Sj√∂din, Lucie~M. Gattepaille, Dena
+  Hernandez, Flora Jay, Sen Li, Michael De~Jongh, Andrew Singleton, Michael
+  G.~B. Blum, Himla Soodyall, and Mattias Jakobsson.
+\newblock Genomic variation in seven khoe-san groups reveals adaptation and
+  complex african history.
+\newblock \emph{Science (New York, N.Y.)}, 338\penalty0 (6105):\penalty0
+  374--379, October 2012.
+
+\bibitem[Skoglund et~al.(2012)Skoglund, Malmström, Raghavan, Storå, Hall,
+  Willerslev, Gilbert, Götherström, and Jakobsson]{skoglund2012origins}
+Pontus Skoglund, Helena Malmström, Maanasa Raghavan, Jan Storå, Per Hall, Eske
+  Willerslev, M.~Thomas~P. Gilbert, Anders Götherström, and Mattias Jakobsson.
+\newblock Origins and genetic legacy of neolithic farmers and hunter-gatherers
+  in {Europe}.
+\newblock \emph{Science}, 336\penalty0 (6080):\penalty0 466--469, 2012.
+
+\bibitem[Skoglund et~al.(2014)Skoglund, Sj√∂din, Skoglund, Lascoux, and
+  Jakobsson]{skoglund_investigating_2014}
+Pontus Skoglund, Per Sj√∂din, Tobias Skoglund, Martin Lascoux, and Mattias
+  Jakobsson.
+\newblock Investigating population history using temporal genetic
+  differentiation.
+\newblock \emph{Molecular Biology and Evolution}, 31\penalty0 (9):\penalty0
+  2516--2527, September 2014.
+
+\bibitem[Ticehurst(1938)]{ticehurst1938}
+C.B. Ticehurst.
+\newblock \emph{A Systematic Review of the Genus Phylloscopus}.
+\newblock Trustees of the British Museum, London, 1938.
+
+\bibitem[Wake and Schneider(1998)]{wake_schneider1998}
+David~B. Wake and Christopher~J. Schneider.
+\newblock Taxonomy of the plethodontid salamander genus ensatina.
+\newblock \emph{Herpetologica}, 54\penalty0 (2):\penalty0 pp. 279--298, 1998.
+
+\bibitem[Wang et~al.(2012)Wang, Z√∂llner, and
+  Rosenberg]{wang_quantitative_2012}
+Chaolong Wang, Sebastian Z√∂llner, and Noah~A. Rosenberg.
+\newblock A quantitative comparison of the similarity between genes and
+  geography in worldwide human populations.
+\newblock \emph{PLoS Genet}, 8\penalty0 (8):\penalty0 e1002886, 08 2012.
+
+\bibitem[Wasser et~al.(2004)Wasser, Shedlock, Comstock, Ostrander, Mutayoba,
+  and Stephens]{Wasser2004}
+Samuel~K Wasser, Andrew~M Shedlock, Kenine Comstock, Elaine~a Ostrander,
+  Benezeth Mutayoba, and Matthew Stephens.
+\newblock {Assigning African elephant DNA to geographic region of origin:
+  Applications to the ivory trade.}
+\newblock \emph{PNAS}, 101\penalty0 (41):\penalty0 14847--52, October 2004.
+
+\bibitem[Wright(1943)]{Wright1943}
+Sewall Wright.
+\newblock {Isolation by distance}.
+\newblock \emph{Genetics}, 28\penalty0 (2):\penalty0 114--138, 1943.
+
+\bibitem[Xu and Jin(2008)]{xu_genome-wide_2008}
+Shuhua Xu and Li~Jin.
+\newblock A genome-wide analysis of admixture in uyghurs and a high-density
+  admixture map for disease-gene discovery.
+\newblock \emph{The American Journal of Human Genetics}, 83\penalty0
+  (3):\penalty0 322--336, September 2008.
+
+\bibitem[Yang et~al.(2012)Yang, Novembre, Eskin, and
+  Halperin]{yang_model-based_2012}
+Wen-Yun Yang, John Novembre, Eleazar Eskin, and Eran Halperin.
+\newblock A model-based approach for analysis of spatial structure in genetic
+  data.
+\newblock \emph{Nature genetics}, 44\penalty0 (6):\penalty0 725--731, May 2012.
+
+\bibitem[Yang et~al.(2014)Yang, Platt, Chiang, Eskin, Novembre, and
+  Pasaniuc]{yang_spatial_2014}
+Wen-Yun Yang, Alexander Platt, Charleston Wen-Kai Chiang, Eleazar Eskin, John
+  Novembre, and Bogdan Pasaniuc.
+\newblock Spatial localization of recent ancestors for admixed individuals.
+\newblock \emph{G3: Genes{\textbar}Genomes{\textbar}Genetics}, 4\penalty0
+  (12):\penalty0 2505--2518, December 2014.
+
+\end{thebibliography}

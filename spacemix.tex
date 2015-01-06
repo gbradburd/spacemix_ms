@@ -29,6 +29,16 @@
 \newcommand{\plrm}[1]{\plr{#1}}
 \fi
 
+% make links in color but without ugly red boxes
+% from https://tex.stackexchange.com/questions/823/remove-ugly-borders-around-clickable-cross-references-and-hyperlinks/847#847
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
 % Make paragraphs not indented and leave a line between paragraphs
 \setlength{\parskip}{\baselineskip}%
 \setlength{\parindent}{0pt}%
@@ -91,7 +101,7 @@ Two populations that are sampled at distant locations but that are genetically s
 may have inferred locations that are nearby, while two populations that are sampled close together, 
 but that are genetically dissimilar (e.g., are separated by a barrier), may have inferred locations that are farther apart.   
 The result is a ``geogenetic'' map in which the distances between populations are effective distances, 
-indicative of the way that populations perceive the distances between themselves: the ``organism's-eye view" of the world.  
+indicative of the way that populations perceive the distances between themselves: the ``organism's-eye view'' of the world.  
 Added to this, ``admixture'' can be thought of as the outcome of unusually long-distance gene flow; 
 it results in relatedness between populations that is anomalously high given the distance that separates them.
 We summarize the effect of admixture as arrows, from a source of admixture to its target, on the inferred map.
@@ -155,7 +165,8 @@ where $\hat{f}_{\ell,k}$ is sample allele frequency at locus $\ell$ in populatio
 This normalization is widely used \citep[e.g.][]{nicholson2002,Patterson2006};
 roughly speaking, mean-centering removes any effect of choice of counted allele,
 and dividing by $\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}$ makes each locus have unit variance.
-Using the sample mean to mean-center these standardized allele frequencies has implications on their covariance structure, which we discuss in the Methods ("Deriving the standardized sample covariance").
+Using the sample mean to mean-center these standardized allele frequencies has implications on their covariance structure, which we discuss in the Methods 
+(``Deriving the standardized sample covariance'').
 We proceed in our discussion of the covariance as if our $\bar{f}_{\ell}$ were a global, rather than sample, mean allele frequency at locus $\ell$.
 
 \paragraph{Spatial Covariance Model}
@@ -216,7 +227,7 @@ where the constant of proportionality is the normalization constant.
 
 The priors on the parameters that control the shape of the decay of covariance with distance $P(\vec{\alpha})$ are given in the Methods, as are those on $P(\eta)$.  We assume that the priors on the inferred, geogenetic locations, $P(G)$ are independent across populations.  Because the observed locations are a natural prior on where populations are positioned under the null of isolation by distance, we use a very weak prior on population $k$'s location parameter ($G_k$) that is centered around the observed location.
 The prior $P(G)$ on geogenetic locations
-also encourages the resulting inferred geogenetic map to be anchored in the observed locations and to represent (informally) the minimum distortion to space necessary to satisfy the constraints placed by genetic similarities of populations.  However, we can also use random locations as the ``observed" locations to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference. 
+also encourages the resulting inferred geogenetic map to be anchored in the observed locations and to represent (informally) the minimum distortion to space necessary to satisfy the constraints placed by genetic similarities of populations.  However, we can also use random locations as the ``observed'' locations to remove any influence of the observed map on the output via the prior, or we can change the variance on the spatial priors to ascertain the effect of the prior on inference. 
 
 We then use a Markov chain Monte Carlo algorithm to estimate the posterior distribution on the parameters; for more details see the Methods. 
 This method is implemented in a program called SpaceMix.
@@ -761,7 +772,7 @@ It is not necessary, but a user may also specify
 The geographic location data may be missing, or generated randomly, for some or all of the samples; if so, the spatial priors on estimated population locations, $G$, and their sources of admixture, $\identifyadmixsource{G}$ will not be tethered to the true map. 
 
 \paragraph{Initiating the MCMC}
-We then calculate the standardized sample covariance matrix $\widehat{\Omega}$ as outlined in the section ``Deriving the standardized sample covariance" above.  We calculate $\bar{S_k}$, the mean sample size across loci for population $k$, for each population as part of the standardization of the sample allele frequencies, and for use as $1/\bar{S_k}$ as part of the spatial covariance function detailed in \eqref{eq:spatial_covariance2}.
+We then calculate the standardized sample covariance matrix $\widehat{\Omega}$ as outlined in the section ``Deriving the standardized sample covariance'' above.  We calculate $\bar{S_k}$, the mean sample size across loci for population $k$, for each population as part of the standardization of the sample allele frequencies, and for use as $1/\bar{S_k}$ as part of the spatial covariance function detailed in \eqref{eq:spatial_covariance2}.
 
 Armed with the standardized sample covariance, the geographic sampling locations, and the inverse mean sample sizes across samples ($\widehat{\Omega}$, $G^{(obs)}$, $1/\bar{S_k}$), we may embark upon our analysis.
 
@@ -824,7 +835,7 @@ where latitude and longitude are given in radians.  As with $\eta$ and $w$, the 
 \paragraph{Adaptive Metropolis-within-Gibbs proposal mechanism}
 We use an adaptive Metropolis-within-Gibbs proposal mechanism on each parameter \citep{roberts2009examples,rosenthal2010_optimal}.  This mechanism attempts to maintain an acceptance proportion for each parameter as close as possible to 0.44 \citep[optimal for one-dimensional proposal mechanisms;][]{Roberts1997,Roberts2001}.  We implement this mechanism by creating, for each variable $i$, an associated variable $\zeta_i$, which gives the log of the standard deviation of the normal distribution from which parameter value updates are proposed.  As outlined above, in the cases of \{$\eta$, $w$, $G$, $\identifyadmixsource{G}$\}, for which each population receives a free parameter, each population gets its own value of $\zeta$.  
 
-When we start our MCMC, $\zeta_i$ for all parameters is initiated at a value of 0, which gives a proposal distribution variance of 1.  We then proceed to track the acceptance rate, $r_i$ for each parameter in windows of 50 MCMC iterations, and, after the $n$th set of 50 iterations, we adjust $\zeta_i$ by an ``adaption amount," which is added to $\zeta_i$ if the acceptance proportion in the $n$th set of 50 iterations (${r^{(n)}}_i$) has been above 0.44, and subtracted from $\zeta_i$ if not.  The magnitude of the adaption amount is a decreasing function of the index $n$, so that updates to $\zeta_i$ proceed as follows:
+When we start our MCMC, $\zeta_i$ for all parameters is initiated at a value of 0, which gives a proposal distribution variance of 1.  We then proceed to track the acceptance rate, $r_i$ for each parameter in windows of 50 MCMC iterations, and, after the $n$th set of 50 iterations, we adjust $\zeta_i$ by an ``adaption amount'', which is added to $\zeta_i$ if the acceptance proportion in the $n$th set of 50 iterations (${r^{(n)}}_i$) has been above 0.44, and subtracted from $\zeta_i$ if not.  The magnitude of the adaption amount is a decreasing function of the index $n$, so that updates to $\zeta_i$ proceed as follows:
 
 \begin{equation}
 {\zeta^{n+1}}_i =
@@ -835,10 +846,10 @@ When we start our MCMC, $\zeta_i$ for all parameters is initiated at a value of 
 \label{eq:adpative_mcmc}
 \end{equation}
 
-We choose to cap the maximum adaption amount at 20 (which is the equivalent of capping the variance of the proposal distribution at ~$4.85 \times 10^8$) to avoid proposal distributions that offer absurdly large or small updates.  This procedure, also referred to as ``auto-tuning," results in acceptance rate plots like those shown in Figure \ref{sfig:example_acceptance_rates}, and in more efficient mixing and decreased autocorrelation time of parameter estimates in the MCMC.
+We choose to cap the maximum adaption amount at 20 (which is the equivalent of capping the variance of the proposal distribution at ~$4.85 \times 10^8$) to avoid proposal distributions that offer absurdly large or small updates.  This procedure, also referred to as ``auto-tuning'', results in acceptance rate plots like those shown in Figure \ref{sfig:example_acceptance_rates}, and in more efficient mixing and decreased autocorrelation time of parameter estimates in the MCMC.
 
 \subsection*{Simulations}
-We ran our simulations using a coalescent framework in the program \textit{ms} (Hudson).  Briefly, we simulated populations on a lattice, with nearest neighbor (separated by a distance of $1$) migration rate $m_{i,j}$, as well as migration on the diagonal of the unit square at rate $m_{i,j}/\sqrt{2}$.  For each locus in the dataset, we used the \textbf{-s} option to specify a single segregating site, and then we simulated 10,000 loci independently, which were subsequently conglomerated into a single dataset for each scenario.  For all simulations, except the ``Populations on a line" scenario (Figure \ref{sfig:line_scenario}), we sampled only every other population, and, from each population, we sampled 10 haplotypes (corresponding to 5 diploid individuals).  In the ``Populations on a line" scenario, we simulated no intervening populations, such that every population was sampled.
+We ran our simulations using a coalescent framework in the program \textit{ms} (Hudson).  Briefly, we simulated populations on a lattice, with nearest neighbor (separated by a distance of $1$) migration rate $m_{i,j}$, as well as migration on the diagonal of the unit square at rate $m_{i,j}/\sqrt{2}$.  For each locus in the dataset, we used the \textbf{-s} option to specify a single segregating site, and then we simulated 10,000 loci independently, which were subsequently conglomerated into a single dataset for each scenario.  For all simulations, except the ``Populations on a line'' scenario (Figure \ref{sfig:line_scenario}), we sampled only every other population, and, from each population, we sampled 10 haplotypes (corresponding to 5 diploid individuals).  In the ``Populations on a line'' scenario, we simulated no intervening populations, such that every population was sampled.
 
 To simulate a barrier event, we divided the migration rate between neighbors separated by the longitudinal barrier by a factor of 5.  To simulate an expansion event, we used the \textbf{-ej} option to move all lineages from each daughter population to its parent population at a very recent point in the past.  For admixture events, we used the \textbf{-es} and \textbf{-ej} options to first (again, going backward in time) split the admixed population into itself and a new subpopulation of index $k + 1$, and second, to move all lineages in the $(k^{\text{th}} + 1)$ into the source of admixture.  Forward in time, this procedure corresponds to cloning the population that is the source of admixture, then merging it, in some admixture proportion, with the (now) admixed population.  The command line arguments used to call ms for a single locus for each simulation are included in the Appendix.
 
@@ -878,8 +889,8 @@ Below, we describe the specifics of our analyses of the greenish warbler dataset
 For each analysis,
 \begin{itemize}
 \item[1.] Five independent chains were run for $5\times 10^6$ MCMC iterations each in which populations were allowed to choose their own locations (but no admixture).  Population locations were initiated at the origin (i.e.\ - at iteration 1 of the MCMC, $G_i = (0,0)$), and all other parameters were drawn randomly from their priors at the start of each chain.  
-\item[2.]The chain with the highest posterior probability at the end of the analysis was selected and identified as the``Best Short Run".
-\item[3.] A chain was initiated from the parameter values in the last iteration of the Best Short Run.  Because inference of admixture proportion and location was not allowed in the five initial runs, admixture proportions were initiated at 0 and admixture locations, \admixsource{G} were initiated at the origin.  This  chain (the ``Long Run") was run for $10^8$ iterations, and sampled every $10^5$ iterations for a total of $1000$ draws from the posterior.
+\item[2.]The chain with the highest posterior probability at the end of the analysis was selected and identified as the ``Best Short Run''.
+\item[3.] A chain was initiated from the parameter values in the last iteration of the Best Short Run.  Because inference of admixture proportion and location was not allowed in the five initial runs, admixture proportions were initiated at 0 and admixture locations, \admixsource{G} were initiated at the origin.  This  chain (the ``Long Run'') was run for $10^8$ iterations, and sampled every $10^5$ iterations for a total of $1000$ draws from the posterior.
 \end{itemize}
 
 For each dataset, we ran two analyses using the observed population locations as the prior on $G$.  
@@ -895,6 +906,12 @@ As results were generally consistent across multiple runs for each dataset regar
 we (unless stated otherwise) present only the results from the `random' prior analyses.
 
 Finally, we compared the SpaceMix map to a map derived from a Principal Components Analysis (Patterson and Reich 2006).  For this analysis, we calculated the eigendecomposition of the mean-centered allelic covariance matrix, then plotted individuals' coordinates on the first two eigenvectors (e.g.\ Novembre et al 2008).  For consistency of presentation, we show the full Procrustes superimposition of the PC coordinate space around the geographic sampling locations.
+
+
+
+\section*{Acknowledgements}
+We would like to gratefully acknowledge XXX for helpful discussions.
+This work was supported in part by NSF grant \#1262645 (DBI) to PR and GC.
 
 
 \newpage
@@ -1075,7 +1092,7 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 			{\includegraphics[width=\textwidth,height=0.71\textwidth]{figs/globetrotter/globe_Ad_map_AfricaInset_realpr2.pdf}}
 		\subcaptionbox{Close-up of Eurasian populations \label{globe_eurasia_ad_map_realpr2}}
 			{\includegraphics[width=\textwidth,height=0.71\textwidth]{figs/globetrotter/eurasia_Ad_map_indproc_realpr2.pdf}}
-	\caption{Map of human populations from a different SpaceMix analysis (``Real\_Prior1" - inferred with admixture), using real geographic coordinates as population location priors. a) complete map; b) close-up of Eurasian populations}
+	\caption{Map of human populations from a different SpaceMix analysis (``Real\_Prior1'' - inferred with admixture), using real geographic coordinates as population location priors. a) complete map; b) close-up of Eurasian populations}
 	\label{sfig:globe_ad_maps_realpr2}
 \end{figure}
 
@@ -1087,7 +1104,7 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 			{\includegraphics[width=\textwidth,height=0.71\textwidth]{figs/globetrotter/globe_Ad_map_AfricaInset_realpr3.pdf}}
 		\subcaptionbox{Close-up of Eurasian populations \label{globe_eurasia_ad_map_realpr3}}
 			{\includegraphics[width=\textwidth,height=0.71\textwidth]{figs/globetrotter/eurasia_Ad_map_indproc_realpr3.pdf}}
-	\caption{Map of human populations from another SpaceMix analysis (``Real\_Prior2,"  inferred with admixture), 
+	\caption{Map of human populations from another SpaceMix analysis (``Real\_Prior2'',  inferred with admixture), 
 			using real geographic coordinates as population location priors. 
 			 a) complete map; b) close-up of Eurasian populations}
 	\label{sfig:globe_ad_maps_realpr3}

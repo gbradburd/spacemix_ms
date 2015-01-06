@@ -78,29 +78,25 @@
  
 
 \begin{abstract}
-The complex demographic histories of migration and population size change
-that have produced the distributions of genetic variation within modern populations
-can be difficult to infer and visually summarize,
-especially with a large number of geographically distributed samples.
-A general consequence of geographically limited dispersal
-is that samples from nearby locations tend to be more closely related
-than samples from distant locations,
-and so genetic covariance often recapitulates geographic proximity.
-We use genome-wide polymorphism data to build ``geogenetic maps'',
-which when applied to stationary populations,
-produces a map of the geographic positions of the populations,
-but with distances distorted to reflect historical rates of gene flow.
-In the underlying model, 
-allele frequency covariance is a decreasing function of geogenetic distance,
-and nonlocal gene flow such as admixture
-can be identified as anomalously strong covariance over long distances.
-This admixture is explicitly co-estimated and depicted as arrows,
-from the source of admixture to the recipient, on the geogenetic map.
-We demonstrate the utility of this method on a circum-Tibetan sampling of the greenish warbler (\textit{Phylloscopus trochiloides}), 
-in which we find evidence for gene flow between the adjacent, terminal populations of the ring species.  
+Geographic patterns of genetic variation within modern populations, 
+produced by complex histories of migration, 
+can be difficult to infer and visually summarize. 
+A general consequence of geographically limited dispersal 
+is that samples from nearby locations tend to be more closely related than samples from distant locations, 
+and so genetic covariance often recapitulates geographic proximity.  
+We use genome-wide polymorphism data to build ``geogenetic maps'', 
+which, when applied to stationary populations, 
+produces a map of the geographic positions of the populations, 
+but with distances distorted to reflect historical rates of gene flow.  
+In the underlying model, allele frequency covariance is a decreasing function of geogenetic distance, 
+and nonlocal gene flow such as admixture can be identified as anomalously strong covariance over long distances.  
+This admixture is explicitly co-estimated and depicted as arrows, 
+from the source of admixture to the recipient, on the geogenetic map.  
+We demonstrate the utility of this method on a circum-Tibetan sampling of the greenish warbler (Phylloscopus trochiloides), 
+in which we find evidence for gene flow between the adjacent, terminal populations of the ring species. 
 We also analyze a global sampling of human populations, for which we largely recover the geography of the sampling, 
 with support for significant histories of admixture in many samples.  
-This new tool for understanding and visualizing patterns of population structure
+This new tool for understanding and visualizing patterns of population structure 
 is implemented in a Bayesian framework in the program SpaceMix.
 \end{abstract}
 
@@ -470,9 +466,9 @@ In each of these scenarios, the estimated admixture proportion is less than that
 \end{figure}
 
 \section*{Empirical Applications}
-To the method, we analyzed population genomic data from two systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.  Maps showing our sampling in these two systems are given in Figure \ref{sfig:empirical_maps}, and information on the specific samples included is given in the Supplementary Materials, Tables \ref{tab:warbler_data_table} and \ref{tab:globe_data_table}.  
+To demonstrate the applications of this novel method, we analyzed population genomic data from two systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.  Maps showing our sampling in these two systems are given in Figure \ref{sfig:empirical_maps}, and information on the specific samples included is given in the Supplementary Materials, Tables \ref{tab:warbler_data_table} and \ref{tab:globe_data_table}.  
 For all analyses presented below, we used random `observed' locations as the priors on population locations.
-The geogenetic maps shown here were maximum a posteriori estimates (over all parameters). For clarity and ease of interpretation, we then present a full Procrustes superimposition of the inferred population locations ($G$) and their sources of admixture ($\identifyadmixsource{G}$), using the observed latitude and longitude of the sample/individuals to give a reference position and orientation.
+The geogenetic maps shown here were maximum a posteriori estimates (over all parameters). For clarity and ease of interpretation, we then present a full Procrustes superimposition of the inferred population locations ($G$) and their sources of admixture ($\identifyadmixsource{G}$), using the observed latitude and longitude of the samples/individuals to give a reference position and orientation.
 
 \begin{figure}
 	\centering
@@ -525,14 +521,14 @@ No individual drew appreciable admixture (see Figure \ref{sfig:warb_ind_adprops}
 }\label{sfig:warbler_ind_maps}
 \end{figure}
 
-There are, however, a number of obvious departures in the individual inferred geogenetic map from the population map.  The most obvious is that the location of a pair of \textit{nitidus} samples (in purple) is very far from the rest of the samples.  
+There are, however, a number of obvious departures in the individual geogenetic map from the population map.  The most obvious is that the location of a pair of \textit{nitidus} samples (in purple) is very far from the rest of the samples.  
 These individuals appear to be fairly close relatives:
 in the population-level analysis of Figure \ref{sfig:warb_pop_nugg}\subref{warb_pop_noad_nugg},
 this increase in shared ancestry was accounted for by a large nugget for the \textit{nitidus} population;
 but in the individual-level analysis, they cannot share a nugget parameter, 
 and must therefore choose a location close to each other and far from the rest of the samples.
 The same phenomenon seems to be at work in determining the locations of a pair of individuals, one identified as \textit{P. t. ludlowi} (Lud-MN3), one as \textit{P. t. trochiloides} (Tro-LN11), 
-as they also show an unusually low pairwise sequence divergence see Figure \ref{sfig:warb_ind_pwp}).
+as they also show an unusually low pairwise sequence divergence (see Figure \ref{sfig:warb_ind_pwp}).
 
 The split between \textit{viridanus} and \textit{plumbeitarsus} individuals (blue and red, respectively), in the north at the contact zone of the two waves of expansion, is clearer now than in the population-based analysis, as individuals from the Stolby population have moved to near their respective clusters. 
 Despite the fact that \textit{viridanus} and \textit{plumbeitarsus} individuals have moved away from each other in our geogenetic map, 
@@ -547,7 +543,7 @@ However, as discussed by \citet{novembre_interpreting_2008}, such patterns in PC
 The SpaceMix map also diverges from the observed map in the distribution of individuals from the subspecies \textit{ludlowi} (in green).  These samples were taken from seven sampling locations along the southwest margin of the Tibetan Plateau, but, in the SpaceMix analysis, they partition into two main clusters, one near the \textit{trochiloides} cluster, and one near the \textit{viridanus} cluster.  This break between samples from the same subspecies, which is concordant with the findings of \citet{alcaide2014genomic}, makes the \textit{ludlowi} cluster unusual compared to the estimated spatial distributions of the other subspecies (see Figure \ref{sfig:warb_ind_distcomp}), and suggests a break in historic or current gene flow.
 
 \subsection*{Human Populations}
-Human population structure is a complex product of the forces of migration and drift acting on both local and global scales, patterned by geography \citep{novembre_genes_2008, ralph2013geography} time \citep{skoglund2012origins, skoglund_investigating_2014}, admixture \citep{Hellenthal},  landscape and environment \citep{Beall2010, Bigham2010, Bradburd2013}, and shaped by culture \citep{reich_india_2009, Atzmon2010, moorjani_history_2011}. To visualize the patterns these processes have induced, we create a geogenetic map for a worldwide sample of modern human populations. In doing so we fully acknowledge that human history at these geographic scales has many aspects that are not well captured by isolation distance or simple admixture models. To simplify the discussion of our results, we talk about samples' locations and those of their sources of admixture, but of course both reflect the compounding of drift and gene flow over many historical processes.  We therefore urge caution in the interpretation our results, and view them as a simplistic but rich visualization of patterns of population structure in humans. 
+Human population structure is a complex product of the forces of migration and drift acting on both local and global scales, patterned by geography \citep{novembre_genes_2008, ralph2013geography}, time \citep{skoglund2012origins, skoglund_investigating_2014}, admixture \citep{Hellenthal},  landscape and environment \citep{Beall2010, Bigham2010, Bradburd2013}, and shaped by culture \citep{reich_india_2009, Atzmon2010, moorjani_history_2011}. To visualize the patterns these processes have induced, we create a geogenetic map for a worldwide sample of modern human populations. In doing so we fully acknowledge that human history at these geographic scales has many aspects that are not well captured by isolation distance or simple admixture models. To simplify the discussion of our results, we talk about samples' locations and those of their sources of admixture, but of course both reflect the compounding of drift and gene flow over many historical processes.  We therefore urge caution in the interpretation our results, and view them as a simplistic but rich visualization of patterns of population structure in humans. 
 
 We used a random subset of 10,000 SNPs from the SNP dataset of \citet{Hellenthal}, which is comprised of 1,490 individuals from 95 population samples (see Figure \ref{sfig:empirical_maps}\subref{human_map} for map of sampling), as well as the latitude and longitude attributed to each sample.  
 We ran two sets of SpaceMix analyses: in the first, we estimated population sample locations, 
@@ -558,7 +554,7 @@ which is unsurprising given the depth of recent attention on human admixture stu
 However, what is novel here is the ability to visualize these admixture events in a geographic context, 
 and that these admixture signals stand out against a null model of isolation by distance (rather than tree-based models).
 
-When population samples choose only their own locations, the map roughly recapitulates the geography of the samples (Figure \ref{sfig:globe_noad_maps}\subref{globe_all_noad_map}). This holds nicely  zooming in on the more heavily sampled area of Eurasia (Figure \ref{sfig:globe_noad_maps}\subref{globe_eurasia_noad_map}). We see that samples both in the Americas and in Oceania cluster close to the East Asian samples, but that the two clusters are on opposite sides.  The proximity of these groups to the East Asians represents the fact that both groups share an ancestral population in the relatively recent past with East Eurasian populations, but the two expansions occurred independently. As in our simulations (Figure \ref{sfig:lattice_scenarios}\subref{expansion_inference}) population expansions/bottlenecks have distorted the relationship between geographic and geogenetic distance. In the SpaceMix analysis of the human genetic data, the scale of inferred inter-population sample distance within Africa is much greater than that between any other group (see Figure \ref{sfig:globe_noad_distcomp}), and the slope of the relationship between observed and estimated geographic distances between populations on each continent decays with distance from Africa.  This pattern is consistent with a history of human colonization events characterized by serial bottlenecks \citep{Harpending_Rogers_2000,prugnolle_geography_2005,Ramachandran:05} following an out-of-Africa expansion, and subsequent expansions into Western Eurasia, East Asia, the Americas, and Oceania \citep[but see][for a discussion of other models]{pickrell_reich:14}. 
+When population samples choose only their own locations, the map roughly recapitulates the geography of the samples (Figure \ref{sfig:globe_noad_maps}\subref{globe_all_noad_map}), a result that holds nicely when we zoom in on the more heavily sampled area of Eurasia (Figure \ref{sfig:globe_noad_maps}\subref{globe_eurasia_noad_map}). We see that samples both in the Americas and in Oceania cluster close to the East Asian samples, but that the two clusters are on opposite sides.  The proximity of these groups to the East Asians represents the fact that both groups share an ancestral population in the relatively recent past with East Eurasian populations, but the two expansions occurred independently. As in our simulations (Figure \ref{sfig:lattice_scenarios}\subref{expansion_inference}) population expansions/bottlenecks have distorted the relationship between geographic and geogenetic distance. In the SpaceMix analysis of the human genetic data, the scale of inferred inter-population sample distance within Africa is much greater than that between any other group (see Figure \ref{sfig:globe_noad_distcomp}), and the slope of the relationship between observed and estimated geographic distances between populations on each continent decays with distance from Africa.  This pattern is consistent with a history of human colonization events characterized by serial bottlenecks \citep{Harpending_Rogers_2000,prugnolle_geography_2005,Ramachandran:05} following an out-of-Africa expansion, and subsequent expansions into Western Eurasia, East Asia, the Americas, and Oceania \citep[but see][for a discussion of other models]{pickrell_reich:14}. 
 
 \begin{figure}
 	\centering

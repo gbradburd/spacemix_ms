@@ -73,9 +73,9 @@ populations should be more closely related to nearby populations than to distant
 We use genome-wide polymorphism data to build a ``geogenetic map''
 that visualizes how populations are located with respect to one another under isolation by distance, 
 modeling allele frequency covariance as a decreasing function of geogenetic distance. 
-Within this framework, 
-historical admixture results in anomalously long distance covariance,
-and so we model admixture events as arrows, from a source of admixture to its target, on the inferred map.  
+Within this framework, we look for historical admixture (gene flow over unusually long geogenetic distances) 
+by identifying anomalously long distance allele frequency covariance, 
+and model admixture as arrows, from a source of admixture to its recipient, on the inferred map.
 We demonstrate the utility of this method on a circum-Tibetan sampling of the greenish warbler (\textit{Phylloscopus trochiloides}), in which we find evidence for gene flow between the adjacent, terminal populations of the ring species.  
 We also analyze a global sampling of human populations, for which we largely recover the geography of the sampling, with support for significant histories of admixture in many samples.  The implementation of this method, 
 called SpaceMix, provides a valuable new resource for understanding and visualizing patterns of population structure.

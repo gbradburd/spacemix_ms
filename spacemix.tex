@@ -58,7 +58,7 @@
 
 \geometry{a4paper}
 
-\title{A Spatial Framework for Understanding Population Structure and Admixture.}
+\title{A Spatial Framework for Understanding Population Structure and Admixture}
 \date{\vspace{-5ex}}
 \author{Gideon S. Bradburd$^{1,a}$, Peter L. Ralph$^{2,b}$, Graham M. Coop$^{1,c}$}
 
@@ -732,8 +732,8 @@ that samples parameter values from the posterior distribution.
 
 As motivation, consider several randomly mating (Wright-Fisher) populations
 that all split from an ancestral population
-in which a neutral allele is present at frequency $\epsilon_\ell$
-and subsequently exchange migrants.
+in which a neutral allele is present at frequency $\epsilon_\ell$,
+and then subsequently exchange migrants.
 Since the allele is neutral, the mean change in its frequency in each population after $t$ generations is zero,
 and if $t$ is much smaller than the population size (so the frequencies remain close to $\epsilon_\ell$), 
 the variance is proportional to $\sqrt{\epsilon_\ell (1-\epsilon_\ell)}$.
@@ -776,7 +776,7 @@ T_{ij} = \delta_{i,j}  -  \frac{\bar{S}_j}{\sum\limits_{k=1}^{K} \bar{S}_j	} \te
 where $\delta_{i,j}=1$ if $i=j$ and is 0 otherwise.
 If the covariance matrix of $Y$ is $\Omega^*$,
 then the covariance matrix of $\hat X_\ell$ would be $T^T \Omega^* T$.
-Since allowing $T$ to very by locus would be computationally infeasible,
+Since allowing $T$ to vary by locus would be computationally infeasible,
 we make one final assumption,
 that the covariance matrix of the standardized frequencies $\hat X_\ell$ at each locus is given by $T^T \Omega^* T$.
 This makes it inadvisable to include loci for which there are large differences in sample sizes across populations.
@@ -905,7 +905,7 @@ R = \text{min}\left(1, \frac{P(\widehat{\Omega} \mid \identifyadmixsource{\Omega
 Note that all of our moves, described below, are symmetric, so the Hastings ratio is always 1.
 If we accept our proposed move, $\Theta$ is replaced by $\Theta^{\prime}$ and this is recorded, otherwise $\Theta^{\prime}$ is discarded and we remain at $\Theta$. 
 
-\paragraph{Updates for $\vec{\alpha}$, $\eta$, and $w$.}
+\paragraph{Updates for $\vec{\alpha}$, $\eta$, and $w$}
 We propose updates to the values of the $\vec{\alpha}$, $\eta$, and $w$ parameters via a symmetric normal density with mean zero 
 and variance given by a tuning parameter specific to that parameter.  
 For example, $\alpha_0^{\prime} \sim \alpha_0 + \delta$, 
@@ -913,7 +913,7 @@ where $\delta \sim \mathcal{N}(0,\sigma_{\alpha_0}^2)$ and $\sigma_{\alpha_0}$ i
 For $\eta$ and $w$, each of which consists of $K$ parameters, each parameter receives its own independent tuning parameter. 
 If the proposed move takes the parameter outside the range of its prior, the move is rejected and we do not move in that iteration of the MCMC.
 
-\paragraph{Updates for geographic co-ordinates $G$ and $\identifyadmixsource{G}$}. Updates to the location parameters, $G$ and $\identifyadmixsource{G}$, are somewhat more complicated due to the curvature of the Earth.  Implementing updates via a symmetric normal density on estimated latitude and longitude directly would have the drawback of a) being naive to the continuity of the spherical manifold and b) vary the actual distance of the proposed move as a function of the current lat/long parameter values (e.g., a $1^{\circ}$ change in longitude at the equator is a larger distance than at the North Pole).  
+\paragraph{Updates for geographic coordinates $G$ and $\identifyadmixsource{G}$} Updates to the location parameters, $G$ and $\identifyadmixsource{G}$, are somewhat more complicated due to the curvature of the Earth.  Implementing updates via a symmetric normal density on estimated latitude and longitude directly would have the drawback of a) being naive to the continuity of the spherical manifold and b) vary the actual distance of the proposed move as a function of the current lat/long parameter values (e.g., a $1^{\circ}$ change in longitude at the equator is a larger distance than at the North Pole).  
 
 Instead, we propose a bearing and a distance traveled, and, given these two quantities and a starting position, calculate the latitude and longitude of the proposed update to the location.  For example, in an update to the location of population $i$, $G_i$, we propose a distance traveled $\Delta_{{G}_i}$, where, e.g., $\Delta_{G_i}  \sim | \mathcal{N}(0,\sigma_{{G}_i})|$, and a bearing, $\gamma$, where $\gamma \sim U(0,2\pi)$.  Then we use the following equations to calculate the latitude and longitude of the proposed location:
 \begin{align}
@@ -997,7 +997,7 @@ and the admixed populations are able to explain the high covariance they have wi
 rather than just via their inferred source of admixture and admixture proportion.  
 The reason they choose to do explain their anomalous covariance with their inferred location,
 rather than with their admixture source,
-is that we place a very harsh prior against admixture inference Table \ref{tab:param_prior_tab}.
+is that we place a very harsh prior against admixture inference (Table \ref{tab:param_prior_tab}).
 The prior is designed to make inference conservative with respect to admixture,
 but it has the side effect of skewing the posterior probability toward lower admixture proportions.
 
@@ -1177,12 +1177,6 @@ This work was supported in part by NSF grant \#1262645 (DBI) to PR and GC and NS
 \end{figure}
 
 \clearpage
-
-\begin{figure}
-\centering
-	{\includegraphics[width=5in,height=2.5in]{figs/globetrotter/globe_adprop.pdf}}
-	\caption{Credible intervals on estimated human sample admixture proportion parameters.}\label{sfig:globe_adprops}
-\end{figure}
 
 \clearpage
 

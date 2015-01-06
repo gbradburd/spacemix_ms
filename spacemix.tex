@@ -470,7 +470,7 @@ In each of these scenarios, the estimated admixture proportion is less than that
 \end{figure}
 
 \section*{Empirical Applications}
-To demonstrate the applications of this novel method, we analyzed population genomic data from two systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.  Maps showing our sampling in these two systems are given in Figure \ref{sfig:empirical_maps}, and information on the specific samples included is given in the Supplementary Materials, Tables \ref{tab:warbler_data_table} and \ref{tab:globe_data_table}.  
+To the method, we analyzed population genomic data from two systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.  Maps showing our sampling in these two systems are given in Figure \ref{sfig:empirical_maps}, and information on the specific samples included is given in the Supplementary Materials, Tables \ref{tab:warbler_data_table} and \ref{tab:globe_data_table}.  
 For all analyses presented below, we used random `observed' locations as the priors on population locations.
 The geogenetic maps shown here were maximum a posteriori estimates (over all parameters). For clarity and ease of interpretation, we then present a full Procrustes superimposition of the inferred population locations ($G$) and their sources of admixture ($\identifyadmixsource{G}$), using the observed latitude and longitude of the sample/individuals to give a reference position and orientation.
 
@@ -498,17 +498,17 @@ The libraries were prepared using a genotype-by-sequencing protocol and were run
 
 \begin{figure}
 	\centering
-		\subcaptionbox{Warbler population map, no admixture \label{warb_pop_noad}}
+		\subcaptionbox{Warbler geogenetic map, no admixture \label{warb_pop_noad}}
 			{\includegraphics[width=0.45\textwidth,height=0.375\textwidth]{figs/warblers/warb_pop_noad.pdf}}
-		\subcaptionbox{Warbler population map, with admixture \label{warb_pop_ad}}
+		\subcaptionbox{Warbler geogenetic map, with admixture \label{warb_pop_ad}}
 			{\includegraphics[width=0.45\textwidth,height=0.375\textwidth]{figs/warblers/population_warbler_ad_map_randpr1.pdf}}
 \caption{Inferred population maps with population labels colored as in Figure \ref{sfig:empirical_maps}\subref{irwin_map}: a) the map inferred with no admixture inference; b) the map inferred with admixture inference.}
 \label{sfig:warbler_pop}
 \end{figure}
 
-We first ran SpaceMix on the population dataset, with no admixture. The resulting inferred map (Figure \ref{sfig:warbler_pop}\subref{warb_pop_noad}) largely recapitulates the geography of the sampled populations around the ring.  The Turkish population (\textbf{TU}, \textit{Phylloscopus trochiloides} ssp.\ \textit{nitidus}) clusters with the populations in the subspecies \textit{ludlowi}, due to its recent expansion, but also chooses a relatively high nugget parameter (see Figure \ref{sfig:warb_pop_nugg}\subref{warb_pop_noad_nugg}), reflecting the population history it does not share with its \textit{ludlowi} neighbors.  In the North, where the twin waves of expansion around the Tibetan Plateau are hypothesized to meet, the inferred geogenetic distance between populations from either side of the ring was much greater than their observed geographic separation, reflecting the reproductive isolation between these adjacent forms (see Figure \ref{sfig:warb_pop_distcomp}).  
+We first ran SpaceMix on the population dataset, with no admixture. The resulting inferred map (Figure \ref{sfig:warbler_pop}\subref{warb_pop_noad}) largely recapitulates the geography of the sampled populations around the ring.  The Turkish population (\textbf{TU}, \textit{Phylloscopus trochiloides} ssp.\ \textit{nitidus}) clusters with the populations in the subspecies \textit{ludlowi}, due to its recent expansion, but also chooses a relatively high nugget parameter (see Figure \ref{sfig:warb_pop_nugg}\subref{warb_pop_noad_nugg}), reflecting the population history it does not share with its \textit{ludlowi} neighbors.  In the North, where the twin waves of expansion around the Tibetan Plateau are hypothesized to meet, the inferred geogenetic distance between populations from opposite sides of the ring was much greater than their observed geographic separation, reflecting the reproductive isolation between these adjacent forms (see Figure \ref{sfig:warb_pop_distcomp}).  
 
-We then ran the method allowing admixture (Figure \ref{sfig:warbler_pop}\subref{warb_pop_ad}). The only population sample with appreciable admixture is the Stolby sample ($w=0.19$ (95\% credible interval: 0.146-0.238).  This sample is known to be composed of an equal mixture of eastern \textit{plumbeitarsus} and western \textit{viridanus} individuals \citep{alcaide2014genomic}. Multiple runs agreed well on the level of admixture of the Stolby sample (see Figure \ref{sfig:warbler_pop_compare}). What does vary across runs is whether the Stolby sample chooses to locate itself by the \textit{viridanus} cluster and draw admixture from near the \textit{plumbeitarsus}  cluster or vise versa; however, this is to be expected given the 50/50 nature of the sample's makeup (Figure \ref{sfig:warbler_pop_compare}). The somewhat intermediate position of the Stolby sample, and its non-50/50 admixture proportion, likely partially reflect the influence of the priors (Figure \ref{sfig:warbler_pop_compare}). 
+We then ran the method allowing admixture (Figure \ref{sfig:warbler_pop}\subref{warb_pop_ad}). The only population sample with appreciable admixture is the Stolby sample (\textbf{ST}; $w=0.19$, 95\% credible interval: 0.146-0.238).  This sample is known to be composed of an equal mixture of eastern \textit{plumbeitarsus} and western \textit{viridanus} individuals \citep{alcaide2014genomic}. Multiple runs agreed well on the level of admixture of the Stolby sample (see Figure \ref{sfig:warbler_pop_compare}). What does vary across runs is whether the Stolby sample chooses to locate itself by the \textit{viridanus} cluster and draw admixture from near the \textit{plumbeitarsus}  cluster or vise versa; however, this is to be expected given the 50/50 nature of the sample's makeup (Figure \ref{sfig:warbler_pop_compare}). The somewhat intermediate position of the Stolby sample, and its non-50/50 admixture proportion, likely partially reflect the influence of the priors (Figure \ref{sfig:warbler_pop_compare}). 
 
 We repeated these analyses (with and without admixture) on an individual level (Figure \ref{sfig:warbler_ind_maps}).  
 No individual drew appreciable admixture (see Figure \ref{sfig:warb_ind_adprops} for admixture proportions), and so we discuss the results with admixture (those without admixture are nearly identical, see Figure \ref{sfig:warbler_ind_maps_compare}).  As with the analysis on multi-sample populations, the results approximately mirror the geography of the individuals.
@@ -631,17 +631,17 @@ Due to the linearity of PCs, many higher order PCs
 have to correspond to higher order functions of positional information under isolation by distance, 
 and are therefore needed to explain the bulk of the variance \citep{novembre_interpreting_2008}. 
 These higher order PCs can be hard to interpret in empirical data (see discussion in the warbler section).
+The recently introduced SPA approach \citep{yang_model-based_2012},
+since it assumes allele frequencies are monotonically increasing in a given direction,
+may also suffer from this problem
+(although we note that PCA and SPA both have significant speed advantages over SpaceMix).  
 
 In comparison, if isolation by distance holds then (nearly) all of the variance will be captured by SpaceMix in the inferred geogenetic positions 
 (to the extent to which the parametric form of the covariance is flexible enough to capture the empirical decay of covariance with distance). 
-The recently introduced SPA approach \citep{yang_model-based_2012} also has this advantage, 
-but only really makes use of loci that conform to particular spatial patterns,
-so it is making use of less of the data and is less flexible 
-(although we note that PCA and SPA both have significant speed advantages over SpaceMix).  
 The application of SpaceMix to humans nicely illustrates the utility of our approach: 
 the first two PCs of this dataset resemble a boomerang (Figure \ref{sfig:globe_PCA_map}), 
 with its arms corresponding to the Africa/Non-Africa split and the spread of populations across Eurasia. 
-In contrast, while the SpaceMix geogenetic map is dominated by the out of Africa drift, 
+In contrast, while the SpaceMix geogenetic map is dominated by the genetic drift induced by migration out of Africa,
 it also captures much more detail than is contained in the first two PCs (e.g., Figure \ref{sfig:globe_ad_maps}\subref{globe_eurasia_ad_map}).
 This comparison is also nicely illustrated by the example in Figure \ref{sfig:line_scenario}.
 
@@ -696,9 +696,9 @@ A null model inspired by models of LD under isolation by distance models \citep{
 allowing the covariance among alleles to decay with their geographic distance and the recombination distance between the loci. 
 In such a framework, sources and time-scales of admixture could be identified through unusually long-distance LD between geographically separated populations. 
 
-The landscape of allele frequencies on which the location of the samples 
-(and those of the sources of admixture for the sampled populations) 
-are estimated is entirely informed by the placement of other modern samples.  
+The landscape of allele frequencies on which the location of populations that were the source of population's admixture
+are estimated is entirely informed by the placement of other modern samples,
+even those the admixture events may have occurred many generations ago.
 This immediately leads to the caveat that, instead of ``location of the parental population'',
 we should refer to the ``location of the closest descendants of the parental population''.
 The increased sequencing of ancient DNA \citep[see][for a recent review]{pickrell_reich:14} promises an interesting way forward on that front,
@@ -977,8 +977,8 @@ The lines show the expected covariance under isolation by distance that each pop
     Lines show the covariances populations A, C, and D would have with population B as a function of B's location,
     with no admixture,
     under the parametric form of equation \eqref{eq:spatial_covariance}.
-    Dots above `B' show the covariances observed with B at that location if B has 40\% admixture from D;
-    note that there is no single spatial location with unadmixed covariances remotely similar to these.
+    The colored dots above `B' show the covariances observed with B at that location if B has 40\% admixture from D.
+    There is no single spatial location with unadmixed covariances remotely similar to these.
     } \label{sfig:toy_admixture}
 \end{figure}
 

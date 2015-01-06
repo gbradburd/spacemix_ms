@@ -7,3 +7,5 @@ spacemix.pdf
 *.top
 *.tui
 .DS*
+*.blg
+*.out

@@ -48,6 +48,10 @@
 \newcommand{\kadmixsource}[1]{{$G^{*}_{#1}$}}
 \newcommand{\identifyadmixsource}[1]{{#1^{*}}}
 \newcommand{\given}{\mid}
+% refer to section by name
+\newcommand{\secref}[1]{``\nameref{#1}''}
+
+
 \newcommand{\gb}[1]{{\it\color{magenta}{(#1)}}}
 \newcommand{\plr}[1]{{\it\color{purple}{(#1)}}}
 \newcommand{\gc}[1]{{\it\color{blue}{(#1)}}}
@@ -189,19 +193,20 @@ The implementation of this method, SpaceMix, is available at \href{https://githu
 The genetic data we model consist of allele counts
 at $L$ unlinked, bi-allelic single nucleotide polymorphisms (SNPs), sampled across $K$ populations.
 After arbitrarily choosing an allele to count at each locus, 
-denote the number of counted alleles at locus $\ell$ in population $k$ as $C_{\ell,k}$,
-and the total number of alleles observed as $S_{\ell,k}$.
-The sample frequency at locus $\ell$ in population $k$ is $\hat{f}_{\ell,k} = C_{\ell,k}/S_{\ell,k}$.  
-Although we will refer to ``populations'', each could consist of a single individual ($S_{\ell,k}=2$ for a diploid).
+denote the number of counted alleles at locus $\ell$ in population $k$ as $C_{k,\ell}$,
+and the total number of alleles observed as $S_{k,\ell}$.
+The sample frequency at locus $\ell$ in population $k$ is $\hat{f}_{k,\ell} = C_{k,\ell}/S_{k,\ell}$.  
+Although we will refer to ``populations'', each could consist of a single individual ($S_{k,\ell}=2$ for a diploid).
 We will depict results as coordinates on a map; however, the method does not require user-specified sampling locations.
 
 We first compute standardized sample allele frequencies at locus $\ell$ in population $k$, by
 \begin{equation}
   \label{eq:standardized_sample_freqs}
-  \hat{X}_{\ell,k} = (\hat{f}_{\ell,k}  - \bar{f}_{\ell})/\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}\text{,}
+  \hat{X}_{k,\ell} = (\hat{f}_{k,\ell}  - \bar{f}_{\ell})/\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}\text{,}
 \end{equation}
-where $\hat{f}_{\ell,k}$ is the sample allele frequency at locus $\ell$ in population $k$, 
-and $\bar{f}_{\ell}$ is the average of the $K$ sample allele frequencies.
+where $\hat{f}_{k,\ell}$ is the sample allele frequency at locus $\ell$ in population $k$, 
+and $\bar{f}_{\ell}$ is the average of the $K$ sample allele frequencies,
+weighted by mean population size.
 This normalization is widely used \citep[e.g.][]{nicholson2002,Patterson2006};
 mean-centering makes the result invariant to choice of which allele to count at each locus,
 and dividing by $\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}$ makes each locus have roughly unit variance in some sense.
@@ -209,7 +214,7 @@ and dividing by $\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}$ makes each locus have 
 We work with the empirical covariance matrix of these standardized sample allele frequencies,
 calculated across loci, namely, $\widehat{\Omega} = (1/L)  \hat{X}\hat{X}^T$.
 Using the sample mean to mean-center $\hat X$ has implications on their covariance structure, discussed in the Methods 
-(``Deriving the standardized sample covariance'').
+(\secref{ss:cov_methods}).
 For clarity, here we proceed as if $\bar{f}_{\ell}$ were instead an unobserved, global mean allele frequency at locus $\ell$.
 
 \paragraph{Spatial Covariance Model}
@@ -241,7 +246,7 @@ resulting in the covariance matrix for standardized sample frequencies
 \Omega_{i,j} =F(D_{i,j}) + \delta_{i,j} \big(\frac{1}{\bar{S_{i}}} + \eta_{i} \big) \text{,}
 \end{equation} 
 where $\delta_{i,j}=1$ if $i=j$ and is $0$ otherwise,
-$\eta_k$ is a sample-specific variance term (nugget) for sample $k$ representing allele frequency variance not accounted for by the spatial model,
+$\eta_k$ is a nonnegative sample-specific variance term (nugget) to account for variance specific to population $k$ that is not accounted for by the spatial model,
 and $\bar{S}_k$ is the mean sample size across all loci in population $k$,
 so that $1/\bar{S_k}$ accounts for the variance introduced by sampling within the population.
 
@@ -383,7 +388,7 @@ With no nugget, each allele would be sampled independently, but the nugget intro
 With this addition, the parametric covariance matrix before given by \eqref{eq:spatial_covariance2}
 becomes a function of all the pairwise spatial covariances between the locations of populations $i$ and $j$ and the points from which they draw admixture 
 (illustrated in Figure \ref{sfig:admixed_cov_diagram});
-now, we model the covariance between $\hat X_{\ell,i}$ and $\hat X_{\ell,j}$, for each $\ell$, as
+now, we model the covariance between $\hat X_{k,\ell}$ and $\hat X_{k,\ell}$, for each $\ell$, as
 \begin{align}
 \label{eq:admixed_covariance_1}\begin{split}
 \identifyadmixsource{\Omega_{i,j}} = 
@@ -707,82 +712,102 @@ so that modern day samples may draw admixture from coordinates estimated in spac
 
 \newpage
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Methods}
-As described above, we have developed an algorithm, called SpaceMix, that uses the standardized sample allele frequency covariance and the the likelihood equation in equation \eqref{eq:admixed_post_prob} to simultaneously estimate the posterior distribution of the population locations, $G$, their sources of admixture, $\identifyadmixsource{G}$, their admixture proportions, $w$, their independent drift parameters, $\eta$, and the parameters of the model of isolation by distance, $\vec{\alpha}$.  The inference procedure has two main components: (1) the derivation of the standardized sample allele frequency covariance matrix, and (2) a Markov chain Monte Carlo algorithm that samples parameter values from the posterior distribution.  Here, we describe these procedures in detail.
 
-\subsection*{Deriving the standardized sample covariance}
+Here we describe in more detail the algorithm we use to estimate the posterior distribution defined by \eqref{eq:admixed_post_prob} 
+of the population locations, $G$, 
+their sources of admixture, $\identifyadmixsource{G}$, 
+their admixture proportions, $w$, 
+their independent drift parameters, $\eta$, 
+and the parameters of the model of isolation by distance, $\vec{\alpha}$.  
+First, we give the exact form of the covariance matrix we use,
+and then describe the Markov chain Monte Carlo algorithm 
+that samples parameter values from the posterior distribution.
 
-We assume that the sample allele frequencies at locus $\ell$ across populations are given by
 
-\begin{equation}
-\hat{f}_{\ell} \sim MVN(\epsilon_{\ell}, \epsilon_{\ell} (1-\epsilon_{\ell})\Omega)
-\end{equation}
+\subsection*{The standardized sample covariance}
+\label{ss:cov_methods}
 
-where $\Omega$ is the covariance matrix that describes shared population history between populations, $\epsilon_{\ell}$ is the ancestral mean frequency at that locus, and $\epsilon_{\ell}(1 - \epsilon_{\ell})  \frac{1}{\bar{S}}$ on the diagonal of the covariance matrix captures, to first approximation, the effects of sampling.
+As motivation, consider several randomly mating (Wright-Fisher) populations
+that all split from an ancestral population
+in which a neutral allele is present at frequency $\epsilon_\ell$
+and subsequently exchange migrants.
+Since the allele is neutral, the mean change in its frequency in each population after $t$ generations is zero,
+and if $t$ is much smaller than the population size (so the frequencies remain close to $\epsilon_\ell$), 
+the variance is proportional to $\sqrt{\epsilon_\ell (1-\epsilon_\ell)}$.
+Conveniently, additional variance introduced by binomial sampling of alleles
+is also proportional to $\sqrt{\epsilon_\ell (1-\epsilon_\ell)}$.
+It would then be natural to consider the covariance matrix of 
+\begin{align}
+  X_{k,\ell} = \frac{ \hat f_{k,\ell} - \epsilon_\ell }{ \sqrt{ \epsilon_\ell (1- \epsilon_\ell) } } ,
+\end{align}
+since these standardized allele frequencies would be independent if the loci are unlinked,
+and would have mean zero and variance independent of the sample sizes or allele frequencies.
+The central limit theorem would then imply that in the limit of a large number of loci, 
+the sample covariance matrix $X^T X$ is Wishart with degrees of freedom equal to the number of loci
+and mean determined by the pattern of migration.
 
-If we knew $\epsilon$, we could calculate an estimate of the covariance matrix ($\Omega$) across loci as 
-
-\begin{equation}
-\label{eq:sample_cov}
-\widehat{\Omega} = \frac{1}{L} \sum_{\ell=1}^{L} \frac{(\hat{f}_{\ell_{\ell}}  - \epsilon_{\ell}) (\hat{f}_{\ell}  - \epsilon_{\ell})^T}{\epsilon_{\ell}(1-\epsilon_{\ell})} \text{.}
-\end{equation}
-
-Then, if we define the standardized sample allele frequencies, $X_\ell$, as
-
-\begin{equation}
-X_\ell = (\hat{f}_{\ell}  - \epsilon_{\ell})/\sqrt{\epsilon_{\ell}(1-\epsilon_{\ell})}\text{,}
-\end{equation}
-
-the expression given in equation \eqref{eq:sample_cov} gives the sample covariance matrix of the standardized sample allele frequencies. Then $L\widehat{\Omega} = X X^T$  is Wishart distributed with degrees of freedom equal to the number of loci ($L$) across which the covariance is calculated. 
-
-However, we do not get to observe the `ancestral' frequencies ($\epsilon$). 
-Instead we mean-center and normalize the observations at a locus using the weighted mean sample frequency in place of $\epsilon_{\ell}$.
-Recall that the sample allele frequency at locus $\ell$ in population $k$ is given by $\hat{f}_{\ell,k} = C_{\ell,k}/S_{\ell,k}$,  
-where $C_{\ell,k}$ is the number of (arbitrarily chosen) counted alleles,
-and $S_{\ell,k}$ is the total number of sampled alleles.
-We wish to calculate a sample mean frequency at each locus weighted by the sample size in each population.  As sample size may vary across loci, we first calculate $\bar{S}_k$, the mean sample size in population $k$, as $\bar{S}_k = \frac{1}{L}\sum_{\ell=1}^L S_{\ell,k}$.  We then calculate the weighted sample mean frequency at locus $\ell$ 
-
+Although the conditions are not strictly met, 
+these theoretical considerations indicate that such a normalization may be a reasonable thing to do,
+even after substituting the empirical mean allele frequency $\bar f_\ell$ in place of $\epsilon_\ell$,
+which is what we do to define $\hat X_{k,\ell}$ in equation \eqref{eq:standardized_sample_freqs}.
+Recall that the sample allele frequency at locus $\ell$ in population $k$ is given by $\hat{f}_{k,\ell} = C_{k,\ell}/S_{k,\ell}$,  
+where $C_{k,\ell}$ is the number of (arbitrarily chosen) counted alleles,
+and $S_{k,\ell}$ is the total number of sampled alleles.
+As sample size may vary across loci, we first calculate $\bar{S}_k$, 
+the mean sample size in population $k$, 
+as $\bar{S}_k = \frac{1}{L}\sum_{\ell=1}^L S_{k,\ell}$.  
+We then compute the global mean allele frequency at locus $\ell$ as
 \begin{equation}
 \label{eq:sample_mean_freq}
-\bar{f}_{\ell} = \frac{1}{\sum_K S_{\ell,k}} \sum_K \hat{f}_{\ell,k} S_{\ell,k}
-\end{equation}
-We refer to the mean standardized allele frequency in population $k$ as $\hat{X}_{\ell,k}$ and calculate them as follows:
-
-\begin{equation}
-\hat{X}_{\ell,k} = \frac{ \hat{f}_{\ell,k} - \bar{f}_{\ell} } {\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}}
+\bar{f}_{\ell} = \frac{1}{\sum_K S_{k,\ell}} \sum_K \hat{f}_{k,\ell} S_{k,\ell} .
 \end{equation}
 
-If sample size were constant across all loci in each population, this would be equivalent to taking our variance-normalized vector of sample frequencies
+If sample size were constant across all loci in each population, this would be equivalent to defining the variance-normalized sample frequencies
 \begin{equation}
-\hat{Y}_{\ell} = \frac{ \hat{f}_{\ell,k} } {\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}}
+\hat{Y}_{k,\ell} = \frac{ \hat{f}_{k,\ell} } {\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}}
 \end{equation}
-and writing $\hat{X}_{\ell} = T Y_{\ell} $ where $T$ is the mean centering matrix, whose elements are given by
+and writing $\hat{X}_{\ell} = T Y_{\ell} $ where $T$ is the mean centering matrix whose elements are given by
 \begin{equation}
 T_{ij} = \delta_{i,j}  -  \frac{\bar{S}_j}{\sum\limits_{k=1}^{K} \bar{S}_j	} \text{,}
 \end{equation}
-and $\delta_{i,j}$ here is 1 when $i=j$ and 0 otherwise.
-Therefore, we assume that
-\begin{equation}
-\hat{X_{\ell}} \sim MVN(0, T^T \Omega T) \text{.}
-\end{equation}
-The mean centering acts to to reduce the covariance among populations in $\hat{X}_{\ell}$ compared to $\hat{f}_{\ell}$, and can induce negative covariance between more unrelated populations (as, across loci, they are often on opposite sides of the mean). In addition, the covariance matrix of the standardized frequencies has rank $K-1$ rather than $K$.
+where $\delta_{i,j}=1$ if $i=j$ and is 0 otherwise.
+If the covariance matrix of $Y$ is $\Omega^*$,
+then the covariance matrix of $\hat X_\ell$ would be $T^T \Omega^* T$.
+Since allowing $T$ to very by locus would be computationally infeasible,
+we make one final assumption,
+that the covariance matrix of the standardized frequencies $\hat X_\ell$ at each locus is given by $T^T \Omega^* T$.
+This makes it inadvisable to include loci for which there are large differences in sample sizes across populations.
+This mean centering acts to to reduce the covariance among populations in $\hat{X}_{\ell}$ compared to $\hat{f}_{\ell}$, and can induce negative covariance between more unrelated populations (as, across loci, they are often on opposite sides of the mean). 
 
-This means that $T^T \Omega T$ is not invertible, and the corresponding Wishart distribution is singular.
+Additionally, the covariance matrix of the standardized frequencies has rank $K-1$ rather than $K$,
+and so the corresponding Wishart distribution is singular.
 To circumvent this problem we compute the likelihood of a $(K-1)$-dimensional projection of the data.
 Any projection would do; we choose a projection matrix $\Psi$ by dropping the last column of the orthogonal matrix in the QR decomposition of $T$,
-and compute the likelihood of the projected data $\Psi^T Y$, which is
+and compute the likelihood of the empirical covariance matrix of allele frequencies $\widehat\Omega = \hat X^T \hat X$ as
 \begin{equation} \label{eq:projected_wishart_dist}
-P(\widehat{\Omega} \mid \Omega) = \mathcal{W}\left( \Psi^T YY^T \Psi \mid  \Psi^{T}   \Omega   \Psi,L \right) \text{.}
+  P(\widehat{\Omega} \given \Omega^*) = \mathcal{W}\left( L \Psi^T X^T X \Psi \given  \Psi^{T} \Omega^* \Psi, L \right) \text{.}
 \end{equation}
 
+
+%%%%%%%%%%%%%%%
 \subsection*{Markov chain Monte Carlo Inference Procedure}
-The inference algorithm described here may be used to estimate the parameters of any of four possible models: (1) population locations are stationary, and they do not draw any admixture; (2) populations may choose their own locations, but not admixture; (3) populations may draw admixture, but are themselves stationary; (4) populations may both choose their own locations and draw admixture.  The free parameters in each of these models are given in Table \ref{tab:model_options}.
+
+The inference algorithm described here may be used to estimate the parameters with any of these held fixed,
+for  instance:
+(1) population locations are fixed, and they do not draw any admixture; 
+(2) populations may choose their own locations, but not admixture; 
+(3) populations may draw admixture, but their own locations are fixed; or
+(4) populations may both choose their own locations and draw admixture.  
+The free parameters for each of options are given in Table \ref{tab:model_options}.
 
 \begin{centering}
 \begin{table}
 \begin{tabular}{| >{\centering\arraybackslash}m{6cm} | >{\centering\arraybackslash}m{3cm} | l |}
 	\hline
-	\textbf{Model} & \textbf{No. Free Parameters} & \textbf{Parameters}\\ \hline
+	\textbf{Model} & \textbf{\# of Free Parameters} & \textbf{Parameters}\\ \hline
 	stationary population locations, no admixture & $K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta$	\\ \hline
 	inferred population locations, \hspace{0.5cm}no admixture & $2K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta,G$	\\ \hline
 	stationary population locations, inferred admixture & $2K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta,\identifyadmixsource{G},w$	\\ \hline
@@ -796,7 +821,7 @@ The inference algorithm described here may be used to estimate the parameters of
 \end{centering}
 
 Below, we outline the inference procedure for the most parameter-rich model (inference on both population locations, their sources of admixture, and the proportions in which they draw admixture, in addition to inference of the parameters of the spatial covariance function).
-We use a Bayesian MCMC approach to parameter inference, and specify priors on all parameters.  A table of all parameters, their descriptions, and their priors is given in Table \ref{tab:param_prior_tab}.
+A table of all parameters, their descriptions, and their priors is given in Table \ref{tab:param_prior_tab}.
 
 \begin{centering}
 \begin{table}
@@ -816,41 +841,45 @@ We use a Bayesian MCMC approach to parameter inference, and specify priors on al
 		the nugget in population $k$ (population specific drift parameter)  & 
 		$\eta_k \sim Exp(\lambda = 1)$\\ \hline
 	$\boldsymbol{G_k}$ & 
-		the estimated location of population $k$ &
+		the geogenetic location of population $k$ &
 		 $G_k \sim \mathcal{N}(\mu = G^{(obs)}_k,\sigma = \frac{1}{2}\bar{D}(G^{(obs)}))$ \\ \hline
 	$\boldsymbol{w_k}$ &
 		the proportion of admixture in population $k$ &
 		$2 w_k \sim \beta(\alpha = 1,\beta = 100)$  \\ \hline
 	$\boldsymbol{\identifyadmixsource{G_k}}$ &
-		the estimated location of the source of admixture in population $k$ &
+		the geogenetic location of the source of admixture in population $k$ &
 		$\identifyadmixsource{G_k} \sim \mathcal{N}(\mu = \bar{G^{(obs)}},\sigma = 2 \bar{D}(G^{(obs)}))$ \\
 	\hline
 \end{tabular}
-\caption{List of parameters used in the SpaceMix models, along with their descriptions and priors.}\label{tab:param_prior_tab}
+\caption{
+List of parameters used in the SpaceMix models, along with their descriptions and priors.
+$\bar{D}(G^{(obs)})$ is the mean of the pairwise distances between observed locations $G^{(obs)}$.
+}\label{tab:param_prior_tab}
 \end{table}
 \end{centering}
 
-Our inference algorithm proceeds is described in excruciating detail below.
+We now specify in detail the Markov chain Monte Carlo algorithm we use to sample from the posterior distribution on the parameters,
+for Bayesian inference.
 
 We assume that the user has specified the following data: 
 \begin{itemize}
-\item the allelic count data, $C$, from $K$ population over $L$ variant loci, where $C_{\ell,k}$ gives the number of observations of a given allele at locus $\ell$ in population $k$. 
-\item the sample size data, $S$, from $K$ population over $L$ variant loci, where $S_{\ell,k}$ gives the number of haplotypes sampled at locus $\ell$ in population $k$.
+\item the allelic count data, $C$, from $K$ population over $L$ variant loci, where $C_{k,\ell}$ gives the number of observations of a given allele at locus $\ell$ in population $k$. 
+\item the sample size data, $S$, from $K$ population over $L$ variant loci, where $S_{k,\ell}$ gives the total number of alleles typed at locus $\ell$ in population $k$.
 \end{itemize}
 
 It is not necessary, but a user may also specify 
 \begin{itemize}
-\item the geographic sampling locations, $G^{(obs)}$, from each of the $K$ populations, where $G^{(obs)}_k$ gives the longitude and latitude of the sampled individual(s).
+  \item the geographic sampling locations, $G^{(obs)}$, from each of the $K$ populations, where $G^{(obs)}_k$ gives the longitude and latitude of the $k^\mathrm{th}$ sampled individual(s).
 \end{itemize}
 
 The geographic location data may be missing, or generated randomly, for some or all of the samples; if so, the spatial priors on estimated population locations, $G$, and their sources of admixture, $\identifyadmixsource{G}$ will not be tethered to the true map. 
 
 \paragraph{Initiating the MCMC}
-We then calculate the standardized sample covariance matrix $\widehat{\Omega}$ as outlined in the section ``Deriving the standardized sample covariance'' above.  We calculate $\bar{S_k}$, the mean sample size across loci for population $k$, for each population as part of the standardization of the sample allele frequencies, and for use as $1/\bar{S_k}$ as part of the spatial covariance function detailed in \eqref{eq:spatial_covariance2}.
+We then calculate the standardized sample covariance matrix $\widehat{\Omega}$ as described in the section \secref{ss:cov_methods} above,
+as well as $\bar{S_k}$, the mean sample size across loci for each population.
+Armed with the standardized sample covariance, the geographic sampling locations, and the inverse mean sample sizes across samples ($\widehat{\Omega}$, $G^{(obs)}$, $1/\bar{S_k}$), we embark upon the analysis.
 
-Armed with the standardized sample covariance, the geographic sampling locations, and the inverse mean sample sizes across samples ($\widehat{\Omega}$, $G^{(obs)}$, $1/\bar{S_k}$), we may embark upon our analysis.
-
-To initiate our MCMC, we specify starting values for each parameter.  We draw initial values for $\alpha_0$, $\alpha_1$, $\alpha_2$, $\eta$, and $w$ randomly from their priors.  We initiate $G$ at user-specified geographic sampling locations and $\identifyadmixsource{G}$ at randomly drawn, uniformly distributed values of latitude and longitude in the observed range of both axes.  
+To initiate the chain, we specify starting values for each parameter.  We draw initial values for $\alpha_0$, $\alpha_1$, $\alpha_2$, $\eta$, and $w$ randomly from their priors.  We initiate $G$ at user-specified geographic sampling locations and $\identifyadmixsource{G}$ at randomly drawn, uniformly distributed values of latitude and longitude in the observed range of both axes.  
 
 \paragraph{Overview of MCMC procedure}
 We use a Metropolis-Hastings update algorithm. 
@@ -865,23 +894,24 @@ This gives us a proposed update to our set of parameters $\Theta^{\prime}$, whic
 The set of locations of populations and their sources of admixture specify a pairwise geographic distance matrix $D$, 
 which, given the current $\vec{\alpha}$ and $\eta$ parameters, 
 gives the admixed covariance matrix described in \eqref{eq:admixed_covariance_1}, $\identifyadmixsource{\Omega}$.  
-We then calculate the likelihood of the standardized sample covariance $\widehat{\Omega}$ 
-following equation \eqref{eq:projected_wishart_dist} for the current set of parameters 
-$P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}(\Theta))$ and our proposed update to our set of parameters 
-$P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}(\Theta^{\prime}))$. 
-We then calculate the prior probabilities of both sets of parameter values, $P(\Theta^{\prime}),~P(\Theta) $, 
-following the priors given in Table \ref{tab:param_prior_tab}.
-
-We combine these together to give the Metropolis-Hastings ratio, \emph{R}, the probability of accepting the proposed parameter values $\Theta^{\prime}$:
+The likelihood of the two sets of parameters $\Theta$ and $\Theta'$, 
+calculated with \eqref{eq:projected_wishart_dist} and the priors of Table \ref{tab:param_prior_tab},
+combine to give the Metropolis-Hastings ratio, \emph{R}, the probability of accepting the proposed parameter values $\Theta^{\prime}$:
 \begin{equation}
 R = \text{min}\left(1, \frac{P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}(\Theta^{\prime}))} {P(\widehat{\Omega} \mid \identifyadmixsource{\Omega}(\Theta))} 
 				\frac{P(\Theta^{\prime})}{P(\Theta)} 	\right) \text{,}
 \label{eq:MH_algorithm}
 \end{equation}
-Note that all of our moves, described below, are symmetric, so the Hastings ratio cancels through. If we accept our proposed move, $\Theta$ is replaced by $\Theta^{\prime}$ and this is recorded, otherwise $\Theta^{\prime}$ is discarded and we remain at $\Theta$. 
+Note that all of our moves, described below, are symmetric, so the Hastings ratio is always 1.
+If we accept our proposed move, $\Theta$ is replaced by $\Theta^{\prime}$ and this is recorded, otherwise $\Theta^{\prime}$ is discarded and we remain at $\Theta$. 
 
 \paragraph{Updates for $\vec{\alpha}$, $\eta$, and $w$.}
-We propose updates to the values of the $\vec{\alpha}$, $\eta$, and $w$ parameters via a symmetric normal density with mean zero and its own variance given by the scale of the tuning parameter for that parameter.  For example $\alpha_0^{\prime} \sim \alpha_0 + \delta$, where $\delta \sim \mathcal{N}(0,\sigma_{\alpha_0})$ and $\sigma_{\alpha_0}$ is scale of the tuning parameter for $\alpha_0$.  For $\eta$ and $w$, each of which consists of $K$ parameters, each parameter receives its own independent tuning parameter scale. If the proposed move takes the parameter outside the range of its prior, the move is rejected and we do not move in that iteration of the MCMC.
+We propose updates to the values of the $\vec{\alpha}$, $\eta$, and $w$ parameters via a symmetric normal density with mean zero 
+and variance given by a tuning parameter specific to that parameter.  
+For example, $\alpha_0^{\prime} \sim \alpha_0 + \delta$, 
+where $\delta \sim \mathcal{N}(0,\sigma_{\alpha_0}^2)$ and $\sigma_{\alpha_0}$ is the tuning parameter for $\alpha_0$.  
+For $\eta$ and $w$, each of which consists of $K$ parameters, each parameter receives its own independent tuning parameter. 
+If the proposed move takes the parameter outside the range of its prior, the move is rejected and we do not move in that iteration of the MCMC.
 
 \paragraph{Updates for geographic co-ordinates $G$ and $\identifyadmixsource{G}$}. Updates to the location parameters, $G$ and $\identifyadmixsource{G}$, are somewhat more complicated due to the curvature of the Earth.  Implementing updates via a symmetric normal density on estimated latitude and longitude directly would have the drawback of a) being naive to the continuity of the spherical manifold and b) vary the actual distance of the proposed move as a function of the current lat/long parameter values (e.g., a $1^{\circ}$ change in longitude at the equator is a larger distance than at the North Pole).  
 
@@ -893,29 +923,34 @@ Instead, we propose a bearing and a distance traveled, and, given these two quan
 \end{align}
 and
 \begin{align}
-\text{proposed longitude} = & - \pi + (\text{current longitude} \; - \\ \notag
-					 	&\hspace{1cm} \arctan(
-							\sin(\gamma) \times
-							\sin(\Delta) \times
-							\cos(\text{current latitude}) , \\ \notag
-						& \hspace{2cm} \cos(\Delta) - 
-							\sin(\text{current latitude}) \times \\ \notag
-						& \hspace{2cm} \sin(\text{proposed latitude})) + \pi) \; \bmod (2\pi) \\ \notag
+  \begin{split}
+    & \text{proposed longitude} =  \text{current longitude} \\
+    & \quad {} - \arctan\left(
+                        \frac{
+							\sin(\gamma)
+							\sin(\Delta) 
+                            \cos(\text{current latitude}) 
+                          }{
+                           \cos(\Delta) - 
+                           \sin(\text{current latitude}) 
+                          \sin(\text{proposed latitude})
+                        } \right) ,
+    \end{split}
 \end{align}
-
-where latitude and longitude are given in radians.  As with $\eta$ and $w$, the scales of the tuning parameters for the different populations and different location parameters ($G$ and $\identifyadmixsource{G}$) are independent.
+where latitude and longitude are given in radians and are taken ${}\bmod 2\pi$.
+As with $\eta$ and $w$, each population's location and admixture source location parameters have their own tuning parameters.
 
 
 \paragraph{Adaptive Metropolis-within-Gibbs proposal mechanism}
 We use an adaptive Metropolis-within-Gibbs proposal mechanism on each parameter \citep{roberts2009examples,rosenthal2010_optimal}.  This mechanism attempts to maintain an acceptance proportion for each parameter as close as possible to 0.44 \citep[optimal for one-dimensional proposal mechanisms;][]{Roberts1997,Roberts2001}.  We implement this mechanism by creating, for each variable $i$, an associated variable $\zeta_i$, which gives the log of the standard deviation of the normal distribution from which parameter value updates are proposed.  As outlined above, in the cases of \{$\eta$, $w$, $G$, $\identifyadmixsource{G}$\}, for which each population receives a free parameter, each population gets its own value of $\zeta$.  
 
-When we start our MCMC, $\zeta_i$ for all parameters is initiated at a value of 0, which gives a proposal distribution variance of 1.  We then proceed to track the acceptance rate, $r_i$ for each parameter in windows of 50 MCMC iterations, and, after the $n$th set of 50 iterations, we adjust $\zeta_i$ by an ``adaption amount'', which is added to $\zeta_i$ if the acceptance proportion in the $n$th set of 50 iterations (${r^{(n)}}_i$) has been above 0.44, and subtracted from $\zeta_i$ if not.  The magnitude of the adaption amount is a decreasing function of the index $n$, so that updates to $\zeta_i$ proceed as follows:
+When we start our MCMC, $\zeta_i$ for all parameters is initiated at a value of 0, which gives a proposal distribution variance of 1.  We then proceed to track the acceptance rate, $r_i$ for each parameter in windows of 50 MCMC iterations, and, after the $n$th set of 50 iterations, we adjust $\zeta_i$ by an ``adaption amount'', which is added to $\zeta_i$ if the acceptance proportion in the $n$th set of 50 iterations ($r^{(n)}_i$) has been above 0.44, and subtracted from $\zeta_i$ if not.  The magnitude of the adaption amount is a decreasing function of the index $n$, so that updates to $\zeta_i$ proceed as follows:
 
 \begin{equation}
-{\zeta^{n+1}}_i =
+\zeta^{n+1}_i =
 \begin{cases}
-{\zeta^{n}}_i + \text{min}(\text{min}(0.01,n^{-\frac{1}{2}}),20), & \text{if} \: {r^{(n)}}_i \; > \; 0.44 \\
-{\zeta^{n}}_i - \text{min}(0.01,n^{-\frac{1}{2}}), & \text{if} \: {r^{(n)}}_i \; < \; 0.44
+\zeta^{n}_i + \text{min}(\text{min}(0.01,n^{-\frac{1}{2}}),20), & \text{if} \: r^{(n)}_i \; > \; 0.44 \\
+\zeta^{n}_i - \text{min}(0.01,n^{-\frac{1}{2}}), & \text{if} \: r^{(n)}_i \; < \; 0.44
 \end{cases}
 \label{eq:adpative_mcmc}
 \end{equation}
@@ -928,14 +963,23 @@ We ran our simulations using a coalescent framework in the program \textit{ms} (
 To simulate a barrier event, we divided the migration rate between neighbors separated by the longitudinal barrier by a factor of 5.  To simulate an expansion event, we used the \textbf{-ej} option to move all lineages from each daughter population to its parent population at a very recent point in the past.  For admixture events, we used the \textbf{-es} and \textbf{-ej} options to first (again, going backward in time) split the admixed population into itself and a new subpopulation of index $k + 1$, and second, to move all lineages in the $(k^{\text{th}} + 1)$ into the source of admixture.  Forward in time, this procedure corresponds to cloning the population that is the source of admixture, then merging it, in some admixture proportion, with the (now) admixed population.  The command line arguments used to call ms for a single locus for each simulation are included in the Appendix.
 
 \subsection*{Intuition on identifiability of admixture parameters}
-A natural concern is whether all of the parameters in the SpaceMix are separately identifiable, most notably whether population locations, admixture locations, and proportions can be estimated. That is, if a population has received some level of admixture from another population, what is to stop it from simply moving toward that population in geogenetic space to satisfy its increased resemblance to that population, rather than choosing admixture from that location?  We build and illustrate an intuition for why admixture is identifiable in our model below (Figure \ref{sfig:toy_admixture}).
+A natural concern is whether all of the parameters we infer are separately identifiable, most notably whether population locations, admixture locations, and proportions can be estimated. That is, if a population has received some admixture from another population, what is to stop it from simply moving toward that population in geogenetic space to satisfy its increased resemblance to that population, rather than choosing admixture from that location?  We do not provide a formal proof, but here build and illustrate some relevant intuition.
 
-Admixture is identifiable in our model because there are covariance relationships among populations that cannot simply be satisfied by shifting population locations around (as demonstrated by the tortured nature of Figure \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}). Consider the simple spatial admixture scenario shown in Figure \ref{sfig:toy_admixture}. Our populations A-D are spatially arrayed  along a line, and their allele frequencies are specified by a simple isolation by distance model, but there is recent admixture from D into B (such that 40\% of the alleles in B are drawn from D).  The lines show the expected covariance under isolation by distance that each population (A, C, or D, as indicated by line color) has with a putative population at a given distance.  The dots show the admixed covariance between B and the three other populations, as well as B's variance with itself (B-B) as specified by equation \eqref{eq:admixed_covariance_1}, with no nugget or sampling effect.
+Admixture is identifiable in our model because there are covariance relationships among populations that cannot simply be satisfied by shifting population locations around (as demonstrated by the tortured nature of Figure \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}). 
+Consider the simple spatial admixture scenario shown in Figure \ref{sfig:toy_admixture}. 
+Populations A--D are arrayed  along a line, but there is recent admixture from D into B (such that 40\% of the alleles assigned to B are sampled from location D).  
+The lines show the expected covariance under isolation by distance that each population (A, C, or D, as indicated by line color) has with a putative population at a given distance.  The dots show the admixed covariance between B and the three other populations, as well as B's variance with itself (B-B) as specified by equation \eqref{eq:admixed_covariance_1}, with no nugget or sampling effect.
 
 \begin{figure}[htp!]
 	\centering
 	\includegraphics[width=\textwidth]{figs/sims/Admix_covar_toy_fig.pdf}
-	\caption{} \label{sfig:toy_admixture}
+	\caption{
+    Lines show the covariances populations A, C, and D would have with population B as a function of B's location,
+    with no admixture,
+    under the parametric form of equation \eqref{eq:spatial_covariance}.
+    Dots above `B' show the covariances observed with B at that location if B has 40\% admixture from D;
+    note that there is no single spatial location with unadmixed covariances remotely similar to these.
+    } \label{sfig:toy_admixture}
 \end{figure}
 
 Due to its admixture from D, B has lower covariance with A than expected given its distance, somewhat higher covariance with C, and much higher covariance with D. In addition, the variance of B is lower than that of the other three populations, which each have variance $1$: the value of the covariance when the distance is zero. This lower variance results from the fact that the frequencies at $B$ represent a mixture of the frequency at $D$ and the frequency at $B$ before the admixture. 
@@ -969,9 +1013,8 @@ For each analysis,
 
 For each dataset, we ran two analyses using the observed population locations as the prior on $G$.  
 Then, to assess the potential influence of the spatial prior on population locations, 
-we ran one analysis in which random, uniformly distributed locations between, 
-for longitude, the minimum and maximum observed longitude, 
-and, for latitude, the minimum and maximum observed latitude were used as the prior on population locations.  
+we ran one analysis in which the observed locations
+were replaced with random, uniformly distributed locations between the observed minima and maxima of latitude and longitude.
 For the warbler dataset, we repeated this analysis procedure, treating each sequenced individual as its own population.  
 For clarity and ease of interpretation, we present a full Procrustes superimposition of the inferred population locations ($G$) 
 and their sources of admixture ($\identifyadmixsource{G}$), 
@@ -984,7 +1027,8 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 
 
 \section*{Acknowledgements}
-We would like to gratefully acknowledge the Coop Lab, Yaniv Brandvain, Razib Khan, Dan Runcie, Brad Shaffer, Marjorie Weber, and Will Wetzel for helpful discussions.  We also thank Miguel Alcaide, Cristian Capelli, Garrett Hellenthal, and Darren Irwin  for sharing data.
+We would like to gratefully acknowledge the Coop Lab, Yaniv Brandvain, Razib Khan, Dan Runcie, Brad Shaffer, Marjorie Weber, and Will Wetzel for helpful discussions.  
+We also thank Miguel Alcaide, Cristian Capelli, Garrett Hellenthal, and Darren Irwin for sharing data.
 This work was supported in part by NSF grant \#1262645 (DBI) to PR and GC and NSF grant \# 1148897 to GB (GRFP).
 
 

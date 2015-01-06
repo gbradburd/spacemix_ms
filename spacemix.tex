@@ -73,22 +73,30 @@
  
 
 \begin{abstract}
-The distributions of genetic variation in modern populations 
-are the result of 
-complex demographic histories of migration and population size change,
-which can be difficult to infer and visually summarize,
+The complex demographic histories of migration and population size change
+that have produced the distributions of genetic variation within modern populations
+can be difficult to infer and visually summarize,
 especially with a large number of geographically distributed samples.
-Under a broad set of models of isolation by distance, 
-populations should be more closely related to nearby populations than to distant ones.
-We use genome-wide polymorphism data to build a ``geogenetic map''
-that visualizes how populations are located with respect to one another under isolation by distance, 
-modeling allele frequency covariance as a decreasing function of geogenetic distance. 
-Within this framework, we look for historical admixture (gene flow over unusually long geogenetic distances) 
-by identifying anomalously long distance allele frequency covariance, 
-and model admixture as arrows, from a source of admixture to its recipient, on the inferred map.
-We demonstrate the utility of this method on a circum-Tibetan sampling of the greenish warbler (\textit{Phylloscopus trochiloides}), in which we find evidence for gene flow between the adjacent, terminal populations of the ring species.  
-We also analyze a global sampling of human populations, for which we largely recover the geography of the sampling, with support for significant histories of admixture in many samples.  The implementation of this method, 
-called SpaceMix, provides a valuable new resource for understanding and visualizing patterns of population structure.
+A general consequence of geographically limited dispersal
+is that samples from nearby locations tend to be more closely related
+than samples from distant locations,
+and so genetic covariance often recapitulates geographic proximity.
+We use genome-wide polymorphism data to build ``geogenetic maps'',
+which when applied to stationary populations,
+produces a map of the geographic positions of the populations,
+but with distances distorted to reflect historical rates of gene flow.
+In the underlying model, 
+allele frequency covariance is a decreasing function of geogenetic distance,
+and nonlocal gene flow such as admixture
+can be identified as anomalously strong covariance over long distances,
+which is explictly co-estimated and depicted as arrows,
+from the source of admixture to the recipient, on the geogenetic map.
+We demonstrate the utility of this method on a circum-Tibetan sampling of the greenish warbler (\textit{Phylloscopus trochiloides}), 
+in which we find evidence for gene flow between the adjacent, terminal populations of the ring species.  
+We also analyze a global sampling of human populations, for which we largely recover the geography of the sampling, 
+with support for significant histories of admixture in many samples.  
+This new tool for understanding and visualizing patterns of population structure
+is implemented in a Bayesian framework in the program SpaceMix.
 \end{abstract}
 
 \newpage
@@ -104,8 +112,8 @@ The result is a ``geogenetic'' map in which the distances between populations ar
 indicative of the way that populations perceive the distances between themselves: the ``organism's-eye view'' of the world.  
 Added to this, ``admixture'' can be thought of as the outcome of unusually long-distance gene flow; 
 it results in relatedness between populations that is anomalously high given the distance that separates them.
-We summarize the effect of admixture as arrows, from a source of admixture to its target, on the inferred map.
-The inferred geogenetic map, is an intuitive and information-rich visual summary of patterns of population structure.
+We depict the effect of admixture using arrows, from a source of admixture to its target, on the inferred map.
+The inferred geogenetic map is an intuitive and information-rich visual summary of patterns of population structure.
 
 \section*{Introduction}
 There are many different methods to learn how population structure and demographic processes have left their mark on 
@@ -131,7 +139,7 @@ Recently, there has been a resurgence of interest in these tree-based methods.  
 
 There has also been renewed interest in the use of dimensionality reduction approaches, especially Principal Components Analysis (PCA), for the visualization of patterns of genetic variation \citep{Patterson2006}.  As with the tree-based methods described above, the use of PCA in population genetics was pioneered by Cavalli-Sforza \citep{menozzi1978synthetic}, and, with the rise of genomic datasets of thousands of loci for tens or hundreds of samples, this approach for creating a low-dimensional visual summary of genetic data that has thousands of dimensions (one for each locus) is more popular than ever before.  Generally, the genetic variation in a genotype matrix of allele frequencies is summarized by plotting the first eigenvector of the covariance of the allele frequencies against the second. 
 
-Both PCA and tree-based methods are valuable as genetic inference and visualization tools, but both also suffer from serious limitations.  Because gene flow is frequently pervasive, patterns of relatedness between samples may often be only poorly represented by a tree-based model.  PCA is more flexible; it assumes no explicit model of population-genetic processes, and simply describes the axes of greatest variance in the average coalescent times between pairs of samples \citep{mcvean_genealogical_2009}. This allows PCA to capture more continuous patterns of population; PC analysis within continents often resulting in a close correspondence between PC and geographic axes \citep[e.g.][]{novembre_genes_2008,wang_quantitative_2012}.  However, the interpretation of PCA is more difficult, as the results can be strongly affected by the size and design of sampling, and the linearity and orthogonality of requirements of the PC axes can lead to counter intuitive results \citep{novembre_interpreting_2008, Francois_2010_surfing}.
+Both PCA and tree-based methods are valuable as genetic inference and visualization tools, but both also suffer from serious limitations.  Because gene flow is frequently pervasive, patterns of relatedness between samples may often be only poorly represented by a tree-based model.  PCA is more flexible; it assumes no explicit model of population-genetic processes, and simply describes the axes of greatest variance in the average coalescent times between pairs of samples \citep{mcvean_genealogical_2009}. This allows PCA to capture more continuous patterns of population; PC analysis within continents often resulting in a close correspondence between PC and geographic axes \citep[e.g.][]{novembre_genes_2008,wang_quantitative_2012}.  However, the interpretation of PCA is more difficult, as the results can be strongly affected by the size and design of sampling, and the linearity and orthogonality of requirements of the PC axes can lead to counterintuitive results \citep{novembre_interpreting_2008, Francois_2010_surfing}.
 
 What is desired, then, is a method for inferring and visualizing patterns of population differentiation that can recapitulate complex, non-hierarchical structures, while also admitting simple and intuitive interpretation.  Geographically continuous models, in which dispersal is spatially limited and the expected pattern of population differentiation is that of isolation by distance, offer a natural framework for such a method.  
 In natural populations, the pattern of increasing genetic differentiation with geographic distance is ubiquitous \citep{meirmans2012};

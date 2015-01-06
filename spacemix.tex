@@ -126,31 +126,61 @@ or approximations to the coalescent applied to sequence data \citep{Paul_Song201
 Other approaches are designed only to visualize patterns of genetic relatedness and population structure,
 without using a particular population genetic model.
 Such methods can deal with many populations or individuals as the unit of analysis. 
-Examples of this second set of methods include cluster-based methods \citep{STRUCTURE, ADMIXTURE, FINESTRUCTURE} and reduced dimensionality representations of the data, such as Principal Components (PC) Analysis (e.g. \citep{cavallisforza1994, Patterson2006, price2006eigenstrat}).  
+Examples of this second set of methods include clustering methods \citep{STRUCTURE, ADMIXTURE, FINESTRUCTURE} 
+and reduced dimensionality representations of the data, such as Principal Components Analysis (PCA; e.g. \citep{cavallisforza1994, Patterson2006, price2006eigenstrat}).  
 
-Between these, there is a set of methods for visualizing patterns of relatedness that use allele frequency data to estimate a population phylogeny of the evolutionary history shared between sampled individuals or populations.  This approach of modeling relatedness between populations within species as a tree-like structure was pioneered by \cite{cavallisforza_edwards1967}, as were methods to test whether a tree is a good model of population history \citep{CavalliSforza1975} (see \citep{Felsenstein1982} for a review).
+A third set of methods that describe relatedness between populations by constructing a ``population phylogeny''
+was pioneered by \cite{cavallisforza_edwards1967}, 
+as were methods to test whether a tree is a good model of population history \citep{CavalliSforza1975} (see \citep{Felsenstein1982} for a review).
 Tree-based approaches are appealing because trees are easy to visualize and explain,
-but interpretation can be tricky,
-as the assumptions of a tree-based model
-(unstructured populations that split at discrete points in time)
-are often not met.
+but the underlying assumptions (unstructured populations that split at discrete points in time)
+rarely hold true.
  
-Recently, there has been a resurgence of interest in these tree-based methods.  Some use population trees as a null model to test and quantify the signal of admixture between samples, where admixture is defined as covariance between samples in excess of that predicted by their tree-like history \cite{reich_india_2009}.  Others, such as Treemix \citep{Treemix} and MixMapper \citep{lipson_mixmapper_2013}, focus on data analysis and visualization, and fit a population model represented by a directed acyclic graph between populations.  TreeMix accommodates reticulate population structure by allowing branches on the population tree to be connected by arrows of admixture that explain excess residual covariance between populations or population `clades.'
+Recently, there has been a resurgence of interest in these tree-based methods.  
+Some use population trees as a null model to test and quantify the signal of admixture between samples \cite{reich_india_2009}.  
+% where admixture is defined as covariance between samples in excess of that predicted by their tree-like history 
+Others, such as TreeMix \citep{Treemix} and MixMapper \citep{lipson_mixmapper_2013}, 
+visualize population relationships using a directed acyclic graph;
+for instance, TreeMix connects branches in a population tree with additional edges
+to explain excess covariance between groups of populations.
 
-There has also been renewed interest in the use of dimensionality reduction approaches, especially Principal Components Analysis (PCA), for the visualization of patterns of genetic variation \citep{Patterson2006}.  As with the tree-based methods described above, the use of PCA in population genetics was pioneered by Cavalli-Sforza \citep{menozzi1978synthetic}, and, with the rise of genomic datasets of thousands of loci for tens or hundreds of samples, this approach for creating a low-dimensional visual summary of genetic data that has thousands of dimensions (one for each locus) is more popular than ever before.  Generally, the genetic variation in a genotype matrix of allele frequencies is summarized by plotting the first eigenvector of the covariance of the allele frequencies against the second. 
+There has also been renewed interest in methods for dimensionality reduction
+for the visualization of patterns of genetic variation \citep{Patterson2006},
+especially PCA (also pioneered by Cavalli-Sforza \citep{menozzi1978synthetic}). 
+Examining such low-dimensional visual summaries has become an indispensible step in
+the analysis of modern genomic datasets of thousands of loci typed in tens or hundreds of samples.
+Generally, these visualizations are constructed by plotting the first few eigenvectors of the covariance matrix
+of normalized allele frequencies against each other.
 
-Both PCA and tree-based methods are valuable as genetic inference and visualization tools, but both also suffer from serious limitations.  Because gene flow is frequently pervasive, patterns of relatedness between samples may often be only poorly represented by a tree-based model.  PCA is more flexible; it assumes no explicit model of population-genetic processes, and simply describes the axes of greatest variance in the average coalescent times between pairs of samples \citep{mcvean_genealogical_2009}. This allows PCA to capture more continuous patterns of population; PC analysis within continents often resulting in a close correspondence between PC and geographic axes \citep[e.g.][]{novembre_genes_2008,wang_quantitative_2012}.  However, the interpretation of PCA is more difficult, as the results can be strongly affected by the size and design of sampling, and the linearity and orthogonality of requirements of the PC axes can lead to counterintuitive results \citep{novembre_interpreting_2008, Francois_2010_surfing}.
+Both PCA and tree-based methods are valuable as genetic inference and visualization tools, but both also suffer from serious limitations.  
+Because gene flow is frequently pervasive, patterns of relatedness between samples may often be only poorly represented by a tree-based model.  
+PCA is more flexible, as it assumes no explicit model of population-genetic processes, 
+simply describing the axes of greatest variance in the average coalescent times between pairs of samples \citep{mcvean_genealogical_2009}. 
+This allows PCA to describe more geographically continuous relationships: 
+PCA applied to human populations within continents often shows a close correspondence to geographic locations \citep[e.g.][]{novembre_genes_2008,wang_quantitative_2012}.  
+However, the interpretation of PCA is more difficult, as the results can be strongly affected by the size and design of sampling, 
+and the linearity and orthogonality requirements of the PC axes can lead to counterintuitive results \citep{novembre_interpreting_2008, Francois_2010_surfing}.
 
-What is desired, then, is a method for inferring and visualizing patterns of population differentiation that can recapitulate complex, non-hierarchical structures, while also admitting simple and intuitive interpretation.  Geographically continuous models, in which dispersal is spatially limited and the expected pattern of population differentiation is that of isolation by distance, offer a natural framework for such a method.  
-In natural populations, the pattern of increasing genetic differentiation with geographic distance is ubiquitous \citep{meirmans2012};
-this empirical pattern is called ``Isolation by Distance'' \citep[IBD][]{Wright1943}, 
-and there is a rich history of population genetics theory for populations distributed in continuous space \citep{Malecot1975, nagylaki1978diffusion, felsensten1975pain, barton-depaulis-etheridge}, as well as exciting new developments in the field \citep[e.g.][]{Petkova_2014_EEMS}.
-Modeling such empirical patterns in a geographically continuous framework relies only on the weak assumption that an individual's mating opportunities are spatially limited by dispersal; a large set of models, ranging from equilibrium migration-drift models to non-equilibrium models, such as recent spatial expansions of populations, give rise to the empirical pattern of isolation by distance.
+What is desired, then, is a method for inferring and visualizing patterns of population differentiation that can recapitulate complex, non-hierarchical structures, while also admitting simple and intuitive interpretation.  
+Since gene flow and population movements are often constrained by geography,
+it is natural to base such a method in a geographic framework.
+There is a rich history of population genetics theory for populations distributed in continuous space \citep{Malecot1975, nagylaki1978diffusion, felsensten1975pain, barton-depaulis-etheridge}, as well as exciting new developments in the field \citep[e.g.][]{Petkova_2014_EEMS}.
+The pattern of increasing genetic differentiation with geographic distance 
+was termed ``Isolation by Distance'' by \citet{Wright1943},
+and is ubiquitous in natural populations \citep{meirmans2012}.
+Descriptive models of such patterns rely only on the weak assumption that an individual's mating opportunities are spatially limited by dispersal; 
+a large set of models, ranging from equilibrium migration-drift models to non-equilibrium models, such as recent spatial expansions of populations, 
+give rise to the empirical pattern of isolation by distance.
 
-Here, we present a statistical framework for studying the spatial distribution of genetic variation and genetic admixture based on a flexible parameterization
-of the relationship of isolation by distance.
-Within this framework, the pattern of genetic relatedness between the samples is represented by a map, in which inferred distances between samples are proportional to their genetic differentiation, and long distance relatedness (in excess of that predicted by the map) is modeled as genetic admixture.
-These `geogenetic'  maps are simple, intuitive, low-dimensional summaries of population structure, and they provide a natural framework for the inference and visualization of spatial patterns of genetic variation and the signature of genetic admixture.  The implementation of this method, SpaceMix, is available at \href{https://github.com/gbradburd/SpaceMix}{https://github.com/gbradburd/SpaceMix}.
+In this paper, we present a statistical framework for studying the spatial distribution of genetic variation and genetic admixture based on a flexible parameterization
+of the relationship between genetic and geographic distances.
+Within this framework, the pattern of genetic relatedness between the samples is represented by a map, 
+in which inferred distances between samples are proportional to their genetic differentiation, 
+and long distance relatedness (in excess of that predicted by the map) is modeled as genetic admixture.
+These `geogenetic'  maps are simple, intuitive, low-dimensional summaries of population structure, 
+and provide a natural framework for the inference and visualization of spatial patterns of genetic variation and the signature of genetic admixture.  
+The implementation of this method, SpaceMix, is available at \href{https://github.com/gbradburd/SpaceMix}{https://github.com/gbradburd/SpaceMix}.
+
 
 \section*{Results}
 
@@ -864,7 +894,7 @@ To simulate a barrier event, we divided the migration rate between neighbors sep
 \subsection*{Intuition on identifiability of admixture parameters}
 A natural concern is whether all of the parameters in the SpaceMix are separately identifiable, most notably whether population locations, admixture locations, and proportions can be estimated. That is, if a population has received some level of admixture from another population, what is to stop it from simply moving toward that population in geogenetic space to satisfy its increased resemblance to that population, rather than choosing admixture from that location?  We build and illustrate an intuition for why admixture is identifiable in our model below (Figure \ref{sfig:toy_admixture}).
 
-Admixture is identifiable in our model because there are covariance relationships among populations that cannot simply be satisfied by shifting population locations around (as demonstrated by the tortured nature of Figure \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}). Consider the simple spatial admixture scenario shown in Figure \ref{sfig:toy_admixture}. Our populations A-D are spatially arrayed  along a line, and their allele frequencies are specified by a simple isolation by distance model, but there is recent admixture from D into B (such that 40\% of the alleles in B are drawn from D).  The lines show the expected covariance under IBD that each population (A, C, or D, as indicated by line color) has with a putative population at a given distance.  The dots show the admixed covariance between B and the three other populations, as well as B's variance with itself (B-B) as specified by equation \eqref{eq:admixed_covariance_1}, with no nugget or sampling effect.
+Admixture is identifiable in our model because there are covariance relationships among populations that cannot simply be satisfied by shifting population locations around (as demonstrated by the tortured nature of Figure \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}). Consider the simple spatial admixture scenario shown in Figure \ref{sfig:toy_admixture}. Our populations A-D are spatially arrayed  along a line, and their allele frequencies are specified by a simple isolation by distance model, but there is recent admixture from D into B (such that 40\% of the alleles in B are drawn from D).  The lines show the expected covariance under isolation by distance that each population (A, C, or D, as indicated by line color) has with a putative population at a given distance.  The dots show the admixed covariance between B and the three other populations, as well as B's variance with itself (B-B) as specified by equation \eqref{eq:admixed_covariance_1}, with no nugget or sampling effect.
 
 \begin{figure}[htp!]
 	\centering

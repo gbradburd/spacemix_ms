@@ -495,9 +495,9 @@ The libraries were prepared using a genotype-by-sequencing protocol and were run
 \begin{figure}
 	\centering
 		\subcaptionbox{Warbler geogenetic map, no admixture \label{warb_pop_noad}}
-			{\includegraphics[width=0.45\textwidth,height=0.375\textwidth]{figs/warblers/warb_pop_noad.pdf}}
+			{\includegraphics[width=0.9\textwidth,height=0.75\textwidth]{figs/warblers/warb_pop_noad.pdf}}
 		\subcaptionbox{Warbler geogenetic map, with admixture \label{warb_pop_ad}}
-			{\includegraphics[width=0.45\textwidth,height=0.375\textwidth]{figs/warblers/population_warbler_ad_map_randpr1.pdf}}
+			{\includegraphics[width=0.9\textwidth,height=0.75\textwidth]{figs/warblers/population_warbler_ad_map_randpr1.pdf}}
 \caption{Inferred population maps with population labels colored as in Figure \ref{sfig:empirical_maps}\subref{irwin_map}: a) the map inferred with no admixture inference; b) the map inferred with admixture inference.}
 \label{sfig:warbler_pop}
 \end{figure}
@@ -512,9 +512,9 @@ No individual drew appreciable admixture (see Figure \ref{sfig:warb_ind_adprops}
 \begin{figure}
 	\centering
 		\subcaptionbox{Warbler individuals map, admixture \label{warb_ind_ad}}
-			{\includegraphics[width=0.45\textwidth,height=0.37\textwidth]{figs/warblers/individual_warbler_map_arrows_randpr2.pdf}}
+			{\includegraphics[width=0.9\textwidth,height=0.75\textwidth]{figs/warblers/individual_warbler_map_arrows_randpr2.pdf}}
 		\subcaptionbox{Close-up of non-\textit{nitidus} samples \label{warb_ind_ad_closeup}}
-			{\includegraphics[width=0.45\textwidth,height=0.37\textwidth]{figs/warblers/individual_warbler_map_arrows_randpr2_closeup.pdf}}
+			{\includegraphics[width=0.9\textwidth,height=0.75\textwidth]{figs/warblers/individual_warbler_map_arrows_randpr2_closeup.pdf}}
 	\caption{
     Inferred maps for warbler individuals, colored by subspecies in an analysis with admixture inference. 
     a) map inferred with admixture; b) close-up of all non-\textit{nitidus} samples in the admixture map.
@@ -844,7 +844,7 @@ A table of all parameters, their descriptions, and their priors is given in Tabl
 		$2 w_k \sim \beta(\alpha = 1,\beta = 100)$  \\ \hline
 	$\boldsymbol{\identifyadmixsource{G_k}}$ &
 		the geogenetic location of the source of admixture in population $k$ &
-		$\identifyadmixsource{G_k} \sim \mathcal{N}(\mu = \bar{G^{(obs)}},\sigma = 2 \bar{D}(G^{(obs)}))$ \\
+		$\identifyadmixsource{G_k} \sim \mathcal{N}(\mu = \bar{G}^{(obs)},\sigma = 2 \bar{D}(G^{(obs)}))$ \\
 	\hline
 \end{tabular}
 \caption{
@@ -1025,7 +1025,10 @@ Finally, we compared the SpaceMix map to a map derived from a Principal Componen
 \section*{Acknowledgements}
 We would like to gratefully acknowledge the Coop Lab, Yaniv Brandvain, Razib Khan, Dan Runcie, Brad Shaffer, Marjorie Weber, and Will Wetzel for helpful discussions.  
 We also thank Miguel Alcaide, Cristian Capelli, Garrett Hellenthal, and Darren Irwin for sharing data.
-This work was supported in part by NSF grant \#1262645 (DBI) to PR and GC and NSF grant \# 1148897 to GB (GRFP).
+This work was supported in part by 
+the National Science Foundation under award number NSF \#1262645 (DBI) to PR and GC, 
+the National Institute of General Medical Sciences of the National Institutes of Health under award numbers NIH RO1GM83098 and RO1GM107374 to GC,
+and the National Science Foundation under award numbers NSF \# 1148897 and \# 1402725 to GB.
 
 
 \newpage

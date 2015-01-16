@@ -357,7 +357,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=pop.col,
-						font=2,cex=1.5)
+						font=2,cex=2)
 		legend(x="bottomleft",col=legend.pop.cols,pch=19,
 				legend=subspp,cex=1.3,bg="white")
 				box(lwd=2)
@@ -576,13 +576,13 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 			par(mar=c(4.5,4.5,3,1))
 			plot(target.coords,type='n',
 					xlim=c(71,114), #realpr1: c(68,115), realpr2: c(53,101), randpr: c(71,114)
-					ylim=c(23,55), #realpr1: c(26,53), realpr2: c(25,54), randpr: c(23,55)
+					ylim=c(20,55), #realpr1: c(26,53), realpr2: c(25,54), randpr: c(23,55)
 					xlab="Eastings",
 					ylab="Northings",cex.lab=1.7)
 				text(target.coords[c(1:k),],
 						labels=pops,
 						col=pop.col,
-						font=2,cex=0.9)
+						font=2,cex=2)
 				points(source.coords,
 							col=pop.plot.cols,
 							pch=20)
@@ -1161,7 +1161,7 @@ best <- which.max(Prob)
 				text(target.coords[c(1:k),],
 						labels=plot.inds,
 						col=adjustcolor(inds.col,0.8),
-						font=2,cex=0.9)
+						font=2,cex=1.5)
 				points(source.coords,
 							col=ind.plot.cols,
 							pch=20)
@@ -1188,7 +1188,7 @@ best <- which.max(Prob)
 				text(target.coords[c(1:k),],
 						labels=plot.inds,
 						col=adjustcolor(inds.col,1),
-						font=2,cex=1)
+						font=2,cex=2)
 				points(source.coords,
 							col=ind.plot.cols,
 							pch=20)

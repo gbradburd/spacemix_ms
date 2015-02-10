@@ -1,4 +1,4 @@
-\begin{thebibliography}{79}
+\begin{thebibliography}{80}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -53,8 +53,8 @@ Cynthia~M. Beall, Gianpiero~L. Cavalleri, Libin Deng, Robert~C. Elston, Yang
   Ngodrop Tsering, Krishna~R. Veeramah, Wei Wang, Puchung Wangdui, Michael~E.
   Weale, Yaomin Xu, Zhe Xu, Ling Yang, M.~Justin Zaman, Changqing Zeng,
   Li~Zhang, Xianglong Zhang, Pingcuo Zhaxi, and Yong~Tang Zheng.
-\newblock Natural selection on epas1 (hif2?) associated with low hemoglobin
-  concentration in tibetan highlanders.
+\newblock Natural selection on {EPAS1} ({HIF2}?) associated with low hemoglobin
+  concentration in {Tibetan} highlanders.
 \newblock \emph{Proceedings of the National Academy of Sciences}, 107\penalty0
   (25):\penalty0 11459--11464, 2010.
 
@@ -71,7 +71,7 @@ Abigail Bigham, Marc Bauchet, Dalila Pinto, Xianyun Mao, Joshua~M. Akey, Rui
   Mei, Stephen~W. Scherer, Colleen~G. Julian, Megan~J. Wilson, David
   L√≥pez~Herr√°ez, Tom Brutsaert, Esteban~J. Parra, Lorna~G. Moore, and Mark~D.
   Shriver.
-\newblock Identifying signatures of natural selection in tibetan and andean
+\newblock Identifying signatures of natural selection in {Tibetan} and {Andean}
   populations using dense genome scan data.
 \newblock \emph{PLoS Genet}, 6\penalty0 (9):\penalty0 e1001116, 09 2010.
 
@@ -81,8 +81,8 @@ Abigail Bigham, Marc Bauchet, Dalila Pinto, Xianyun Mao, Joshua~M. Akey, Rui
 Laura~R. Botigu√©, Brenna~M. Henn, Simon Gravel, Brian~K. Maples,
   Christopher~R. Gignoux, Erik Corona, Gil Atzmon, Edward Burns, Harry Ostrer,
   Carlos Flores, Jaume Bertranpetit, David Comas, and Carlos~D. Bustamante.
-\newblock Gene flow from north africa contributes to differential human genetic
-  diversity in southern europe.
+\newblock Gene flow from {North} {Africa} contributes to differential human
+  genetic diversity in southern {Europe}.
 \newblock \emph{Proceedings of the National Academy of Sciences of the United
   States of America}, 110\penalty0 (29):\penalty0 11791--11796, July 2013.
 
@@ -98,7 +98,7 @@ L.~L. Cavalli-Sforza and A.~W.~F. Edwards.
 \newblock \emph{Evolution}, 21\penalty0 (3):\penalty0 pp. 550--570, 1967.
 
 \bibitem[Cavalli-Sforza and Piazza(1975)]{CavalliSforza1975}
-L.L. Cavalli-Sforza and A.~Piazza.
+L.~L. Cavalli-Sforza and A.~Piazza.
 \newblock Analysis of evolution: Evolutionary rates, independence and treeness.
 \newblock \emph{Theoretical Population Biology}, 8\penalty0 (2):\penalty0 127
   -- 165, 1975.
@@ -131,7 +131,7 @@ P~J Diggle, J~A Tawn, and R~A Moyeed.
   Foll]{Excoffier2013}
 Laurent Excoffier, Isabelle Dupanloup, Emilia Huerta-Sanchez, Vitor~C. Sousa,
   and Matthieu Foll.
-\newblock Robust demographic inference from genomic and snp data.
+\newblock Robust demographic inference from genomic and {SNP} data.
 \newblock \emph{PLoS Genet}, 9\penalty0 (10):\penalty0 e1003905, 10 2013.
 
 \bibitem[Felsenstein(1975)]{felsensten1975pain}
@@ -156,6 +156,13 @@ Olivier Francois, Mathias Currat, Nicolas Ray, Eunjung Han, Laurent Excoffier,
 \newblock \emph{Molecular Biology and Evolution}, 27\penalty0 (6):\penalty0
   1257--1268, 2010.
 
+\bibitem[Frichot et~al.(2012)Frichot, Schoville, Bouchard, and
+  Francois]{Frichot2012}
+Eric Frichot, Sean~D Schoville, Guillaume Bouchard, and Olivier Francois.
+\newblock Correcting principal component maps for effects of spatial
+  autocorrelation in population genetic data.
+\newblock \emph{Frontiers in Genetics}, 3\penalty0 (254), 2012.
+
 \bibitem[Gravel(2012)]{gravel_population_2012}
 Simon Gravel.
 \newblock Population genetics models of local ancestry.
@@ -166,7 +173,7 @@ Simon Gravel.
 Ryan~N. Gutenkunst, Ryan~D. Hernandez, Scott~H. Williamson, and Carlos~D.
   Bustamante.
 \newblock Inferring the joint demographic history of multiple populations from
-  multidimensional snp frequency data.
+  multidimensional {SNP} frequency data.
 \newblock \emph{PLoS Genet}, 5\penalty0 (10):\penalty0 e1000695, 10 2009.
 
 \bibitem[Harpending and Rogers(2000)]{Harpending_Rogers_2000}
@@ -187,14 +194,14 @@ G.~Hellenthal, G.~B. Busby, G.~Band, J.~F. Wilson, C.~Capelli, D.~Falush, and
 Brenna~M. Henn, Laura~R. Botigu√©, Simon Gravel, Wei Wang, Abra Brisbin,
   Jake~K. Byrnes, Karima Fadhlaoui-Zid, Pierre~A. Zalloua, Andres
   Moreno-Estrada, Jaume Bertranpetit, Carlos~D. Bustamante, and David Comas.
-\newblock Genomic ancestry of north africans supports back-to-africa
+\newblock Genomic ancestry of {North} {Africans} supports back-to-{Africa}
   migrations.
 \newblock \emph{{PLoS} Genet}, 8\penalty0 (1):\penalty0 e1002397, January 2012.
 
 \bibitem[Hodgson et~al.(2014)Hodgson, Mulligan, Al-Meeri, and
   Raaum]{hodgson_early_2014}
 Jason~A. Hodgson, Connie~J. Mulligan, Ali Al-Meeri, and Ryan~L. Raaum.
-\newblock Early back-to-africa migration into the horn of africa.
+\newblock Early back-to-{Africa} migration into the {Horn} of {Africa}.
 \newblock \emph{{PLoS} Genet}, 10\penalty0 (6):\penalty0 e1004393, June 2014.
 
 \bibitem[Hudson(2002)]{Hudson2002}
@@ -273,7 +280,7 @@ Iosif Lazaridis, Nick Patterson, Alissa Mittnik, Gabriel Renaud, Swapan
   Evan~E. Eichler, Joachim Burger, Montgomery Slatkin, Svante P√§√§bo, Janet
   Kelso, David Reich, and Johannes Krause.
 \newblock Ancient human genomes suggest three ancestral populations for
-  present-day europeans.
+  present-day {Europeans}.
 \newblock \emph{Nature}, 513\penalty0 (7518):\penalty0 409--413, September
   2014.
 
@@ -358,15 +365,15 @@ P~Menozzi, A~Piazza, and L~Cavalli-Sforza.
   Atzmon, Burns, Ostrer, Price, and Reich]{moorjani_history_2011}
 Priya Moorjani, Nick Patterson, Joel~N. Hirschhorn, Alon Keinan, Li~Hao, Gil
   Atzmon, Edward Burns, Harry Ostrer, Alkes~L. Price, and David Reich.
-\newblock The history of african gene flow into southern europeans, levantines,
-  and jews.
+\newblock The history of {African} gene flow into southern {Europeans,}
+  {Levantines,} and {Jews}.
 \newblock \emph{{PLoS} Genet}, 7\penalty0 (4):\penalty0 e1001373, April 2011.
 
 \bibitem[Moorjani et~al.(2013)Moorjani, Thangaraj, Patterson, Lipson, Loh,
   Govindaraj, Berger, Reich, and Singh]{moorjani_india_2013}
 Priya Moorjani, Kumarasamy Thangaraj, Nick Patterson, Mark Lipson, Po-Ru Loh,
   Periyasamy Govindaraj, Bonnie Berger, David Reich, and Lalji Singh.
-\newblock Genetic evidence for recent population mixture in india.
+\newblock Genetic evidence for recent population mixture in {India}.
 \newblock \emph{American Journal of Human Genetics}, 93\penalty0 (3):\penalty0
   422--438, September 2013.
 
@@ -396,7 +403,7 @@ John Novembre and Matthew Stephens.
 John Novembre, Toby Johnson, Katarzyna Bryc, Zolt√°n Kutalik, Adam~R. Boyko,
   Adam Auton, Amit Indap, Karen~S. King, Sven Bergmann, Matthew~R. Nelson,
   Matthew Stephens, and Carlos~D. Bustamante.
-\newblock Genes mirror geography within europe.
+\newblock Genes mirror geography within {Europe}.
 \newblock \emph{Nature}, 456\penalty0 (7218):\penalty0 98--101, November 2008.
 
 \bibitem[Patterson et~al.(2006)Patterson, Price, and Reich]{Patterson2006}
@@ -414,8 +421,8 @@ Nick Patterson, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland,
 
 \bibitem[Paul et~al.(2011)Paul, Steinrücken, and Song]{Paul_Song2011}
 Joshua~S. Paul, Matthias Steinrücken, and Yun~S. Song.
-\newblock An accurate sequentially markov conditional sampling distribution for
-  the coalescent with recombination.
+\newblock An accurate sequentially {Markov} conditional sampling distribution
+  for the coalescent with recombination.
 \newblock \emph{Genetics}, 2011.
 
 \bibitem[Petkova et~al.(2014)Petkova, Novembre, and
@@ -471,7 +478,7 @@ Jonathan~K. Pritchard, Matthew Stephens, and Peter Donnelly.
 
 \bibitem[Prugnolle et~al.(2005)Prugnolle, Manica, and
   Balloux]{prugnolle_geography_2005}
-Franck Prugnolle, Andrea Manica, and Fran√ßois Balloux.
+Franck Prugnolle, Andrea Manica, and Fran{\c c}ois Balloux.
 \newblock Geography predicts neutral genetic diversity of human populations.
 \newblock \emph{Current biology : {CB}}, 15\penalty0 (5):\penalty0 R159--R160,
   March 2005.
@@ -494,7 +501,7 @@ S.~Ramachandran, O.~Deshpande, C.~C. Roseman, N.~A. Rosenberg, M.~W. Feldman,
   Singh]{reich_india_2009}
 David Reich, Kumarasamy Thangaraj, Nick Patterson, Alkes~L. Price, and Lalji
   Singh.
-\newblock Reconstructing indian population history.
+\newblock Reconstructing {Indian} population history.
 \newblock \emph{Nature}, 461\penalty0 (7263):\penalty0 489--494, September
   2009.
 
@@ -511,7 +518,7 @@ Gareth~O. Roberts and Jeffrey~S. Rosenthal.
 
 \bibitem[Roberts and Rosenthal(2009)]{roberts2009examples}
 Gareth~O Roberts and Jeffrey~S Rosenthal.
-\newblock Examples of adaptive mcmc.
+\newblock Examples of adaptive {MCMC}.
 \newblock \emph{Journal of Computational and Graphical Statistics}, 18\penalty0
   (2):\penalty0 349--367, 2009.
 
@@ -525,11 +532,11 @@ Noah~A. Rosenberg, Jonathan~K. Pritchard, James~L. Weber, Howard~M. Cann,
 
 \bibitem[Rosenthal(2011)]{rosenthal2010_optimal}
 Jeffrey~S. Rosenthal.
-\newblock {Optimal Proposal Distributions and Adaptive MCMC}.
+\newblock Optimal proposal distributions and adaptive {MCMC}.
 \newblock In Steve Brooks, Andrew Gelman, Galin~L. Jones, and Xiao-Li Meng,
-  editors, \emph{Handbook of Markov Chain Monte Carlo}, Handbooks of Modern
-  Statistical Methods, chapter~4. Chapman \& Hall, CRC, Florida, USA, first
-  edition, 2011.
+  editors, \emph{Handbook of {Markov} Chain {Monte} {Carlo}}, Handbooks of
+  Modern Statistical Methods, chapter~4. Chapman \& Hall, CRC, Florida, USA,
+  first edition, 2011.
 
 \bibitem[Schlebusch et~al.(2012)Schlebusch, Skoglund, Sj√∂din, Gattepaille,
   Hernandez, Jay, Li, De~Jongh, Singleton, Blum, Soodyall, and
@@ -537,15 +544,17 @@ Jeffrey~S. Rosenthal.
 Carina~M. Schlebusch, Pontus Skoglund, Per Sj√∂din, Lucie~M. Gattepaille, Dena
   Hernandez, Flora Jay, Sen Li, Michael De~Jongh, Andrew Singleton, Michael
   G.~B. Blum, Himla Soodyall, and Mattias Jakobsson.
-\newblock Genomic variation in seven khoe-san groups reveals adaptation and
-  complex african history.
+\newblock Genomic variation in seven {Khoe}-{San} groups reveals adaptation and
+  complex {African} history.
 \newblock \emph{Science (New York, N.Y.)}, 338\penalty0 (6105):\penalty0
   374--379, October 2012.
 
-\bibitem[Skoglund et~al.(2012)Skoglund, Malmström, Raghavan, Storå, Hall,
-  Willerslev, Gilbert, Götherström, and Jakobsson]{skoglund2012origins}
-Pontus Skoglund, Helena Malmström, Maanasa Raghavan, Jan Storå, Per Hall, Eske
-  Willerslev, M.~Thomas~P. Gilbert, Anders Götherström, and Mattias Jakobsson.
+\bibitem[Skoglund et~al.(2012)Skoglund, Malmstr{\"o}m, Raghavan, Stor{\aa},
+  Hall, Willerslev, Gilbert, G{\"o}therstr{\"o}m, and
+  Jakobsson]{skoglund2012origins}
+Pontus Skoglund, Helena Malmstr{\"o}m, Maanasa Raghavan, Jan Stor{\aa}, Per
+  Hall, Eske Willerslev, M.~Thomas~P. Gilbert, Anders G{\"o}therstr{\"o}m, and
+  Mattias Jakobsson.
 \newblock Origins and genetic legacy of neolithic farmers and hunter-gatherers
   in {Europe}.
 \newblock \emph{Science}, 336\penalty0 (6080):\penalty0 466--469, 2012.
@@ -578,10 +587,10 @@ Chaolong Wang, Sebastian Z√∂llner, and Noah~A. Rosenberg.
 
 \bibitem[Wasser et~al.(2004)Wasser, Shedlock, Comstock, Ostrander, Mutayoba,
   and Stephens]{Wasser2004}
-Samuel~K Wasser, Andrew~M Shedlock, Kenine Comstock, Elaine~a Ostrander,
-  Benezeth Mutayoba, and Matthew Stephens.
-\newblock {Assigning African elephant DNA to geographic region of origin:
-  Applications to the ivory trade.}
+Samuel~K Wasser, Andrew~M Shedlock, Kenine Comstock, Elaine Ostrander, Benezeth
+  Mutayoba, and Matthew Stephens.
+\newblock Assigning {African} elephant {DNA} to geographic region of origin:
+  {Applications} to the ivory trade.
 \newblock \emph{PNAS}, 101\penalty0 (41):\penalty0 14847--52, October 2004.
 
 \bibitem[Wright(1943)]{Wright1943}
@@ -591,7 +600,7 @@ Sewall Wright.
 
 \bibitem[Xu and Jin(2008)]{xu_genome-wide_2008}
 Shuhua Xu and Li~Jin.
-\newblock A genome-wide analysis of admixture in uyghurs and a high-density
+\newblock A genome-wide analysis of admixture in {Uyghurs} and a high-density
   admixture map for disease-gene discovery.
 \newblock \emph{The American Journal of Human Genetics}, 83\penalty0
   (3):\penalty0 322--336, September 2008.

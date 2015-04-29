@@ -1,0 +1,122 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[authoryear]{natbib}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bigints}
+\usepackage{array}
+\usepackage{tikz}
+
+
+\newcommand{\gb}[1]{{\it\color{magenta}{(#1)}}}
+\newcommand{\plr}[1]{{\it\color{purple}{(#1)}}}
+\newcommand{\gc}[1]{{\it\color{blue}{(#1)}}}
+
+\begin{document}
+
+\section*{Guest Editor's summary}
+
+Overall this paper is good and the topic is of wide enough interest to be appropriate for PLoS Genetics. However, the reviewers, particularly 1 and 2, made several points about the paper that would need to be addressed before it could be accepted. The reviewers noted a number of deficiencies in the paper that will require major revision. The most important points of the reviewers are as follows.
+
+\subsection*{Reviewer 1}
+
+I agree that the paper would be more persuasive if the real improvements over PCA, Treemix and Globetrotter could be made clearer. 
+
+Why not use a third dimension, in a way similar to using PC3?
+
+Don’t worry about extending the method to within-population structure unless you want to.
+
+The comments about multiple sources of admixture is germane, especially in light of David Reich’s recent papers.
+
+\subsection*{Reviewer 2}
+
+The point about possible effects of LD and uneven spacing of samples are important and will have to be addressed.
+
+The comments made about comparison with Treemix results and the potential use of additional dimensions echo Reviewer 1’s comments. Is all the useful information really contained in a two-dimensional graph? In not, what else can you say?
+
+Reviewer 2 made several additional technical comments that need to be addressed. Is MCMC really necessary?
+
+\subsection*{Reviewer 3} 
+Reviewer 3 suggests shortening and clarifying the discussion of the human data. The authors should consider the other comment about analyzing the POPRES data.
+
+\section*{Reviewer Comments}
+
+\subsection*{Reviewer 1}
+Bradburd et al. develop a novel method to produce "geogenetic maps" where populations are placed on the map at distances distorted to reflect rates of gene flow among the sampled populations. The authors show that in simulation their method (SpaceMix) produces results more easily interpreted and reflective of gene flow than does PCA, and they then apply SpaceMix to two datasets: one from a ring species (the greenish warbler) and one from a global sampling of human populations.
+
+\subsubsection*{Major comments (in no particular order)}
+Overall I think this method could be widely used in the field, but I think to achieve that the authors need to show more details in their applications of what (ideally, erroneous) conclusions PCA and TreeMix (or a similar tree-based method) would have on the same datasets they apply SpaceMix to. I agree in principle that PCA and tree-based methods can't fully capture admixture and/or are biased by sampling/scale of data, but I want the authors to show me how I would "go wrong" by using alternatives to SpaceMix to analyze population genetic data. Also, it wasn't totally clear to me how SpaceMix differs from Globetrotter (Hellenthal et al.), which is referenced quite late in this manuscript.
+
+The theory underlying this paper is very nice; the fact that the covariance matrix from a population genetic dataset can be expected to be Wishart and that this allows efficient calculations of the likelihood of the data is neat. But Figure 2 was not surprising to me and I wonder why the authors limit themselves to inferring geographic locations in two dimensions - why not three and then show a series of biplots? With admixed populations, a 3rd PC is often useful in visualizing the nature of the admixture.
+
+I think the authors are missing an opportunity to use SpaceMix to study within-population variation. Since SpaceMix only needs 1 sample from each population, why not apply it to identify relatives or reveal structure within a population? A little bit of this happens in figure 5 with zooming in on Eurasian map but there is more that could be done; a simple application to the 1000 Genomes without filtering on relatives could produce a result with high impact.
+
+The authors assume a single source of admixture - why not have supplementary figures that at least show what happens with 2 or 3? I think this will help users compare SpaceMix to competing methods like Globetrotter.
+
+Line 350 – were the data generated for this paper, or previously? If the latter, more info is given here than needed.
+
+Major comment about writing:
+There’s an anthropomorphization of populations starting around line 282 of populations that should be fixed. Examples are: “…the admixed population (population 23) choose admixture from very close….” –don’t the authors mean the method is assigning the admixture source from very close to the true source? Another example, Line 290 – “it [population 18] explains its intermediate genetic relationships by….” Line 375 – “chooses to locate itself” Line 542 – “…where the Uygur have positioned themselves.” Line 668 – “choose to cluster close to each other”
+
+\subsubsection*{Minor comments}
+Figure captions don’t really explain the axis labels Northings and Eastings. 
+Line 25 - Li and Durbin 2011 doesn’t provide gene flow information really, but MSMC does (are the authors thinking of when they use 1 sequence from one pop and another from another?)
+Line 32 - Luca et al. 1994? Fix citation.
+Intro (first page) is a little repetitive in its multiple mentions of PCA – way to tighten this up?
+Line 116 – “historical or ongoing migration” – vague
+
+Line 130 – change line end from “Within population” to “Within-population”.
+Subsection heading on line 176 is confusing. How about just “Simulations”?
+Line 266 – are heavily weighted towards small values to be conservative with respect to admixture inference. Explain.
+Line 455 – what does “subset of HGDP samples” means? These papers mostly deal with full HGDP.
+Line 495 – typo: “the of the North”
+Line 505 – the ‘nuggets’ – why quotes here and nowhere else?
+Line 845 – missing a comma to indicate that migration rate is constant across all neighbors (including diagonal)
+
+\subsection*{Reviewer 2}
+In the submitted article entitled "A Spatial Framework for Understanding Population Structure and Admixture", Bradburd, Ralph and Coop present a new statistical method to describe population structure. They introduce the concept of geogenetic maps that is a projection of the genetic samples in 2 dimensions using the genetic covariance between populations or individuals. The idea is interesting and has the advantage of taking into account the decay of genetic covariance due to geographical distance, and the possibility of modeling admixture events. In addition, the method is implemented in a program SpaceMix. Because it uses the genetic covariance between populations or individuals, it is not computationally costly. However I have general and statistical comments or concerns about the method.
+
+- The covariance estimated is assumed to follow a Wishart distribution. This is the case if the allele frequencies are independent Gaussian vectors. However at the genome-wide level, Linkage Disequilibrium would completely distort the Wishart distribution, just like summing correlated squared Gaussian variables distorts a chi-square distribution. Especially when working on data with spatial structure, or potential admixed populations, where the level of LD is expected to be stronger. The authors mention l.92 "unlinked" and LD in a brief paragraph in the discussion. I suggest to emphasize this issue earlier in the article, as it would be important for SpaceMix users to know that. In addition, subsample of the SNPs is done in the empirical analysis, does it mean that $r^2$ measures between SNPs are very low? Can the authors detail?
+
+- The simulated examples are useful to understand geogenetic maps. However all the sampling schemes are regular grids. It would be of interest to see how robust these maps are to uneven sampling. This is the most common case in empirical analysis. Did the authors make sure that missing samples on the grid do not distort the resulting geogenetic maps?
+
+- There are already tools for l.66 "visualizing patterns of population differentiation" that could be mentioned. To assess the power and the novelty of the method, the authors should compare the geogenetic maps to what is already done. There is no need to compare to all the previous methods, but at least with the very common Multi dimensional scaling (which would give the same projections as PCA, but philosophically closer to the method (1)). The only comparison made is for a 1D stepping stone model in Fig. S13, where the population structure needs only 1 dimension to be described. With comparisons the authors could assess the advantage of the statistical modeling of the Isolation by distance pattern, and the admixture. In the same spirit, the method mentions TreeMix that estimates admixture, but does not compare the estimated admixture proportion w to TreeMix results. This is unfortunate, because it could show how taking geography into account helps estimate admixture.
+
+- My main concern is rather general than statistical. Although the authors claim it is a simple and intuitive way to visualize population structure, the interpretation does not always seem obvious. For example in the expansion scenario of Figure 1, the populations where expansion took place have closer geogenetic coordinates than populations with only migrations. But based on the coordinates only, it seems unlikely to know if the geogenetic pattern is due to expansion, higher migration rates, strong edge effect, or other. Would it be possible to disentangle the sources of population structure without a priori knowledge? In the Human data analysis, It would be difficult to interpret the 2 independent expansions for Oceania and America with no prior knowledge. The fact that Native American populations are northmost population is not intuitive, when with PCA, they would be separated on PC3 or PC4. It feels like too much information is being summarized in 2 dimensions.
+When adding admixture, the many arrows make the visualization tricky (Figure 9). Wouldn't it be better to separate the G and G* on two different maps?
+
+- From a statistical point of view, perform a mapping $R^2$ -> $R^2$ based on a covariance matrix and variogram analysis is something that has been studied (2, 3). A connection between the present work and the statistical literature is interesting to place the work in a broader context of warping study.
+
+- In the article, several models are introduced. The inference of geognetic maps can be done with or without stationary population location, and with or without admixture. The geogenetic coordinates estimated by the different models are presented for simulated data and empirical data, and are different (Figure 2, 6, 8, 9). The model selection approach is here unclear. The model with the less parameters is advised l.275, why? How can a user know which model is the most relevant? An intuitive approach such as running the with admixture model and looking for large admixture proportion w does not seem a good idea as the true admixture proportion value may be outside the 95\% credibility interval (l.286) in the simulations.
+
+- I don't understand why the authors run an MCMC algorithm if they are only interested in a MAP. The authors could use an efficient gradient algorithm such as the Conjugate gradient algorithm, or a variational approach to get a MAP (4). These options would be much faster than running a long Markov Chain. The credibility interval would not be returned, but the G coordinates would be the same if the MAP is actually reached. It would avoid computing chains with millions of steps.
+
+
+\subsubsection*{Minor}
+l.146 "The likelihood of the data". One should say "likelihood" or "probability of the data".
+l.191 "and and"
+l.245 "between $X_{k, l} and X_{k, l}$"
+l.446 "the interpretation our results"
+
+\subsubsection*{References}
+1. MARDIA, Kantilal Varichand, KENT, John T., et BIBBY, John M. Multivariate analysis. Academic press, 1979. Chap. 14\\
+2. SAMPSON, Paul D. et GUTTORP, Peter. Nonparametric estimation of nonstationary spatial covariance structure. Journal of the American Statistical Association, 1992, vol. 87, no 417, p. 108-119.\\
+3. BOOKSTEIN, Fred L.. . Principal warps: Thin-plate splines and the decomposition of deformations. IEEE Transactions on pattern analysis and machine intelligence, 1989, vol. 11, no 6, p. 567-585.\\
+4. RUSTAGI, Jagdish S. Optimization techniques in statistics. Elsevier, 2014.\\
+
+\subsection*{Reviewer 3} This paper describes a new method for summarizing and visualizing genetic data. It uses an isolation by distance model as a null and tries to infer the positions of populations in two dimensional space, adding admixture edges as necessary. I like the approach very much. Overall the paper is well written, the method is sound, and I don’t have any major criticisms. Below are a few suggestions that might improve the paper. 
+
+1) I thought that the analysis of the human data was the weakest part of the paper. It’s clear that the IBD model is a poor fit to the worldwide data and, and I don’t know how to interpret many of the admixture edges. As the authors write in another context - it looks a bit tortured. What does it mean that the Brahui apparently have Bantu-like admixture, for example? I agree with the authors’ discussion that this might be an artifact due to multiple sources of admixture or unsampled populations, but I felt like this whole discussion was a bit long and over-interpreted some of these analyses. When the analysis is restricted to the Eurasian samples it looks cleaner, but then seems to find very few admixture edges compared to what I’d expect. I don’t have any specific suggestions except that this discussion could be shortened a bit. 
+
+It would have been very interesting to see the result of running SpaceMix on a dataset which fits the IBD model better – for example the POPRES data. This would also have the advantage that we could compare directly with the PCA and SPA analyses of this dataset. 
+
+2) Maybe I’m misunderstanding this, but on line 807 the methods say that the move is rejected if it lies outside the range of the prior. Doesn’t think mean that the proposal distribution is not actually symmetric? 
+
+3) Line 108 – “roughly unit variance in some sense” – perhaps this could be more specific.
+
+\end{document}

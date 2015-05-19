@@ -2,6 +2,9 @@
 .Rapp.history
 *.log
 spacemix.pdf
+submission1/reviews/spacemix_reviews.pdf
+submission1/spacemix_plos_template.pdf
+submission2/spacemix_plos_template_sub2.pdf
 *.synctex.gz
 *.mp
 *.top

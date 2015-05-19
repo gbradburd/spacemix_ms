@@ -25,22 +25,19 @@ Overall this paper is good and the topic is of wide enough interest to be approp
 
 \subsection*{Reviewer 1}
 
-I agree that the paper would be more persuasive if the real improvements over PCA, Treemix and Globetrotter could be made clearer. 
-\par\gb{We can run TreeMix on the lattice dataset, and show that the results are (hopefully) weird.
-	For PCA...not sure.  I have the 1D simulations, and I have the PCA for the global human dataset, which is not super map-like.
-	Could also come back to that ``how much variance is explained in our map vs. PCA map?" comparison...}\\\\
-%%%%%
+I agree that the paper would be more persuasive if the real improvements over PCA, Treemix and Globetrotter could be made clearer.\\\\
+
 Why not use a third dimension, in a way similar to using PC3?\\\\
 
-Don’t worry about extending the method to within-population structure unless you want to.\\\\
+Don't worry about extending the method to within-population structure unless you want to.\\\\
 
-The comments about multiple sources of admixture is germane, especially in light of David Reich’s recent papers.\\\\
+The comments about multiple sources of admixture is germane, especially in light of David Reich's recent papers.\\\\
 
 \subsection*{Reviewer 2}
 
 The point about possible effects of LD and uneven spacing of samples are important and will have to be addressed.\\\\
 
-The comments made about comparison with Treemix results and the potential use of additional dimensions echo Reviewer 1’s comments. Is all the useful information really contained in a two-dimensional graph? In not, what else can you say?\\\\
+The comments made about comparison with Treemix results and the potential use of additional dimensions echo Reviewer 1's comments. Is all the useful information really contained in a two-dimensional graph? In not, what else can you say?\\\\
 
 Reviewer 2 made several additional technical comments that need to be addressed. Is MCMC really necessary?\\\\
 
@@ -61,25 +58,25 @@ I think the authors are missing an opportunity to use SpaceMix to study within-p
 
 The authors assume a single source of admixture - why not have supplementary figures that at least show what happens with 2 or 3? I think this will help users compare SpaceMix to competing methods like Globetrotter.
 
-Line 350 – were the data generated for this paper, or previously? If the latter, more info is given here than needed.
+Line 350 -- were the data generated for this paper, or previously? If the latter, more info is given here than needed.
 
 Major comment about writing:
-There’s an anthropomorphization of populations starting around line 282 of populations that should be fixed. Examples are: “…the admixed population (population 23) choose admixture from very close….” –don’t the authors mean the method is assigning the admixture source from very close to the true source? Another example, Line 290 – “it [population 18] explains its intermediate genetic relationships by….” Line 375 – “chooses to locate itself” Line 542 – “…where the Uygur have positioned themselves.” Line 668 – “choose to cluster close to each other”
+There's an anthropomorphization of populations starting around line 282 of populations that should be fixed. Examples are: ``…the admixed population (population 23) choose admixture from very close….'' --don't the authors mean the method is assigning the admixture source from very close to the true source? Another example, Line 290 -- ``it [population 18] explains its intermediate genetic relationships by….'' Line 375 -- ``chooses to locate itself'' Line 542 -- ``…where the Uygur have positioned themselves.'' Line 668 -- ``choose to cluster close to each other''
 
 \subsubsection*{Minor comments}
-Figure captions don’t really explain the axis labels Northings and Eastings. 
-Line 25 - Li and Durbin 2011 doesn’t provide gene flow information really, but MSMC does (are the authors thinking of when they use 1 sequence from one pop and another from another?)
+Figure captions don't really explain the axis labels Northings and Eastings. 
+Line 25 - Li and Durbin 2011 doesn't provide gene flow information really, but MSMC does (are the authors thinking of when they use 1 sequence from one pop and another from another?)
 Line 32 - Luca et al. 1994? Fix citation.
-Intro (first page) is a little repetitive in its multiple mentions of PCA – way to tighten this up?
-Line 116 – “historical or ongoing migration” – vague
+Intro (first page) is a little repetitive in its multiple mentions of PCA -- way to tighten this up?
+Line 116 -- ``historical or ongoing migration'' -- vague
 
-Line 130 – change line end from “Within population” to “Within-population”.
-Subsection heading on line 176 is confusing. How about just “Simulations”?
-Line 266 – are heavily weighted towards small values to be conservative with respect to admixture inference. Explain.
-Line 455 – what does “subset of HGDP samples” means? These papers mostly deal with full HGDP.
-Line 495 – typo: “the of the North”
-Line 505 – the ‘nuggets’ – why quotes here and nowhere else?
-Line 845 – missing a comma to indicate that migration rate is constant across all neighbors (including diagonal)
+Line 130 -- change line end from ``Within population'' to ``Within-population''.
+Subsection heading on line 176 is confusing. How about just ``Simulations''?
+Line 266 -- are heavily weighted towards small values to be conservative with respect to admixture inference. Explain.
+Line 455 -- what does ``subset of HGDP samples'' means? These papers mostly deal with full HGDP.
+Line 495 -- typo: ``the of the North''
+Line 505 -- the ‘nuggets' -- why quotes here and nowhere else?
+Line 845 -- missing a comma to indicate that migration rate is constant across all neighbors (including diagonal)
 
 \subsection*{Reviewer 2}
 In the submitted article entitled ``A Spatial Framework for Understanding Population Structure and Admixture", Bradburd, Ralph and Coop present a new statistical method to describe population structure. They introduce the concept of geogenetic maps that is a projection of the genetic samples in 2 dimensions using the genetic covariance between populations or individuals. The idea is interesting and has the advantage of taking into account the decay of genetic covariance due to geographical distance, and the possibility of modeling admixture events. In addition, the method is implemented in a program SpaceMix. Because it uses the genetic covariance between populations or individuals, it is not computationally costly. However I have general and statistical comments or concerns about the method.
@@ -112,24 +109,23 @@ l.446 ``the interpretation our results"\\
 3. BOOKSTEIN, Fred L.. . Principal warps: Thin-plate splines and the decomposition of deformations. IEEE Transactions on pattern analysis and machine intelligence, 1989, vol. 11, no 6, p. 567-585.\\
 4. RUSTAGI, Jagdish S. Optimization techniques in statistics. Elsevier, 2014.\\
 
-\subsection*{Reviewer 3} This paper describes a new method for summarizing and visualizing genetic data. It uses an isolation by distance model as a null and tries to infer the positions of populations in two dimensional space, adding admixture edges as necessary. I like the approach very much. Overall the paper is well written, the method is sound, and I don’t have any major criticisms. Below are a few suggestions that might improve the paper. 
+\subsection*{Reviewer 3} This paper describes a new method for summarizing and visualizing genetic data. It uses an isolation by distance model as a null and tries to infer the positions of populations in two dimensional space, adding admixture edges as necessary. I like the approach very much. Overall the paper is well written, the method is sound, and I don't have any major criticisms. Below are a few suggestions that might improve the paper. 
 
-1) I thought that the analysis of the human data was the weakest part of the paper. It’s clear that the IBD model is a poor fit to the worldwide data and, and I don’t know how to interpret many of the admixture edges. As the authors write in another context - it looks a bit tortured. What does it mean that the Brahui apparently have Bantu-like admixture, for example? I agree with the authors’ discussion that this might be an artifact due to multiple sources of admixture or unsampled populations, but I felt like this whole discussion was a bit long and over-interpreted some of these analyses. When the analysis is restricted to the Eurasian samples it looks cleaner, but then seems to find very few admixture edges compared to what I’d expect. I don’t have any specific suggestions except that this discussion could be shortened a bit. 
+1) I thought that the analysis of the human data was the weakest part of the paper. It's clear that the IBD model is a poor fit to the worldwide data and, and I don't know how to interpret many of the admixture edges. As the authors write in another context - it looks a bit tortured. What does it mean that the Brahui apparently have Bantu-like admixture, for example? I agree with the authors' discussion that this might be an artifact due to multiple sources of admixture or unsampled populations, but I felt like this whole discussion was a bit long and over-interpreted some of these analyses. When the analysis is restricted to the Eurasian samples it looks cleaner, but then seems to find very few admixture edges compared to what I'd expect. I don't have any specific suggestions except that this discussion could be shortened a bit. 
 
-It would have been very interesting to see the result of running SpaceMix on a dataset which fits the IBD model better – for example the POPRES data. This would also have the advantage that we could compare directly with the PCA and SPA analyses of this dataset. 
+It would have been very interesting to see the result of running SpaceMix on a dataset which fits the IBD model better -- for example the POPRES data. This would also have the advantage that we could compare directly with the PCA and SPA analyses of this dataset. 
 
-2) Maybe I’m misunderstanding this, but on line 807 the methods say that the move is rejected if it lies outside the range of the prior. Doesn’t think mean that the proposal distribution is not actually symmetric? 
+2) Maybe I'm misunderstanding this, but on line 807 the methods say that the move is rejected if it lies outside the range of the prior. Doesn't think mean that the proposal distribution is not actually symmetric? 
 
-3) Line 108 – “roughly unit variance in some sense” – perhaps this could be more specific.
+3) Line 108 -- ``roughly unit variance in some sense'' -- perhaps this could be more specific.
 
 \newpage
 \section*{To-Do List for G, P, and G}
 \begin{itemize}
-\item graham to run treemix on lattice and admixed lattice (and maybe map w/ a gap?)
-\item gid to run PCA on lattice and admixed lattice
-\item Peter to think about quantifying the variance explained by our map
-\item gid to fix anthropomorphization of geogenetic location language
-\item gid to write section in response to Rev. 2 on LD considerations
+\item Graham to run treemix on lattice and admixed lattice (and maybe map w/ a gap?)
+\item Gid to run PCA on lattice and admixed lattice
+\item Gid to fix anthropomorphization of geogenetic location language
+\item Gid to write section in response to Rev. 2 on LD considerations
 	\begin{itemize}
 		\item thin, as we have done
 		\item estimate number of loci $L$
@@ -137,13 +133,19 @@ It would have been very interesting to see the result of running SpaceMix on a d
 	\end{itemize}
 \item re-run globetrotter analyses w/ larger SNP dataset
 	\begin{itemize}
-		\item graham create thinned dataset
-		\item gid to re-run analyses
+		\item Graham create thinned dataset
+		\item Gid to re-run analyses
 	\end{itemize}
-\item gid add a note in discussion in response to Rev. 2 about multiple processes potentially generating patterns
-\item gid add a paragraph (maybe in SuppMat?) describing when to use different models
-\item gid add a note about why we want a full MCMC (for now) even though we only show MAP
-\item all weigh in on whether to pare down discussion of human results (in response to Rev. 3)
+\item Gid add a note in discussion in response to Rev. 2 about multiple processes potentially generating patterns
+\item Gid add a paragraph (maybe in SuppMat?) describing when to use different models
+\item Gid add a note about why we want a full MCMC (for now) even though we only show MAP
+\item All weigh in on whether to pare down discussion of human results (in response to Rev. 3)
+\item Peter to think about quantifying the variance explained by our map (in response to Rev. 1 \& AE)
+	\begin{itemize}
+		\item i.e., how much variance is explained by our map vs. a map comprised of the first 2 PCs?
+	\end{itemize}
+\item Peter to look at warping work mentioned by reviewer 2.
+\item ?? look at effect of uneven sampling scheme.
 \end{itemize}
 
 

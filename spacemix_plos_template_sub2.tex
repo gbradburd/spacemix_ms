@@ -1059,6 +1059,49 @@ we (unless stated otherwise) present only the results from the `random' prior an
 
 Finally, we compared the SpaceMix map to a map derived from a Principal Components Analysis (Patterson and Reich 2006).  For this analysis, we calculated the eigendecomposition of the mean-centered allelic covariance matrix, then plotted individuals' coordinates on the first two eigenvectors (e.g.\ Novembre et al 2008).  For consistency of presentation, we show the full Procrustes superimposition of the PC coordinate space around the geographic sampling locations.
 
+\subsection*{Treemix Comparisons}
+To contrast our approach to tree based approaches to admixture we
+applied Treemix \cite{Treemix} to our spatial simulations. 
+
+We took the \textt{ms} output, that we had also run Spacemix on, and converted it into \texttt{Treemix}
+format, we included an outgroup sequence which consisted of a single
+haploid individual who carried the $0$/ancestral allele at every locus. We ran Treemix without migration edges on the processed ms.treemix.file.gz file to construct the initial
+tree, this tree was rooted using the myoutgroup sequence:\\
+\texttt{treemix -i ms.treemix.file.gz  -root myoutgroup -o treemix_output}\\
+We then sequentially added migration edges to the tree/graph, using the
+command to add another edge to the existing tree (prev.treemix):\\
+\texttt{treemix -i  ms.treemix.file.gz -root myoutgroup  -g  prev.treemix.vertices.gz  prev.treemix.edges.gz -m 1 -o  treemix_output}\\
+
+The Treemix graphs, and residual covariance matrices, were visualized
+using the scripts provided with Treemix. The code to process and plot
+the data is provided.
+
+In Figure SXXX we show a tree and admixture graphs produced when
+Treemix is run on a lattice stepping stone model (a smaller scale
+version of this was done in \cite{Treemix}). The tree produced by
+running \texttt{Treemix} is rake-like showing the lack of deep shared
+sub-division. However, while the tree captures some features of the
+isolation-by-distance, e.g. neighboring samples are often sister to
+each other in the tree, the tree structure forces many unnatural
+splits of geographically neighboring populations (as was found by
+\cite{Treemix}, see their Figure S14). Migration arrows are
+added in an order that act to mitigate the strongest departures from
+the tree, i.e. geographically neighboring samples who were forced into
+separate places on the tree. Different runs of Treemix, on the same
+dataset, result in quite different trees, and orders of migration events, reflect the high degree of symmetry of our
+simulated samples on a grid. In Figures SXXX and SXXXX we also present the
+results of \texttt{Treemix} to our expansion and barrier simulation. 
+
+In Figures SXXX, SXXXX, and SXXXX we show the application of \texttt{Treemix}
+to our simulations of long-distance admixture events. For none of our
+scenarios was the true admixture the first migration edge added; in
+fact only for the corner admixture scenario was the true admixture
+event in the first three edges added. This reflects the fact that
+\texttt{Treemix} has to add migration edges to cope with the residual
+covariance induced, simply above and beyond that expected assuming a tree,
+and so misses more subtle (but real) admixture events. 
+
+
 \section*{Supporting Information}
 
 % Include only the SI item label in the subsection heading. Use the \nameref{label} command to cite SI items in the text.

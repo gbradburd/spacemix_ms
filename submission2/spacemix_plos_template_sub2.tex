@@ -1003,7 +1003,7 @@ We choose to cap the maximum adaption amount at 20 (which is the equivalent of c
 \subsection*{Simulations}
 We ran our simulations using a coalescent framework in the program \textit{ms} (Hudson).  Briefly, we simulated populations on a lattice, with nearest neighbor (separated by a distance of $1$) migration rate $m_{i,j}$, as well as migration on the diagonal of the unit square at rate $m_{i,j}/\sqrt{2}$.  For each locus in the dataset, we used the \textbf{-s} option to specify a single segregating site, and then we simulated 10,000 loci independently, which were subsequently conglomerated into a single dataset for each scenario.  For all simulations, except the ``Populations on a line'' scenario (Fig.\ \ref{sfig:line_scenario}), we sampled only every other population, and, from each population, we sampled 10 haplotypes (corresponding to 5 diploid individuals).  In the ``Populations on a line'' scenario, we simulated no intervening populations, such that every population was sampled.
 
-To simulate a barrier event, we divided the migration rate between neighbors separated by the longitudinal barrier by a factor of 5.  To simulate an expansion event, we used the \textbf{-ej} option to move all lineages from each daughter population to its parent population at a very recent point in the past.  For admixture events, we used the \textbf{-es} and \textbf{-ej} options to first (again, going backward in time) split the admixed population into itself and a new subpopulation of index $k + 1$, and second, to move all lineages in the $(k^{\text{th}} + 1)$ into the source of admixture.  Forward in time, this procedure corresponds to cloning the population that is the source of admixture, then merging it, in some admixture proportion, with the (now) admixed population.  The command line arguments used to call ms for a single locus for each simulation are included in the Appendix.
+To simulate a barrier event, we divided the migration rate between neighbors separated by the longitudinal barrier by a factor of 5.  To simulate an expansion event, we used the \textbf{-ej} option to move all lineages from each daughter population to its parent population at a very recent point in the past.  For admixture events, we used the \textbf{-es} and \textbf{-ej} options to first (again, going backward in time) split the admixed population into itself and a new subpopulation of index $k + 1$, and second, to move all lineages in the $(k^{\text{th}} + 1)$ into the source of admixture.  Forward in time, this procedure corresponds to cloning the population that is the source of admixture, then merging it, in some admixture proportion, with the (now) admixed population.  The command line arguments used to call \texttt{ms} for a single locus for each simulation are included in the Appendix.
 
 \subsection*{Intuition on identifiability of admixture parameters}
 A natural concern is whether all of the parameters we infer are separately identifiable, most notably whether population locations, admixture locations, and proportions can be estimated. That is, if a population has received some admixture from another population, what is to stop it from simply moving toward that population in geogenetic space to satisfy its increased resemblance to that population, rather than choosing admixture from that location?  We do not provide a formal proof, but here build and illustrate some relevant intuition.
@@ -1063,70 +1063,80 @@ we (unless stated otherwise) present only the results from the `random' prior an
 
 Finally, we compared the SpaceMix map to a map derived from a Principal Components Analysis (Patterson and Reich 2006).  For this analysis, we calculated the eigendecomposition of the mean-centered allelic covariance matrix, then plotted individuals' coordinates on the first two eigenvectors (e.g.\ Novembre et al 2008).  For consistency of presentation, we show the full Procrustes superimposition of the PC coordinate space around the geographic sampling locations.
 
-\gc{\subsection*{Treemix Comparisons}}
-To contrast our approach to tree based approaches to admixture we
-applied Treemix \cite{Treemix} to our spatial simulations.
+\subsection*{\gc{Treemix Comparisons}}
+To contrast our approach to tree-based approaches to admixture we
+applied \texttt{TreeMix} \cite{Treemix} to our spatial simulations.
 %
-We took the \texttt{ms} output, that we had also run Spacemix on, and converted it into \texttt{Treemix}
-format, we included an outgroup sequence which consisted of a single
-haploid individual who carried the $0$/ancestral allele at every locus. We ran Treemix without migration edges on the processed ms.treemix.file.gz file to construct the initial
-tree, this tree was rooted using the myoutgroup sequence:\\
-\texttt{treemix -i ms.treemix.file.gz  -root myoutgroup -o treemix\_output}\\
-We then sequentially added migration edges to the tree/graph, using the
-command to add another edge to the existing tree (prev.treemix):\\
+We took the \texttt{ms} output on which we had also run Spacemix 
+(Figs.\ \ref{sfig:lattice_scenarios},\ref{sfig:corner_admix_scenarios},\ref{sfig:barr_inland_ad}), 
+and converted it into \texttt{TreeMix} format.  
+We also included an outgroup sequence for each dataset,
+ which consisted of a single haploid individual who carried the $0$ (ancestral allele) at every locus. 
+ We ran \texttt{TreeMix} without migration edges on the processed \texttt{ms.treemix.file.gz} file to construct the initial
+tree, which was rooted using the \texttt{myoutgroup} sequence using the following command:
+\hspace*{\fill}\newline\hspace*{\fill}\newline
+\texttt{treemix -i ms.treemix.file.gz  -root myoutgroup -o treemix\_output}
+\hspace*{\fill}\newline\hspace*{\fill}\newline
+We then sequentially added admixture migration edges, 
+using the following command to add another edge to the existing tree (``\texttt{prev.treemix}"):
+\hspace*{\fill}\newline\hspace*{\fill}\newline
 \texttt{treemix -i  ms.treemix.file.gz -root myoutgroup  -g  prev.treemix.vertices.gz  prev.treemix.edges.gz -m 1 -o  treemix\_output}
+\hspace*{\fill}\newline\hspace*{\fill}\newline
+The \texttt{TreeMix} graphs and residual covariance matrices were visualized
+using the scripts provided with \texttt{TreeMix}. 
+The code to process and plot the data is provided \gb{by us?  in the appendix or something?}.\\
 %
-The Treemix graphs, and residual covariance matrices, were visualized
-using the scripts provided with Treemix. The code to process and plot
-the data is provided.\\
-%
-In Figure SXXX we show a tree and admixture graphs produced when
-Treemix is run on a lattice stepping stone model (a smaller scale
-version of this was done in \cite{Treemix}). The tree produced by
-running \texttt{Treemix} is rake-like showing the lack of deep shared
-sub-division. However, while the tree captures some features of the
-isolation-by-distance, e.g. neighboring samples are often sister to
-each other in the tree, the tree structure forces many unnatural
-splits of geographically neighboring populations (as was found by
-\cite{Treemix}, see their Figure S14). Migration arrows are
-added in an order that act to mitigate the strongest departures from
-the tree, i.e. geographically neighboring samples who were forced into
-separate places on the tree. Different runs of Treemix, on the same
-dataset, result in quite different trees, and orders of migration events, reflect the high degree of symmetry of our
-simulated samples on a grid. In Figures SXXX and SXXXX we also present the
-results of \texttt{Treemix} to our expansion and barrier simulation.\\
-%
-In Figures SXXX, SXXXX, and SXXXX we show the application of \texttt{Treemix}
-to our simulations of long-distance admixture events. For none of our
-scenarios was the true admixture the first migration edge added; in
-fact only for the corner admixture scenario was the true admixture
-event in the first three edges added. This reflects the fact that
-\texttt{Treemix} has to add migration edges to cope with the residual
-covariance induced, simply above and beyond that expected assuming a tree,
+In Fig.\ \ref{sfig:treemix_lattice} we show the tree and admixture graphs produced when
+\texttt{TreeMix} is run on a lattice stepping stone model 
+(a smaller scale version of this exercise was previously done by Pickrell and Pritchard \cite{Treemix}). 
+The tree produced by running \texttt{TreeMix} is rake-like, showing the lack of deep shared sub-division. 
+However, while the tree captures some features of isolation by distance, 
+(e.g., neighboring samples are often sister to each other), 
+the tree structure forces many unnatural splits of geographically neighboring populations 
+(as was previously found \cite{Treemix}; see their Figure S14). 
+The admixture migration arrows act to mitigate the strongest departures from the tree, 
+such as geographically neighboring samples that were forced into separate places on the tree,
+but are unable to fully accommodate the spatial relationships between samples. 
+ Different runs of \texttt{TreeMix} on the same dataset result in quite different trees and orders of migration events, 
+ reflecting both the high degree of symmetry in our simulated samples on a grid, 
+ and also the poor fit of the tree model to spatial data. 
+In Figs.\ \ref{sfig:treemix_barrier} and \ref{sfig:treemix_expansion},
+we also present the results of \texttt{TreeMix} run on our expansion and barrier simulations.\\
+
+In Figs.\ \ref{sfig:treemix_corneradmixture}, \ref{sfig:treemix_neighboradmixture}, and \ref{sfig:treemix_inlandadmixture},
+we show the application of \texttt{TreeMix} to the scenarios simulated with admixture events.  
+For none of our scenarios was the true admixture the first migration edge added; 
+in fact, only for the corner admixture scenario was the true admixture
+event in the first three edges added. 
+This reflects the fact that \texttt{TreeMix} has to add migration edges to cope with the residual
+covariance induced simply due to the poor fit of a tree to spatially simulated data,
 and so misses more subtle (but real) admixture events.
+The poor performance of \texttt{TreeMix} here is the result of the 
+spatially simulated data not conforming to the 
+underlying assumption of the \texttt{TreeMix} tree-like model.
 
 
 \section*{Supporting Information}
 
 % Include only the SI item label in the subsection heading. Use the \nameref{label} command to cite SI items in the text.
-\subsection*{simulated covariance decays}
+
+\subsection*{Simulated covariance decays}
 \label{sim_covariance_decays}
 {\bf{Decays in covariance for four different simulation scenarios (from top to bottom: simple lattice; lattice with barrier; lattice with expansion; lattice with admixture).} } Left column: sample covariance plotted against observed pairwise distance.  Right column: sample covariance plotted against inferred geogenetic distance.
 
-
-\subsection*{warbler population nugget}
+\subsection*{Warbler population nuggets}
 \label{warb_pop_nugg}
 {\bf{Credible intervals on estimated warbler population nugget parameters.}} a) analysis without admixture; b) analysis with admixture.
 
-\subsection*{warbler population geographic/geogenetic distance comparison}
+\subsection*{Warbler population geographic/geogenetic distance comparison}
 \label{warb_pop_distcomp}
 {\bf{Comparing geographic to geogenetic pairwise distance between warbler populations: a) observed population coordinates; b) pairwise geographic (great-circle) distance between populations compared to that between their geogenetic locations.}} The highlighted points show distances between populations from the \textit{plumbeitarsus} and \textit{viridanus} subspecies.  Notice that, regardless of their observed distance, their geogenetic separations are roughly constant, and much larger than the geographic distance between them.
 
-\subsection*{warbler population admixture proportions}
+\subsection*{Warbler population admixture proportions}
 \label{warb_pop_adprop}
 {\bf{Credible intervals on estimated warbler population admixture proportion parameters.}}
 
-\subsection*{warbler population geogenetic map comparison}
+\subsection*{Warbler population geogenetic map comparison}
 \label{warbler_pop_compare}
 {\bf{Comparison of inferred maps from three independent analyses.	}} (a,b) Results from analysis using observed locations as priors on population locations.  (c) Results from analysis using random, uniformly distributed locations within the observed range of latitude and longitude as priors on population locations.
 
@@ -1134,11 +1144,11 @@ and so misses more subtle (but real) admixture events.
 \label{admix_prop_func_loc_lnl}
 {\bf{Likelihood surfaces for different placements of population ST between \textit{plumbeitarsus} and \textit{viridanus} clusters: (a) log likelihood surface; (b) posterior probability surface, incorporating the priors.}}  The maximum a posteriori estimate (MAP) is shown as a star. 
 
-\subsection*{warbler individual admixture proportions}
+\subsection*{Warbler individual admixture proportions}
 \label{warb_ind_adprops}
 {\bf{Credible intervals on estimated warbler individual admixture proportion parameters.}}
 
-\subsection*{warbler individual geogenetic map comparison}
+\subsection*{Warbler individual geogenetic map comparison}
 \label{warbler_ind_maps_compare}
 {\bf{Inferred maps for warbler individuals, colored by subspecies under analyses with and without admixture inference.}} a) map inferred without admixture; (b) close-up of all non-\textit{nitidus} samples in non-admixture map; c) map inferred with admixture; d) close-up of all non-\textit{nitidus} samples in the admixture map.
 
@@ -1146,19 +1156,19 @@ and so misses more subtle (but real) admixture events.
 \label{warb_ind_clouds}
 {\bf{Maps of the posterior distributions on population locations in three separate SpaceMix analyses on the warbler individual dataset.}}
 
-\subsection*{warbler individual nuggets}
+\subsection*{Warbler individual nuggets}
 \label{warb_ind_nugg}
 {\bf{Credible intervals on estimated warbler individual nugget parameters. }} a) analysis without admixture; b) analysis with admixture.
 
-\subsection*{warbler individual pairwise-$\pi$}
+\subsection*{Warbler individual pairwise-$\pi$}
 \label{warb_ind_pwp}
 {\bf{Mean pairwise sequence divergence at polymorphic sites calculated between all pairs of individuals from different subspecies, and colored by the subspecies to which each individual in the comparison is drawn.}} Note that individuals Tro-LN11 and Lud-MN3 have sequence divergence that is unusually low relative to that of other comparisons between individuals from the same two subspecies.
 
-\subsection*{warbler individual PCA map}
+\subsection*{Warbler individual PCA map}
 \label{warb_ind_PC_map}
 {\bf{The map of warbler individuals derived from a Principal Components analysis.}} The PC coordinates have undergone a full Procrustes transformation around the actual sampling coordinates.
 
-\subsection*{simulation scenario of populations on a line}
+\subsection*{Simulation scenario of populations on a line}
 \label{line_scenario}
 {\bf{Simulation scenario of populations on a line, contrasting PCA-based inference and SpaceMix inference.}} a) Scenario used to simulate data in a spatial coalescent framework with nearest-neighbor migration; b) PCA map of allele frequencies, plotting PC axis 1 against PC axis 2, forming a `U' shape; c) Posterior distribution of SpaceMix location inference, forming a rough line; d) snapshot of the MAP draw from the posterior, again showing a rough line.
 
@@ -1186,6 +1196,36 @@ and so misses more subtle (but real) admixture events.
 \label{example_acceptance_rates}
 {\bf{Example parameter acceptance proportions for the $\alpha_2$ parameter and the nugget parameter, $\eta$, using the adaptive Metropolis-within-Gibbs proposal mechanism.}}
 
+\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Lattice}
+\label{treemix_lattice}
+{\bf{\texttt{TreeMix} analysis of lattice spatial coalescent simulation.}}  
+The tree, residual covariance matrix, and first three migration admixture arrows are shown.
+
+\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Barrier}
+\label{treemix_barrier}
+{\bf{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier.}}
+The tree, residual covariance matrix, and first three migration admixture arrows are shown.
+
+\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Expansion}
+\label{treemix_expansion}
+{\bf{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with an expansion event.}}
+The tree, residual covariance matrix, and first three migration admixture arrows are shown.
+
+\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Admixture}
+\label{treemix_corneradmixture}
+{\bf{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a long-range admixture event.}}
+The tree, residual covariance matrix, and first three migration admixture arrows are shown.
+
+\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Barrier and Short-Range Admixture}
+\label{treemix_neighboradmixture}
+{\bf{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and short-range admixture event.}}  
+The tree, residual covariance matrix, and first three migration admixture arrows are shown.
+
+\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Barrier and Mid-Range Admixture}
+\label{treemix_inlandadmixture}
+{\bf{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and mid-range admixture event.}}  
+The tree, residual covariance matrix, and first three migration admixture arrows are shown.
+
 \subsection*{Warbler Sample Metadata}
 \label{warbler_data_table}
 {\bf{Subspecies and geographic meta-data for greenish warbler individuals included in analysis.}}
@@ -1196,7 +1236,8 @@ and so misses more subtle (but real) admixture events.
 
 % Do NOT remove this, even if you are not including acknowledgments.
 \section*{Acknowledgments}
-We would like to gratefully acknowledge the Coop Lab, Yaniv Brandvain, Razib Khan, Dan Runcie, Brad Shaffer, Marjorie Weber, and Will Wetzel for helpful discussions.  
+We would like to gratefully acknowledge the Coop Lab, Yaniv Brandvain, Razib Khan, Joe Pickrell, 
+Jonathan Pritchard, Dan Runcie, Brad Shaffer, Marjorie Weber, and Will Wetzel for helpful discussions.  
 We also thank Miguel Alcaide, Cristian Capelli, Garrett Hellenthal, and Darren Irwin for sharing data.
 %This work was supported in part by 
 %the National Science Foundation under award number NSF \#1262645 (DBI) to PR and GC, 
@@ -2121,6 +2162,43 @@ samples.}\label{sfig:globe_noad_maps}
 \end{figure}
 
 \clearpage
+
+\begin{figure}
+	\centering
+		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_stationary_popstreemix_fig_sequential.pdf}}
+	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_lattice}
+\end{figure}
+
+\begin{figure}
+	\centering
+		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_barriertreemix_fig_sequential.pdf}}
+	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier..  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_barrier}
+\end{figure}
+
+\begin{figure}
+	\centering
+		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_expansiontreemix_fig_sequential.pdf}}
+	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with an expansion event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_expansion}
+\end{figure}
+
+\begin{figure}
+	\centering
+		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_corner_admixturetreemix_fig_sequential.pdf}}
+	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a long-range admixture event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_corneradmixture}
+\end{figure}
+
+\begin{figure}
+	\centering
+		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_neighbor_admixturetreemix_fig_sequential.pdf}}
+	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and short-range admixture event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_neighboradmixture}
+\end{figure}
+
+\begin{figure}
+	\centering
+		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_barrier_and_inland_admixturetreemix_fig_sequential.pdf}}
+	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and mid-range admixture event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_inlandadmixture}
+\end{figure}
+
 
 \begin{table}
 \centering

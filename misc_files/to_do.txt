@@ -95,5 +95,8 @@ COMPLETED:
 	-check for globe anomalies
 	
 AFTER SUBMISSION:
-	fix spacemix to run \hat(omega)/L ~ W(\Omega,L)
 	re-mean centering our standardized freq.
+	
+	
+DONE:
+	fix spacemix to run \hat(omega)/L ~ W(\Omega,L)

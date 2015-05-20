@@ -3277,6 +3277,28 @@ load("~/Desktop/Dropbox/space.mix/sims/stationary_pops/spacemix/stationary_pops_
 k <- last.params$k
 best <- which.max(Prob)
 pop.cols <- rainbow(k,start=4/6,end=6/6)[as.numeric(cut(spacemix.dataset$population.coordinates[,1],k))]
+
+cov_hat <- cov(t(spacemix.dataset$allele.counts/spacemix.dataset$sample.sizes))
+mean.centering.matrix <- get.transformation.matrix(apply(spacemix.dataset$sample.sizes,1,get.mean.sample.size))
+mc.cov_hat <- mean.centering.matrix %*% cov_hat %*% t(mean.centering.matrix)
+pc.coords <- cbind(eigen(mc.cov_hat)$vectors[,1],eigen(mc.cov_hat)$vectors[,2])
+proc.pc.coords <- fitted(vegan::procrustes(spacemix.dataset$population.coordinates,pc.coords))
+
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/lattice_PC_map.pdf",width=5,height=4)
+	#quartz(width=5,height=4)
+	par(mar=c(4.5,4.5,3,1))
+	plot(proc.pc.coords,type='n',
+		xlab=paste("PC1 (",
+					round(eigen(mc.cov_hat)$values[c(1)]/sum(eigen(mc.cov_hat)$values),3) * 100,
+				"%)",sep=""),
+		ylab=paste("PC2 (",
+					round(eigen(mc.cov_hat)$values[c(2)]/sum(eigen(mc.cov_hat)$values),3) * 100,
+				"%)",sep=""),
+		main="Lattice Population PC Map",cex.axis=0.7,xlim=c(0.5,11.5),ylim=c(-0.5,10))
+	text(proc.pc.coords,col=pop.cols,labels=paste(1:k),font=2)
+	box(lwd=2)
+dev.off()
+
 target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 							target.locs = population.coordinates[[best]][1:k,],
 							k = k,
@@ -3345,6 +3367,30 @@ load("~/Desktop/Dropbox/space.mix/sims/barrier/spacemix/barrier_1/spacemix_ms_si
 load("~/Desktop/Dropbox/space.mix/sims/barrier/spacemix.ms.dataset.Robj")
 k <- last.params$k
 best <- which.max(Prob)
+
+cov_hat <- cov(t(spacemix.dataset$allele.counts/spacemix.dataset$sample.sizes))
+mean.centering.matrix <- get.transformation.matrix(apply(spacemix.dataset$sample.sizes,1,get.mean.sample.size))
+mc.cov_hat <- mean.centering.matrix %*% cov_hat %*% t(mean.centering.matrix)
+pc.coords <- cbind(eigen(mc.cov_hat)$vectors[,1],eigen(mc.cov_hat)$vectors[,2])
+proc.pc.coords <- fitted(vegan::procrustes(spacemix.dataset$population.coordinates,pc.coords))
+
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/barrier_PC_map.pdf",width=5,height=4)
+	#quartz(width=5,height=4)
+	par(mar=c(4.5,4.5,3,1))
+	plot(proc.pc.coords,type='n',
+		xlab=paste("PC1 (",
+					round(eigen(mc.cov_hat)$values[c(1)]/sum(eigen(mc.cov_hat)$values),3) * 100,
+				"%)",sep=""),
+		ylab=paste("PC2 (",
+					round(eigen(mc.cov_hat)$values[c(2)]/sum(eigen(mc.cov_hat)$values),3) * 100,
+				"%)",sep=""),
+		main="Barrier Population PC Map",cex.axis=0.7,xlim=c(1.5,10.5),ylim=c(-0.5,10.5))
+	text(proc.pc.coords,col=pop.cols,labels=paste(1:k),font=2)
+	box(lwd=2)
+dev.off()
+
+
+
 target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 							target.locs = population.coordinates[[best]][1:k,],
 							k = k,
@@ -3371,6 +3417,28 @@ load("~/Desktop/Dropbox/space.mix/sims/expansion/spacemix/noad/rand_prior1/expan
 load("~/Desktop/Dropbox/space.mix/sims/expansion/sim_expansion_dataset.Robj")
 k <- last.params$k
 best <- which.max(Prob)
+
+cov_hat <- cov(t(spacemix.dataset$allele.counts/spacemix.dataset$sample.sizes))
+mean.centering.matrix <- get.transformation.matrix(apply(spacemix.dataset$sample.sizes,1,get.mean.sample.size))
+mc.cov_hat <- mean.centering.matrix %*% cov_hat %*% t(mean.centering.matrix)
+pc.coords <- cbind(eigen(mc.cov_hat)$vectors[,1],eigen(mc.cov_hat)$vectors[,2])
+proc.pc.coords <- fitted(vegan::procrustes(spacemix.dataset$population.coordinates,pc.coords))
+
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/expansion_PC_map.pdf",width=5,height=4)
+	#quartz(width=5,height=4)
+	par(mar=c(4.5,4.5,3,1))
+	plot(proc.pc.coords,type='n',
+		xlab=paste("PC1 (",
+					round(eigen(mc.cov_hat)$values[c(1)]/sum(eigen(mc.cov_hat)$values),3) * 100,
+				"%)",sep=""),
+		ylab=paste("PC2 (",
+					round(eigen(mc.cov_hat)$values[c(2)]/sum(eigen(mc.cov_hat)$values),3) * 100,
+				"%)",sep=""),
+		main="Expansion Population PC Map",cex.axis=0.7,xlim=c(0.5,10.5),ylim=c(-0.5,10.5))
+	text(proc.pc.coords,col=pop.cols,labels=paste(1:k),font=2)
+	box(lwd=2)
+dev.off()
+
 target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 							target.locs = population.coordinates[[best]][1:k,],
 							k = k,
@@ -3392,11 +3460,32 @@ dev.off()
 ################
 #	Corner Admixture
 ################
-
 load("~/Desktop/Dropbox/space.mix/sims/admixture/spacemix/admixture_4/spacemix_ms_sim_admixture_4space_MCMC_output1.Robj")
 load("~/Desktop/Dropbox/space.mix/sims/admixture/spacemix/admixture_4/spacemix.ms.dataset.Robj")
 k <- last.params$k
 best <- which.max(Prob)
+
+cov_hat <- cov(t(spacemix.dataset$allele.counts/spacemix.dataset$sample.sizes))
+mean.centering.matrix <- get.transformation.matrix(apply(spacemix.dataset$sample.sizes,1,get.mean.sample.size))
+mc.cov_hat <- mean.centering.matrix %*% cov_hat %*% t(mean.centering.matrix)
+pc.coords <- cbind(eigen(mc.cov_hat)$vectors[,1],eigen(mc.cov_hat)$vectors[,2])
+proc.pc.coords <- fitted(vegan::procrustes(spacemix.dataset$population.coordinates,pc.coords))
+
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/corneradmixture_PC_map.pdf",width=5,height=4)
+	#quartz(width=5,height=4)
+	par(mar=c(4.5,4.5,3,1))
+	plot(proc.pc.coords,type='n',
+		xlab=paste("PC1 (",
+					round(eigen(mc.cov_hat)$values[c(1)]/sum(eigen(mc.cov_hat)$values),3) * 100,
+				"%)",sep=""),
+		ylab=paste("PC2 (",
+					round(eigen(mc.cov_hat)$values[c(2)]/sum(eigen(mc.cov_hat)$values),3) * 100,
+				"%)",sep=""),
+		main="Long-Range Admixture Population PC Map",cex.axis=0.7,xlim=c(1,11),ylim=c(-0.5,10.5))
+	text(proc.pc.coords,col=pop.cols,labels=paste(1:k),font=2)
+	box(lwd=2)
+dev.off()
+
 target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 							target.locs = population.coordinates[[best]][1:k,],
 							k = k,
@@ -3514,6 +3603,28 @@ load("~/Desktop/Dropbox/space.mix/sims/bar_inland_ad/bar_inland_ad_spacemix/bar_
 load("~/Desktop/Dropbox/space.mix/sims/bar_inland_ad/bar_inland_ad_spacemix/bar_inland_ad_spacemix1/rand_prior/barr_inland_ad_dataset.Robj")
 k <- last.params$k
 best <- which.max(Prob)
+
+cov_hat <- cov(t(spacemix.dataset$allele.counts/spacemix.dataset$sample.sizes))
+mean.centering.matrix <- get.transformation.matrix(apply(spacemix.dataset$sample.sizes,1,get.mean.sample.size))
+mc.cov_hat <- mean.centering.matrix %*% cov_hat %*% t(mean.centering.matrix)
+pc.coords <- cbind(eigen(mc.cov_hat)$vectors[,1],eigen(mc.cov_hat)$vectors[,2])
+proc.pc.coords <- fitted(vegan::procrustes(spacemix.dataset$population.coordinates,pc.coords))
+
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/barr_inland_ad_PC_map.pdf",width=5,height=4)
+	#quartz(width=5,height=4)
+	par(mar=c(4.5,4.5,3,1))
+	plot(proc.pc.coords,type='n',
+		xlab=paste("PC1 (",
+					round(eigen(mc.cov_hat)$values[c(1)]/sum(eigen(mc.cov_hat)$values),3) * 100,
+				"%)",sep=""),
+		ylab=paste("PC2 (",
+					round(eigen(mc.cov_hat)$values[c(2)]/sum(eigen(mc.cov_hat)$values),3) * 100,
+				"%)",sep=""),
+		main="Barrier with Mid-Range Admixture\n Population PC Map",cex.axis=0.7,xlim=c(1.5,10.5),ylim=c(-0.5,10.5))
+	text(proc.pc.coords,col=pop.cols,labels=paste(1:k),font=2)
+	box(lwd=2)
+dev.off()
+
 target.coords <- procrusteez(obs.locs = spacemix.dataset$population.coordinates,
 							target.locs = population.coordinates[[best]][1:k,],
 							k = k,
@@ -3639,6 +3750,28 @@ load("~/Desktop/Dropbox/space.mix/sims/big_barr_ad/spacemix/rand_pr1/big_barr_ad
 load("~/Desktop/Dropbox/space.mix/sims/big_barr_ad/spacemix/rand_pr1/sim_big_barr_ad_dataset.Robj")
 k <- last.params$k
 best <- which.max(Prob)
+
+cov_hat <- cov(t(spacemix.dataset$allele.counts/spacemix.dataset$sample.sizes))
+mean.centering.matrix <- get.transformation.matrix(apply(spacemix.dataset$sample.sizes,1,get.mean.sample.size))
+mc.cov_hat <- mean.centering.matrix %*% cov_hat %*% t(mean.centering.matrix)
+pc.coords <- cbind(eigen(mc.cov_hat)$vectors[,1],eigen(mc.cov_hat)$vectors[,2])
+proc.pc.coords <- fitted(vegan::procrustes(spacemix.dataset$population.coordinates,pc.coords))
+
+pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/neighborad_PC_map.pdf",width=5,height=4)
+	#quartz(width=5,height=4)
+	par(mar=c(4.5,4.5,3,1))
+	plot(proc.pc.coords,type='n',
+		xlab=paste("PC1 (",
+					round(eigen(mc.cov_hat)$values[c(1)]/sum(eigen(mc.cov_hat)$values),3) * 100,
+				"%)",sep=""),
+		ylab=paste("PC2 (",
+					round(eigen(mc.cov_hat)$values[c(2)]/sum(eigen(mc.cov_hat)$values),3) * 100,
+				"%)",sep=""),
+		main="Barrier with Short-Range Admixture\n Population PC Map",cex.axis=0.7,xlim=c(1.5,10.5),ylim=c(-0.5,10.5))
+	text(proc.pc.coords,col=pop.cols,labels=paste(1:k),font=2)
+	box(lwd=2)
+dev.off()
+
 pop.cols <- rainbow(k,start=4/6,end=6/6)[as.numeric(cut(spacemix.dataset$population.coordinates[,1],k))]
 plot(rowMeans(admix.proportions[,250:1000])/2,col=pop.cols)
 quantile(admix.proportions[18,]/2,c(0.025,0.975))

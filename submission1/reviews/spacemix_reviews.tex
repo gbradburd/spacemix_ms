@@ -50,33 +50,39 @@ Reviewer 3 suggests shortening and clarifying the discussion of the human data. 
 Bradburd et al. develop a novel method to produce ``geogenetic maps" where populations are placed on the map at distances distorted to reflect rates of gene flow among the sampled populations. The authors show that in simulation their method (SpaceMix) produces results more easily interpreted and reflective of gene flow than does PCA, and they then apply SpaceMix to two datasets: one from a ring species (the greenish warbler) and one from a global sampling of human populations.
 
 \subsubsection*{Major comments (in no particular order)}
-Overall I think this method could be widely used in the field, but I think to achieve that the authors need to show more details in their applications of what (ideally, erroneous) conclusions PCA and TreeMix (or a similar tree-based method) would have on the same datasets they apply SpaceMix to. I agree in principle that PCA and tree-based methods can't fully capture admixture and/or are biased by sampling/scale of data, but I want the authors to show me how I would ``go wrong" by using alternatives to SpaceMix to analyze population genetic data. Also, it wasn't totally clear to me how SpaceMix differs from Globetrotter (Hellenthal et al.), which is referenced quite late in this manuscript.
+\begin{itemize}
+\item Overall I think this method could be widely used in the field, but I think to achieve that the authors need to show more details in their applications of what (ideally, erroneous) conclusions PCA and TreeMix (or a similar tree-based method) would have on the same datasets they apply SpaceMix to. I agree in principle that PCA and tree-based methods can't fully capture admixture and/or are biased by sampling/scale of data, but I want the authors to show me how I would ``go wrong" by using alternatives to SpaceMix to analyze population genetic data. Also, it wasn't totally clear to me how SpaceMix differs from Globetrotter (Hellenthal et al.), which is referenced quite late in this manuscript.
 
-The theory underlying this paper is very nice; the fact that the covariance matrix from a population genetic dataset can be expected to be Wishart and that this allows efficient calculations of the likelihood of the data is neat. But Figure 2 was not surprising to me and I wonder why the authors limit themselves to inferring geographic locations in two dimensions - why not three and then show a series of biplots? With admixed populations, a 3rd PC is often useful in visualizing the nature of the admixture.
+\item The theory underlying this paper is very nice; the fact that the covariance matrix from a population genetic dataset can be expected to be Wishart and that this allows efficient calculations of the likelihood of the data is neat. But Figure 2 was not surprising to me and I wonder why the authors limit themselves to inferring geographic locations in two dimensions - why not three and then show a series of biplots? With admixed populations, a 3rd PC is often useful in visualizing the nature of the admixture.
 
-I think the authors are missing an opportunity to use SpaceMix to study within-population variation. Since SpaceMix only needs 1 sample from each population, why not apply it to identify relatives or reveal structure within a population? A little bit of this happens in figure 5 with zooming in on Eurasian map but there is more that could be done; a simple application to the 1000 Genomes without filtering on relatives could produce a result with high impact.
+\item I think the authors are missing an opportunity to use SpaceMix to study within-population variation. Since SpaceMix only needs 1 sample from each population, why not apply it to identify relatives or reveal structure within a population? A little bit of this happens in figure 5 with zooming in on Eurasian map but there is more that could be done; a simple application to the 1000 Genomes without filtering on relatives could produce a result with high impact.
 
-The authors assume a single source of admixture - why not have supplementary figures that at least show what happens with 2 or 3? I think this will help users compare SpaceMix to competing methods like Globetrotter.
+\item The authors assume a single source of admixture - why not have supplementary figures that at least show what happens with 2 or 3? I think this will help users compare SpaceMix to competing methods like Globetrotter.
 
-Line 350 -- were the data generated for this paper, or previously? If the latter, more info is given here than needed.
+\item Line 350 -- were the data generated for this paper, or previously? If the latter, more info is given here than needed.
+\item \gb{This section has been tightened up.}
 
-Major comment about writing:
+\item Major comment about writing:
 There's an anthropomorphization of populations starting around line 282 of populations that should be fixed. Examples are: ``…the admixed population (population 23) choose admixture from very close….'' --don't the authors mean the method is assigning the admixture source from very close to the true source? Another example, Line 290 -- ``it [population 18] explains its intermediate genetic relationships by….'' Line 375 -- ``chooses to locate itself'' Line 542 -- ``…where the Uygur have positioned themselves.'' Line 668 -- ``choose to cluster close to each other''
+\end{itemize}
 
 \subsubsection*{Minor comments}
-Figure captions don't really explain the axis labels Northings and Eastings. 
-Line 25 - Li and Durbin 2011 doesn't provide gene flow information really, but MSMC does (are the authors thinking of when they use 1 sequence from one pop and another from another?)
-Line 32 - Luca et al. 1994? Fix citation.
-Intro (first page) is a little repetitive in its multiple mentions of PCA -- way to tighten this up?
-Line 116 -- ``historical or ongoing migration'' -- vague
-
-Line 130 -- change line end from ``Within population'' to ``Within-population''.
-Subsection heading on line 176 is confusing. How about just ``Simulations''?
-Line 266 -- are heavily weighted towards small values to be conservative with respect to admixture inference. Explain.
-Line 455 -- what does ``subset of HGDP samples'' means? These papers mostly deal with full HGDP.
-Line 495 -- typo: ``the of the North''
-Line 505 -- the ‘nuggets' -- why quotes here and nowhere else?
-Line 845 -- missing a comma to indicate that migration rate is constant across all neighbors (including diagonal)
+\begin{itemize}
+\item Figure captions don't really explain the axis labels Northings and Eastings.
+\item \gb{We now explain that the axes of the geogenetic maps are presented as Northings and Eastings because the geogenetic locations no longer correspond
+to the latitude and longitude of the original sampling locations.}\\
+\item Line 25 - Li and Durbin 2011 doesn't provide gene flow information really, but MSMC does (are the authors thinking of when they use 1 sequence from one pop and another from another?)
+\item Line 32 - Luca et al. 1994? Fix citation.
+\item Intro (first page) is a little repetitive in its multiple mentions of PCA -- way to tighten this up?
+\item Line 116 -- ``historical or ongoing migration'' -- vague
+\item Line 130 -- change line end from ``Within population'' to ``Within-population''.
+\item Subsection heading on line 176 is confusing. How about just ``Simulations''?
+\item Line 266 -- are heavily weighted towards small values to be conservative with respect to admixture inference. Explain.
+\item Line 455 -- what does ``subset of HGDP samples'' means? These papers mostly deal with full HGDP.
+\item Line 495 -- typo: ``the of the North''
+\item Line 505 -- the ‘nuggets' -- why quotes here and nowhere else?
+\item Line 845 -- missing a comma to indicate that migration rate is constant across all neighbors (including diagonal)
+\end{itemize}
 
 \subsection*{Reviewer 2}
 In the submitted article entitled ``A Spatial Framework for Understanding Population Structure and Admixture", Bradburd, Ralph and Coop present a new statistical method to describe population structure. They introduce the concept of geogenetic maps that is a projection of the genetic samples in 2 dimensions using the genetic covariance between populations or individuals. The idea is interesting and has the advantage of taking into account the decay of genetic covariance due to geographical distance, and the possibility of modeling admixture events. In addition, the method is implemented in a program SpaceMix. Because it uses the genetic covariance between populations or individuals, it is not computationally costly. However I have general and statistical comments or concerns about the method.

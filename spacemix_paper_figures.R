@@ -3676,7 +3676,6 @@ map.list <- make.spacemix.map.list("~/Desktop/Dropbox/space.mix/sims/uneven_samp
 									observed.coords = subsampled.dataset$population.coordinates,
 									name.vector =   pop.names,
 									color.vector = sub.samp.cols)
-									
 pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/sims/uneven_sampling_lattice.pdf",height=4,width=12,pointsize=9)
 # quartz(height=4,width=12)
 par(mfrow=c(1,3))
@@ -3692,11 +3691,23 @@ plot(subsampled.dataset$population.coordinates,
 				labels=pop.names,
 				col="white",font=2,cex=1.7)
 	box(lwd=2)
-make.spacemix.map(map.list,text=FALSE,ellipses=TRUE,source.option=FALSE,xlim=c(-2,13),ylim=c(-1,13))
+plot(0,xlim=c(-2,13),ylim=c(-1,13),type='n',xlab="",ylab="")
+# make.spacemix.map(map.list,text=FALSE,ellipses=TRUE,source.option=FALSE,xlim=c(-2,13),ylim=c(-1,13))
+for(i in 1:length(map.list$procrustes.coord.posterior.lists[[1]])){
+ 		points(map.list$procrustes.coord.posterior.lists[[1]][[i]],col=adjustcolor(sub.samp.cols,0.1),pch=20)
+}
+lapply(1:map.list$k,FUN=function(i){
+		plot.credible.ellipse(map.list$posterior.target.ellipses[[i]],sub.samp.cols[i]) ; 
+		return(invisible(0))})
 		text(map.list$procrustes.coord.posterior.lists$target.coords.list[[which.max(map.list$Prob)]],
 				labels=pop.names,
-				col=sub.samp.cols,
+				col="black",
 				font=2,cex=2.5)
+		# text(map.list$procrustes.coord.posterior.lists$target.coords.list[[which.max(map.list$Prob)]],
+				# labels=pop.names,
+				# col=sub.samp.cols,
+				# font=1,cex=2.5)
+	box(lwd=2)
 dev.off()
 
 load("~/Desktop/Dropbox/space.mix/sims/uneven_sampling/barrier/cyol/barrier_subsamp_randpr_1_LongRun/barrier_subsamp_randpr_1_space_MCMC_output1.Robj")
@@ -3725,11 +3736,23 @@ plot(subsampled.dataset$population.coordinates,
 				labels=pop.names,
 				col="white",font=2,cex=1.7)
 	box(lwd=2)
-make.spacemix.map(map.list,text=FALSE,ellipses=TRUE,source.option=FALSE,xlim=c(-2,12.5),ylim=c(2,9.1))
+plot(0,xlim=c(-2,13),ylim=c(-1,13),type='n',xlab="",ylab="")
+# make.spacemix.map(map.list,text=FALSE,ellipses=TRUE,source.option=FALSE,xlim=c(-2,13),ylim=c(-1,13))
+for(i in 1:length(map.list$procrustes.coord.posterior.lists[[1]])){
+ 		points(map.list$procrustes.coord.posterior.lists[[1]][[i]],col=adjustcolor(sub.samp.cols,0.1),pch=20)
+}
+lapply(1:map.list$k,FUN=function(i){
+		plot.credible.ellipse(map.list$posterior.target.ellipses[[i]],sub.samp.cols[i]) ; 
+		return(invisible(0))})
 		text(map.list$procrustes.coord.posterior.lists$target.coords.list[[which.max(map.list$Prob)]],
 				labels=pop.names,
-				col=sub.samp.cols,
+				col="black",
 				font=2,cex=2.5)
+		# text(map.list$procrustes.coord.posterior.lists$target.coords.list[[which.max(map.list$Prob)]],
+				# labels=pop.names,
+				# col=sub.samp.cols,
+				# font=1,cex=2.5)
+	box(lwd=2)
 dev.off()
 
 ################

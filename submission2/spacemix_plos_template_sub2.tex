@@ -423,7 +423,9 @@ we present inferred locations after a Procrustes transformation
 to match the coordinates used to simulate the data.  
 \gb{The axes of the resultant maps are presented as Northings and Eastings, 
 as population locations in this geogenetic space no longer conform 
-to the latitude or longitude of the original sampling locations.}
+to the latitude or longitude of the original sampling locations.
+In Fig.\ \ref{sfig:sim_covariance_decays}, we show the relationship between genetic covariance, 
+geographic distance, and inferred geogenetic distance for these simulations.}
 %
 \newline\newline
 \begin{centering}
@@ -446,10 +448,10 @@ the two halves of the map are pushed farther away from one another,
 reflecting the decreased gene flow between them.
 
 In the expansion scenario, in which all populations in the last five columns of the grid have expanded simultaneously in the immediate past from the nearest population in their row (Fig.\ \ref{sfig:lattice_scenarios}\subref{expansion_lattice}), 
-the daughter populations of the expansion event cluster with their parent populations, reflecting the higher relatedness (per unit of geographic separation) between them.  
+the daughter populations of the expansion event cluster with their parent populations, reflecting the higher relatedness (per unit of geographic separation) between them.
+
 \gb{In all scenarios, populations at the corners of the lattice are pulled in somewhat
 because these have the least amount of data informing their relative placements, and because, without nearest-neighbor migration from farther outside the lattice, they are in fact more closely related to their neighbors.  We also examined the effects of uneven sampling on inference by sampling random subsets of the simple lattice and barrier scenarios shown in Figs.\ \ref{sfig:lattice_scenarios}\subref{simple_lattice} and \ref{sfig:lattice_scenarios}\subref{barrier_lattice}.  The results of these analyses are given in Figs.\ \ref{sfig:uneven_sampling}\subref{lattice} and \ref{sfig:uneven_sampling}\subref{barrier}.}
-In Fig.\ \ref{sfig:sim_covariance_decays}, we show the relationship between genetic covariance, geographic distance, and inferred geogenetic distance for these simulations.
 
 We next simulated a long-distance admixture event on the same grid,
 by sampling half of the alleles of each individual in the northeast corner population from the southwest corner population (Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}).  We then ran a SpaceMix analysis in which the locations of these populations were estimated (Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}).

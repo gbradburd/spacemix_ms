@@ -197,7 +197,7 @@ can be difficult to infer and visually summarize.
 A general consequence of geographically limited dispersal 
 is that samples from nearby locations tend to be more closely related than samples from distant locations, 
 and so genetic covariance often recapitulates geographic proximity.  
-We use genome-wide polymorphism data to build ``geogenetic maps'', 
+We use genome-wide polymorphism data to build ``geogenetic maps',' 
 which, when applied to stationary populations, 
 produces a map of the geographic positions of the populations, 
 but with distances distorted to reflect historical rates of gene flow.  
@@ -373,6 +373,11 @@ Note that if the standardized sample frequencies are Gaussian, then the sample c
 so that calculating the likelihood of $\widehat \Omega$ is the same as calculating the likelihood of the data up to a constant.
 Handily, it also means that once the sample covariance matrix has been calculated, 
 all other computations do not scale with the number of loci, making the method scalable to genome size datasets. 
+\gb{This modeling approach rests on the assumption that the loci in the dataset are independent, that is, not in linkage disequilibrium (LD).
+Linkage disequilibrium between loci included in the dataset will have the effect of decreasing the true number of degrees of freedom, 
+effectively making this likelihood calculation a composite likelihood and artificially increasing confidence in parameter estimation.
+In the analyses presented below, we have either simulated independent loci, 
+or, in the empirical analyses, we have thinned the total dataset for LD, with a upper limit on $r^2$ of ...}
 
 \paragraph{Location Inference} 
 Non-equilibrium processes like long distance admixture, colonization, or population expansion events will distort the relationship between covariance and distance across the range, as will barriers to dispersal on the landscape. To accommodate these heterogeneous processes we infer the locations of populations on a map that reflects genetic, rather than geographic, proximity.  
@@ -432,7 +437,7 @@ geographic distance, and inferred geogenetic distance for these simulations.}
 {\bf{Figure 1}}
     Simulation scenarios and and their corresponding geogenetic maps estimated with SpaceMix.  
     The smaller circles in the simulation scenarios represent unsampled populations.  
-    a) configuration of simulated populations on a simple lattice with spatially homogeneous migration rates; 
+    a) configuration of simulated populations on a simple lattice with spatially homogeneous migration rates (a plot showing the first two Principal Component axes for this simulation is given in \ref{sfig:sim_pc_maps}\subref{lattice_pc}); 
     b) a lattice with a barrier along the center line of longitude, across which migration rates are reduced by a factor of 5; 
     c) a lattice with recent expansion on the eastern margin; 
     d) the maximum \textit{a posteriori} (MAP) estimate from the posterior distribution of population locations under the scenario in \ref{sfig:lattice_scenarios}\subref{simple_lattice}; 
@@ -460,7 +465,7 @@ Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL} show
 However, this warping of space is difficult to interpret, and would be even more so in empirical data for which a researcher does not know the true demographic history.  
 %
 \newline\newline
-{\bf{Figure 2}} Simulation scenarios and SpaceMix inference.  a) a lattice with recent admixture event between population 1 in the southwest corner and population 30 in the northeast corner, so that population 30 is drawing half of its ancestry from population 1; b) the estimate of population locations under this scenario; c) the estimate of population locations and their sources of admixture under this scenario.  The 95\% credible interval on $w_{30}$ is 0.36--0.40. In panel (c), the width and opacity of the admixture arrows are drawn proportional the admixture proportions.
+{\bf{Figure 2}} Simulation scenarios and SpaceMix inference.  a) a lattice with recent admixture event between population 1 in the southwest corner and population 30 in the northeast corner, so that population 30 is drawing half of its ancestry from population 1 (a plot showing the first two Principal Component axes for this simulation is given in \ref{sfig:sim_pc_maps}\subref{cornerad_pc}); b) the estimate of population locations under this scenario; c) the estimate of population locations and their sources of admixture under this scenario.  The 95\% credible interval on $w_{30}$ is 0.36--0.40. In panel (c), the width and opacity of the admixture arrows are drawn proportional the admixture proportions.
 \newline\newline
 
 \subsection*{Inference of Spatial Admixture}
@@ -508,7 +513,7 @@ We place a weak spatial prior on the sources of admixture, $\identifyadmixsource
 and are heavily weighted towards small values to be conservative with respect to admixture inference.  
 These priors are detailed in Table \ref{tab:param_prior_tab}.
 
-The models described above may be used in various combinations.  In the simplest model, locations are not estimated for populations , nor do they draw admixture; the only parameters to be estimated are those of the spatial covariance function given in equation \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_i$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  Users may wish to employ the more constrained models (e.g., fixing the locations or admixture proportions for some or all samples) in a model selection framework to test specific hypotheses.
+The models described above may be used in various combinations.  In the simplest model, locations are not estimated for populations , nor do they draw admixture; the only parameters to be estimated are those of the spatial covariance function given in equation \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_i$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  Users may wish to employ the more constrained models (e.g., fixing the locations or admixture proportions for some or all samples) in a model selection framework to test specific hypotheses.  We discuss the utility of these different models in the Appendix.
 
 Allowing admixture gives sensible results for the scenario of Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}:
 in the resulting map,
@@ -746,13 +751,20 @@ This suggests that geogenetic clustering (in lieu of drawing admixture) of popul
 The method could in theory be modified to allow geogenetically proximal populations to draw from the same admixture event;
 however, this may be difficult to make fully automated.
 
-In this paper we have focused on the covariance among alleles at the same locus, 
-but linkage disequilibrium (LD; covariance of alleles among loci) 
+\gb{In this paper, we have treated the loci in the dataset as independent, and,
+where necessary, we have thinned empirical datasets to decrease LD between loci.
+One possible approach that avoids the necessity of thinning the data would be to 
+calculate the sample covariance in large (e.g., megabase), non-overlapping windows along the genome,
+then average those sample covariances across all windows.
+Another approach is to use empirical LD between loci to estimate the effective number of independent
+loci in the dataset, and use this quantity as the number of degrees of freedom in the Wishart likelihood calculation.}
+Additionally, although we have focused on the covariance among alleles at the same locus, 
+linkage disequilibrium (covariance of alleles among loci) 
 holds rich information about the timing and source of admixture events \cite{chakraborty_admixture_1988,moorjani_india_2013, Hellenthal,gravel_population_2012} 
 as well as information about isolation by distance \cite{ralph2013geography}.
 Just as population graph approaches have been extended to incorporate information from LD \cite{Loh:13}, 
 a spatial covariance approach could be informed by LD. 
-A null model inspired by models of LD under isolation by distance models \cite{Arkendra2007,Barton2013} could be fitted, 
+A null model inspired by models of LD under isolation by distance models \cite{Arkendra20067,Barton2013} could be fitted, 
 allowing the covariance among alleles to decay with their geographic distance and the recombination distance between the loci. 
 In such a framework, sources and time-scales of admixture could be identified through unusually long-distance LD between geographically separated populations. 
 
@@ -864,10 +876,10 @@ The free parameters for each of options are given in Table \ref{tab:model_option
 \begin{tabular}{| >{\centering\arraybackslash}m{6cm} | >{\centering\arraybackslash}m{3cm} | l |}
 	\hline
 	\textbf{Model} & \textbf{\# of Free Parameters} & \textbf{Parameters}\\ \hline
-	stationary population locations, no admixture & $K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta$	\\ \hline
-	inferred population locations, \hspace{0.5cm}no admixture & $2K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta,G$	\\ \hline
-	stationary population locations, inferred admixture & $2K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta,\identifyadmixsource{G},w$	\\ \hline
-	inferred population locations, inferred admixture & $3K + 3$	&$\alpha_0,\alpha_1,\alpha_2,\eta,G,\identifyadmixsource{G},w$	\\
+	\textbf{(1)} stationary population locations, no admixture & $K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta$	\\ \hline
+	\textbf{(2)} inferred population locations, \hspace{0.5cm}no admixture & $2K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta,G$	\\ \hline
+	\textbf{(3)} stationary population locations, inferred admixture & $2K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta,\identifyadmixsource{G},w$	\\ \hline
+	\textbf{(4)} inferred population locations, inferred admixture & $3K + 3$	&$\alpha_0,\alpha_1,\alpha_2,\eta,G,\identifyadmixsource{G},w$	\\
 	\hline
 \end{tabular}
 \caption{
@@ -875,6 +887,8 @@ The free parameters for each of options are given in Table \ref{tab:model_option
 }\label{tab:model_options}
 \end{table}
 \end{centering}
+
+Although we anticipate most empirical researchers will be interested in the joint inference of a geogenetic map with admixture (Model 4), we have presented these models separately, as we believe each have their own utility.  Model 1 and Model 3 can each be used to infer landscapes of allele frequencies, upon which genotyped individuals can be probabilistically placed (following \cite{Wasser2004}).  This application may be useful to determine the geographic origin of potentially contraband biological samples (e.g., ivory), or the most likely source of museum specimens missing sampling metadata.  Model 3 has the potential to improve the performance of these spatial assignment methods over Model 1, as the inclusion of admixture in the model may allow for more accurate inference of allele frequency surfaces.  Model 2 offers a direct touchstone to Principal Component Analysis, and can also be used in a model comparison framework with Model 4 to formally test for the presence of admixture in the sampled dataset.
 
 Below, we outline the inference procedure for the most parameter-rich model (inference on both population locations, their sources of admixture, and the proportions in which they draw admixture, in addition to inference of the parameters of the spatial covariance function).
 A table of all parameters, their descriptions, and their priors is given in Table \ref{tab:param_prior_tab}.
@@ -1136,6 +1150,19 @@ underlying assumption of the \texttt{TreeMix} tree-like model.
 \subsection*{Simulated covariance decays}
 \label{sim_covariance_decays}
 {\bf{Decays in covariance for four different simulation scenarios (from top to bottom: simple lattice; lattice with barrier; lattice with expansion; lattice with admixture).} } Left column: sample covariance plotted against observed pairwise distance.  Right column: sample covariance plotted against inferred geogenetic distance.
+
+\subsection*{PCA maps of simulated datasets}
+\label{sim_pc_maps}
+{\bf{Plots of the first two Principal Component axes (with variance explained labeled on the relevant axes)
+			of the mean-centered covariance matrix from simulated spatial scenarios.}}
+			a) the basic lattice scenario shown in \ref{sfig:lattice_scenarios}\subref{simple_lattice}.
+			b) the lattice scenario with admixture from Population 1 into Population 30, 
+				shown in \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}.
+
+\subsection*{The effects of uneven sampling}
+\label{uneven_sampling}
+{\bf{The effect of uneven sampling on inference of geogenetic maps.}}
+a) inference using a dataset with a random subsample of 12 populations from the simple lattice scenario with nearest neighbor migration; b) inference using a dataset with a random subsample of 12 populations from the barrier scenario with nearest neighbor migration and a barrier down the center line of longitude.
 
 \subsection*{Warbler population nuggets}
 \label{warb_pop_nugg}
@@ -1984,6 +2011,20 @@ samples.}\label{sfig:globe_noad_maps}
 		{\includegraphics[width=4.8in,height=8.8in]{../figs/sims/sim_covariance_decays.pdf}}
 		\caption{Decays in covariance for four different simulation scenarios (from top to bottom: simple lattice; lattice with barrier; lattice with expansion; lattice with admixture).  Left column: sample covariance plotted against observed pairwise distance.  Right column: sample covariance plotted against inferred geogenetic distance.}
 	\label{sfig:sim_covariance_decays}
+\end{figure}
+
+\begin{figure}
+\centering
+	\subcaptionbox{\label{lattice_pc}}
+		{\includegraphics[width=5in,height=4in]{../figs/sims/lattice_PC_map.pdf}}
+	\subcaptionbox{\label{cornerad_pc}}
+			{\includegraphics[width=5in,height=4in]{../figs/sims/corneradmixture_PC_map.pdf}}
+	\caption{Plots of the first two Principal Component axes (with variance explained labeled on the relevant axes) 
+			of the mean-centered covariance matrix from simulated spatial scenarios.
+			a) the basic lattice scenario shown in \ref{sfig:lattice_scenarios}\subref{simple_lattice}.
+			b) the lattice scenario with admixture from Population 1 into Population 30, 
+				shown in \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}}.
+	\label{sfig:sim_pc_maps}
 \end{figure}
 
 \begin{figure}

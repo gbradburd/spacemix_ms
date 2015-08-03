@@ -1,10 +1,13 @@
 *.aux
 .Rapp.history
 *.log
-spacemix.pdf
-submission1/reviews/spacemix_reviews.pdf
+submission1/submitted_files/spacemix_plos_template.pdf
 submission1/spacemix_plos_template.pdf
+submission1/reviews/spacemix_reviews.pdf
+arxiv_tex/spacemix.pdf
 submission2/spacemix_plos_template_sub2.pdf
+submission2/spacemix_plos_template_sub2.bbl
+submission2/spacemix_sub1v2_diff.bbl
 *.synctex.gz
 *.mp
 *.top

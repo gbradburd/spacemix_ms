@@ -76,7 +76,7 @@ can be difficult to infer and visually summarize.
 A general consequence of geographically limited dispersal 
 is that samples from nearby locations tend to be more closely related than samples from distant locations, 
 and so genetic covariance often recapitulates geographic proximity.  
-We use genome-wide polymorphism data to build ``geogenetic maps'', 
+We use genome-wide polymorphism data to build ``geogenetic maps,'' 
 which, when applied to stationary populations, 
 produces a map of the geographic positions of the populations, 
 but with distances distorted to reflect historical rates of gene flow.  
@@ -251,7 +251,12 @@ P(\widehat{\Omega} \given \Omega) = \mathcal{W}\left( L\widehat{\Omega} \mid \Om
 Note that if the standardized sample frequencies are Gaussian, then the sample covariance matrix is a sufficient statistic,
 so that calculating the likelihood of $\widehat \Omega$ is the same as calculating the likelihood of the data up to a constant.
 Handily, it also means that once the sample covariance matrix has been calculated, 
-all other computations do not scale with the number of loci, making the method scalable to genome size datasets. 
+all other computations do not scale with the number of loci, making the method scalable to genome size datasets.
+This modeling approach rests on the assumption that the loci in the dataset are independent, that is, not in linkage disequilibrium (LD).
+Linkage disequilibrium between loci included in the dataset will have the effect of decreasing the true number of degrees of freedom, 
+effectively making this likelihood calculation a composite likelihood and artificially increasing confidence in parameter estimation.
+In the analyses presented below, we have either simulated independent loci, 
+or, in the empirical analyses of human data, we have thinned the total dataset for LD in windows of 50 base-pairs, with a step-size of 5 base-pairs, and an upper limit of 0.2 on pairwise $r^2$ \citep{Purcell_etal_2007,plink}.
 
 \paragraph{Location Inference} 
 Non-equilibrium processes like long distance admixture, colonization, or population expansion events will distort the relationship between covariance and distance across the range, as will barriers to dispersal on the landscape. To accommodate these heterogeneous processes we infer the locations of populations on a map that reflects genetic, rather than geographic, proximity.  
@@ -289,7 +294,7 @@ We then use a Markov chain Monte Carlo algorithm to estimate the posterior distr
 We first apply the method to several scenarios simulated using the coalescent simulator \textit{ms} \citep{Hudson2002}.  
 Each scenario is simulated using a stepping stone model in which populations are arranged on a grid with symmetric migration 
 to nearest neighbors (eight neigbors, including diagonals)
-with 10 haploid individuals sampled from every other population at 10,000 unlinked loci (for details on all simulations, see Methods and Appendix).  
+with 10 haploid individuals sampled from every other population at 10,000 unlinked loci (for details on all simulations, see Methods and Supplementary Materials).  
 The basic scenario is shown in Fig.\ \ref{sfig:lattice_scenarios}\subref{simple_lattice}, 
 which is then embellished in various ways.
 In the SpaceMix analysis of each simulated dataset, 
@@ -300,6 +305,12 @@ Since overall translation, rotation, and scale are nuisance parameters,
 we present inferred locations after a Procrustes transformation
 (best-fit rotation, translation, and dilation) 
 to match the coordinates used to simulate the data.
+The axes of the resultant maps are presented as Northings and Eastings, 
+as population locations in this geogenetic space no longer conform 
+to the latitude or longitude of the original sampling locations.
+In Fig.\ \ref{sfig:sim_covariance_decays}, we show the relationship between genetic covariance, 
+geographic distance, and inferred geogenetic distance for these simulations.
+
 
 \begin{figure}
 	\centering
@@ -328,8 +339,9 @@ to match the coordinates used to simulate the data.
     }\label{sfig:lattice_scenarios}
 \end{figure}
 
+
 The lattice scenarios, illustrated in Figs.\ \ref{sfig:lattice_scenarios} and \ref{sfig:corner_admix_scenarios}, are: 
-homogeneous migration rates across the grid; a longitudinal barrier across the center of the grid; a series of recent expansion events; and an admixture event between opposite corners of the lattice.  In the simple lattice scenario with homogeneous migration rates (Figs.\ \ref{sfig:lattice_scenarios}\subref{simple_lattice} and \ref{sfig:lattice_scenarios}\subref{lattice_inference}), SpaceMix recovers the lattice structure used to simulate the data (i.e., populations correctly choose their nearest neighbors).  
+homogeneous migration rates across the grid; a longitudinal barrier across the center of the grid; a series of recent expansion events; and an admixture event between opposite corners of the lattice.  In the simple lattice scenario with homogeneous migration rates (Figs.\ \ref{sfig:lattice_scenarios}\subref{simple_lattice} and \ref{sfig:lattice_scenarios}\subref{lattice_inference}), SpaceMix recovers the lattice structure used to simulate the data (i.e., populations correctly find their nearest neighbors).  
 After adding a longitudinal barrier to dispersal across which migration rates are reduced by a factor of 5 (Fig.\ \ref{sfig:lattice_scenarios}\subref{barrier_lattice}), 
 the two halves of the map are pushed farther away from one another, 
 reflecting the decreased gene flow between them.
@@ -337,8 +349,7 @@ reflecting the decreased gene flow between them.
 In the expansion scenario, in which all populations in the last five columns of the grid have expanded simultaneously in the immediate past from the nearest population in their row (Fig.\ \ref{sfig:lattice_scenarios}\subref{expansion_lattice}), 
 the daughter populations of the expansion event cluster with their parent populations, reflecting the higher relatedness (per unit of geographic separation) between them.  
 In all scenarios, populations at the corners of the lattice are pulled in somewhat
-because these have the least amount of data informing their relative placements.
-In Fig.\ \ref{sfig:sim_covariance_decays}, we show the relationship between genetic covariance, geographic distance, and inferred geogenetic distance for these simulations.
+because these have the least amount of data informing their relative placements, and because, without nearest-neighbor migration from farther outside the lattice, they are in fact more closely related to their neighbors.  We also examined the effects of uneven sampling on inference by sampling random subsets of the simple lattice and barrier scenarios shown in Figs.\ \ref{sfig:lattice_scenarios}\subref{simple_lattice} and \ref{sfig:lattice_scenarios}\subref{barrier_lattice}.  The results of these analyses are given in Figs.\ \ref{sfig:uneven_sampling}\subref{lattice} and \ref{sfig:uneven_sampling}\subref{barrier}.
 
 We next simulated a long-distance admixture event on the same grid,
 by sampling half of the alleles of each individual in the northeast corner population from the southwest corner population (Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}).  We then ran a SpaceMix analysis in which the locations of these populations were estimated (Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}).
@@ -406,7 +417,7 @@ These priors are detailed in Table \ref{tab:param_prior_tab}.
 \label{sfig:admixed_cov_diagram}
 \end{figure}
 
-The models described above may be used in various combinations.  In the simplest model, populations do not choose their own locations, nor are they allowed to draw admixture; the only parameters to be estimated are those of the spatial covariance function given in equation \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_i$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  Users may wish to employ the more constrained models (e.g., fixing the locations or admixture proportions for some or all samples) in a model selection framework to test specific hypotheses.
+The models described above may be used in various combinations.  In the simplest model, locations are not estimated for populations , nor do they draw admixture; the only parameters to be estimated are those of the spatial covariance function given in equation \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_i$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  Users may wish to employ the more constrained models (e.g., fixing the locations or admixture proportions for some or all samples) in a model selection framework to test specific hypotheses.  We discuss the utility of these different models in the Appendix.
 
 Allowing admixture gives sensible results for the scenario of Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}:
 in the resulting map,
@@ -417,15 +428,17 @@ A more subtle simulated admixture scenario, with admixture proportion of 10\% ac
 is shown Fig.\ \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_scenario}.  
 The resulting SpaceMix map (Fig.\ \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_inference}), 
 separates the east and west sides of the grid to accommodate the effect of the barrier,
-and the admixed population (population 23) chooses admixture from very close to its true source (population 13), 
+and the admixed population (population 23) draws admixture from very close to its true source (population 13), 
 and in close to the correct amount ($\bar{w}_{(23)} = 0.05$; 95\% CI $= 0.02-0.08$).
 
 Another difficult scenario is shown in Fig.\ \ref{sfig:barr_inland_ad}\subref{big_barr_ad_scenario},
 where 40\% admixture has occurred between two populations immediately adjacent to each other on either side of a barrier.  
-Here, the admixed population 18 is correctly identified as admixed, 
-but it explains its intermediate genetic relationships by taking a location close to its true admixture source (population 13), 
-and drawing admixture (95\% CI: 0.04--0.14) from a location on the far margin of the half of the grid on its own side of the barrier.
-Because there is no sampled intervening population between admixed population 18 and its source of admixture 13, there is nothing to stop 18 from explaining its higher covariance with 13 via its chosen location $G_{(18)}$ rather than via that of its source of admixture \kadmixsource{(18)}.  
+Here, the admixed population 18 is correctly identified as admixed; 
+however, its intermediate genetic relationships are explained through an estimated location close to its true admixture source (population 13)
+and source of admixture (95\% CI: 0.04--0.14) on the far margin of the half of the grid on its own side of the barrier.
+Because there is no sampled intervening population between admixed population 18 and its source of admixture 13, 
+the model is able to explain population 18's its higher covariance with population 13 via its estimated location $G_{(18)}$, 
+rather than via that of its source of admixture \kadmixsource{(18)}.  
 In each of these scenarios, the estimated admixture proportion is less than that used to simulate the data.  This is due to the stringent prior we place against admixture.  We discuss these examples further in the Methods.
 
 \begin{figure}[htp!]
@@ -451,6 +464,9 @@ rather than at the observed geographical locations.
 Each geogenetic map shown here is the maximum a posteriori estimate (over all parameters),
 transformed by rotation, translation, and scaling to best fit inferred locations ($G$)
 to the observed latitude and longitudes (a full Procrustes transformation).
+As with the simulations described above, the axes of the geogenetic maps are presented
+in Eastings and Northings.
+
 
 \begin{figure}
 	\centering
@@ -459,8 +475,7 @@ to the observed latitude and longitudes (a full Procrustes transformation).
 		\subcaptionbox{Human sample distribution map \label{human_map}}
 			{\includegraphics[width=\textwidth,height=0.6\textwidth]{../figs/globetrotter/globe_world_map_text.pdf}}
             \caption{
-            Sampling maps of both empirical systems analyzed.  (a) greenish warbler subspecies distributions of all 22 sampled populations (breeding grounds), consisting of 95 individuals and colored by subspecies \citep{alcaide2014genomic}; (b) sampling map for human dataset, consisting of 1,490 individuals from 95 population samples \citep{Hellenthal}.
-            }
+            Sampling maps of both empirical systems analyzed.  (a) greenish warbler subspecies distributions of all 22 sampled populations (breeding grounds), consisting of 95 individuals and colored by subspecies; (b) sampling map for human dataset, consisting of 1,490 individuals from 95 population samples.}
 \label{sfig:empirical_maps}
 \end{figure}
 
@@ -470,12 +485,13 @@ to the observed latitude and longitudes (a full Procrustes transformation).
 The greenish warbler (\textit{Phylloscopus trochiloides}) species complex is broadly distributed in their breeding habitat
 around the Tibetan plateau, and exhibits gradients around the ring in a range of phenotypes including song, as well as in allele frequencies \citep{ticehurst1938, Irwin2001, Irwin2005}.  At the northern end of the ring in central Siberia, where the eastern and western arms of population expansion meet, there are discontinuities in call and morphology, as well as reproductive isolation and a genetic discontinuity \citep{Irwin2001, Irwin2008}. It is proposed that the species complex represents a ring species, in which selection and/or drift, acting in the populations as they spread northward on either side of the Tibetan plateau, have led to the evolution of reproductive isolation between the terminal forms.
 
-The question of whether it fits the most strict definition of a ring species focuses on whether gene flow around the plateau has truly been continuous throughout the history of the expansion or if, alternatively, discontinuities in migration around the species complex's range have facilitated periods of differentiation in genotype or phenotype without gene flow \citep{Mayr1942, Mayr1970, coyne_orr_speciation} (see \citet{wake_schneider1998} for discussion). 
-\citet{alcaide2014genomic} have suggested that the greenish warbler species complex constitutes a `broken' ring species, in which historical discontinuities in gene flow have facilitated the evolution of reproductive isolation between adjacent forms.  
+The question of whether it fits the most strict definition of a ring species focuses on whether gene flow around the plateau has truly been continuous throughout the history of the expansion or if, alternatively, discontinuities in migration around the species complex's range have facilitated periods of differentiation in genotype or phenotype without gene flow \citep{Mayr1942, Mayr1970, coyne_orr_speciation} (see \cite{wake_schneider1998} for discussion). 
+\cite{alcaide2014genomic} have suggested that the greenish warbler species complex constitutes a `broken' ring species, in which historical discontinuities in gene flow have facilitated the evolution of reproductive isolation between adjacent forms.  
 
-To investigate this question, we applied SpaceMix to the dataset from \citet{alcaide2014genomic}, 
+To investigate this question, we applied SpaceMix to the dataset from \cite{alcaide2014genomic}, 
 consisting of 95 individuals sampled at 22 distinct locations and sequenced at 2,334 SNPs, of which 2,247 were bi-allelic and retained for SpaceMix runs.
-The libraries were prepared using a genotype-by-sequencing protocol and were run on an Illumina HiSeq 2000 with a paired-end sequencing protocol \citep{alcaide2014genomic}.
+
+We first ran SpaceMix on the population dataset, with no admixture. The resulting inferred map (Fig.\ \ref{sfig:warbler_pop}\subref{warb_pop_noad}) largely recapitulates the geography of the sampled populations around the ring.  The Turkish population (\textbf{TU}, \textit{Phylloscopus trochiloides} ssp.\ \textit{nitidus}) clusters with the populations in the subspecies \textit{ludlowi}, due to its recent expansion, but also has a relatively high nugget parameter (see Fig.\ \ref{sfig:warb_pop_nugg}\subref{warb_pop_noad_nugg}), reflecting the population history it does not share with its \textit{ludlowi} neighbors.  In the north, where the twin waves of expansion around the Tibetan Plateau are hypothesized to meet, the inferred geogenetic distance between populations from opposite sides of the ring was much greater than their observed geographic separation, reflecting the reproductive isolation between these adjacent forms (see Fig.\ \ref{sfig:warb_pop_distcomp}).
 
 \begin{figure}
 	\centering
@@ -487,9 +503,7 @@ The libraries were prepared using a genotype-by-sequencing protocol and were run
 \label{sfig:warbler_pop}
 \end{figure}
 
-We first ran SpaceMix on the population dataset, with no admixture. The resulting inferred map (Fig.\ \ref{sfig:warbler_pop}\subref{warb_pop_noad}) largely recapitulates the geography of the sampled populations around the ring.  The Turkish population (\textbf{TU}, \textit{Phylloscopus trochiloides} ssp.\ \textit{nitidus}) clusters with the populations in the subspecies \textit{ludlowi}, due to its recent expansion, but also chooses a relatively high nugget parameter (see Fig.\ \ref{sfig:warb_pop_nugg}\subref{warb_pop_noad_nugg}), reflecting the population history it does not share with its \textit{ludlowi} neighbors.  In the North, where the twin waves of expansion around the Tibetan Plateau are hypothesized to meet, the inferred geogenetic distance between populations from opposite sides of the ring was much greater than their observed geographic separation, reflecting the reproductive isolation between these adjacent forms (see Fig.\ \ref{sfig:warb_pop_distcomp}).  
-
-We then ran the method allowing admixture (Fig.\ \ref{sfig:warbler_pop}\subref{warb_pop_ad}). The only population sample with appreciable admixture is the Stolby sample (\textbf{ST}; $w=0.19$, 95\% credible interval: 0.146-0.238; Fig.\ \ref{sfig:warb_pop_adprop}).  This sample is known to be composed of an equal mixture of eastern \textit{plumbeitarsus} and western \textit{viridanus} individuals \citep{alcaide2014genomic}. Multiple runs agreed well on the level of admixture of the Stolby sample (see Fig.\ \ref{sfig:warbler_pop_compare}). What does vary across runs is whether the Stolby sample chooses to locate itself by the \textit{viridanus} cluster and draw admixture from near the \textit{plumbeitarsus}  cluster or vise versa; however, this is to be expected given the 50/50 nature of the sample's makeup (Fig.\ \ref{sfig:warbler_pop_compare}). The somewhat intermediate position of the Stolby sample, and its non-50/50 admixture proportion, likely partially reflect the influence of the priors (Fig.\ \ref{sfig:admix_prop_func_loc}). 
+We then ran the method allowing admixture (Fig.\ \ref{sfig:warbler_pop}\subref{warb_pop_ad}). The only population sample with appreciable admixture is the Stolby sample (\textbf{ST}; $w=0.19$, 95\% credible interval: 0.146-0.238; Fig.\ \ref{sfig:warb_pop_adprop}).  This sample is known to be composed of an equal mixture of eastern \textit{plumbeitarsus} and western \textit{viridanus} individuals \citep{alcaide2014genomic}. Multiple runs agreed well on the level of admixture of the Stolby sample (see Fig.\ \ref{sfig:warbler_pop_compare}). What does vary across runs is whether the Stolby sample has an estimated location by the \textit{viridanus} cluster while drawing admixture from near the \textit{plumbeitarsus} cluster, or vise versa; however, this is to be expected given the 50/50 nature of the sample's makeup (Fig.\ \ref{sfig:warbler_pop_compare}). The somewhat intermediate position of the Stolby sample, and its non-50/50 admixture proportion, likely partially reflect the influence of the priors (Fig.\ \ref{sfig:admix_prop_func_loc}). 
 
 We repeated these analyses (with and without admixture) on an individual level (Fig.\ \ref{sfig:warbler_ind_maps}).  
 No individual drew appreciable admixture (see Fig.\ \ref{sfig:warb_ind_adprops} for admixture proportions), and so we discuss the results with admixture (those without admixture are nearly identical, see Figs.\ \ref{sfig:warbler_ind_maps_compare}, \ref{sfig:warb_ind_clouds}, and \ref{sfig:warb_ind_nugg}).  As with the analysis on multi-sample populations, the results approximately mirror the geography of the individuals.
@@ -509,23 +523,24 @@ No individual drew appreciable admixture (see Fig.\ \ref{sfig:warb_ind_adprops} 
 There are, however, a number of obvious departures in the individual geogenetic map from the population map.  The most obvious is that the location of a pair of \textit{nitidus} samples (in purple) is very far from the rest of the samples.  
 These individuals appear to be fairly close relatives:
 in the population-level analysis of Fig.\ \ref{sfig:warb_pop_nugg}\subref{warb_pop_noad_nugg},
-this increase in shared ancestry was accounted for by a large nugget for the \textit{nitidus} population;
-but in the individual-level analysis, they cannot share a nugget parameter, 
-and must therefore choose a location close to each other and far from the rest of the samples.
+this increase in shared ancestry was accounted for by a large nugget for the \textit{nitidus} population.
+However, in the individual-level analysis, a nugget is estimated separately for each sample, 
+so, the model must accommodate the much higher relatedness between this pair of individuals
+through estimated locations that are close to each other and far from the rest of the samples.
 The same phenomenon seems to be at work in determining the locations of a pair of individuals, one identified as \textit{P. t. ludlowi} (Lud-MN3), one as \textit{P. t. trochiloides} (Tro-LN11), 
 as they also show an unusually low pairwise sequence divergence (see Fig.\ \ref{sfig:warb_ind_pwp}).
 
-The split between \textit{viridanus} and \textit{plumbeitarsus} individuals (blue and red, respectively), in the north at the contact zone of the two waves of expansion, is clearer now than in the population-based analysis, as individuals from the Stolby population have moved to near their respective clusters. 
-Despite the fact that \textit{viridanus} and \textit{plumbeitarsus} individuals have moved away from each other in our geogenetic map, 
+The split between \textit{viridanus} and \textit{plumbeitarsus} individuals (blue and red, respectively), in the north at the contact zone of the two waves of expansion, is clearer now than in the population-based analysis, as the estimated locations of individuals from the Stolby population are near their respective clusters. 
+Although the geogenetic separation between the \textit{viridanus} and \textit{plumbeitarsus} individuals is greater than their geographic separation, 
 they are still closer to each other than we would expect if all gene flow between the two was mediated by the southern populations,
 in which case we would expect the populations to form a line, 
 with \textit{viridanus} at one end and \textit{plumbeitarsus} at the other. 
-This horseshoe, with \textit{viridanus} and \textit{plumbeitarsus} at its tips, is steady within and among runs of the MCMC and choice of position priors (see Figs.\ \ref{sfig:warb_ind_clouds}\subref{post_map_randpr2}-\ref{sfig:warb_ind_clouds}\subref{post_map_realpr2}).  
+This horseshoe configuration, with \textit{viridanus} and \textit{plumbeitarsus} at its tips, is steady within and among runs of the MCMC and choice of position priors (see Figs.\ \ref{sfig:warb_ind_clouds}\subref{post_map_randpr2}-\ref{sfig:warb_ind_clouds}\subref{post_map_realpr2}).  
 
-Is this biologically meaningful?  A similar horseshoe shape appears when a principal components (PC) analysis is conducted and individuals are plotted on the first two PCs \citep[see Fig.\ \ref{sfig:warb_ind_PC_map} and ][]{alcaide2014genomic}.  
-However, as discussed by \citet{novembre_interpreting_2008}, such patterns in PC analysis can arise for somewhat unintuitive reasons. If populations are simulated under a one dimensional stepping stone model, then plotting individuals on the first two PCs results in a horseshoe (e.g.\ see Fig.\ \ref{sfig:line_scenario}\subref{line_pops_pca}) not because of gene flow connecting the tips, but rather because of the orthogonality requirement of PCs (see \cite{novembre_interpreting_2008} for more discussion).  In contrast, when SpaceMix is applied to data simulated on a one dimensional array of populations, the placement of samples is consistent with a line (see Figs.\ \ref{sfig:line_scenario}\subref{line_pops_post}, \ref{sfig:line_scenario}\subref{line_pops_MAP}). The proximity of \textit{viridanus} and \textit{plumbeitarsus} in geogenetic space may be due to gene flow between the tips of the horseshoe north of the Tibetan Plateau. This conclusion is in agreement with that of \citet{alcaide2014genomic}, who observed evidence of hybridization between \textit{viridanus} and \textit{plumbeitarsus} using assignment methods.
+Is this biologically meaningful?  A similar horseshoe shape appears when a principal components (PC) analysis is conducted and individuals are plotted on the first two PCs (see Fig.\ \ref{sfig:warb_ind_PC_map} and \cite{alcaide2014genomic}).  
+However, as discussed by \cite{novembre_interpreting_2008}, such patterns in PC analysis can arise for somewhat unintuitive reasons. If populations are simulated under a one dimensional stepping stone model, then plotting individuals on the first two PCs results in a horseshoe (e.g.\ see Fig.\ \ref{sfig:line_scenario}\subref{line_pops_pca}) not because of gene flow connecting the tips, but rather because of the orthogonality requirement of PCs \citep[see ][ for more discussion]{novembre_interpreting_2008}.  In contrast, when SpaceMix is applied to data simulated on a one dimensional array of populations, the placement of samples is consistent with a line (see Figs.\ \ref{sfig:line_scenario}\subref{line_pops_post}, \ref{sfig:line_scenario}\subref{line_pops_MAP}). The proximity of \textit{viridanus} and \textit{plumbeitarsus} in geogenetic space may be due to gene flow between the tips of the horseshoe north of the Tibetan Plateau. This conclusion is in agreement with that of \cite{alcaide2014genomic}, who observed evidence of hybridization between \textit{viridanus} and \textit{plumbeitarsus} using assignment methods.
 
-The SpaceMix map also diverges from the observed map in the distribution of individuals from the subspecies \textit{ludlowi} (in green).  These samples were taken from seven sampling locations along the southwest margin of the Tibetan Plateau, but, in the SpaceMix analysis, they partition into two main clusters, one near the \textit{trochiloides} cluster, and one near the \textit{viridanus} cluster.  This break between samples from the same subspecies, which is concordant with the findings of \citet{alcaide2014genomic}, makes the \textit{ludlowi} cluster unusual compared to the estimated spatial distributions of the other subspecies (see Fig.\ \ref{sfig:warb_ind_distcomp}), and suggests a break in historic or current gene flow.
+The SpaceMix map also diverges from the observed map in the distribution of individuals from the subspecies \textit{ludlowi} (in green).  These samples were taken from seven sampling locations along the southwest margin of the Tibetan Plateau, but, in the SpaceMix analysis, they partition into two main clusters, one near the \textit{trochiloides} cluster, and one near the \textit{viridanus} cluster.  This break between samples from the same subspecies, which is concordant with the findings of \cite{alcaide2014genomic}, makes the \textit{ludlowi} cluster unusual compared to the estimated spatial distributions of the other subspecies (see Fig.\ \ref{sfig:warb_ind_distcomp}), and suggests a break in historic or current gene flow.
 
 \subsection*{Human Populations}
 Human population structure is a complex product of the forces of migration and drift acting on both local and global scales, patterned by geography \citep{novembre_genes_2008, ralph2013geography}, time \citep{skoglund2012origins, skoglund_investigating_2014}, admixture \citep{Hellenthal},  landscape and environment \citep{Beall2010, Bigham2010, Bradburd2013}, and shaped by culture \citep{reich_india_2009, Atzmon2010, moorjani_history_2011}. To visualize the patterns these processes have induced, we create a geogenetic map for a worldwide sample of modern human populations. 
@@ -562,9 +577,9 @@ This pattern is consistent with a history of human colonization events character
 samples.}\label{sfig:globe_noad_maps}
 \end{figure}
 
-To investigate possible patterns of admixture further, we ran a SpaceMix analysis with admixture (results shown in Figs.\ \ref{sfig:globe_ad_maps} and \ref{globe_ad_props}). The biggest change between the geogenetic map of human populations inferred with admixture and that without is the positioning of African samples with respect to the rest of the world.  The relatively large geogenetic distances between these groups reflects the fact that Eurasian, North African, Oceanian, and American populations all share relatively large amounts of population history (and hence genetic drift) not shared with the Sub-Saharan African samples. Relative to the geogenetic map inferred without admixture, the inclusion of admixture allows samples that fall intermediate between Sub-Saharan Africa and North Africa and the Middle East to move closer to one or the other, which, in turn, allows each of those major clusters to move relatively farther apart.  The Ethiopian and Ethiopian Jewish samples move to be closer to the Sub-Saharan samples than the of the North African samples, but draw substantial amounts of admixture ($\sim 40\%$) from close to where the Egyptian sample has positioned itself in the the Middle East cluster, as do the Sandawe \citep{hodgson_early_2014,Pickrell:12}. 
-The SanKhomani draw admixture from near Syria, which may reflect multiple distinct geographic sources of admixture as discussed by \citep{Hellenthal} and \citep{Pickrell:14}. 
-Interestingly the Bantu South African sample, though it moves to join the other Bantu samples, draws admixture from close to the San populations. This is consistent with previous signals of the expansion of Bantu-speaking peoples into southern Africa  \citep{Pickrell:12,Jakobsson_genomic_2012,Pickrell:14,Hellenthal}.  The inferred sample-specific drift parameters (the `nuggets') are similar between runs with and without admixture (Fig.\ \ref{sfig:globe_nuggs}).
+To investigate possible patterns of admixture further, we ran a SpaceMix analysis with admixture (results shown in Figs.\ \ref{sfig:globe_ad_maps} and \ref{globe_ad_props}). The biggest change between the geogenetic map of human populations inferred with admixture and that without is the positioning of African samples with respect to the rest of the world.  The relatively large geogenetic distances between these groups reflects the fact that Eurasian, North African, Oceanian, and American populations all share relatively large amounts of population history (and hence genetic drift) not shared with the Sub-Saharan African samples. Relative to the geogenetic map inferred without admixture, the inclusion of admixture shifts the estimated locations of admixed samples intermediate between Sub-Saharan Africa and North Africa/the Middle East toward one cluster or the other, which, in turn, pushes each of those major clusters to move relatively farther apart.  The Ethiopian and Ethiopian Jewish samples have estimated locations closer to the Sub-Saharan samples than the of the North African samples, but draw substantial amounts of admixture ($\sim 40\%$) from close to where the Egyptian sample has positioned itself in the the Middle East cluster, as do the Sandawe \citep{hodgson_early_2014,Pickrell:12}. 
+The SanKhomani draw admixture from near Syria, which may reflect multiple distinct geographic sources of admixture as discussed by \cite{Hellenthal} and \cite{Pickrell:14}. 
+Interestingly the Bantu South African sample, though it has an estimated location near the other Bantu samples, draws admixture from close to the San populations. This is consistent with previous signals of the expansion of Bantu-speaking peoples into southern Africa \citep{Pickrell:12,Jakobsson_genomic_2012,Pickrell:14,Hellenthal}.  The inferred sample-specific drift parameters (the `nuggets') are similar between runs with and without admixture (Fig.\ \ref{sfig:globe_nuggs}).
 
 \begin{figure}
 	\centering
@@ -585,15 +600,18 @@ Interestingly the Bantu South African sample, though it moves to join the other 
 	\label{globe_ad_props}
     }
 \end{figure}
+
 The majority of North African samples (Egyptian, Tunisian, Morocan, Mozabite) join the Middle Eastern samples (positioned in rough accord with their sampling location along North Africa), and draw admixture from near the Ethiopian samples. All of the Middle Eastern samples draw admixture from close to the geogenetic location of the Ethiopian samples and where most of the North African samples draw admixture from, representing the complex history of North African--Middle Eastern gene flow \citep{henn_genomic_2012,Hellenthal}. 
 
 A number of other population samples draw admixture from Africa. The Sindhi, Makrani, and Brahui draw admixture from close to the location of the Bantu samples  \citep{Hellenthal}, and the Balochi and Kalash draw admixture from some distance away from African population samples.  Of the European samples, the Spanish and both East and West Sicilian samples draw small amounts of admixture from close to the Ethiopian samples, presumably reflecting a North African ancestry component  \citep{moorjani_history_2011,botigue_gene_2013}. 
 
-The other significant signal of admixture is between East and West Eurasia \citep[a signal documented by many authors:][]{rosenberg_genetic_2002,li_worldwide_2008, xu_genome-wide_2008,Hellenthal}. The majority of samples maintain their relative positions within each of these groups; however, several of the populations whose inferred locations are intermediate between eastern and western Eurasia (in the SpaceMix analysis without admixture) now move towards one side and draw admixture from the other.  The Uzbekistani and Hazara samples move to be closer to the East Asian samples, while drawing a substantial admixture proportion from close to where the Georgian and Armenian samples have located themselves, while conversely the Uygur sample moves to be close to the Burusho, Kalash, and Pathan samples. The Tu sample (with a geogenetic location in East Asia) draws a small amount of ancestry from close to where the Uygur have positioned themselves. The Chuvash move close to Russian and Lithuanian samples, drawing admixture from close to the Yakut; the Turkish sample also draws a smaller amount of admixture from there. There are several other East-West connections: the Russian and Adygei samples have admixture from a location ``north'' of the East Asian samples, and the Cambodia sample draws admixture from close to the Eygptian sample \citep{Treemix, Hellenthal}. 
+The other significant signal of admixture is between East and West Eurasia, a signal documented by many authors \citep{rosenberg_genetic_2002,li_worldwide_2008, xu_genome-wide_2008,Hellenthal}. The majority of samples maintain their relative positions within each of these groups; however, there are several samples that show admixture between eastern and western Eurasia.  The Uzbekistani and Hazara samples have estimated locations close to the East Asian samples and draw a substantial admixture proportion from close to where the Georgian and Armenian samples have located themselves.  Conversely, the Uygur sample has an estimated location close to the Burusho, Kalash, and Pathan samples, and draws admixture from near the Mongola and Hezhen samples. The Tu sample (with a geogenetic location in East Asia) draws a small amount of ancestry from close to the estimated location of the Uygur. The estimated location of the Chuvash sample is near the Russian and Lithuanian samples, and the Chuvash draw admixture from close to the Yakut (as do the Turkish, to a smaller extent). There are several other East-West connections: the Russian and Adygei samples have admixture from a location ``north'' of the East Asian samples, and the Cambodia sample draws admixture from close to the Eygptian sample \citep{Treemix, Hellenthal}. 
 
-There are also a number of samples that draw admixture from locations that are not immediately interpretable.  For example, the Hadza and Bantu Kenyan samples draw admixture from somewhat close to India, 
+There are also a number of samples that draw admixture from locations that are not immediately interpretable.  
+For example, the Hadza and Bantu Kenyan samples draw admixture from somewhat close to India, 
 and the Xibo and Yakut from close to ``northwest'' of Europe.  
-The Pathan samples draw admixture from a location far from any other samples' locations, but close to where the India samples also draws admixture from. 
+The Pathan samples draw admixture from a location far from any other samples' locations, 
+but close to where the India samples also draws admixture from. 
 The Myanmar and the Burusho samples both draw admixture far from the locations estimated for other samples as well.
 
 There are a number of possible explanations for these results. As we only allow a single admixture arrow for each sample, populations with multiple, geographically distinct sources of admixture may be choosing admixture locations that average over those sources. This may be the case for the Hadza and Bantu Keynan samples \citep{Hellenthal}.  A second possibility is that the relatively steep prior on admixture proportion forces samples to choose lower proportions of admixture from locations that overshoot their true sources; this may explain the Xibo and Yakut admixture locations. A final explanation is that good proxies for the sources of admixture may not be included in our sampling, either because of of the limited geographic sampling of current day populations, or because of old admixture events from populations from which there are not other more directly descending modern populations. The admixture into the Indian and Pathan samples (whose admixture source also clusters with the Indian Jew samples in some MCMC runs) may be an example of this; \citet{reich_india_2009} and \citet{moorjani_india_2013} have hypothesized that many populations from the Indian subcontinent may be descended from an admixture event involving an ancestral Southern Indian population not otherwise represented in this dataset.
@@ -652,7 +670,7 @@ due to the constraints of linearity, would need more to describe.
 
 Another strong advantage of SpaceMix over current methods is the introduction of admixture arrows. 
 Although PCA can be interpreted in light of simple admixture events \citep{mcvean_genealogical_2009}, 
-and \citet{yang_model-based_2012,yang_spatial_2014} can locate the recent, spatially admixed ancestry of out-of-sample individuals,
+and recent methods can locate the recent, spatially admixed ancestry of out-of-sample individuals \citep{yang_model-based_2012,yang_spatial_2014},
 neither approach explicitly models admixture between multiple geographically distant locations,
 as SpaceMix does.
 Assignment methods are designed to deal with many admixed samples \citep{STRUCTURE}, 
@@ -669,9 +687,9 @@ we were concerned about both the identifiability and the interpretability of suc
 However, there may be empirical datasets in which such a modeling scheme is required to effectively map patterns of population structure.
 In addition, we have assumed that only single populations are admixed, when in fact it is likely that particular admixture events may affect multiple samples.
 
-One concern is that the multiple admixed samples (from a single admixture event) may simply choose to cluster close to each other, 
+One concern is that the multiple admixed samples (from a single admixture event) may simply have clustered estimated locations, 
 and not need to draw admixture from elsewhere due to the fact that their frequencies are well described by their proximity to other admixed populations.  
-Along these lines, it is noticeable that many of our European samples draw little admixture from elsewhere \citep[also noted by][ using a different approach]{Hellenthal}, 
+Along these lines, it is noticeable that many of our European samples draw little admixture from elsewhere (also noted by \citep{Hellenthal} using a different approach), 
 despite evidence of substantial ancient admixture \citep{lazaridis_ancient_2014}.
 This may reflect the fact that all of the European samples are affected by the admixture events, and are relatively over-represented in our sample. 
 However, this may also simply reflect the fact that the admixture is ancient, 
@@ -683,9 +701,16 @@ This suggests that geogenetic clustering (in lieu of drawing admixture) of popul
 The method could in theory be modified to allow geogenetically proximal populations to draw from the same admixture event;
 however, this may be difficult to make fully automated.
 
-In this paper we have focused on the covariance among alleles at the same locus, 
-but linkage disequilibrium (LD; covariance of alleles among loci) 
-holds rich information about the timing and source of admixture events \citep[e.g.][]{chakraborty_admixture_1988,moorjani_india_2013, Hellenthal,gravel_population_2012} 
+In this paper, we have treated the loci in the dataset as independent, and,
+where necessary, we have thinned empirical datasets to decrease LD between loci.
+One possible approach that avoids the necessity of thinning the data would be to 
+calculate the sample covariance in large (e.g., megabase), non-overlapping windows along the genome,
+then average those sample covariances across all windows.
+Another approach is to use empirical LD between loci to estimate the effective number of independent
+loci in the dataset, and use this quantity as the number of degrees of freedom in the Wishart likelihood calculation.
+Additionally, although we have focused on the covariance among alleles at the same locus, 
+linkage disequilibrium (covariance of alleles among loci) 
+holds rich information about the timing and source of admixture events \citep{chakraborty_admixture_1988,moorjani_india_2013, Hellenthal,gravel_population_2012} 
 as well as information about isolation by distance \citep{ralph2013geography}.
 Just as population graph approaches have been extended to incorporate information from LD \citep{Loh:13}, 
 a spatial covariance approach could be informed by LD. 
@@ -792,9 +817,9 @@ and compute the likelihood of the empirical covariance matrix of allele frequenc
 The inference algorithm described here may be used to estimate the parameters with any of these held fixed,
 for  instance:
 (1) population locations are fixed, and they do not draw any admixture; 
-(2) populations may choose their own locations, but not admixture; 
+(2) populations locations are estimated, but not admixture; 
 (3) populations may draw admixture, but their own locations are fixed; or
-(4) populations may both choose their own locations and draw admixture.  
+(4) populations locations and admixture are both estimated.  
 The free parameters for each of options are given in Table \ref{tab:model_options}.
 
 \begin{centering}
@@ -802,10 +827,10 @@ The free parameters for each of options are given in Table \ref{tab:model_option
 \begin{tabular}{| >{\centering\arraybackslash}m{6cm} | >{\centering\arraybackslash}m{3cm} | l |}
 	\hline
 	\textbf{Model} & \textbf{\# of Free Parameters} & \textbf{Parameters}\\ \hline
-	stationary population locations, no admixture & $K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta$	\\ \hline
-	inferred population locations, \hspace{0.5cm}no admixture & $2K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta,G$	\\ \hline
-	stationary population locations, inferred admixture & $2K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta,\identifyadmixsource{G},w$	\\ \hline
-	inferred population locations, inferred admixture & $3K + 3$	&$\alpha_0,\alpha_1,\alpha_2,\eta,G,\identifyadmixsource{G},w$	\\
+	\textbf{(1)} stationary population locations, no admixture & $K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta$	\\ \hline
+	\textbf{(2)} inferred population locations, \hspace{0.5cm}no admixture & $2K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta,G$	\\ \hline
+	\textbf{(3)} stationary population locations, inferred admixture & $2K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta,\identifyadmixsource{G},w$	\\ \hline
+	\textbf{(4)} inferred population locations, inferred admixture & $3K + 3$	&$\alpha_0,\alpha_1,\alpha_2,\eta,G,\identifyadmixsource{G},w$	\\
 	\hline
 \end{tabular}
 \caption{
@@ -813,6 +838,8 @@ The free parameters for each of options are given in Table \ref{tab:model_option
 }\label{tab:model_options}
 \end{table}
 \end{centering}
+
+Although we anticipate most empirical researchers will be interested in the joint inference of a geogenetic map with admixture (Model 4), we have presented these models separately, as we believe each have their own utility.  Model 1 and Model 3 can each be used to infer landscapes of allele frequencies, upon which genotyped individuals can be probabilistically placed (following \citep{Wasser2004}).  This application may be useful to determine the geographic origin of potentially contraband biological samples (e.g., ivory), or the most likely source of museum specimens missing sampling metadata.  Model 3 has the potential to improve the performance of these spatial assignment methods over Model 1, as the inclusion of admixture in the model may allow for more accurate inference of allele frequency surfaces.  Model 2 offers a direct touchstone to Principal Component Analysis, and can also be used in a model comparison framework with Model 4 to formally test for the presence of admixture in the sampled dataset.
 
 Below, we outline the inference procedure for the most parameter-rich model (inference on both population locations, their sources of admixture, and the proportions in which they draw admixture, in addition to inference of the parameters of the spatial covariance function).
 A table of all parameters, their descriptions, and their priors is given in Table \ref{tab:param_prior_tab}.
@@ -961,8 +988,8 @@ A natural concern is whether all of the parameters we infer are separately ident
 
 Admixture is identifiable in our model because there are covariance relationships among populations that cannot simply be satisfied by shifting population locations around (as demonstrated by the tortured nature of Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}). 
 Consider the simple spatial admixture scenario shown in Fig.\ \ref{sfig:toy_admixture}. 
-Populations A--D are arrayed  along a line, but there is recent admixture from D into B (such that 40\% of the alleles assigned to B are sampled from location D).  
-The lines show the expected covariance under isolation by distance that each population (A, C, or D, as indicated by line color) has with a putative population at a given distance.  The dots show the admixed covariance between B and the three other populations, as well as B's variance with itself (B-B) as specified by equation \eqref{eq:admixed_covariance_1}, with no nugget or sampling effect.
+Populations $A$--$D$ are arrayed  along a line, but there is recent admixture from $D$ into $B$ (such that 40\% of the alleles assigned to B are sampled from location $D$).  
+The lines show the expected covariance under isolation by distance that each population ($A$, $C$, or $D$, as indicated by line color) has with a putative population at a given distance.  The dots show the admixed covariance between $B$ and the three other populations, as well as $B$'s variance with itself ($B$-$B$) as specified by equation \eqref{eq:admixed_covariance_1}, with no nugget or sampling effect.
 
 \begin{figure}[htp!]
 	\centering
@@ -976,7 +1003,7 @@ The lines show the expected covariance under isolation by distance that each pop
     } \label{sfig:toy_admixture}
 \end{figure}
 
-Due to its admixture from D, B has lower covariance with A than expected given its distance, somewhat higher covariance with C, and much higher covariance with D. In addition, the variance of B is lower than that of the other three populations, which each have variance $1$: the value of the covariance when the distance is zero. This lower variance results from the fact that the frequencies at $B$ represent a mixture of the frequency at $D$ and the frequency at $B$ before the admixture. 
+Due to its admixture from $D$, $B$ has lower covariance with $A$ than expected given its distance, somewhat higher covariance with $C$, and much higher covariance with $D$. In addition, the variance of $B$ is lower than that of the other three populations, which each have variance $1$: the value of the covariance when the distance is zero. This lower variance results from the fact that the frequencies at $B$ represent a mixture of the frequency at $D$ and the frequency at $B$ before the admixture. 
 
 Now, using this example scenario, let us return to the concern posed above: that admixture location and population location are not identifiable.  For the sake of simplicity, assume that we hold the locations of A, C, and D constant, as well as the decay of covariance with distance (as could be the case if A-D are part of a larger analysis).  The covariance relationships of $B$ to the other populations cannot be simply satisfied by moving $B$ towards D, as B would then have a covariance with C that is higher, and a covariance with A that is lower, than that we actually observe. 
 
@@ -987,9 +1014,9 @@ The analyses depicted in Figs.\ \ref{sfig:corner_admix_scenarios}\subref{corner_
 \ref{sfig:barr_inland_ad}\subref{big_barr_ad_scenario}, 
 give examples of these tradeoffs.
 In each, the inferred admixture proportions in the admixed populations are less than those used to simulate the data,
-and the admixed populations are able to explain the high covariance they have with their sources of admixture via their inferred location,
+and the model is able to explain the high covariance the admixed populations have with their sources of admixture via their inferred location,
 rather than just via their inferred source of admixture and admixture proportion.  
-The reason they choose to do explain their anomalous covariance with their inferred location,
+The reason the model explains these admixed populations' anomalous covariance with their inferred location,
 rather than with their admixture source,
 is that we place a very harsh prior against admixture inference (Table \ref{tab:param_prior_tab}).
 The prior is designed to make inference conservative with respect to admixture,
@@ -1000,7 +1027,7 @@ Below, we describe the specifics of our analyses of the greenish warbler dataset
 
 For each analysis,
 \begin{itemize}
-\item[1.] Five independent chains were run for $5\times 10^6$ MCMC iterations each in which populations were allowed to choose their own locations (but no admixture).  Population locations were initiated at the origin (i.e.\, at iteration 1 of the MCMC, $G_i = (0,0)$), and all other parameters were drawn randomly from their priors at the start of each chain.  
+\item[1.] Five independent chains were run for $5\times 10^6$ MCMC iterations each in which population locations were estimated (but no admixture).  Population locations were initiated at the origin (i.e.\, at iteration 1 of the MCMC, $G_i = (0,0)$), or at uniformly distributed coordinates between the minimum and maximum observed range of latitude and longitude, and all other parameters were drawn randomly from their priors at the start of each chain. 
 \item[2.]The chain with the highest posterior probability at the end of the analysis was selected and identified as the ``Best Short Run''.
 \item[3.] A chain was initiated from the parameter values in the last iteration of the Best Short Run.  Because inference of admixture proportion and location was not allowed in the five initial runs, admixture proportions were initiated at 0 and admixture locations, \admixsource{G} were initiated at the origin.  This  chain (the ``Long Run'') was run for $10^8$ iterations, and sampled every $10^5$ iterations for a total of $1000$ draws from the posterior.
 \end{itemize}
@@ -1018,8 +1045,57 @@ we (unless stated otherwise) present only the results from the `random' prior an
 
 Finally, we compared the SpaceMix map to a map derived from a Principal Components Analysis (Patterson and Reich 2006).  For this analysis, we calculated the eigendecomposition of the mean-centered allelic covariance matrix, then plotted individuals' coordinates on the first two eigenvectors (e.g.\ Novembre et al 2008).  For consistency of presentation, we show the full Procrustes superimposition of the PC coordinate space around the geographic sampling locations.
 
-\subsection*{Treemix comparisons}
+\subsection*{Treemix Comparisons}
+To contrast our approach to tree-based approaches to admixture we
+applied \texttt{TreeMix} \citep{Treemix} to our spatial simulations.
+%
+We took the \texttt{ms} output on which we had also run Spacemix 
+(Figs.\ \ref{sfig:lattice_scenarios},\ref{sfig:corner_admix_scenarios},\ref{sfig:barr_inland_ad}), 
+and converted it into \texttt{TreeMix} format.  
+We also included an outgroup sequence for each dataset,
+ which consisted of a single haploid individual who carried the $0$ (ancestral allele) at every locus. 
+ We ran \texttt{TreeMix} without migration edges on the processed \texttt{ms.treemix.file.gz} file to construct the initial
+tree, which was rooted using the \texttt{myoutgroup} sequence using the following command:
+\hspace*{\fill}\newline\hspace*{\fill}\newline
+\texttt{treemix -i ms.treemix.file.gz  -root myoutgroup -o treemix\_output}
+\hspace*{\fill}\newline\hspace*{\fill}\newline
+We then sequentially added admixture migration edges, 
+using the following command to add another edge to the existing tree (``\texttt{prev.treemix}"):
+\hspace*{\fill}\newline\hspace*{\fill}\newline
+\texttt{treemix -i  ms.treemix.file.gz -root myoutgroup  -g  prev.treemix.vertices.gz  prev.treemix.edges.gz -m 1 -o  treemix\_output}
+\hspace*{\fill}\newline\hspace*{\fill}\newline
+The \texttt{TreeMix} graphs and residual covariance matrices were visualized
+using the scripts provided with \texttt{TreeMix}. 
+The code to process and plot the data is provided in the Appendix.\\
+%
+In Fig.\ \ref{sfig:treemix_lattice} we show the tree and admixture graphs produced when
+\texttt{TreeMix} is run on a lattice stepping stone model 
+(a smaller scale version of this exercise was previously done by \cite{Treemix}). 
+The tree produced by running \texttt{TreeMix} is rake-like, showing the lack of deep shared sub-division. 
+However, while the tree captures some features of isolation by distance, 
+(e.g., neighboring samples are often sister to each other), 
+the tree structure forces many unnatural splits of geographically neighboring populations 
+\citep[as was previously found][; see their Figure S14]{Treemix}. 
+The admixture migration arrows act to mitigate the strongest departures from the tree, 
+such as geographically neighboring samples that were forced into separate places on the tree,
+but are unable to fully accommodate the spatial relationships between samples. 
+ Different runs of \texttt{TreeMix} on the same dataset result in quite different trees and orders of migration events, 
+ reflecting both the high degree of symmetry in our simulated samples on a grid, 
+ and also the poor fit of the tree model to spatial data. 
+In Figs.\ \ref{sfig:treemix_barrier} and \ref{sfig:treemix_expansion},
+we also present the results of \texttt{TreeMix} run on our expansion and barrier simulations.\\
 
+In Figs.\ \ref{sfig:treemix_corneradmixture}, \ref{sfig:treemix_neighboradmixture}, and \ref{sfig:treemix_inlandadmixture},
+we show the application of \texttt{TreeMix} to the scenarios simulated with admixture events.  
+For none of our scenarios was the true admixture the first migration edge added; 
+in fact, only for the corner admixture scenario was the true admixture
+event in the first three edges added. 
+This reflects the fact that \texttt{TreeMix} has to add migration edges to cope with the residual
+covariance induced simply due to the poor fit of a tree to spatially simulated data,
+and so misses more subtle (but real) admixture events.
+The poor performance of \texttt{TreeMix} here is the result of the 
+spatially simulated data not conforming to the 
+underlying assumption of the \texttt{TreeMix} tree-like model.
 
 \section*{Acknowledgements}
 We would like to gratefully acknowledge the Coop Lab, Yaniv Brandvain, Razib Khan, Dan Runcie, Brad Shaffer, Marjorie Weber, and Will Wetzel for helpful discussions.  
@@ -1050,6 +1126,29 @@ and the National Science Foundation under award numbers NSF \# 1148897 and \# 14
 		{\includegraphics[width=4.8in,height=8.8in]{../figs/sims/sim_covariance_decays.pdf}}
 		\caption{Decays in covariance for four different simulation scenarios (from top to bottom: simple lattice; lattice with barrier; lattice with expansion; lattice with admixture).  Left column: sample covariance plotted against observed pairwise distance.  Right column: sample covariance plotted against inferred geogenetic distance.}
 	\label{sfig:sim_covariance_decays}
+\end{figure}
+
+\begin{figure}
+\centering
+	\subcaptionbox{\label{lattice_pc}}
+		{\includegraphics[width=5in,height=4in]{../figs/sims/lattice_PC_map.pdf}}
+	\subcaptionbox{\label{cornerad_pc}}
+			{\includegraphics[width=5in,height=4in]{../figs/sims/corneradmixture_PC_map.pdf}}
+	\caption{Plots of the first two Principal Component axes (with variance explained labeled on the relevant axes) 
+			of the mean-centered covariance matrix from simulated spatial scenarios.
+			a) the basic lattice scenario shown in \ref{sfig:lattice_scenarios}\subref{simple_lattice}.
+			b) the lattice scenario with admixture from Population 1 into Population 30, 
+				shown in \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}}.
+	\label{sfig:sim_pc_maps}
+\end{figure}
+
+\begin{figure}
+\centering
+	\subcaptionbox{\label{lattice}}
+		{\includegraphics[width=6in,height=2in]{../figs/sims/uneven_sampling_lattice.pdf}}
+	\subcaptionbox{\label{barrier}}
+			{\includegraphics[width=6in,height=2in]{../figs/sims/uneven_sampling_barrier.pdf}}
+	\caption{The effect of uneven sampling on inference of geogenetic maps. a) inference using a dataset with a random subsample of 12 populations from the simple lattice scenario with nearest neighbor migration; b) inference using a dataset with a random subsample of 12 populations from the barrier scenario with nearest neighbor migration and a barrier down the center line of longitude.}\label{sfig:uneven_sampling}
 \end{figure}
 
 \begin{figure}
@@ -1095,6 +1194,8 @@ and the National Science Foundation under award numbers NSF \# 1148897 and \# 14
 			{\includegraphics[width=6in,height=2in]{../figs/warblers/admix_prop_func_loc_prob.pdf}}
 	\caption{Likelihood surfaces for different placements of population ST between \textit{plumbeitarsus} and \textit{viridanus} clusters: (a) log likelihood surface; (b) posterior probability surface, incorporating the priors. The maximum a posteriori estimate (MAP) is shown as a star. }\label{sfig:admix_prop_func_loc}
 \end{figure}
+
+\clearpage
 
 \begin{figure}
 \centering
@@ -1239,6 +1340,43 @@ and the National Science Foundation under award numbers NSF \# 1148897 and \# 14
 \end{figure}
 
 \clearpage
+
+\begin{figure}
+	\centering
+		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_stationary_popstreemix_fig_sequential.pdf}}
+	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_lattice}
+\end{figure}
+
+\begin{figure}
+	\centering
+		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_barriertreemix_fig_sequential.pdf}}
+	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier..  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_barrier}
+\end{figure}
+
+\begin{figure}
+	\centering
+		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_expansiontreemix_fig_sequential.pdf}}
+	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with an expansion event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_expansion}
+\end{figure}
+
+\begin{figure}
+	\centering
+		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_corner_admixturetreemix_fig_sequential.pdf}}
+	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a long-range admixture event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_corneradmixture}
+\end{figure}
+
+\begin{figure}
+	\centering
+		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_neighbor_admixturetreemix_fig_sequential.pdf}}
+	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and short-range admixture event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_neighboradmixture}
+\end{figure}
+
+\begin{figure}
+	\centering
+		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_barrier_and_inland_admixturetreemix_fig_sequential.pdf}}
+	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and mid-range admixture event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_inlandadmixture}
+\end{figure}
+
 
 \begin{table}
 \centering
@@ -1558,6 +1696,5 @@ Sample & Subspecies & Longitude & Latitude \\
    \caption{sample size and geographic meta-data for human samples included in analysis}
    \label{tab:globe_data_table}
 \end{table}
-
 
 \end{document}

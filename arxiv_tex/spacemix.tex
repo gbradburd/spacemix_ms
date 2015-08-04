@@ -124,13 +124,13 @@ and reduced dimensionality representations of the data, such as Principal Compon
 
 A third set of methods that describe relatedness between populations by constructing a ``population phylogeny''
 was pioneered by \cite{cavallisforza_edwards1967}, 
-as were methods to test whether a tree is a good model of population history \citep{CavalliSforza1975} (see \citep{Felsenstein1982} for a review).
+as were methods to test whether a tree is a good model of population history \citep{CavalliSforza1975} (see \cite{Felsenstein1982} for a review).
 Tree-based approaches are appealing because trees are easy to visualize and explain,
 but the underlying assumptions (unstructured populations that split at discrete points in time)
 rarely hold true.
  
 Recently, there has been a resurgence of interest in these tree-based methods.  
-Some use population trees as a null model to test and quantify the signal of admixture between samples \cite{reich_india_2009}.  
+Some use population trees as a null model to test and quantify the signal of admixture between samples \citep{reich_india_2009}.  
 Others, such as TreeMix \citep{Treemix} and MixMapper \citep{lipson_mixmapper_2013}, 
 visualize population relationships using a directed acyclic graph;
 for instance, TreeMix connects branches in a population tree with additional edges
@@ -419,7 +419,7 @@ These priors are detailed in Table \ref{tab:param_prior_tab}.
 
 The models described above may be used in various combinations.  In the simplest model, locations are not estimated for populations , nor do they draw admixture; the only parameters to be estimated are those of the spatial covariance function given in equation \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_i$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  Users may wish to employ the more constrained models (e.g., fixing the locations or admixture proportions for some or all samples) in a model selection framework to test specific hypotheses.  We discuss the utility of these different models in the Appendix.
 
-Allowing admixture gives sensible results for the scenario of Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}:
+Allowing admixture gives sensible results for the scenario of Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice};
 in the resulting map,
 the only population that draws substantial admixture is the one that is actually admixed, 
 and it draws admixture (95\% CI: 0.36 - 0.40) from the correct location (Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference}).
@@ -538,7 +538,7 @@ with \textit{viridanus} at one end and \textit{plumbeitarsus} at the other.
 This horseshoe configuration, with \textit{viridanus} and \textit{plumbeitarsus} at its tips, is steady within and among runs of the MCMC and choice of position priors (see Figs.\ \ref{sfig:warb_ind_clouds}\subref{post_map_randpr2}-\ref{sfig:warb_ind_clouds}\subref{post_map_realpr2}).  
 
 Is this biologically meaningful?  A similar horseshoe shape appears when a principal components (PC) analysis is conducted and individuals are plotted on the first two PCs (see Fig.\ \ref{sfig:warb_ind_PC_map} and \cite{alcaide2014genomic}).  
-However, as discussed by \cite{novembre_interpreting_2008}, such patterns in PC analysis can arise for somewhat unintuitive reasons. If populations are simulated under a one dimensional stepping stone model, then plotting individuals on the first two PCs results in a horseshoe (e.g.\ see Fig.\ \ref{sfig:line_scenario}\subref{line_pops_pca}) not because of gene flow connecting the tips, but rather because of the orthogonality requirement of PCs \citep[see ][ for more discussion]{novembre_interpreting_2008}.  In contrast, when SpaceMix is applied to data simulated on a one dimensional array of populations, the placement of samples is consistent with a line (see Figs.\ \ref{sfig:line_scenario}\subref{line_pops_post}, \ref{sfig:line_scenario}\subref{line_pops_MAP}). The proximity of \textit{viridanus} and \textit{plumbeitarsus} in geogenetic space may be due to gene flow between the tips of the horseshoe north of the Tibetan Plateau. This conclusion is in agreement with that of \cite{alcaide2014genomic}, who observed evidence of hybridization between \textit{viridanus} and \textit{plumbeitarsus} using assignment methods.
+However, as discussed by \cite{novembre_interpreting_2008}, such patterns in PC analysis can arise for somewhat unintuitive reasons. If populations are simulated under a one dimensional stepping stone model, then plotting individuals on the first two PCs results in a horseshoe (e.g.\ see Fig.\ \ref{sfig:line_scenario}\subref{line_pops_pca}) not because of gene flow connecting the tips, but rather because of the orthogonality requirement of PCs \citep[see][for more discussion]{novembre_interpreting_2008}.  In contrast, when SpaceMix is applied to data simulated on a one dimensional array of populations, the placement of samples is consistent with a line (see Figs.\ \ref{sfig:line_scenario}\subref{line_pops_post}, \ref{sfig:line_scenario}\subref{line_pops_MAP}). The proximity of \textit{viridanus} and \textit{plumbeitarsus} in geogenetic space may be due to gene flow between the tips of the horseshoe north of the Tibetan Plateau. This conclusion is in agreement with that of \cite{alcaide2014genomic}, who observed evidence of hybridization between \textit{viridanus} and \textit{plumbeitarsus} using assignment methods.
 
 The SpaceMix map also diverges from the observed map in the distribution of individuals from the subspecies \textit{ludlowi} (in green).  These samples were taken from seven sampling locations along the southwest margin of the Tibetan Plateau, but, in the SpaceMix analysis, they partition into two main clusters, one near the \textit{trochiloides} cluster, and one near the \textit{viridanus} cluster.  This break between samples from the same subspecies, which is concordant with the findings of \cite{alcaide2014genomic}, makes the \textit{ludlowi} cluster unusual compared to the estimated spatial distributions of the other subspecies (see Fig.\ \ref{sfig:warb_ind_distcomp}), and suggests a break in historic or current gene flow.
 
@@ -557,7 +557,7 @@ We ran two sets of SpaceMix analyses: in the first, we estimated population samp
 and in the second, we also allowed admixture. 
 We note that few of the putative admixture events that we report have escaped the notice of previous investigators, 
 which is unsurprising given the depth of recent attention on human admixture studies, particularly on the subset of HGDP samples 
-\citep[see ][for various global analyses]{rosenberg_genetic_2002,li_worldwide_2008,Loh:13,patterson_ancient_2012,Hellenthal}. 
+\citep[see][for various global analyses]{rosenberg_genetic_2002,li_worldwide_2008,Loh:13,patterson_ancient_2012,Hellenthal}. 
 Below, when discussing a pattern we see in our analyses, we often cite other authors who have seen or suggested similar patterns.
 However, what is novel here is the ability to visualize these admixture events in a geographic context, 
 and that these admixture signals stand out against a null model of migration in continuous space (rather than tree-based models).
@@ -828,7 +828,7 @@ The free parameters for each of options are given in Table \ref{tab:model_option
 	\hline
 	\textbf{Model} & \textbf{\# of Free Parameters} & \textbf{Parameters}\\ \hline
 	\textbf{(1)} stationary population locations, no admixture & $K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta$	\\ \hline
-	\textbf{(2)} inferred population locations, \hspace{0.5cm}no admixture & $2K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta,G$	\\ \hline
+	\textbf{(2)} inferred population locations, no admixture & $2K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta,G$	\\ \hline
 	\textbf{(3)} stationary population locations, inferred admixture & $2K + 3$	& $\alpha_0,\alpha_1,\alpha_2,\eta,\identifyadmixsource{G},w$	\\ \hline
 	\textbf{(4)} inferred population locations, inferred admixture & $3K + 3$	&$\alpha_0,\alpha_1,\alpha_2,\eta,G,\identifyadmixsource{G},w$	\\
 	\hline
@@ -839,7 +839,7 @@ The free parameters for each of options are given in Table \ref{tab:model_option
 \end{table}
 \end{centering}
 
-Although we anticipate most empirical researchers will be interested in the joint inference of a geogenetic map with admixture (Model 4), we have presented these models separately, as we believe each have their own utility.  Model 1 and Model 3 can each be used to infer landscapes of allele frequencies, upon which genotyped individuals can be probabilistically placed (following \citep{Wasser2004}).  This application may be useful to determine the geographic origin of potentially contraband biological samples (e.g., ivory), or the most likely source of museum specimens missing sampling metadata.  Model 3 has the potential to improve the performance of these spatial assignment methods over Model 1, as the inclusion of admixture in the model may allow for more accurate inference of allele frequency surfaces.  Model 2 offers a direct touchstone to Principal Component Analysis, and can also be used in a model comparison framework with Model 4 to formally test for the presence of admixture in the sampled dataset.
+Although we anticipate most empirical researchers will be interested in the joint inference of a geogenetic map with admixture (Model 4), we have presented these models separately, as we believe each have their own utility.  Model 1 and Model 3 can each be used to infer landscapes of allele frequencies, upon which genotyped individuals can be probabilistically placed (following \cite{Wasser2004}).  This application may be useful to determine the geographic origin of potentially contraband biological samples (e.g., ivory), or the most likely source of museum specimens missing sampling metadata.  Model 3 has the potential to improve the performance of these spatial assignment methods over Model 1, as the inclusion of admixture in the model may allow for more accurate inference of allele frequency surfaces.  Model 2 offers a direct touchstone to Principal Component Analysis, and can also be used in a model comparison framework with Model 4 to formally test for the presence of admixture in the sampled dataset.
 
 Below, we outline the inference procedure for the most parameter-rich model (inference on both population locations, their sources of admixture, and the proportions in which they draw admixture, in addition to inference of the parameters of the spatial covariance function).
 A table of all parameters, their descriptions, and their priors is given in Table \ref{tab:param_prior_tab}.
@@ -1005,9 +1005,9 @@ The lines show the expected covariance under isolation by distance that each pop
 
 Due to its admixture from $D$, $B$ has lower covariance with $A$ than expected given its distance, somewhat higher covariance with $C$, and much higher covariance with $D$. In addition, the variance of $B$ is lower than that of the other three populations, which each have variance $1$: the value of the covariance when the distance is zero. This lower variance results from the fact that the frequencies at $B$ represent a mixture of the frequency at $D$ and the frequency at $B$ before the admixture. 
 
-Now, using this example scenario, let us return to the concern posed above: that admixture location and population location are not identifiable.  For the sake of simplicity, assume that we hold the locations of A, C, and D constant, as well as the decay of covariance with distance (as could be the case if A-D are part of a larger analysis).  The covariance relationships of $B$ to the other populations cannot be simply satisfied by moving $B$ towards D, as B would then have a covariance with C that is higher, and a covariance with A that is lower, than that we actually observe. 
+Now, using this example scenario, let us return to the concern posed above: that admixture location and population location are not identifiable.  For the sake of simplicity, assume that we hold the locations of $A$, $C$, and $D$ constant, as well as the decay of covariance with distance (as could be the case if $A$-$D$ are part of a larger analysis).  The covariance relationships of $B$ to the other populations cannot be simply satisfied by moving $B$ towards $D$, as $B$ would then have a covariance with $C$ that is higher, and a covariance with $A$ that is lower, than that we actually observe. 
 
-Introducing admixture into the model allows it to satisfy all of these conditions: it can draw ancestry from D but keep part of its resemblance to A, it avoids B having to move closer to C, and it explains B's low variance.  Even in the absence of a sample from population C, B is better described as a linear mixture of a population close to A and D.  However, there are specific scenarios in which a limited sampling scheme (both in size and location), can lead to tradeoffs in the likelihood between estimated population location and that of its source of admixture.
+Introducing admixture into the model allows it to satisfy all of these conditions: it can draw ancestry from $D$ but keep part of its resemblance to $A$, it avoids $B$ having to move closer to $C$, and it explains B's low variance.  Even in the absence of a sample from population $C$, $B$ is better described as a linear mixture of a population close to $A$ and $D$.  However, there are specific scenarios in which a limited sampling scheme (both in size and location), can lead to tradeoffs in the likelihood between estimated population location and that of its source of admixture.
 
 The analyses depicted in Figs.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference}, 
 \ref{sfig:barr_inland_ad}\subref{barr_inland_ad_inference}, and
@@ -1043,7 +1043,7 @@ using the observed latitude and longitude of the populations/individuals ($G$) t
 As results were generally consistent across multiple runs for each dataset regardless of the prior employed, 
 we (unless stated otherwise) present only the results from the `random' prior analyses.
 
-Finally, we compared the SpaceMix map to a map derived from a Principal Components Analysis (Patterson and Reich 2006).  For this analysis, we calculated the eigendecomposition of the mean-centered allelic covariance matrix, then plotted individuals' coordinates on the first two eigenvectors (e.g.\ Novembre et al 2008).  For consistency of presentation, we show the full Procrustes superimposition of the PC coordinate space around the geographic sampling locations.
+Finally, we compared the SpaceMix map to a map derived from a Principal Components Analysis \citep{Patterson2006}.  For this analysis, we calculated the eigendecomposition of the mean-centered allelic covariance matrix, then plotted individuals' coordinates on the first two eigenvectors \citep[e.g.][]{novembre_genes_2008}.  For consistency of presentation, we show the full Procrustes superimposition of the PC coordinate space around the geographic sampling locations.
 
 \subsection*{Treemix Comparisons}
 To contrast our approach to tree-based approaches to admixture we
@@ -1067,7 +1067,7 @@ using the following command to add another edge to the existing tree (``\texttt{
 The \texttt{TreeMix} graphs and residual covariance matrices were visualized
 using the scripts provided with \texttt{TreeMix}. 
 The code to process and plot the data is provided in the Appendix.\\
-%
+
 In Fig.\ \ref{sfig:treemix_lattice} we show the tree and admixture graphs produced when
 \texttt{TreeMix} is run on a lattice stepping stone model 
 (a smaller scale version of this exercise was previously done by \cite{Treemix}). 
@@ -1075,7 +1075,7 @@ The tree produced by running \texttt{TreeMix} is rake-like, showing the lack of 
 However, while the tree captures some features of isolation by distance, 
 (e.g., neighboring samples are often sister to each other), 
 the tree structure forces many unnatural splits of geographically neighboring populations 
-\citep[as was previously found][; see their Figure S14]{Treemix}. 
+\citep[as was previously found;][their Figure S14]{Treemix}. 
 The admixture migration arrows act to mitigate the strongest departures from the tree, 
 such as geographically neighboring samples that were forced into separate places on the tree,
 but are unable to fully accommodate the spatial relationships between samples. 

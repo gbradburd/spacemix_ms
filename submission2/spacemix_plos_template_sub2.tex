@@ -515,7 +515,7 @@ These priors are detailed in Table \ref{tab:param_prior_tab}.
 
 The models described above may be used in various combinations.  In the simplest model, locations are not estimated for populations , nor do they draw admixture; the only parameters to be estimated are those of the spatial covariance function given in equation \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_i$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  Users may wish to employ the more constrained models (e.g., fixing the locations or admixture proportions for some or all samples) in a model selection framework to test specific hypotheses.  We discuss the utility of these different models in the Appendix.
 
-Allowing admixture gives sensible results for the scenario of Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}:
+Allowing admixture gives sensible results for the scenario of Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice};
 in the resulting map,
 the only population that draws substantial admixture is the one that is actually admixed, 
 and it draws admixture (95\% CI: 0.36 - 0.40) from the correct location (Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference}).
@@ -1087,9 +1087,9 @@ using the observed latitude and longitude of the populations/individuals ($G$) t
 As results were generally consistent across multiple runs for each dataset regardless of the prior employed, 
 we (unless stated otherwise) present only the results from the `random' prior analyses.
 
-Finally, we compared the SpaceMix map to a map derived from a Principal Components Analysis (Patterson and Reich 2006).  For this analysis, we calculated the eigendecomposition of the mean-centered allelic covariance matrix, then plotted individuals' coordinates on the first two eigenvectors (e.g.\ Novembre et al 2008).  For consistency of presentation, we show the full Procrustes superimposition of the PC coordinate space around the geographic sampling locations.
+Finally, we compared the SpaceMix map to a map derived from a Principal Components Analysis \cite{Patterson2006}.  For this analysis, we calculated the eigendecomposition of the mean-centered allelic covariance matrix, then plotted individuals' coordinates on the first two eigenvectors (e.g., \cite{novembre_genes_2008}).  For consistency of presentation, we show the full Procrustes superimposition of the PC coordinate space around the geographic sampling locations.
 
-\subsection*{\gc{Treemix Comparisons}}
+\subsection*{Treemix Comparisons}
 To contrast our approach to tree-based approaches to admixture we
 applied \texttt{TreeMix} \cite{Treemix} to our spatial simulations.
 %
@@ -1111,7 +1111,7 @@ using the following command to add another edge to the existing tree (``\texttt{
 The \texttt{TreeMix} graphs and residual covariance matrices were visualized
 using the scripts provided with \texttt{TreeMix}. 
 The code to process and plot the data is provided in the Appendix.\\
-%
+
 In Fig.\ \ref{sfig:treemix_lattice} we show the tree and admixture graphs produced when
 \texttt{TreeMix} is run on a lattice stepping stone model 
 (a smaller scale version of this exercise was previously done by Pickrell and Pritchard \cite{Treemix}). 

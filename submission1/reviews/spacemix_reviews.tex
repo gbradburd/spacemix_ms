@@ -27,12 +27,16 @@ Overall this paper is good and the topic is of wide enough interest to be approp
 \subsection*{Reviewer 1}
 
 I agree that the paper would be more persuasive if the real improvements over PCA, Treemix and Globetrotter could be made clearer.\\\\
+\gb{We appreciate this point, and have worked to clarify the advantages SpaceMix has over currently available methods.  Specifically, we have now added comparisons between the performance of PCA, TreeMix and SpaceMix on simulated data, and demonstrated and discussed the utility and limits of SpaceMix in these simulated scenarios.}
 
 Why not use a third dimension, in a way similar to using PC3?\\\\
+\gb{This is a good idea, and one we've debated implementing for a while.  There is no statistical reason why this approach couldn't be implemented; however, we felt that the visualization of a more-than-two-dimension geogenetic map would be difficult and non-intuitive, especially because of the admixture arrows.  For now, we are choosing to stick with two dimensions.}
 
 Don't worry about extending the method to within-population structure unless you want to.\\\\
+\gb{We have chosen not to extend this method to explicitly compare within- and among- population structure, but we are currently working on extensions to this statistical framework that are designed to do that.}
 
 The comments about multiple sources of admixture is germane, especially in light of David Reich's recent papers.\\\\
+\gb{As with the comment about having more than 2 dimensions, this is a good idea, and one that we've discussed extensively.  We have chosen not to implement multiple sources of admixture for each population because we have concerns about both identifiability of the model and interpretability of the resulting figures.}
 
 \subsection*{Reviewer 2}
 
@@ -143,7 +147,8 @@ It would have been very interesting to see the result of running SpaceMix on a d
 		\item Graham create thinned dataset
 		\item Gid to re-run analyses
 	\end{itemize}
-\item Gid add a note in discussion in response to Rev. 2 about multiple processes potentially generating patterns
+\item \textbf{Gid add a note in discussion in response to Rev. 2 about multiple processes potentially generating patterns}
+\item \textbf{Gid add a note in discussion in response to Rev. 2 about warping}
 \item Gid add a paragraph (maybe in SuppMat?) describing when to use different models
 \item Gid add a note about why we want a full MCMC (for now) even though we only show MAP
 \item All weigh in on whether to pare down discussion of human results (in response to Rev. 3)

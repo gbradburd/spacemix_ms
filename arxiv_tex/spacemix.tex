@@ -11,6 +11,7 @@
 \usepackage{bigints}
 \usepackage{array}
 \usepackage{tikz}
+\usepackage{longtable}
 
 \bibliographystyle{plainnat}
 
@@ -1378,10 +1379,11 @@ and the National Science Foundation under award numbers NSF \# 1148897 and \# 14
 \end{figure}
 
 
-\begin{table}
-\centering
-\tiny
-\begin{tabular}{rlrr}
+%\begin{table}
+%\tiny
+\begin{longtable}{rlrr}
+   \caption{Subspecies and geographic meta-data for greenish warbler individuals included in analysis}\\
+%   \centering
   \hline
 Sample & Subspecies & Longitude & Latitude \\ 
   \hline
@@ -1486,10 +1488,10 @@ Sample & Subspecies & Longitude & Latitude \\
    Plu-SL2 & \textcolor{red}{Plumbeitarsus} & 91.00 & 91.00 \\ 
    Plu-TA1 & \textcolor{red}{Plumbeitarsus} & 92.00 & 92.00 \\ 
    \hline
-   \end{tabular}
-   \caption{Subspecies and geographic meta-data for greenish warbler individuals included in analysis}
+%   \end{tabular}
    \label{tab:warbler_data_table}
-\end{table}
+%\end{table}
+\end{longtable}
 
 
  \definecolor{Adygei}{HTML}{4B00FF} 
@@ -1589,10 +1591,12 @@ Sample & Subspecies & Longitude & Latitude \\
  \definecolor{Yoruba}{HTML}{00FFD2}
  
  
- \begin{table}[ht]
- \tiny
-\centering
-\begin{tabular}{rlrrr}
+% \begin{table}[ht]
+% \tiny
+%\begin{tabular}{rlrrr}
+\begin{longtable}{rlrrr}
+   \caption{sample size and geographic meta-data for human samples included in analysis}\\
+%\centering
   \hline
  & Population & Longitude & Latitude & Mean Sample Size \\ 
   \hline
@@ -1692,9 +1696,9 @@ Sample & Subspecies & Longitude & Latitude \\
   94 & \textcolor{Karitiana}{Karitiana} & -63.00 & -10.00 & 27.99 \\ 
   95 & \textcolor{Surui}{Surui} & -62.00 & -11.00 & 16.00 \\ 
    \hline
-\end{tabular}
-   \caption{sample size and geographic meta-data for human samples included in analysis}
+%\end{tabular}
    \label{tab:globe_data_table}
-\end{table}
+%\end{table}
+\end{longtable}
 
 \end{document}

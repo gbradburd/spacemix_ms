@@ -27,7 +27,7 @@ Overall this paper is good and the topic is of wide enough interest to be approp
 \subsection*{Reviewer 1}
 
 I agree that the paper would be more persuasive if the real improvements over PCA, Treemix and Globetrotter could be made clearer.\\\\
-\gb{We appreciate this point, and have worked to clarify the advantages SpaceMix has over currently available methods.  Specifically, we have now added comparisons between the performance of PCA, TreeMix and SpaceMix on simulated data, and demonstrated and discussed the utility and limits of SpaceMix in these simulated scenarios.}
+\gb{We appreciate this point, and have worked to clarify the advantages SpaceMix has over currently available methods.  Specifically, we have now added comparisons between the performance of PCA, TreeMix, and SpaceMix on simulated data, and demonstrated and discussed the utility and limits of SpaceMix in these simulated scenarios.}
 
 Why not use a third dimension, in a way similar to using PC3?\\\\
 \gb{This is a good idea, and one we've debated implementing for a while.  There is no statistical reason why this approach couldn't be implemented; however, we felt that the visualization of a more-than-two-dimension geogenetic map would be difficult and non-intuitive, especially because of the admixture arrows.  For now, we are choosing to stick with two dimensions.}
@@ -41,13 +41,18 @@ The comments about multiple sources of admixture is germane, especially in light
 \subsection*{Reviewer 2}
 
 The point about possible effects of LD and uneven spacing of samples are important and will have to be addressed.\\\\
+\gb{We agree that these are important points, and we appreciate the reviewer having pointed them out.  To address the issue of LD between loci, we have clarified our methods (thinning for LD in the human empirical dataset), and also added paragraph of discussion on the ways in which LD between loci in other empirical datasets could be accommodated (Lines XX-XX).
+To address the issue of uneven sampling, we randomly subsampled two of the lattice simulations (30 population simple lattice with nearest-neighbor migration and the 30 population lattice with nearest-neighbor migration and the longitudinal barrier) down to 12 populations and repeated our SpaceMix runs.  The SpaceMix results of these uneven sampling scenarios (referenced in the main text Lines XX-XX, Figures XX and XX in the SuppMat) show that the method is robust to missing or irregularly sampled population data.}
 
 The comments made about comparison with Treemix results and the potential use of additional dimensions echo Reviewer 1's comments. Is all the useful information really contained in a two-dimensional graph? In not, what else can you say?\\\\
+\gb{As above, we agree that this is an important question. All of the primary information from a SpaceMix analysis is contained in the two-dimensional ``geogenetic" graph.  There is additional information in the matrix of residuals between the parametric covariance matrix and the sample covariance matrix, which gives information about samples (or, more specifically, about the relationships between samples) that are well or poorly fit by the model. In an extension to the current framework, positive residual covariance could potentially be modeled posthoc with additional admixture arrows (following TreeMix).  However, we feel that the figures currently produced by the SpaceMix admixture model are sufficiently information-rich, and that adding multiple admixture arrows may be, as noted above, too much.}
 
 Reviewer 2 made several additional technical comments that need to be addressed. Is MCMC really necessary?\\\\
+\gb{This is a good point.  In the current manuscript, we have shown figures using the sample from the MCMC with the highest posterior probability.  We chose to only present these MAP estimates for clarity of the figures; however, in the Supplement, we show figures that take advantage of the full posterior distribution to describe both the 95\% credible intervals of the population locations as well as the 95\% credible intervals of admixture proportions and nuggets.  Although we are currently exploring other inference algorithms that have lower computational costs (e.g. hill-climbing techniques to get a maximum-likelihood or MAP estimate), we believe that the full MCMC inference procedure has value for users that wish to elegantly accommodate uncertainty in inference.  This point is especially germane because we anticipate great heterogeneity in the number of independent loci used to calculate the sample covariance across different empirical datasets, and therefore great disparity in the size of the credible intervals on the parameter estimates.  We are currently working on functions for the publicly released package that allow for easy visualization of point estimates and the credible intervals in the geogenetic maps.}
 
 \subsection*{Reviewer 3} 
 Reviewer 3 suggests shortening and clarifying the discussion of the human data. The authors should consider the other comment about analyzing the POPRES data.
+\gb{We appreciate this feedback.  We have significantly shortened, clarified, and de-anthropomorphized the discussion of the human Globetrotter dataset (see LatexDiff document for a comparison).  We have considered running this method on other empirical datasets, such as the POPRES data, but we feel that the manuscript is, at this point, already quite long, and that the addition of another empirical example does not offer significant marginal benefit.}
 
 \section*{Reviewer Comments}
 

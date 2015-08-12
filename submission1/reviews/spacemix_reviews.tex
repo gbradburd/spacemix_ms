@@ -149,7 +149,7 @@ The second important point raised is that it the geogenetic maps with admixture 
 \gb{W e have now included a detailed discussion of when users may wish to employ the different models described in lines XX-XX}\\
 
 \item I don't understand why the authors run an MCMC algorithm if they are only interested in a MAP. The authors could use an efficient gradient algorithm such as the Conjugate gradient algorithm, or a variational approach to get a MAP (4). These options would be much faster than running a long Markov Chain. The credibility interval would not be returned, but the G coordinates would be the same if the MAP is actually reached. It would avoid computing chains with millions of steps.\\\\
-\gb{This is a good point, which we have responded to above.}\\
+\gb{This is a good point.  We have responded above.}\\
 
 
 \subsubsection*{Minor}
@@ -157,7 +157,7 @@ l.146 ``The likelihood of the data". One should say ``likelihood" or ``probabili
 \gb{Fixed.}\\
 l.191 ``and and"\\\\
 \gb{Fixed.}\\
-l.245 ``between $X_{k, l} and X_{k, l}$"\\\\
+l.245 ``between $X_{k, l}$ and $X_{k, l}$"\\\\
 \gb{Fixed}\\
 l.446 ``the interpretation our results"\\\\
 \gb{Fixed.}\\
@@ -172,13 +172,20 @@ l.446 ``the interpretation our results"\\\\
 
 \subsection*{Reviewer 3} This paper describes a new method for summarizing and visualizing genetic data. It uses an isolation by distance model as a null and tries to infer the positions of populations in two dimensional space, adding admixture edges as necessary. I like the approach very much. Overall the paper is well written, the method is sound, and I don't have any major criticisms. Below are a few suggestions that might improve the paper. 
 
-1) I thought that the analysis of the human data was the weakest part of the paper. It's clear that the IBD model is a poor fit to the worldwide data and, and I don't know how to interpret many of the admixture edges. As the authors write in another context - it looks a bit tortured. What does it mean that the Brahui apparently have Bantu-like admixture, for example? I agree with the authors' discussion that this might be an artifact due to multiple sources of admixture or unsampled populations, but I felt like this whole discussion was a bit long and over-interpreted some of these analyses. When the analysis is restricted to the Eurasian samples it looks cleaner, but then seems to find very few admixture edges compared to what I'd expect. I don't have any specific suggestions except that this discussion could be shortened a bit. 
+\begin{itemize}
+\item I thought that the analysis of the human data was the weakest part of the paper. It's clear that the IBD model is a poor fit to the worldwide data and, and I don't know how to interpret many of the admixture edges. As the authors write in another context - it looks a bit tortured. What does it mean that the Brahui apparently have Bantu-like admixture, for example? I agree with the authors' discussion that this might be an artifact due to multiple sources of admixture or unsampled populations, but I felt like this whole discussion was a bit long and over-interpreted some of these analyses. When the analysis is restricted to the Eurasian samples it looks cleaner, but then seems to find very few admixture edges compared to what I'd expect. I don't have any specific suggestions except that this discussion could be shortened a bit.\\\\
+\gb{We have responded to this point above, but, briefly, we have significantly re-written the section on the interpretation of the human dataset analyses (see the LatexDiff document).}\\
 
-It would have been very interesting to see the result of running SpaceMix on a dataset which fits the IBD model better -- for example the POPRES data. This would also have the advantage that we could compare directly with the PCA and SPA analyses of this dataset. 
+\item It would have been very interesting to see the result of running SpaceMix on a dataset which fits the IBD model better -- for example the POPRES data. This would also have the advantage that we could compare directly with the PCA and SPA analyses of this dataset.\\\\
+\gb{We have responded to this point above, but, briefly, we think this is a good idea, but that the manuscript is already so long that the addition of another empirical analysis would be excessive.}\\
 
-2) Maybe I'm misunderstanding this, but on line 807 the methods say that the move is rejected if it lies outside the range of the prior. Doesn't think mean that the proposal distribution is not actually symmetric? 
+\item Maybe I'm misunderstanding this, but on line 807 the methods say that the move is rejected if it lies outside the range of the prior. Doesn't that mean that the proposal distribution is not actually symmetric? \\\\
+\gb{NOT SURE HOW TO RESPOND TO THIS}\\
 
-3) Line 108 -- ``roughly unit variance in some sense'' -- perhaps this could be more specific.
+\item Line 108 -- ``roughly unit variance in some sense'' -- perhaps this could be more specific.\\\\
+\gb{NOT SURE HOW TO RESPOND TO THIS}\\
+
+\end{itemize}
 
 \newpage
 \section*{To-Do List for G, P, and G}

@@ -242,7 +242,7 @@ Other approaches are designed only to visualize patterns of genetic relatedness 
 without using a particular population genetic model.
 Such methods can deal with many populations or individuals as the unit of analysis. 
 Examples of this second set of methods include clustering methods \cite{STRUCTURE, ADMIXTURE, FINESTRUCTURE} 
-and reduced dimensionality representations of the data, such as Principal Components Analysis (PCA; e.g. \cite{cavallisforza1994, Patterson2006, price2006eigenstrat}).  
+and reduced dimensionality representations of the data (e.g. \cite{cavallisforza1994, Patterson2006, price2006eigenstrat}).  
 
 A third set of methods that describe relatedness between populations by constructing a ``population phylogeny''
 was pioneered by \cite{cavallisforza_edwards1967}, 
@@ -271,7 +271,7 @@ Because gene flow is frequently pervasive, patterns of relatedness between sampl
 PCA is more flexible, as it assumes no explicit model of population-genetic processes, 
 simply describing the axes of greatest variance in the average coalescent times between pairs of samples \cite{mcvean_genealogical_2009}. 
 This allows PCA to describe more geographically continuous relationships: 
-PCA applied to human populations within continents often shows a close correspondence to geographic locations\cite{novembre_genes_2008,wang_quantitative_2012}.  
+applied to human populations within continents, it often shows a close correspondence to geographic locations\cite{novembre_genes_2008,wang_quantitative_2012}.  
 However, the interpretation of PCA is more difficult, as the results can be strongly affected by the size and design of sampling, 
 and the linearity and orthogonality requirements of the PC axes can lead to counterintuitive results \cite{novembre_interpreting_2008, Francois_2010_surfing, Frichot2012}.
 
@@ -346,7 +346,7 @@ where $D_{i,j}$ is the geogenetic distance between populations $i$ and $j$,
 $\alpha_0$ controls the within-population variance 
 (or the covariance when distance between points is 0, known as a ``sill'' in the geospatial literature),
 $\alpha_1$ controls the rate of the decay of covariance per unit pairwise distance, and $\alpha_2$ determines the shape of that decay.  
-Within population variance may vary across samples due to either noise from a finite sample size or demographic history unique to that sample (e.g., bottlenecks or endogamy).  
+Within-population variance may vary across samples due to either noise from a finite sample size or demographic history unique to that sample (e.g., bottlenecks or endogamy).  
 To accommodate this heterogeneity we introduce population-specific variance terms,
 resulting in the covariance matrix for standardized sample frequencies
 \begin{equation}
@@ -411,7 +411,7 @@ where $P( )$ denotes the various priors, and the constant of proportionality is 
 We then use a Markov chain Monte Carlo algorithm to estimate the posterior distribution on the parameters as described in more detail in the Methods.
 
 
-\paragraph{Illustrated with Simulations.} 
+\paragraph{Simulations.} 
 We first apply the method to several scenarios simulated using the coalescent simulator \textit{ms} \cite{Hudson2002}.  
 Each scenario is simulated using a stepping stone model in which populations are arranged on a grid with symmetric migration 
 to nearest neighbors (eight neigbors, including diagonals)
@@ -619,7 +619,7 @@ comprised of 1,490 individuals from 95 population samples (see Fig.\ \ref{sfig:e
 We ran two sets of SpaceMix analyses: in the first, we estimated population sample locations, 
 and in the second, we also allowed admixture. 
 We note that few of the putative admixture events that we report have escaped the notice of previous investigators, 
-which is unsurprising given the depth of recent attention on human admixture studies, particularly on the subset of HGDP samples 
+which is unsurprising given the depth of recent attention on human admixture studies, particularly on the subset of these samples that are in the HGDP dataset
 \cite{rosenberg_genetic_2002,li_worldwide_2008,Loh:13,patterson_ancient_2012,Hellenthal}. 
 Below, when discussing a pattern we see in our analyses, we often cite other authors who have seen or suggested similar patterns.
 However, what is novel here is the ability to visualize these admixture events in a geographic context, 
@@ -636,9 +636,9 @@ This pattern is consistent with a history of human colonization events character
 %
 \newline\newline
 
-To investigate possible patterns of admixture further, we ran a SpaceMix analysis with admixture (results shown in Figs.\ \ref{sfig:globe_ad_maps} and \ref{globe_ad_props}). The biggest change between the geogenetic map of human populations inferred with admixture and that without is the positioning of African samples with respect to the rest of the world.  The relatively large geogenetic distances between these groups reflects the fact that Eurasian, North African, Oceanian, and American populations all share relatively large amounts of population history (and hence genetic drift) not shared with the Sub-Saharan African samples. Relative to the geogenetic map inferred without admixture, the inclusion of admixture shifts the estimated locations of admixed samples intermediate between Sub-Saharan Africa and North Africa/the Middle East toward one cluster or the other, which, in turn, pushes each of those major clusters to move relatively farther apart.  The Ethiopian and Ethiopian Jewish samples have estimated locations closer to the Sub-Saharan samples than the of the North African samples, but draw substantial amounts of admixture ($\sim 40\%$) from close to where the Egyptian sample has positioned itself in the the Middle East cluster, as do the Sandawe \cite{hodgson_early_2014,Pickrell:12}. 
+To investigate possible patterns of admixture further, we ran a SpaceMix analysis with admixture (results shown in Figs.\ \ref{sfig:globe_ad_maps} and \ref{globe_ad_props}). The biggest change between the geogenetic map of human populations inferred with admixture and that without is the positioning of African samples with respect to the rest of the world.  The relatively large geogenetic distances between these groups reflects the fact that Eurasian, North African, Oceanian, and American populations all share relatively large amounts of population history (and hence genetic drift) not shared with the Sub-Saharan African samples. Relative to the geogenetic map inferred without admixture, the inclusion of admixture shifts the estimated locations of admixed samples intermediate between Sub-Saharan Africa and North Africa/the Middle East toward one cluster or the other, which, in turn, pushes each of those major clusters to move relatively farther apart.  The Ethiopian and Ethiopian Jewish samples have estimated locations closer to the Sub-Saharan samples than those of the North African samples, but draw substantial amounts of admixture ($\sim 40\%$) from close to where the Egyptian sample has positioned itself in the the Middle East cluster, as do the Sandawe \cite{hodgson_early_2014,Pickrell:12}. 
 The SanKhomani draw admixture from near Syria, which may reflect multiple distinct geographic sources of admixture as discussed by \cite{Hellenthal} and \cite{Pickrell:14}. 
-Interestingly the Bantu South African sample, though it has an estimated location near the other Bantu samples, draws admixture from close to the San populations. This is consistent with previous signals of the expansion of Bantu-speaking peoples into southern Africa  \cite{Pickrell:12,Jakobsson_genomic_2012,Pickrell:14,Hellenthal}.  The inferred sample-specific drift parameters (the `nuggets') are similar between runs with and without admixture (Fig.\ \ref{sfig:globe_nuggs}).
+Interestingly the Bantu South African sample, though it has an estimated location near the other Bantu samples, draws admixture from close to the San populations. This is consistent with previous signals of the expansion of Bantu-speaking peoples into southern Africa  \cite{Pickrell:12,Jakobsson_genomic_2012,Pickrell:14,Hellenthal}.  The inferred sample-specific drift parameters (the nuggets) are similar between runs with and without admixture (Fig.\ \ref{sfig:globe_nuggs}).
 %
 \newline\newline
 {\bf{Figure 9}}	Map of human samples, inferred with admixture. (a) complete map; (b) close-up of Eurasian samples.
@@ -1027,7 +1027,7 @@ When we start our MCMC, $\zeta_i$ for all parameters is initiated at a value of 
 We choose to cap the maximum adaption amount at 20 (which is the equivalent of capping the variance of the proposal distribution at ~$4.85 \times 10^8$) to avoid proposal distributions that offer absurdly large or small updates.  This procedure, also referred to as ``auto-tuning'', results in acceptance rate plots like those shown in Fig.\ \ref{sfig:example_acceptance_rates}, and in more efficient mixing and decreased autocorrelation time of parameter estimates in the MCMC.
 
 \subsection*{Simulations}
-We ran our simulations using a coalescent framework in the program \textit{ms} (Hudson).  Briefly, we simulated populations on a lattice, with nearest neighbor (separated by a distance of $1$) migration rate $m_{i,j}$, as well as migration on the diagonal of the unit square at rate $m_{i,j}/\sqrt{2}$.  For each locus in the dataset, we used the \textbf{-s} option to specify a single segregating site, and then we simulated 10,000 loci independently, which were subsequently conglomerated into a single dataset for each scenario.  For all simulations, except the ``Populations on a line'' scenario (Fig.\ \ref{sfig:line_scenario}), we sampled only every other population, and, from each population, we sampled 10 haplotypes (corresponding to 5 diploid individuals).  In the ``Populations on a line'' scenario, we simulated no intervening populations, such that every population was sampled.
+We ran our simulations using a coalescent framework in the program \textit{ms} (Hudson).  Briefly, we simulated populations on a lattice, with nearest neighbor migration rate $m_{i,j}$, as well as migration on the diagonal of the unit square at rate $m_{i,j}/\sqrt{2}$.  For each locus in the dataset, we used the \textbf{-s} option to specify a single segregating site, and then we simulated 10,000 loci independently, which were subsequently conglomerated into a single dataset for each scenario.  For all simulations, except the ``Populations on a line'' scenario (Fig.\ \ref{sfig:line_scenario}), we sampled only every other population, and, from each population, we sampled 10 haplotypes (corresponding to 5 diploid individuals).  In the ``Populations on a line'' scenario, we simulated no intervening populations, such that every population was sampled.
 
 To simulate a barrier event, we divided the migration rate between neighbors separated by the longitudinal barrier by a factor of 5.  To simulate an expansion event, we used the \textbf{-ej} option to move all lineages from each daughter population to its parent population at a very recent point in the past.  For admixture events, we used the \textbf{-es} and \textbf{-ej} options to first (again, going backward in time) split the admixed population into itself and a new subpopulation of index $k + 1$, and second, to move all lineages in the $(k^{\text{th}} + 1)$ into the source of admixture.  Forward in time, this procedure corresponds to cloning the population that is the source of admixture, then merging it, in some admixture proportion, with the (now) admixed population.  The command line arguments used to call \texttt{ms} for a single locus for each simulation are included in the Appendix.
 
@@ -1579,8 +1579,8 @@ P.~R. Loh, M.~Lipson, N.~Patterson, P.~Moorjani, J.~K. Pickrell, D.~Reich, and
   disequilibrium}.
 \newblock \emph{Genetics}, 193\penalty0 (4):\penalty0 1233--1254, Apr 2013.
 
-\bibitem[Luca et~al.(1994)]{cavallisforza1994}
-Luca, Paolo Menozzi, and Alberto Piazza.
+\bibitem[Cavalli-Sforza et~al.(1994)]{cavallisforza1994}
+L. Luca Cavalli-Sforza, Paolo Menozzi, and Alberto Piazza.
 \newblock \emph{The History and Geography of Human Genes}.
 \newblock Princeton University Press, Princeton, NJ, 1994.
 

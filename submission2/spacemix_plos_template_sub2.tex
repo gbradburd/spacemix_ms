@@ -317,7 +317,7 @@ and $\bar{f}_{\ell}$ is the average of the $K$ sample allele frequencies,
 weighted by mean population size.
 This normalization is widely used \cite{nicholson2002,Patterson2006};
 mean-centering makes the result invariant to choice of which allele to count at each locus,
-and dividing by $\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}$ makes each locus have roughly unit variance in some sense.
+and dividing by $\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}$ makes each locus have roughly unit variance.
 
 We work with the empirical covariance matrix of these standardized sample allele frequencies,
 calculated across loci, namely, $\widehat{\Omega} = (1/L)  \hat{X}\hat{X}^T$.
@@ -716,6 +716,15 @@ the interpretation and visualization of these higher dimensions would prove diff
 and so for the moment we stick with two dimensions.
 On the other hand, SpaceMix can describe in two dimensions patterns that PCA,
 due to the constraints of linearity, would need more to describe.
+Our method shows the utility of representing both isolation by distance and 
+long-distance admixture on a 2-D geogenetic map.  
+While we perform inference of this map using likelihood-based inference 
+relating a parametric covariance matrix to the observed empirical matrix, 
+it would be interesting to explore other methods of generating this geogenetic map 
+(e.g., \cite{Bookstein_1989,Sampson_Guttorp_1992,yang_model-based_2012,Petkova_2014_EEMS}).  
+Such methods may offer computational speedups 
+and also potentially help place SpaceMix within a broader statistical framework.
+
 
 Another strong advantage of SpaceMix over current methods is the introduction of admixture arrows. 
 Although PCA can be interpreted in light of simple admixture events \cite{mcvean_genealogical_2009}, 
@@ -980,7 +989,7 @@ and variance given by a tuning parameter specific to that parameter.
 For example, $\alpha_0^{\prime} \sim \alpha_0 + \delta$, 
 where $\delta \sim \mathcal{N}(0,\sigma_{\alpha_0}^2)$ and $\sigma_{\alpha_0}$ is the tuning parameter for $\alpha_0$.  
 For $\eta$ and $w$, each of which consists of $K$ parameters, each parameter receives its own independent tuning parameter. 
-If the proposed move takes the parameter outside the range of its prior, the move is rejected and we do not move in that iteration of the MCMC.
+If the proposed move takes the parameter outside the range of its prior, the proposed move is rejected, in which case the current parameter value is sampled in that iteration and reused in the next iteration of the MCMC.
 
 \paragraph{Updates for geographic coordinates $G$ and $\identifyadmixsource{G}$} Updates to the location parameters, $G$ and $\identifyadmixsource{G}$, are somewhat more complicated due to the curvature of the Earth.  Implementing updates via a symmetric normal density on estimated latitude and longitude directly would have the drawback of a) being naive to the continuity of the spherical manifold and b) vary the actual distance of the proposed move as a function of the current lat/long parameter values (e.g., a $1^{\circ}$ change in longitude at the equator is a larger distance than at the North Pole).  
 
@@ -1365,6 +1374,12 @@ Abigail Bigham, Marc Bauchet, Dalila Pinto, Xianyun Mao, Joshua~M. Akey, Rui
 \newblock Identifying signatures of natural selection in {Tibetan} and {Andean}
   populations using dense genome scan data.
 \newblock \emph{PLoS Genet}, 6\penalty0 (9):\penalty0 e1001116, 09 2010.
+
+\bibitem[Bookstein (1989)]{Bookstein_1989}
+Fred L. Bookstein.
+\newblock Principal warps: thin-plate splines and the decomposition of deformations.
+\newblock \emph{Pattern Analysis and Machine Intelligence, IEEE Transactions on}, 
+11\penalty0 (6):\penalty0 567--585, 1989.
 
 \bibitem[Botigué et~al.(2013)]{botigue_gene_2013}
 Laura~R. Botigué, Brenna~M. Henn, Simon Gravel, Brian~K. Maples,
@@ -1793,6 +1808,12 @@ Jeffrey~S. Rosenthal.
   editors, \emph{Handbook of {Markov} Chain {Monte} {Carlo}}, Handbooks of
   Modern Statistical Methods, chapter~4. Chapman \& Hall, CRC, Florida, USA,
   first edition, 2011.
+
+\bibitem[Sampson and Guttorp (1992)]{Sampson_Guttorp_1992}
+Paul D.  Sampson  and  Peter  Guttorp.
+\newblock Nonparametric Estimation of Nonstationary Spatial Covariance Structure.
+\newblock \emph{Journal of the American Statistical Association}, 
+87\penalty0 (417):\penalty0 108--119, 1992.
 
 \bibitem[Schlebusch et~al.(2012)]{Jakobsson_genomic_2012}
 Carina~M. Schlebusch, Pontus Skoglund, Per Sjödin, Lucie~M. Gattepaille, Dena

@@ -14,47 +14,67 @@
 \usepackage{ulem}
 
 
-\newcommand{\gb}[1]{{\it\color{magenta}{#1}}}
+\newcommand{\gb}[1]{{\bf\color{black}{#1}}}
 \newcommand{\plr}[1]{{\it\color{purple}{(#1)}}}
 \newcommand{\gc}[1]{{\it\color{blue}{(#1)}}}
 
 \begin{document}
+\section*{Re-Submission Cover Letter}
+To the Editor(s),\\\\
+%
+Please find enclosed the resubmission of our manuscript, 
+entitled ``A Spatial Framework for Understanding Population Structure and Admixture,Ó 
+for re-consideration for publication in PLoS Genetics.\\\\
+%
+We appreciate the opportunity to resubmit a revised version of the manuscript.  
+The comments provided by the Guest Editor 
+and three anonymous reviewers were very helpful, 
+and we have made substantial revisions to the manuscript in response to their thoughtful criticism.
+Our detailed responses to those comments are inset below (in bold), 
+but overall, we were able to greatly increase the clarity of the writing,
+and also to better and more explicitly highlight the advantages of SpaceMix 
+over existing methods for inferring and visualizing patterns of population genetic differentiation.
+We hope that the paper is now acceptable for publication.\\\\
+%
+Thank you for your consideration,\\
+Gideon Bradburd (for all of the authors).
 
 \section*{Guest Editor's summary}
 
 Overall this paper is good and the topic is of wide enough interest to be appropriate for PLoS Genetics. However, the reviewers, particularly 1 and 2, made several points about the paper that would need to be addressed before it could be accepted. The reviewers noted a number of deficiencies in the paper that will require major revision. The most important points of the reviewers are as follows.
 
 \subsection*{Reviewer 1}
-
-I agree that the paper would be more persuasive if the real improvements over PCA, Treemix and Globetrotter could be made clearer.\\\\
+\begin{itemize}
+\item I agree that the paper would be more persuasive if the real improvements over PCA, Treemix and Globetrotter could be made clearer.\\\\
 \gb{We appreciate this point, and have worked to clarify the advantages SpaceMix has over currently available methods.  Specifically, we have now added comparisons between the performance of PCA, TreeMix, and SpaceMix on simulated data, and demonstrated and discussed the utility and limits of SpaceMix in these simulated scenarios.}\\
 
-Why not use a third dimension, in a way similar to using PC3?\\\\
+\item Why not use a third dimension, in a way similar to using PC3?\\\\
 \gb{This is a good idea, and one we've debated implementing for a while.  There is no statistical reason why we couldn't implement three (or more) dimensions; however, we felt that the visualization of a more-than-two-dimension geogenetic map would be difficult and non-intuitive, especially because of the admixture arrows.  For now, we are choosing to stick with two dimensions.}\\
 
-Don't worry about extending the method to within-population structure unless you want to.\\\\
+\item Don't worry about extending the method to within-population structure unless you want to.\\\\
 \gb{We have chosen not to extend this method to explicitly compare within- and among- population structure, but we are currently working on extensions to this statistical framework that are designed to do that.}\\
 
-The comments about multiple sources of admixture is germane, especially in light of David Reich's recent papers.\\\\
+\item The comments about multiple sources of admixture is germane, especially in light of David Reich's recent papers.\\\\
 \gb{As with the comment about having more than 2 dimensions, this is a good idea, and one that we've discussed extensively.  We have chosen not to implement multiple sources of admixture for each population because we have concerns about both identifiability of the model and interpretability of the resulting figures.}\\
 
 \subsection*{Reviewer 2}
 
-The point about possible effects of LD and uneven spacing of samples are important and will have to be addressed.\\\\
+\item The point about possible effects of LD and uneven spacing of samples are important and will have to be addressed.\\\\
 \gb{We agree that these are important points, and we appreciate the reviewer having pointed them out.  To address the issue of LD between loci, we have clarified our methods (thinning for LD in the human empirical dataset), and also added a paragraph of discussion on the ways in which LD between loci in other empirical datasets could be accommodated (Lines XX-XX).
 
 To address the issue of uneven sampling, we randomly subsampled two of the lattice simulations (30 population simple lattice with nearest-neighbor migration and the 30 population lattice with nearest-neighbor migration and the longitudinal barrier) down to 12 populations and repeated our SpaceMix runs.  The SpaceMix results of these uneven sampling scenarios (referenced in the main text Lines XX-XX, Figures XX and XX in the SuppMat) show that the method is robust to missing or irregularly sampled population data.}\\
 
-The comments made about comparison with Treemix results and the potential use of additional dimensions echo Reviewer 1's comments. Is all the useful information really contained in a two-dimensional graph? In not, what else can you say?\\\\
+\item The comments made about comparison with Treemix results and the potential use of additional dimensions echo Reviewer 1's comments. Is all the useful information really contained in a two-dimensional graph? In not, what else can you say?\\\\
 \gb{As above, we agree that this is an important question. All of the primary information from a SpaceMix analysis is contained in the two-dimensional ``geogenetic" graph.  There is additional information in the matrix of residuals between the parametric covariance matrix and the sample covariance matrix, which gives information about samples (or, more specifically, about the relationships between samples) that are well or poorly fit by the model. In an extension to the current framework, positive residual covariance could potentially be modeled post hoc with additional admixture arrows (following TreeMix).  However, we feel that the figures currently produced by the SpaceMix admixture model are sufficiently information-rich, and that adding multiple admixture arrows may be, as noted above, too much.}\\
 
-Reviewer 2 made several additional technical comments that need to be addressed. Is MCMC really necessary?\\\\
+\item Reviewer 2 made several additional technical comments that need to be addressed. Is MCMC really necessary?\\\\
 \gb{This is a good point.  In the current manuscript, we have shown figures using the sample from the MCMC with the highest posterior probability.  We chose to only present these MAP estimates for clarity of the figures; however, in the Supplement, we show figures that take advantage of the full posterior distribution to describe both the 95\% credible intervals of the population locations as well as the 95\% credible intervals of admixture proportions and nuggets.  We are currently exploring other inference algorithms that have lower computational costs (e.g. hill-climbing techniques to get a maximum-likelihood or MAP estimate) for use in future releases of this method.  However, we believe that the full MCMC inference procedure has value for users that wish to accommodate uncertainty in inference.  This point is especially germane because we anticipate great heterogeneity in the number of independent loci used to calculate the sample covariance across different empirical datasets, and therefore great disparity in the size of the credible intervals on the parameter estimates.  We are currently working on functions for the publicly released package that allow for easy visualization of point estimates and the credible intervals in the geogenetic maps.}\\
 
 \subsection*{Reviewer 3} 
-Reviewer 3 suggests shortening and clarifying the discussion of the human data. The authors should consider the other comment about analyzing the POPRES data.\\\\
+\item Reviewer 3 suggests shortening and clarifying the discussion of the human data. The authors should consider the other comment about analyzing the POPRES data.\\\\
 \gb{We appreciate this feedback.  We have significantly shortened, clarified, and de-anthropomorphized the discussion of the human Globetrotter dataset (see LatexDiff document for a comparison).  We have considered running this method on other empirical datasets, such as the POPRES data, but we feel that the manuscript is, at this point, already quite long, and that the addition of another empirical example does not offer significant benefit.}\\
-
+\end{itemize}
+%
 \section*{Reviewer Comments}
 
 \subsection*{Reviewer 1}
@@ -120,7 +140,7 @@ migrants at a lower rate through the sampling time.}\\
 \gb{We meant the subset of the total dataset that was in the HGDP dataset.  The wording has been fixed for clarity.}\\
 
 \item Line 495 -- typo: ``the of the North''\\\\
-\gb{Fixed}\\
+\gb{Fixed.}\\
 
 \item Line 505 -- the Ônuggets' -- why quotes here and nowhere else?\\\\
 \gb{Fixed.}\\
@@ -148,8 +168,7 @@ When adding admixture, the many arrows make the visualization tricky (Figure 9).
 The second important point raised is that it the geogenetic maps with admixture are too information rich for easy interpretation.  We agree that this is the case with some of applications, especially in the dataset of human samples (this is one of the reasons we are hesitant to introduce multiple inferred sources of admixture).  However, we also feel that such complexity will be not be present in all systems, and, in systems that are sufficiently complex to merit multiple plots (e.g., one for $G$ and one for $G^{*}$), the output of SpaceMix contains all the information for them to do so.  We are also currently working on an interactive graphics framework for more elegant exploration of the results, which will be implemented in future releases.}\\
 
 \item From a statistical point of view, perform a mapping $R^2 \rightarrow R^2$ based on a covariance matrix and variogram analysis is something that has been studied (2, 3). A connection between the present work and the statistical literature is interesting to place the work in a broader context of warping study.\\\\
-\gb{NOT SURE HOW TO RESPOND TO THIS}\\
-%Our method shows the utility of representing both Isolation by Distance and long-distance admixture on a 2-D geogenetic map.  While we perform inference of this map using likelihood-based inference relating a parametric covariance matrix to the observed empirical matrix, it would be interesting to explore other methods of generating this geogenetic map (e.g., warping, cite their stuff, SPA, EEMS).  Such methods may offer computational speedups and also potentially help place SpaceMix within a broader statistical framework.
+\gb{We agree that it would be exciting to explore other methods of visualizing covariance matrices (and also to place this work in a broader statistical context) in future work on SpaceMix.  We now discuss this issue in the manuscript, in lines XX-XX.}\\
 
 \item In the article, several models are introduced. The inference of geognetic maps can be done with or without stationary population location, and with or without admixture. The geogenetic coordinates estimated by the different models are presented for simulated data and empirical data, and are different (Figure 2, 6, 8, 9). The model selection approach is here unclear. The model with the less parameters is advised l.275, why? How can a user know which model is the most relevant? An intuitive approach such as running the with admixture model and looking for large admixture proportion w does not seem a good idea as the true admixture proportion value may be outside the 95\% credibility interval (l.286) in the simulations.\\\\
 \gb{W e have now included a detailed discussion of when users may wish to employ the different models described in lines XX-XX}\\
@@ -159,13 +178,13 @@ The second important point raised is that it the geogenetic maps with admixture 
 
 
 \subsubsection*{Minor}
-l.146 ``The likelihood of the data". One should say ``likelihood" or ``probability of the data".\\\\
+\item l.146 ``The likelihood of the data". One should say ``likelihood" or ``probability of the data".\\\\
 \gb{Fixed.}\\
-l.191 ``and and"\\\\
+\item l.191 ``and and"\\\\
 \gb{Fixed.}\\
-l.245 ``between $X_{k, l}$ and $X_{k, l}$"\\\\
-\gb{Fixed}\\
-l.446 ``the interpretation our results"\\\\
+\item l.245 ``between $X_{k, l}$ and $X_{k, l}$"\\\\
+\gb{Fixed.}\\
+\item l.446 ``the interpretation our results"\\\\
 \gb{Fixed.}\\
 
 \subsubsection*{References}
@@ -186,10 +205,10 @@ l.446 ``the interpretation our results"\\\\
 \gb{We have responded to this point above, but, briefly, we think this is a good idea, but that the manuscript is already so long that the addition of another empirical analysis would be excessive.}\\
 
 \item Maybe I'm misunderstanding this, but on line 807 the methods say that the move is rejected if it lies outside the range of the prior. Doesn't that mean that the proposal distribution is not actually symmetric? \\\\
-\gb{NOT SURE HOW TO RESPOND TO THIS}\\
+\gb{The proposal is not repeated until an ``in-bounds" move is proposed (which would not be symmetric).  Instead, the proposed ``out-of-bounds" move is rejected and the current value of the parameter is logged and reused in the next iteration of the MCMC, which does generate a symmetric proposal distribution.  The wording of the sentence has been edited for greater clarity.}\\
 
 \item Line 108 -- ``roughly unit variance in some sense'' -- perhaps this could be more specific.\\\\
-\gb{NOT SURE HOW TO RESPOND TO THIS}\\
+\gb{Fixed.}\\
 
 \end{itemize}
 

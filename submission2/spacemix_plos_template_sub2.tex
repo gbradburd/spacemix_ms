@@ -236,7 +236,7 @@ patterns of genetic variation within and between populations.
 Model-based approaches focus on developing a detailed view of the migrational history of a small number of populations,
 often assuming one or a small number of large, randomly mating populations (i.e.\ little or no geographic structure).
 There has been considerable recent progress in this area, using a variety of summaries such as the allele frequency spectrum \cite{dadi, Bhaskar2014, Excoffier2013}, 
-or approximations to the coalescent applied to sequence data \cite{Paul_Song2011, Li_Durbin2011}.
+or approximations to the coalescent applied to sequence data \cite{Paul_Song2011, Li_Durbin2011, Schiffels_Durbin_2014}.
 
 Other approaches are designed only to visualize patterns of genetic relatedness and population structure,
 without using a particular population genetic model.
@@ -376,8 +376,7 @@ all other computations do not scale with the number of loci, making the method s
 This modeling approach rests on the assumption that the loci in the dataset are independent, that is, not in linkage disequilibrium (LD).
 Linkage disequilibrium between loci included in the dataset will have the effect of decreasing the true number of degrees of freedom, 
 effectively making this likelihood calculation a composite likelihood and artificially increasing confidence in parameter estimation.
-In the analyses presented below, we have either simulated independent loci, 
-or, in the empirical analyses of human data, we have thinned the total dataset for LD in windows of 50 base-pairs, with a step-size of 5 base-pairs, and an upper limit of 0.2 on pairwise $r^2$ \cite{Purcell_etal_2007,plink}.
+We discuss possible ways to accommodate linkage disequilibrium further in the Discussion.
 
 \paragraph{Location Inference} 
 Non-equilibrium processes like long distance admixture, colonization, or population expansion events will distort the relationship between covariance and distance across the range, as will barriers to dispersal on the landscape. To accommodate these heterogeneous processes we infer the locations of populations on a map that reflects genetic, rather than geographic, proximity.  
@@ -565,8 +564,7 @@ The question of whether it fits the most strict definition of a ring species foc
 Alcaide \emph{et. al} \cite{alcaide2014genomic} have suggested that the greenish warbler species complex constitutes a `broken' ring species, in which historical discontinuities in gene flow have facilitated the evolution of reproductive isolation between adjacent forms.  
 
 To investigate this question, we applied SpaceMix to the dataset from Alcaide \emph{et. al}\cite{alcaide2014genomic}, 
-consisting of 95 individuals sampled at 22 distinct locations and sequenced at 2,334 SNPs, of which 2,247 were bi-allelic and retained for SpaceMix runs.
-%The libraries were prepared using a genotype-by-sequencing protocol and were run on an Illumina HiSeq 2000 with a paired-end sequencing protocol \cite{alcaide2014genomic}.
+consisting of 95 individuals sampled at 22 distinct locations and sequenced at 2,334 SNPs, of which 2,247 were bi-allelic and retained for SpaceMix runs.  These loci were treated as independent (i.e., un-linked).  We discuss other ways to accommodate linkage disequilibrium further in the Discussion.
 
 We first ran SpaceMix on the population dataset, with no admixture. The resulting inferred map (Fig.\ \ref{sfig:warbler_pop}\subref{warb_pop_noad}) largely recapitulates the geography of the sampled populations around the ring.  The Turkish population (\textbf{TU}, \textit{Phylloscopus trochiloides} ssp.\ \textit{nitidus}) clusters with the populations in the subspecies \textit{ludlowi}, due to its recent expansion, but also has a relatively high nugget parameter (see Fig.\ \ref{sfig:warb_pop_nugg}\subref{warb_pop_noad_nugg}), reflecting the population history it does not share with its \textit{ludlowi} neighbors.  In the north, where the twin waves of expansion around the Tibetan Plateau are hypothesized to meet, the inferred geogenetic distance between populations from opposite sides of the ring was much greater than their observed geographic separation, reflecting the reproductive isolation between these adjacent forms (see Fig.\ \ref{sfig:warb_pop_distcomp}).  
 %
@@ -614,8 +612,10 @@ even though both reflect the compounding of drift and gene flow over many histor
 We therefore urge caution in the interpretation of our results, 
 and view them as a simplistic but rich visualization of patterns of population structure.
 
-We used a random subset of 10,000 SNPs \gb{come back to this} from the dataset of Hellenthal \emph{et al.}\cite{Hellenthal}, 
+We used the dataset of Hellenthal \emph{et al.}\cite{Hellenthal}, 
 comprised of 1,490 individuals from 95 population samples (see Fig.\ \ref{sfig:empirical_maps}\subref{human_map} for map of sampling), as well as the latitude and longitude attributed to each sample.  
+In the analyses presented on human genotype data below, we have thinned the total dataset for LD in windows of 50 base-pairs, with a step-size of 5 base-pairs, and an upper limit of 0.2 on pairwise $r^2$ \cite{Purcell_etal_2007,plink}.  We then used a random subset of 10,000 SNPs to estimate the sample covariance.
+
 We ran two sets of SpaceMix analyses: in the first, we estimated population sample locations, 
 and in the second, we also allowed admixture. 
 We note that few of the putative admixture events that we report have escaped the notice of previous investigators, 
@@ -1814,6 +1814,12 @@ Paul D.  Sampson  and  Peter  Guttorp.
 \newblock Nonparametric Estimation of Nonstationary Spatial Covariance Structure.
 \newblock \emph{Journal of the American Statistical Association}, 
 87\penalty0 (417):\penalty0 108--119, 1992.
+
+\bibitem[Schiffels and Durbin (2014)]{Schiffels_Durbin_2014}
+Stephan Schiffels  and Richard Durbin.
+\newblock Inferring human population size and separation history from multiple genome sequences.
+\newblock \emph{Nature Genetics}, 46\penalty0 (8):\penalty0 919--925, Aug 2014.
+\newblock \doi{10.1038/ng.3015}.
 
 \bibitem[Schlebusch et~al.(2012)]{Jakobsson_genomic_2012}
 Carina~M. Schlebusch, Pontus Skoglund, Per Sjödin, Lucie~M. Gattepaille, Dena

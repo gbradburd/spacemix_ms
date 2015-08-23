@@ -260,7 +260,9 @@ to explain excess covariance between groups of populations.
 
 There has also been renewed interest in methods for dimensionality reduction
 for the visualization of patterns of genetic variation \cite{Patterson2006},
-especially PCA (also pioneered by Cavalli-Sforza \cite{menozzi1978synthetic}). 
+especially 
+\plr{Principal Components Analysis}  %% first time this appears?
+(PCA; also pioneered by Cavalli-Sforza \cite{menozzi1978synthetic}). 
 Examining such low-dimensional visual summaries has become an indispensable step in
 the analysis of modern genomic datasets of thousands of loci typed in tens or hundreds of samples.
 Generally, these visualizations are constructed by plotting the first few eigenvectors of the covariance matrix
@@ -317,7 +319,8 @@ and $\bar{f}_{\ell}$ is the average of the $K$ sample allele frequencies,
 weighted by mean population size.
 This normalization is widely used \cite{nicholson2002,Patterson2006};
 mean-centering makes the result invariant to choice of which allele to count at each locus,
-and dividing by $\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}$ makes each locus have roughly unit variance.
+and dividing by $\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}$ makes each locus have roughly unit variance
+\plr{if the amount of drift since a common ancestor is small}.
 
 We work with the empirical covariance matrix of these standardized sample allele frequencies,
 calculated across loci, namely, $\widehat{\Omega} = (1/L)  \hat{X}\hat{X}^T$.
@@ -874,9 +877,9 @@ and compute the likelihood of the empirical covariance matrix of allele frequenc
 The inference algorithm described here may be used to estimate the parameters with any of these held fixed,
 for  instance:
 (1) population locations are fixed, and they do not draw any admixture; 
-(2) populations locations are estimated, but not admixture; 
+(2) population locations are estimated, but not admixture; 
 (3) populations may draw admixture, but their own locations are fixed; or
-(4) populations locations and admixture are both estimated.  
+(4) population locations and admixture are both estimated.  
 The free parameters for each of options are given in Table \ref{tab:model_options}.
 
 \begin{centering}
@@ -896,7 +899,7 @@ The free parameters for each of options are given in Table \ref{tab:model_option
 \end{table}
 \end{centering}
 
-Although we anticipate most empirical researchers will be interested in the joint inference of a geogenetic map with admixture (Model 4), we have presented these models separately, as we believe each have their own utility.  Model 1 and Model 3 can each be used to infer landscapes of allele frequencies, upon which genotyped individuals can be probabilistically placed (following \cite{Wasser2004}).  This application may be useful to determine the geographic origin of potentially contraband biological samples (e.g., ivory), or the most likely source of museum specimens missing sampling metadata.  Model 3 has the potential to improve the performance of these spatial assignment methods over Model 1, as the inclusion of admixture in the model may allow for more accurate inference of allele frequency surfaces.  Model 2 offers a direct touchstone to Principal Component Analysis, and can also be used in a model comparison framework with Model 4 to formally test for the presence of admixture in the sampled dataset.
+Although we anticipate most empirical researchers will be interested in the joint inference of a geogenetic map with admixture (Model 4), we have presented these models separately, as we believe each have their own utility.  Model 1 and Model 3 can each be used to infer landscapes of allele frequencies, upon which genotyped individuals can be probabilistically placed (following \cite{Wasser2004}).  This application may be useful to determine the geographic origin of potentially contraband biological samples (e.g., ivory), or the most likely source of museum specimens missing sampling metadata.  Model 3 has the potential to improve the performance of these spatial assignment methods over Model 1, as the inclusion of admixture in the model may allow for more accurate inference of allele frequency surfaces.  Model 2 directly parallels Principal Component Analysis, and can also be used in a model comparison framework with Model 4 to formally test for the presence of admixture in the sampled dataset.
 
 Below, we outline the inference procedure for the most parameter-rich model (inference on both population locations, their sources of admixture, and the proportions in which they draw admixture, in addition to inference of the parameters of the spatial covariance function).
 A table of all parameters, their descriptions, and their priors is given in Table \ref{tab:param_prior_tab}.

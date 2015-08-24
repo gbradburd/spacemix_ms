@@ -1,7 +1,7 @@
 % Template for PLoS
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL /Users/gburd/Desktop/Dropbox/space.mix/ms/submission1/spacemix_plos_template.tex        Sun Jun 14 15:30:12 2015
-%DIF ADD /Users/gburd/Desktop/Dropbox/space.mix/ms/submission2/spacemix_plos_template_sub2.tex   Fri Aug 21 15:43:11 2015
+%DIF ADD /Users/gburd/Desktop/Dropbox/space.mix/ms/submission2/spacemix_plos_template_sub2.tex   Mon Aug 24 10:25:07 2015
 % Version 3.0 December 2014
 %
 % To compile to pdf, run:
@@ -287,7 +287,8 @@ to explain excess covariance between groups of populations.
 
 There has also been renewed interest in methods for dimensionality reduction
 for the visualization of patterns of genetic variation \cite{Patterson2006},
-especially PCA (also pioneered by Cavalli-Sforza \cite{menozzi1978synthetic}). 
+especially \DIFdelbegin \DIFdel{PCA (}\DIFdelend \DIFaddbegin \DIFadd{Principal Components Analysis
+(PCA; }\DIFaddend also pioneered by Cavalli-Sforza \cite{menozzi1978synthetic}). 
 Examining such low-dimensional visual summaries has become an indispensable step in
 the analysis of modern genomic datasets of thousands of loci typed in tens or hundreds of samples.
 Generally, these visualizations are constructed by plotting the first few eigenvectors of the covariance matrix
@@ -344,7 +345,8 @@ and $\bar{f}_{\ell}$ is the average of the $K$ sample allele frequencies,
 weighted by mean population size.
 This normalization is widely used \cite{nicholson2002,Patterson2006};
 mean-centering makes the result invariant to choice of which allele to count at each locus,
-and dividing by $\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}$ makes each locus have roughly unit variance\DIFdelbegin \DIFdel{in some sense}\DIFdelend .
+and dividing by $\sqrt{\bar{f}_{\ell}(1-\bar{f}_{\ell})}$ makes each locus have roughly unit variance
+\DIFdelbegin \DIFdel{in some sense}\DIFdelend \DIFaddbegin \DIFadd{if the amount of drift since a common ancestor is small}\DIFaddend .
 
 We work with the empirical covariance matrix of these standardized sample allele frequencies,
 calculated across loci, namely, $\widehat{\Omega} = (1/L)  \hat{X}\hat{X}^T$.
@@ -818,11 +820,7 @@ holds rich information about the timing and source of admixture events \cite{cha
 as well as information about isolation by distance \cite{ralph2013geography}.
 Just as population graph approaches have been extended to incorporate information from LD \cite{Loh:13}, 
 a spatial covariance approach could be informed by LD. 
-A null model inspired by models of LD under isolation by distance models \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
-\cite{Arkendra2007,Barton2013} }%DIFAUXCMD
-}\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
-\cite{Arkendra20067,Barton2013} }%DIFAUXCMD
-}\DIFaddend could be fitted, 
+A null model inspired by models of LD under isolation by distance models \cite{Arkendra2007,Barton2013} could be fitted, 
 allowing the covariance among alleles to decay with their geographic distance and the recombination distance between the loci. 
 In such a framework, sources and time-scales of admixture could be identified through unusually long-distance LD between geographically separated populations. 
 
@@ -924,9 +922,9 @@ and compute the likelihood of the empirical covariance matrix of allele frequenc
 The inference algorithm described here may be used to estimate the parameters with any of these held fixed,
 for  instance:
 (1) population locations are fixed, and they do not draw any admixture; 
-(2) populations \DIFdelbegin \DIFdel{may choose their own locations }\DIFdelend \DIFaddbegin \DIFadd{locations are estimated}\DIFaddend , but not admixture; 
+(2) \DIFdelbegin \DIFdel{populations may choose their own locations }\DIFdelend \DIFaddbegin \DIFadd{population locations are estimated}\DIFaddend , but not admixture; 
 (3) populations may draw admixture, but their own locations are fixed; or
-(4) populations \DIFdelbegin \DIFdel{may both choose their own locations and draw admixture }\DIFdelend \DIFaddbegin \DIFadd{locations and admixture are both estimated}\DIFaddend .  
+(4) \DIFdelbegin \DIFdel{populations may both choose their own locations and draw admixture }\DIFdelend \DIFaddbegin \DIFadd{population locations and admixture are both estimated}\DIFaddend .  
 The free parameters for each of options are given in Table \ref{tab:model_options}.
 
 \begin{centering}
@@ -948,7 +946,7 @@ The free parameters for each of options are given in Table \ref{tab:model_option
 
 \DIFaddbegin \DIFadd{Although we anticipate most empirical researchers will be interested in the joint inference of a geogenetic map with admixture (Model 4), we have presented these models separately, as we believe each have their own utility.  Model 1 and Model 3 can each be used to infer landscapes of allele frequencies, upon which genotyped individuals can be probabilistically placed (following \mbox{%DIFAUXCMD
 \cite{Wasser2004}}%DIFAUXCMD
-).  This application may be useful to determine the geographic origin of potentially contraband biological samples (e.g., ivory), or the most likely source of museum specimens missing sampling metadata.  Model 3 has the potential to improve the performance of these spatial assignment methods over Model 1, as the inclusion of admixture in the model may allow for more accurate inference of allele frequency surfaces.  Model 2 offers a direct touchstone to Principal Component Analysis, and can also be used in a model comparison framework with Model 4 to formally test for the presence of admixture in the sampled dataset.
+).  This application may be useful to determine the geographic origin of potentially contraband biological samples (e.g., ivory), or the most likely source of museum specimens missing sampling metadata.  Model 3 has the potential to improve the performance of these spatial assignment methods over Model 1, as the inclusion of admixture in the model may allow for more accurate inference of allele frequency surfaces.  Model 2 directly parallels Principal Component Analysis, and can also be used in a model comparison framework with Model 4 to formally test for the presence of admixture in the sampled dataset.
 }
 
 \DIFaddend Below, we outline the inference procedure for the most parameter-rich model (inference on both population locations, their sources of admixture, and the proportions in which they draw admixture, in addition to inference of the parameters of the spatial covariance function).
@@ -1236,7 +1234,7 @@ underlying assumption of the }\texttt{\DIFadd{TreeMix}} \DIFadd{tree-like model.
 \subsection*{\DIFadd{The effects of uneven sampling}}
 \label{uneven_sampling}
 {\bf{The effect of uneven sampling on inference of geogenetic maps.}}
-\DIFadd{a) inference using a dataset with a random subsample of 12 populations from the simple lattice scenario with nearest neighbor migration; b) inference using a dataset with a random subsample of 12 populations from the barrier scenario with nearest neighbor migration and a barrier down the center line of longitude.
+\DIFadd{a) inference using a dataset with a random subsample of 12 populations from the simple lattice scenario with nearest neighbor migration; b) inference using a dataset with a random subsample of 12 populations from the barrier scenario with nearest neighbor migration and a barrier down the center line of longitude.  Ellipses denote the 95\% credible interval on estimated geogenetic locations.
 }
 
 \subsection*{\DIFadd{Warbler population nuggets}}
@@ -2123,9 +2121,18 @@ samples.}\label{sfig:globe_noad_maps}
 \renewcommand{\theequation}{S\arabic{table}}
 \setcounter{equation}{0}
 
-\begin{figure}
+%DIF > %%%%%%%%
+%DIF > %% Make supplemental figure pages wider
+%DIF > %%%%%%%%
+\DIFaddbegin \setlength{\textwidth}{450pt}
+\setlength{\oddsidemargin}{10pt}
+\setlength{\evensidemargin}{10pt}
+\lhead{}
+
+\DIFaddend \begin{figure}
 	\centering
-		{\includegraphics[width=4.8in,height=8.8in]{../figs/sims/sim_covariance_decays.pdf}}
+		{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=4.8in,height=8.8in]{../figs/sims/sim_covariance_decays.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[height=.8\textheight]{../figs/sims/sim_covariance_decays.pdf}\DIFaddendFL }
 		\caption{Decays in covariance for four different simulation scenarios (from top to bottom: simple lattice; lattice with barrier; lattice with expansion; lattice with admixture).  Left column: sample covariance plotted against observed pairwise distance.  Right column: sample covariance plotted against inferred geogenetic distance.}
 	\label{sfig:sim_covariance_decays}
 \end{figure}
@@ -2133,9 +2140,9 @@ samples.}\label{sfig:globe_noad_maps}
 \begin{figure}
 \centering
 	\DIFaddbeginFL \subcaptionbox{\label{lattice_pc}}
-		{\includegraphics[width=5in,height=4in]{../figs/sims/lattice_PC_map.pdf}}
+		{\includegraphics[height=.45\textheight]{../figs/sims/lattice_PC_map.pdf}}
 	\subcaptionbox{\label{cornerad_pc}}
-			{\includegraphics[width=5in,height=4in]{../figs/sims/corneradmixture_PC_map.pdf}}
+			{\includegraphics[height=.45\textheight]{../figs/sims/corneradmixture_PC_map.pdf}}
 	\caption{\DIFaddFL{Plots of the first two Principal Component axes (with variance explained labeled on the relevant axes) 
 			of the mean-centered covariance matrix from simulated spatial scenarios.
 			a) the basic lattice scenario shown in \ref{sfig:lattice_scenarios}}\subref{simple_lattice}\DIFaddFL{.
@@ -2147,24 +2154,27 @@ samples.}\label{sfig:globe_noad_maps}
 \begin{figure}
 \centering
 	\subcaptionbox{\label{lattice}}
-		{\includegraphics[width=6in,height=2in]{../figs/sims/uneven_sampling_lattice.pdf}}
+		{\includegraphics[width=\textwidth]{../figs/sims/uneven_sampling_lattice.pdf}}
 	\subcaptionbox{\label{barrier}}
-			{\includegraphics[width=6in,height=2in]{../figs/sims/uneven_sampling_barrier.pdf}}
-	\caption{\DIFaddFL{The effect of uneven sampling on inference of geogenetic maps. a) inference using a dataset with a random subsample of 12 populations from the simple lattice scenario with nearest neighbor migration; b) inference using a dataset with a random subsample of 12 populations from the barrier scenario with nearest neighbor migration and a barrier down the center line of longitude.}}\label{sfig:uneven_sampling}
+			{\includegraphics[width=\textwidth]{../figs/sims/uneven_sampling_barrier.pdf}}
+	\caption{\DIFaddFL{The effect of uneven sampling on inference of geogenetic maps. a) inference using a dataset with a random subsample of 12 populations from the simple lattice scenario with nearest neighbor migration; b) inference using a dataset with a random subsample of 12 populations from the barrier scenario with nearest neighbor migration and a barrier down the center line of longitude.  Ellipses denote the 95\% credible interval on estimated geogenetic locations.}}\label{sfig:uneven_sampling}
 \end{figure}
 
 \begin{figure}
 \centering
 	\DIFaddendFL \subcaptionbox{\label{warb_pop_noad_nugg}}
-		{\includegraphics[width=4in,height=2.89in]{../figs/warblers/warb_pop_NoAd_nugget.pdf}}
+		{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=4in,height=2.89in]{../figs/warblers/warb_pop_NoAd_nugget.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[height=.45\textheight]{../figs/warblers/warb_pop_NoAd_nugget.pdf}\DIFaddendFL }
 	\subcaptionbox{\label{warb_pop_ad_nugg}}
-			{\includegraphics[width=4in,height=2.89in]{../figs/warblers/warb_pop_Ad_nugget.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=4in,height=2.89in]{../figs/warblers/warb_pop_Ad_nugget.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[height=.45\textheight]{../figs/warblers/warb_pop_Ad_nugget.pdf}\DIFaddendFL }
 	\caption{Credible intervals on estimated warbler population nugget parameters. a) analysis without admixture; b) analysis with admixture.}\label{sfig:warb_pop_nugg}
 \end{figure}
 
 \begin{figure}
 \centering
-	{\includegraphics[width=6in,height=3in]{../figs/warblers/warb_pop_dist_compare.pdf}}
+	{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=6in,height=3in]{../figs/warblers/warb_pop_dist_compare.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/warblers/warb_pop_dist_compare.pdf}\DIFaddendFL }
 	\caption{
     Comparing geographic to geogenetic pairwise distance between warbler populations: a) observed population coordinates; b) pairwise geographic (great-circle) distance between populations compared to that between their geogenetic locations.  The highlighted points show distances between populations from the \textit{plumbeitarsus} and \textit{viridanus} subspecies.  Notice that, regardless of their observed distance, their geogenetic separations are roughly constant, and much larger than the geographic distance between them.
     }
@@ -2173,27 +2183,33 @@ samples.}\label{sfig:globe_noad_maps}
 
 \begin{figure}
 \centering
-	{\includegraphics[width=5in,height=3.6in]{../figs/warblers/warb_pop_adprop.pdf}}
+	{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=5in,height=3.6in]{../figs/warblers/warb_pop_adprop.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/warblers/warb_pop_adprop.pdf}\DIFaddendFL }
 	\caption{Credible intervals on estimated warbler population admixture proportion parameters.}\label{sfig:warb_pop_adprop}
 \end{figure}
 
 \begin{figure}
 	\centering
 		\subcaptionbox{\label{warb_pop_realpr1}}
-			{\includegraphics[width=1.85in,height=1.54in]{../figs/warblers/population_warbler_map_realpr1.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=1.85in,height=1.54in]{../figs/warblers/population_warbler_map_realpr1.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[height=.3\textheight]{../figs/warblers/population_warbler_map_realpr1.pdf}\DIFaddendFL }
 		\subcaptionbox{\label{warb_pop_realpr2}}			
-			{\includegraphics[width=1.85in,height=1.54in]{../figs/warblers/population_warbler_map_realpr2.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=1.85in,height=1.54in]{../figs/warblers/population_warbler_map_realpr2.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[height=.3\textheight]{../figs/warblers/population_warbler_map_realpr2.pdf}\DIFaddendFL }
 		\subcaptionbox{\label{warb_pop_randpr1}}
-			{\includegraphics[width=1.85in,height=1.54in]{../figs/warblers/population_warbler_map_randpr1.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=1.85in,height=1.54in]{../figs/warblers/population_warbler_map_randpr1.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[height=.3\textheight]{../figs/warblers/population_warbler_map_randpr1.pdf}\DIFaddendFL }
 	\caption{Comparison of inferred maps from three independent analyses.  (a,b) Results from analysis using observed locations as priors on population locations.  (c) Results from analysis using random, uniformly distributed locations within the observed range of latitude and longitude as priors on population locations.}\label{sfig:warbler_pop_compare}
 \end{figure}
 
 \begin{figure}
 	\centering
 		\subcaptionbox{Likelihood \label{admix_prop_func_loc_lnl}}
-			{\includegraphics[width=6in,height=2in]{../figs/warblers/admix_prop_func_loc_lnl.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=6in,height=2in]{../figs/warblers/admix_prop_func_loc_lnl.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/warblers/admix_prop_func_loc_lnl.pdf}\DIFaddendFL }
 		\subcaptionbox{Posterior probability \label{admix_prop_func_loc_prob}}
-			{\includegraphics[width=6in,height=2in]{../figs/warblers/admix_prop_func_loc_prob.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=6in,height=2in]{../figs/warblers/admix_prop_func_loc_prob.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/warblers/admix_prop_func_loc_prob.pdf}\DIFaddendFL }
 	\caption{Likelihood surfaces for different placements of population ST between \textit{plumbeitarsus} and \textit{viridanus} clusters: (a) log likelihood surface; (b) posterior probability surface, incorporating the priors. The maximum a posteriori estimate (MAP) is shown as a star. }\label{sfig:admix_prop_func_loc}
 \end{figure}
 
@@ -2201,20 +2217,25 @@ samples.}\label{sfig:globe_noad_maps}
 
 \begin{figure}
 \centering
-	{\includegraphics[width=5in,height=2.5in]{../figs/warblers/warb_ind_adprop.pdf}}
+	{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=5in,height=2.5in]{../figs/warblers/warb_ind_adprop.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/warblers/warb_ind_adprop.pdf}\DIFaddendFL }
 	\caption{Credible intervals on estimated warbler individual admixture proportion parameters.}\label{sfig:warb_ind_adprops}
 \end{figure}
 
 \begin{figure}
 	\centering
     \subcaptionbox{Warbler individuals map, no admixture} 
-			{\includegraphics[width=2.8in,height=2.3in]{../figs/warblers/warb_ind_noad.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=2.8in,height=2.3in]{../figs/warblers/warb_ind_noad.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=0.4\textwidth]{../figs/warblers/warb_ind_noad.pdf}\DIFaddendFL }
             \subcaptionbox{Close-up of non-\textit{nitidus} samples}
-			{\includegraphics[width=2.8in,height=2.3in]{../figs/warblers/warb_ind_noad_closeup.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=2.8in,height=2.3in]{../figs/warblers/warb_ind_noad_closeup.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=0.4\textwidth]{../figs/warblers/warb_ind_noad_closeup.pdf}\DIFaddendFL }
             \subcaptionbox{Warbler individuals map, admixture}
-			{\includegraphics[width=2.8in,height=2.3in]{../figs/warblers/individual_warbler_map_arrows_randpr1.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=2.8in,height=2.3in]{../figs/warblers/individual_warbler_map_arrows_randpr1.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=0.4\textwidth]{../figs/warblers/individual_warbler_map_arrows_randpr1.pdf}\DIFaddendFL }
             \subcaptionbox{Close-up of non-\textit{nitidus} samples}
-			{\includegraphics[width=2.8in,height=2.3in]{../figs/warblers/individual_warbler_map_arrows_randpr1_closeup.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=2.8in,height=2.3in]{../figs/warblers/individual_warbler_map_arrows_randpr1_closeup.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=0.4\textwidth]{../figs/warblers/individual_warbler_map_arrows_randpr1_closeup.pdf}\DIFaddendFL }
 	\caption{
     Inferred maps for warbler individuals, colored by subspecies under analyses with and without admixture inference. a) map inferred without admixture; (b) close-up of all non-\textit{nitidus} samples in non-admixture map; c) map inferred with admixture; d) close-up of all non-\textit{nitidus} samples in the admixture map.}\label{sfig:warbler_ind_maps_compare}
 \end{figure}
@@ -2222,33 +2243,41 @@ samples.}\label{sfig:globe_noad_maps}
 \begin{figure}
 	\centering
 		\subcaptionbox{random location prior \label{post_map_randpr2}}
-			{\includegraphics[width=4in,height=2.88in]{../figs/warblers/warb_inds_ad_post_map_randpr2.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=4in,height=2.88in]{../figs/warblers/warb_inds_ad_post_map_randpr2.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[height=.3\textheight]{../figs/warblers/warb_inds_ad_post_map_randpr2.pdf}\DIFaddendFL }
 		\subcaptionbox{geographic location prior \label{post_map_realpr1}}
-			{\includegraphics[width=4in,height=2.88in]{../figs/warblers/warb_inds_ad_post_map_realpr1.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=4in,height=2.88in]{../figs/warblers/warb_inds_ad_post_map_realpr1.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[height=.3\textheight]{../figs/warblers/warb_inds_ad_post_map_realpr1.pdf}\DIFaddendFL }
 		\subcaptionbox{geographic location prior \label{post_map_realpr2}}
-			{\includegraphics[width=4in,height=2.88in]{../figs/warblers/warb_inds_ad_post_map_realpr2.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=4in,height=2.88in]{../figs/warblers/warb_inds_ad_post_map_realpr2.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[height=.3\textheight]{../figs/warblers/warb_inds_ad_post_map_realpr2.pdf}\DIFaddendFL }
 	\caption{Maps of the posterior distributions on population locations in three separate SpaceMix analyses on the warbler individual dataset.}\label{sfig:warb_ind_clouds}
 \end{figure}
 
 \begin{figure}
 \centering
 	\subcaptionbox{\label{warb_ind_noad_nugg}}
-		{\includegraphics[width=5in,height=2.5in]{../figs/warblers/warb_ind_NoAd_nugget.pdf}}
+		{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=5in,height=2.5in]{../figs/warblers/warb_ind_NoAd_nugget.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/warblers/warb_ind_NoAd_nugget.pdf}\DIFaddendFL }
 	\subcaptionbox{\label{warb_ind_ad_nugg}}
-		{\includegraphics[width=5in,height=2.5in]{../figs/warblers/warb_ind_Ad_nugget.pdf}}
+		{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=5in,height=2.5in]{../figs/warblers/warb_ind_Ad_nugget.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/warblers/warb_ind_Ad_nugget.pdf}\DIFaddendFL }
 	\caption{Credible intervals on estimated warbler individual nugget parameters.  a) analysis without admixture; b) analysis with admixture.}\label{sfig:warb_ind_nugg}
 \end{figure}
 
 \begin{figure}
 \centering
-	{\includegraphics[width=5in,height=4.3in]{../figs/warblers/warb_ind_pairwise_pi.pdf}}
+	{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=5in,height=4.3in]{../figs/warblers/warb_ind_pairwise_pi.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/warblers/warb_ind_pairwise_pi.pdf}\DIFaddendFL }
 	\caption{Mean pairwise sequence divergence at polymorphic sites calculated between all pairs of individuals from different subspecies, and colored by the subspecies to which each individual in the comparison is drawn.  Note that individuals Tro-LN11 and Lud-MN3 have sequence divergence that is unusually low relative to that of other comparisons between individuals from the same two subspecies.}\label{sfig:warb_ind_pwp}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics[width=4in,height=3.33in]{../figs/warblers/warb_ind_PC_map.pdf}
-	\caption{The map of warbler individuals derived from a Principal Components analysis.  The PC coordinates have undergone a full Procrustes transformation around the actual sampling coordinates.}
+	\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=4in,height=3.33in]{../figs/warblers/warb_ind_PC_map.pdf}
+%DIFDELCMD < 	%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/warblers/warb_ind_PC_map.pdf}
+	\DIFaddendFL \caption{The map of warbler individuals derived from a Principal Components analysis.  The PC coordinates have undergone a full Procrustes transformation around the actual sampling coordinates.}
 	\label{sfig:warb_ind_PC_map}
 \end{figure}
 
@@ -2271,9 +2300,11 @@ samples.}\label{sfig:globe_noad_maps}
 \begin{figure}
 	\centering
 		\subcaptionbox{All population pairs \label{warb_ind_dist_compare_allpairs}}
-			{\includegraphics[width=6in,height=3in]{../figs/warblers/warb_ind_dist_compare_allpairs.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=6in,height=3in]{../figs/warblers/warb_ind_dist_compare_allpairs.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/warblers/warb_ind_dist_compare_allpairs.pdf}\DIFaddendFL }
 		\subcaptionbox{Just within population comparisons \label{warb_ind_dist_compare}}
-			{\includegraphics[width=6in,height=3in]{../figs/warblers/warb_ind_dist_compare.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=6in,height=3in]{../figs/warblers/warb_ind_dist_compare.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/warblers/warb_ind_dist_compare.pdf}\DIFaddendFL }
 	\caption{Comparing geographic pairwise distance to geogenetic pairwise distance between warbler individuals, (a) between and (b) within subspecies populations.}\label{sfig:warb_ind_distcomp}
 \end{figure}
 
@@ -2281,7 +2312,8 @@ samples.}\label{sfig:globe_noad_maps}
 
 \begin{figure}
 	\centering
-		{\includegraphics[width=6in,height=2.5in]{../figs/globetrotter/globe_NoAd_dist_decay.pdf}}
+		{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=6in,height=2.5in]{../figs/globetrotter/globe_NoAd_dist_decay.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/globetrotter/globe_NoAd_dist_decay.pdf}\DIFaddendFL }
 	\caption{Comparison of geographic pairwise distance to geogenetic pairwise distance between human populations, colored by continent from which populations were sampled (i.e., two populations sampled from Africa are green).  Eurasia is divided into Western Eurasia and East Asia.}
 \label{sfig:globe_noad_distcomp}
 \end{figure}
@@ -2291,9 +2323,11 @@ samples.}\label{sfig:globe_noad_maps}
 \begin{figure}
 \centering
 	\subcaptionbox{\label{globe_noad_nugg}}
-		{\includegraphics[width=5in,height=2.5in]{../figs/globetrotter/globe_NoAd_nugget.pdf}}
+		{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=5in,height=2.5in]{../figs/globetrotter/globe_NoAd_nugget.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/globetrotter/globe_NoAd_nugget.pdf}\DIFaddendFL }
 	\subcaptionbox{\label{globe_ad_nugg}}
-		{\includegraphics[width=5in,height=2.5in]{../figs/globetrotter/globe_Ad_nugget.pdf}}
+		{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=5in,height=2.5in]{../figs/globetrotter/globe_Ad_nugget.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/globetrotter/globe_Ad_nugget.pdf}\DIFaddendFL }
 	\caption{Credible intervals on estimated human sample nugget parameters. a) analysis without admixture; a) analysis with admixture.}
 	\label{sfig:globe_nuggs}
 \end{figure}
@@ -2303,9 +2337,11 @@ samples.}\label{sfig:globe_noad_maps}
 \begin{figure}
 	\centering
 		\subcaptionbox{Inferred map of human populations \label{globe_all_ad_map_realpr2}}
-			{\includegraphics[width=\textwidth,height=0.71\textwidth]{../figs/globetrotter/globe_Ad_map_AfricaInset_realpr2.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=\textwidth,height=0.71\textwidth]{../figs/globetrotter/globe_Ad_map_AfricaInset_realpr2.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[height=.45\textheight]{../figs/globetrotter/globe_Ad_map_AfricaInset_realpr2.pdf}\DIFaddendFL }
 		\subcaptionbox{Close-up of Eurasian populations \label{globe_eurasia_ad_map_realpr2}}
-			{\includegraphics[width=\textwidth,height=0.71\textwidth]{../figs/globetrotter/eurasia_Ad_map_indproc_realpr2.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=\textwidth,height=0.71\textwidth]{../figs/globetrotter/eurasia_Ad_map_indproc_realpr2.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[height=.45\textheight]{../figs/globetrotter/eurasia_Ad_map_indproc_realpr2.pdf}\DIFaddendFL }
 	\caption{Map of human populations from a different SpaceMix analysis (``Real\_Prior1'' -- inferred with admixture), using real geographic coordinates as population location priors. a) complete map; b) close-up of Eurasian populations}
 	\label{sfig:globe_ad_maps_realpr2}
 \end{figure}
@@ -2315,9 +2351,11 @@ samples.}\label{sfig:globe_noad_maps}
 \begin{figure}
 	\centering
 		\subcaptionbox{Inferred map of human populations \label{globe_all_ad_map_realpr3}}
-			{\includegraphics[width=\textwidth,height=0.71\textwidth]{../figs/globetrotter/globe_Ad_map_AfricaInset_realpr3.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=\textwidth,height=0.71\textwidth]{../figs/globetrotter/globe_Ad_map_AfricaInset_realpr3.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[height=.45\textheight]{../figs/globetrotter/globe_Ad_map_AfricaInset_realpr3.pdf}\DIFaddendFL }
 		\subcaptionbox{Close-up of Eurasian populations \label{globe_eurasia_ad_map_realpr3}}
-			{\includegraphics[width=\textwidth,height=0.71\textwidth]{../figs/globetrotter/eurasia_Ad_map_indproc_realpr3.pdf}}
+			{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=\textwidth,height=0.71\textwidth]{../figs/globetrotter/eurasia_Ad_map_indproc_realpr3.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[height=.45\textheight]{../figs/globetrotter/eurasia_Ad_map_indproc_realpr3.pdf}\DIFaddendFL }
 	\caption{Map of human populations from another SpaceMix analysis (``Real\_Prior2'',  inferred with admixture), 
 			using real geographic coordinates as population location priors. 
 			 a) complete map; b) close-up of Eurasian populations}
@@ -2328,7 +2366,8 @@ samples.}\label{sfig:globe_noad_maps}
 
 \begin{figure}
 	\centering
-		{\includegraphics[width=5.5in,height=5.5in]{../figs/globetrotter/globe_PCA_map.pdf}}
+		{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=5.5in,height=5.5in]{../figs/globetrotter/globe_PCA_map.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/globetrotter/globe_PCA_map.pdf}\DIFaddendFL }
 	\caption{PCA map of human samples used in SpaceMix analyses.  The PC coordinates have undergone a full Procrustes transformation around the actual sampling coordinates (shown in the inset map).}
 \label{sfig:globe_PCA_map}
 \end{figure}
@@ -2337,7 +2376,8 @@ samples.}\label{sfig:globe_noad_maps}
 
 \begin{figure}
 	\centering
-		{\includegraphics[width=6in,height=2.5in]{../figs/sims/example_acceptance_rates.pdf}}
+		{\DIFdelbeginFL %DIFDELCMD < \includegraphics[width=6in,height=2.5in]{../figs/sims/example_acceptance_rates.pdf}%%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=\textwidth]{../figs/sims/example_acceptance_rates.pdf}\DIFaddendFL }
 	\caption{Example parameter acceptance proportions for the $\alpha_2$ parameter and the nugget parameter, $\eta$, using the adaptive Metropolis-within-Gibbs proposal mechanism.}\label{sfig:example_acceptance_rates}
 \end{figure}
 
@@ -2346,37 +2386,37 @@ samples.}\label{sfig:globe_noad_maps}
 
 \begin{figure}
 	\centering
-		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_stationary_popstreemix_fig_sequential.pdf}}
+		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_stationary_popstreemix_fig_sequential.pdf}}
 	\caption{\texttt{\DIFaddFL{TreeMix}} \DIFaddFL{analysis of lattice spatial coalescent simulation.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}}\label{sfig:treemix_lattice}
 \end{figure}
 
 \begin{figure}
 	\centering
-		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_barriertreemix_fig_sequential.pdf}}
+		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_barriertreemix_fig_sequential.pdf}}
 	\caption{\texttt{\DIFaddFL{TreeMix}} \DIFaddFL{analysis of lattice spatial coalescent simulation with a barrier..  The tree, residual covariance matrix, and first three migration admixture arrows are shown}}\label{sfig:treemix_barrier}
 \end{figure}
 
 \begin{figure}
 	\centering
-		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_expansiontreemix_fig_sequential.pdf}}
+		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_expansiontreemix_fig_sequential.pdf}}
 	\caption{\texttt{\DIFaddFL{TreeMix}} \DIFaddFL{analysis of lattice spatial coalescent simulation with an expansion event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}}\label{sfig:treemix_expansion}
 \end{figure}
 
 \begin{figure}
 	\centering
-		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_corner_admixturetreemix_fig_sequential.pdf}}
+		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_corner_admixturetreemix_fig_sequential.pdf}}
 	\caption{\texttt{\DIFaddFL{TreeMix}} \DIFaddFL{analysis of lattice spatial coalescent simulation with a long-range admixture event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}}\label{sfig:treemix_corneradmixture}
 \end{figure}
 
 \begin{figure}
 	\centering
-		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_neighbor_admixturetreemix_fig_sequential.pdf}}
+		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_neighbor_admixturetreemix_fig_sequential.pdf}}
 	\caption{\texttt{\DIFaddFL{TreeMix}} \DIFaddFL{analysis of lattice spatial coalescent simulation with a barrier and short-range admixture event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}}\label{sfig:treemix_neighboradmixture}
 \end{figure}
 
 \begin{figure}
 	\centering
-		{\includegraphics[width=6in,height=4in]{../figs/sims/Treemix_comparison/ms_dataset_barrier_and_inland_admixturetreemix_fig_sequential.pdf}}
+		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_barrier_and_inland_admixturetreemix_fig_sequential.pdf}}
 	\caption{\texttt{\DIFaddFL{TreeMix}} \DIFaddFL{analysis of lattice spatial coalescent simulation with a barrier and mid-range admixture event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}}\label{sfig:treemix_inlandadmixture}
 \end{figure}
 \DIFaddend 

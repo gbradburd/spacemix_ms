@@ -1038,7 +1038,7 @@ When we start our MCMC, $\zeta_i$ for all parameters is initiated at a value of 
 We choose to cap the maximum adaption amount at 20 (which is the equivalent of capping the variance of the proposal distribution at ~$4.85 \times 10^8$) to avoid proposal distributions that offer absurdly large or small updates.  This procedure, also referred to as ``auto-tuning'', results in acceptance rate plots like those shown in Fig.\ \ref{sfig:example_acceptance_rates}, and in more efficient mixing and decreased autocorrelation time of parameter estimates in the MCMC.
 
 \subsection*{Simulations}
-We ran our simulations using a coalescent framework in the program \textit{ms} (Hudson).  Briefly, we simulated populations on a lattice, with nearest neighbor migration rate $m_{i,j}$, as well as migration on the diagonal of the unit square at rate $m_{i,j}/\sqrt{2}$.  For each locus in the dataset, we used the \textbf{-s} option to specify a single segregating site, and then we simulated 10,000 loci independently, which were subsequently conglomerated into a single dataset for each scenario.  For all simulations, except the ``Populations on a line'' scenario (Fig.\ \ref{sfig:line_scenario}), we sampled only every other population, and, from each population, we sampled 10 haplotypes (corresponding to 5 diploid individuals).  In the ``Populations on a line'' scenario, we simulated no intervening populations, such that every population was sampled.
+We ran our simulations using a coalescent framework in the program \texttt{ms} \cite{Hudson2002}.  Briefly, we simulated populations on a lattice, with nearest neighbor migration rate $m_{i,j}$, as well as migration on the diagonal of the unit square at rate $m_{i,j}/\sqrt{2}$.  For each locus in the dataset, we used the \textbf{-s} option to specify a single segregating site, and then we simulated 10,000 loci independently, which were subsequently conglomerated into a single dataset for each scenario.  For all simulations, except the ``Populations on a line'' scenario (Fig.\ \ref{sfig:line_scenario}), we sampled only every other population, and, from each population, we sampled 10 haplotypes (corresponding to 5 diploid individuals).  In the ``Populations on a line'' scenario, we simulated no intervening populations, such that every population was sampled.
 
 To simulate a barrier event, we divided the migration rate between neighbors separated by the longitudinal barrier by a factor of 5.  To simulate an expansion event, we used the \textbf{-ej} option to move all lineages from each daughter population to its parent population at a very recent point in the past.  For admixture events, we used the \textbf{-es} and \textbf{-ej} options to first (again, going backward in time) split the admixed population into itself and a new subpopulation of index $k + 1$, and second, to move all lineages in the $(k^{\text{th}} + 1)$ into the source of admixture.  Forward in time, this procedure corresponds to cloning the population that is the source of admixture, then merging it, in some admixture proportion, with the (now) admixed population.  The command line arguments used to call \texttt{ms} for a single locus for each simulation are included in the Appendix.
 
@@ -1151,138 +1151,6 @@ and so misses more subtle (but real) admixture events.
 The poor performance of \texttt{TreeMix} here is the result of the 
 spatially simulated data not conforming to the 
 underlying assumption of the \texttt{TreeMix} tree-like model.
-
-
-\section*{Supporting Information}
-
-% Include only the SI item label in the subsection heading. Use the \nameref{label} command to cite SI items in the text.
-
-\subsection*{Simulated covariance decays}
-\label{sim_covariance_decays}
-{\bf{Decays in covariance for four different simulation scenarios (from top to bottom: simple lattice; lattice with barrier; lattice with expansion; lattice with admixture).} } Left column: sample covariance plotted against observed pairwise distance.  Right column: sample covariance plotted against inferred geogenetic distance.
-
-\subsection*{PCA maps of simulated datasets}
-\label{sim_pc_maps}
-{\bf{Plots of the first two Principal Component axes (with variance explained labeled on the relevant axes)
-			of the mean-centered covariance matrix from simulated spatial scenarios.}}
-			a) the basic lattice scenario shown in \ref{sfig:lattice_scenarios}\subref{simple_lattice}.
-			b) the lattice scenario with admixture from Population 1 into Population 30, 
-				shown in \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}.
-
-\subsection*{The effects of uneven sampling}
-\label{uneven_sampling}
-{\bf{The effect of uneven sampling on inference of geogenetic maps.}}
-a) inference using a dataset with a random subsample of 12 populations from the simple lattice scenario with nearest neighbor migration; b) inference using a dataset with a random subsample of 12 populations from the barrier scenario with nearest neighbor migration and a barrier down the center line of longitude.  Ellipses denote the 95\% credible interval on estimated geogenetic locations.
-
-\subsection*{Warbler population nuggets}
-\label{warb_pop_nugg}
-{\bf{Credible intervals on estimated warbler population nugget parameters.}} a) analysis without admixture; b) analysis with admixture.
-
-\subsection*{Warbler population geographic/geogenetic distance comparison}
-\label{warb_pop_distcomp}
-{\bf{Comparing geographic to geogenetic pairwise distance between warbler populations: a) observed population coordinates; b) pairwise geographic (great-circle) distance between populations compared to that between their geogenetic locations.}} The highlighted points show distances between populations from the \textit{plumbeitarsus} and \textit{viridanus} subspecies.  Notice that, regardless of their observed distance, their geogenetic separations are roughly constant, and much larger than the geographic distance between them.
-
-\subsection*{Warbler population admixture proportions}
-\label{warb_pop_adprop}
-{\bf{Credible intervals on estimated warbler population admixture proportion parameters.}}
-
-\subsection*{Warbler population geogenetic map comparison}
-\label{warbler_pop_compare}
-{\bf{Comparison of inferred maps from three independent analyses.	}} (a,b) Results from analysis using observed locations as priors on population locations.  (c) Results from analysis using random, uniformly distributed locations within the observed range of latitude and longitude as priors on population locations.
-
-\subsection*{Admixture proportion and population location likelihood surfaces}
-\label{admix_prop_func_loc_lnl}
-{\bf{Likelihood surfaces for different placements of population ST between \textit{plumbeitarsus} and \textit{viridanus} clusters: (a) log likelihood surface; (b) posterior probability surface, incorporating the priors.}}  The maximum a posteriori estimate (MAP) is shown as a star. 
-
-\subsection*{Warbler individual admixture proportions}
-\label{warb_ind_adprops}
-{\bf{Credible intervals on estimated warbler individual admixture proportion parameters.}}
-
-\subsection*{Warbler individual geogenetic map comparison}
-\label{warbler_ind_maps_compare}
-{\bf{Inferred maps for warbler individuals, colored by subspecies under analyses with and without admixture inference.}} a) map inferred without admixture; (b) close-up of all non-\textit{nitidus} samples in non-admixture map; c) map inferred with admixture; d) close-up of all non-\textit{nitidus} samples in the admixture map.
-
-\subsection*{Posterior distributions on locations of warbler individuals}
-\label{warb_ind_clouds}
-{\bf{Maps of the posterior distributions on population locations in three separate SpaceMix analyses on the warbler individual dataset.}}
-
-\subsection*{Warbler individual nuggets}
-\label{warb_ind_nugg}
-{\bf{Credible intervals on estimated warbler individual nugget parameters. }} a) analysis without admixture; b) analysis with admixture.
-
-\subsection*{Warbler individual pairwise-$\pi$}
-\label{warb_ind_pwp}
-{\bf{Mean pairwise sequence divergence at polymorphic sites calculated between all pairs of individuals from different subspecies, and colored by the subspecies to which each individual in the comparison is drawn.}} Note that individuals Tro-LN11 and Lud-MN3 have sequence divergence that is unusually low relative to that of other comparisons between individuals from the same two subspecies.
-
-\subsection*{Warbler individual PCA map}
-\label{warb_ind_PC_map}
-{\bf{The map of warbler individuals derived from a Principal Components analysis.}} The PC coordinates have undergone a full Procrustes transformation around the actual sampling coordinates.
-
-\subsection*{Simulation scenario of populations on a line}
-\label{line_scenario}
-{\bf{Simulation scenario of populations on a line, contrasting PCA-based inference and SpaceMix inference.}} a) Scenario used to simulate data in a spatial coalescent framework with nearest-neighbor migration; b) PCA map of allele frequencies, plotting PC axis 1 against PC axis 2, forming a `U' shape; c) Posterior distribution of SpaceMix location inference, forming a rough line; d) snapshot of the MAP draw from the posterior, again showing a rough line.
-
-\subsection*{Human sample geographic/geogenetic distance comparison}
-\label{globe_noad_distcomp}
-{\bf{Comparison of geographic pairwise distance to geogenetic pairwise distance between human populations, colored by continent from which populations were sampled (i.e., two populations sampled from Africa are green).}} Eurasia is divided into Western Eurasia and East Asia.
-
-\subsection*{Human sample nuggets}
-\label{globe_nuggs}
-{\bf{Credible intervals on estimated human sample nugget parameters. a) analysis without admixture; a) analysis with admixture.}}
-
-\subsection*{SpaceMix output from analysis of human samples}
-\label{globe_ad_maps_realpr2}
-{\bf{Map of human populations from a different SpaceMix analysis (``Real\_Prior1'' -- inferred with admixture), using real geographic coordinates as population location priors.}} a) complete map; b) close-up of Eurasian populations.
-
-\subsection*{SpaceMix output from analysis of human samples}
-\label{globe_ad_maps_realpr3}
-{\bf{Map of human populations from another SpaceMix analysis (``Real\_Prior2'',  inferred with admixture), using real geographic coordinates as population location priors.}}  a) complete map; b) close-up of Eurasian populations.
-
-\subsection*{PCA map of human samples}
-\label{globe_PCA_map}
-{\bf{PCA map of human samples used in SpaceMix analyses.}} The PC coordinates have undergone a full Procrustes transformation around the actual sampling coordinates (shown in the inset map).
-
-\subsection*{Example parameter acceptance rates}
-\label{example_acceptance_rates}
-{\bf{Example parameter acceptance proportions for the $\alpha_2$ parameter and the nugget parameter, $\eta$, using the adaptive Metropolis-within-Gibbs proposal mechanism.}}
-
-\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Lattice}
-\label{treemix_lattice}
-{\bf{\texttt{TreeMix} analysis of lattice spatial coalescent simulation.}}  
-The tree, residual covariance matrix, and first three migration admixture arrows are shown.
-
-\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Barrier}
-\label{treemix_barrier}
-{\bf{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier.}}
-The tree, residual covariance matrix, and first three migration admixture arrows are shown.
-
-\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Expansion}
-\label{treemix_expansion}
-{\bf{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with an expansion event.}}
-The tree, residual covariance matrix, and first three migration admixture arrows are shown.
-
-\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Admixture}
-\label{treemix_corneradmixture}
-{\bf{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a long-range admixture event.}}
-The tree, residual covariance matrix, and first three migration admixture arrows are shown.
-
-\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Barrier and Short-Range Admixture}
-\label{treemix_neighboradmixture}
-{\bf{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and short-range admixture event.}}  
-The tree, residual covariance matrix, and first three migration admixture arrows are shown.
-
-\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Barrier and Mid-Range Admixture}
-\label{treemix_inlandadmixture}
-{\bf{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and mid-range admixture event.}}  
-The tree, residual covariance matrix, and first three migration admixture arrows are shown.
-
-\subsection*{Warbler Sample Metadata}
-\label{warbler_data_table}
-{\bf{Subspecies and geographic meta-data for greenish warbler individuals included in analysis.}}
-
-\subsection*{Human Sample Metadata}
-\label{globe_data_table}
-{\bf{sample size and geographic meta-data for human samples included in analysis}}
 
 % Do NOT remove this, even if you are not including acknowledgments.
 \section*{Acknowledgments}
@@ -2035,6 +1903,143 @@ samples.}\label{sfig:globe_noad_maps}
     There is no single spatial location with unadmixed covariances remotely similar to these.
     } \label{sfig:toy_admixture}
 \end{figure}
+
+
+\section*{Supporting Information}
+
+% Include only the SI item label in the subsection heading. Use the \nameref{label} command to cite SI items in the text.
+
+\subsection*{Simulated covariance decays}
+\label{sim_covariance_decays}
+{\bf{Fig.\ \ref{sfig:sim_covariance_decays}. Decays in covariance for four different simulation scenarios (from top to bottom: simple lattice; lattice with barrier; lattice with expansion; lattice with admixture).} } Left column: sample covariance plotted against observed pairwise distance.  Right column: sample covariance plotted against inferred geogenetic distance.
+
+\subsection*{PCA maps of simulated datasets}
+\label{sim_pc_maps}
+{\bf{Fig.\ \ref{sfig:sim_pc_maps}. Plots of the first two Principal Component axes (with variance explained labeled on the relevant axes)
+			of the mean-centered covariance matrix from simulated spatial scenarios.}}
+			a) the basic lattice scenario shown in \ref{sfig:lattice_scenarios}\subref{simple_lattice}.
+			b) the lattice scenario with admixture from Population 1 into Population 30, 
+				shown in \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}.
+
+\subsection*{The effects of uneven sampling}
+\label{uneven_sampling}
+{\bf{Fig.\ \ref{sfig:uneven_sampling}. The effect of uneven sampling on inference of geogenetic maps.}}
+a) inference using a dataset with a random subsample of 12 populations from the simple lattice scenario with nearest neighbor migration; b) inference using a dataset with a random subsample of 12 populations from the barrier scenario with nearest neighbor migration and a barrier down the center line of longitude.  Ellipses denote the 95\% credible interval on estimated geogenetic locations.
+
+\subsection*{Warbler population nuggets}
+\label{warb_pop_nugg}
+{\bf{Fig.\ \ref{sfig:warb_pop_nugg} Credible intervals on estimated warbler population nugget parameters.}} a) analysis without admixture; b) analysis with admixture.
+
+\subsection*{Warbler population geographic/geogenetic distance comparison}
+\label{warb_pop_distcomp}
+{\bf{Fig.\ \ref{sfig:warb_pop_distcomp}. Comparing geographic to geogenetic pairwise distance between warbler populations: a) observed population coordinates; b) pairwise geographic (great-circle) distance between populations compared to that between their geogenetic locations.}} The highlighted points show distances between populations from the \textit{plumbeitarsus} and \textit{viridanus} subspecies.  Notice that, regardless of their observed distance, their geogenetic separations are roughly constant, and much larger than the geographic distance between them.
+
+\subsection*{Warbler population admixture proportions}
+\label{warb_pop_adprop}
+{\bf{Fig.\ \ref{sfig:warb_pop_adprop}. Credible intervals on estimated warbler population admixture proportion parameters.}}
+
+\subsection*{Warbler population geogenetic map comparison}
+\label{warbler_pop_compare}
+{\bf{Fig.\ \ref{sfig:warbler_pop_compare}. Comparison of inferred maps from three independent analyses.	}} (a,b) Results from analysis using observed locations as priors on population locations.  (c) Results from analysis using random, uniformly distributed locations within the observed range of latitude and longitude as priors on population locations.
+
+\subsection*{Admixture proportion and population location likelihood surfaces}
+\label{admix_prop_func_loc_lnl}
+{\bf{Fig.\ \ref{sfig:admix_prop_func_loc}. Likelihood surfaces for different placements of population ST between \textit{plumbeitarsus} and \textit{viridanus} clusters: (a) log likelihood surface; (b) posterior probability surface, incorporating the priors.}}  The maximum a posteriori estimate (MAP) is shown as a star. 
+
+\subsection*{Warbler individual admixture proportions}
+\label{warb_ind_adprops}
+{\bf{Fig.\ \ref{sfig:warb_ind_adprops}. Credible intervals on estimated warbler individual admixture proportion parameters.}}
+
+\subsection*{Warbler individual geogenetic map comparison}
+\label{warbler_ind_maps_compare}
+{\bf{Fig.\ \ref{sfig:warbler_ind_maps_compare}. Inferred maps for warbler individuals, colored by subspecies under analyses with and without admixture inference.}} a) map inferred without admixture; (b) close-up of all non-\textit{nitidus} samples in non-admixture map; c) map inferred with admixture; d) close-up of all non-\textit{nitidus} samples in the admixture map.
+
+\subsection*{Posterior distributions on locations of warbler individuals}
+\label{warb_ind_clouds}
+{\bf{Fig.\ \ref{sfig:warb_ind_clouds}. Maps of the posterior distributions on population locations in three separate SpaceMix analyses on the warbler individual dataset.}}
+
+\subsection*{Warbler individual nuggets}
+\label{warb_ind_nugg}
+{\bf{Fig.\ \ref{sfig:warb_ind_nugg}. Credible intervals on estimated warbler individual nugget parameters. }} a) analysis without admixture; b) analysis with admixture.
+
+\subsection*{Warbler individual pairwise-$\pi$}
+\label{warb_ind_pwp}
+{\bf{Fig.\ \ref{sfig:warb_ind_pwp}. Mean pairwise sequence divergence at polymorphic sites calculated between all pairs of individuals from different subspecies, and colored by the subspecies to which each individual in the comparison is drawn.}} Note that individuals Tro-LN11 and Lud-MN3 have sequence divergence that is unusually low relative to that of other comparisons between individuals from the same two subspecies.
+
+\subsection*{Warbler individual PCA map}
+\label{warb_ind_PC_map}
+{\bf{Fig.\ \ref{sfig:warb_ind_PC_map}. The map of warbler individuals derived from a Principal Components analysis.}} The PC coordinates have undergone a full Procrustes transformation around the actual sampling coordinates.
+
+\subsection*{Simulation scenario of populations on a line}
+\label{line_scenario}
+{\bf{Fig.\ \ref{sfig:line_scenario}. Simulation scenario of populations on a line, contrasting PCA-based inference and SpaceMix inference.}} a) Scenario used to simulate data in a spatial coalescent framework with nearest-neighbor migration; b) PCA map of allele frequencies, plotting PC axis 1 against PC axis 2, forming a `U' shape; c) Posterior distribution of SpaceMix location inference, forming a rough line; d) snapshot of the MAP draw from the posterior, again showing a rough line.
+
+\subsection*{Warbler population geographic/geogenetic distance comparison}
+\label{warb_ind_distcomp}
+{\bf{Fig.\ \ref{sfig:warb_ind_distcomp}. Comparing geographic pairwise distance to geogenetic pairwise distance between warbler individuals.}} 
+(a) between and (b) within subspecies populations.
+
+\subsection*{Human sample geographic/geogenetic distance comparison}
+\label{globe_noad_distcomp}
+{\bf{Fig.\ \ref{sfig:globe_noad_distcomp}. Comparison of geographic pairwise distance to geogenetic pairwise distance between human populations, colored by continent from which populations were sampled (i.e., two populations sampled from Africa are green).}} Eurasia is divided into Western Eurasia and East Asia.
+
+\subsection*{Human sample nuggets}
+\label{globe_nuggs}
+{\bf{Fig.\ \ref{sfig:globe_nuggs}. Credible intervals on estimated human sample nugget parameters. a) analysis without admixture; a) analysis with admixture.}}
+
+\subsection*{SpaceMix output from analysis of human samples}
+\label{globe_ad_maps_realpr2}
+{\bf{Fig.\ \ref{sfig:globe_ad_maps_realpr2}. Map of human populations from a different SpaceMix analysis (``Real\_Prior1'' -- inferred with admixture), using real geographic coordinates as population location priors.}} a) complete map; b) close-up of Eurasian populations.
+
+\subsection*{SpaceMix output from analysis of human samples}
+\label{globe_ad_maps_realpr3}
+{\bf{Fig.\ \ref{sfig:globe_ad_maps_realpr3}. Map of human populations from another SpaceMix analysis (``Real\_Prior2'',  inferred with admixture), using real geographic coordinates as population location priors.}}  a) complete map; b) close-up of Eurasian populations.
+
+\subsection*{PCA map of human samples}
+\label{globe_PCA_map}
+{\bf{Fig.\ \ref{sfig:globe_PCA_map}. PCA map of human samples used in SpaceMix analyses.}} The PC coordinates have undergone a full Procrustes transformation around the actual sampling coordinates (shown in the inset map).
+
+\subsection*{Example parameter acceptance rates}
+\label{example_acceptance_rates}
+{\bf{Fig.\ \ref{sfig:example_acceptance_rates}. Example parameter acceptance proportions for the $\alpha_2$ parameter and the nugget parameter, $\eta$, using the adaptive Metropolis-within-Gibbs proposal mechanism.}}
+
+\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Lattice}
+\label{treemix_lattice}
+{\bf{Fig.\ \ref{sfig:treemix_lattice}. \texttt{TreeMix} analysis of lattice spatial coalescent simulation.}}  
+The tree, residual covariance matrix, and first three migration admixture arrows are shown.
+
+\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Barrier}
+\label{treemix_barrier}
+{\bf{Fig.\ \ref{sfig:treemix_barrier}. \texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier.}}
+The tree, residual covariance matrix, and first three migration admixture arrows are shown.
+
+\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Expansion}
+\label{treemix_expansion}
+{\bf{Fig.\ \ref{sfig:treemix_expansion}. \texttt{TreeMix} analysis of lattice spatial coalescent simulation with an expansion event.}}
+The tree, residual covariance matrix, and first three migration admixture arrows are shown.
+
+\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Admixture}
+\label{treemix_corneradmixture}
+{\bf{Fig.\ \ref{sfig:treemix_corneradmixture}. \texttt{TreeMix} analysis of lattice spatial coalescent simulation with a long-range admixture event.}}
+The tree, residual covariance matrix, and first three migration admixture arrows are shown.
+
+\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Barrier and Short-Range Admixture}
+\label{treemix_neighboradmixture}
+{\bf{Fig.\ \ref{sfig:treemix_neighboradmixture}. \texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and short-range admixture event.}}  
+The tree, residual covariance matrix, and first three migration admixture arrows are shown.
+
+\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Barrier and Mid-Range Admixture}
+\label{treemix_inlandadmixture}
+{\bf{Fig.\ \ref{sfig:treemix_inlandadmixture}. \texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and mid-range admixture event.}}  
+The tree, residual covariance matrix, and first three migration admixture arrows are shown.
+
+\subsection*{Warbler Sample Metadata}
+\label{warbler_data_table}
+{\bf{Tab.\ \ref{tab:warbler_data_table}. Subspecies and geographic meta-data for greenish warbler individuals included in analysis.}}
+
+\subsection*{Human Sample Metadata}
+\label{globe_data_table}
+{\bf{Tab.\ \ref{tab:globe_data_table}. sample size and geographic meta-data for human samples included in analysis}}
 
 \newpage
 \section*{Supplementary Materials}

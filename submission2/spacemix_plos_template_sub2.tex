@@ -483,12 +483,13 @@ becomes a function of all the pairwise spatial covariances between the locations
 now, we model the covariance between $\hat X_{i,\ell}$ and $\hat X_{j,\ell}$, for each $\ell$, as
 \begin{align}
 \label{eq:admixed_covariance_1}\begin{split}
-\identifyadmixsource{\Omega_{i,j}} = 
-  (1-w_i)(1-w_j) F(D_{i\;,\;j\;}) &\\
-  {} + w_i(1-w_j) F(D_{\identifyadmixsource{i},\;j\;})    &\\
-  {} + w_j(1-w_i) F(D_{i\;,\;\identifyadmixsource{j}})    &\\
-  {} + w_i w_j F(D_{\identifyadmixsource{i},\;\identifyadmixsource{j}})    &\\
-  {} + \delta_{i,j} (\eta_i + 1 / \bar{S}_i) &
+\identifyadmixsource{\Omega_{i,j}} 
+    &= 
+  (1-w_i)(1-w_j) F(D_{i\;,\;j\;}) \\
+  &\qquad {} + w_i(1-w_j) F(D_{\identifyadmixsource{i},\;j\;})    \\
+  &\qquad {} + w_j(1-w_i) F(D_{i\;,\;\identifyadmixsource{j}})    \\
+  &\qquad {} + w_i w_j F(D_{\identifyadmixsource{i},\;\identifyadmixsource{j}})    \\
+  &\qquad {} + \delta_{i,j} (\eta_i + 1 / \bar{S}_i) 
 \end{split}
 \end{align}
 where $D$ is the $2k \, \times \, 2k$ matrix of pairwise distances between all inferred locations and sources of admixture, 
@@ -692,11 +693,11 @@ investigators should employ a range of appropriate methods to identify those tha
 \paragraph{Comparison to PCA}
 SpaceMix, like PCA, is well suited to describing population structure in a continuous fashion --
 but it also has a number of advantages over PCA. 
-PCA is an extremely helpful method for visualization of high-dimensional data used in exploratory data analysis \citep{tukey1977exploratory}.
+PCA is an extremely helpful method for visualization of high-dimensional data used in exploratory data analysis \cite{tukey1977exploratory}.
 In application to genetic data, PCA can quickly identify problematic samples and major axes of variation.  
-Since geography is a major cause of differentiation, the first one or two PC axes often correspond to geography \citep{novembre_interpreting_2008}.  
-However, other factors such as genome rearrangements \citep{ma2012investigation} 
-or other genealogical distortions \citep{mcvean2009genealogical} 
+Since geography is a major cause of differentiation, the first one or two PC axes often correspond to geography \cite{novembre_interpreting_2008}.  
+However, other factors such as genome rearrangements \cite{ma2012investigation} 
+or other genealogical distortions \cite{mcvean2009genealogical} 
 can outweigh, or become mixed with, geographic structure in the results. 
 Furthermore, because PCs are linear functions of the genotypes,
 sometimes many PCs must be used to depict patterns produced by simple isolation by distance \cite{novembre_interpreting_2008}. 

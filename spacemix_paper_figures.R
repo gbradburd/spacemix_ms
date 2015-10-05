@@ -4,7 +4,7 @@
 ################################################################
 ################################################################
 
-source("~/Desktop/Dropbox/space.mix/ms/spacemix.viz.functions.R")
+source("~/Dropbox/space.mix/ms/spacemix.viz.functions.R")
 
 ################################
 #	WARBLER POP FIGS
@@ -1059,8 +1059,8 @@ dev.off()
 ################
 #	CYOL - rand prior
 ################
-load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceruns/globe_no_admixture/rand_prior1/globe_spaceruns_NoAd_randpr1_LongRun/globe_spaceruns_NoAd_randpr1space_MCMC_output1.Robj")
-load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceruns/rand_prior2/globetrotter_dataset.Robj")
+load("~/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceruns/globe_no_admixture/rand_prior1/globe_spaceruns_NoAd_randpr1_LongRun/globe_spaceruns_NoAd_randpr1space_MCMC_output1.Robj")
+load("~/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceruns/rand_prior2/globetrotter_dataset.Robj")
 
 	globe.coords <- cbind(globetrotter.long, globetrotter.lat)
 	pops <- row.names(globetrotter.counts)
@@ -1098,6 +1098,23 @@ load("~/Desktop/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceru
 		continent.col[africa] <- af.loc.cols
 		continent.col[-c(africa,americas)] <- eur.loc.cols
 
+globe.map.list <- make.spacemix.map.list("~/Dropbox/space.mix/data/globetrotter/globe_spacemix/globe_spaceruns/globe_no_admixture/rand_prior1/globe_spaceruns_NoAd_randpr1_LongRun/globe_spaceruns_NoAd_randpr1space_MCMC_output1.Robj",
+											globe.coords,
+											pops,
+											continent.col,
+											0.95)
+quartz(width=7,height=5)
+
+pdf(file="~/Dropbox/space.mix/ms/figs/globetrotter/globe.map.pdf",width=7,height=4)
+	require(maps)
+	map(mar=c(1,1,1,1),col="darkgray")
+	points(globe.coords,col=continent.col,pch=19)
+	box(lwd=2)
+dev.off()
+pdf(file="~/Dropbox/space.mix/ms/figs/globetrotter/globe.geogen.ellipse.map.pdf",width=7,height=5)
+	par(mar=c(3,3,1,1))
+	make.spacemix.map(globe.map.list,text=FALSE,source.option=FALSE,xlim=c(0,100),ylim=c(-45,85))
+dev.off()
 	abbreviate <- function(pop.names){
 	# recover()
 		k <- length(pop.names)
@@ -3588,10 +3605,21 @@ dev.off()
 ################
 #	Pops in a Line
 ################
-load("~/Desktop/Dropbox/space.mix/sims/line_pops/spacemix/linepops1/rand_prior/linepop_1randpr_space_MCMC_output1.Robj")
-load("~/Desktop/Dropbox/space.mix/sims/line_pops/spacemix/linepops1/rand_prior/spacemix.ms.dataset.Robj")
+load("~/Dropbox/space.mix/sims/line_pops/spacemix/linepops1/rand_prior/linepop_1randpr_space_MCMC_output1.Robj")
+load("~/Dropbox/space.mix/sims/line_pops/spacemix/linepops1/rand_prior/spacemix.ms.dataset.Robj")
+require(SpaceMix)
 k <- nrow(spacemix.dataset$population.coordinates)
 pop.cols <- rainbow(k,start=4/6,end=6/6)[as.numeric(cut(spacemix.dataset$population.coordinates[,1],k))]
+linepops.map.list <- make.spacemix.map.list("~/Dropbox/space.mix/sims/line_pops/spacemix/linepops1/rand_prior/linepop_1randpr_space_MCMC_output1.Robj",
+												spacemix.dataset$population.coordinates,
+												unlist(lapply(1:10,function(i){paste("Sample_",i,sep="")})),
+												pop.cols,
+												0.95,
+												burnin=200)
+pdf(file="~/Dropbox/space.mix/ms/figs/sims/linepops_ellipses.pdf",width=6,height=3)
+	par(mar=c(3,3,1,1))
+	make.spacemix.map(linepops.map.list,text=FALSE,source.option=FALSE,xlim=c(0,19),ylim=c(-2,4))
+dev.off()
 burnin <- 200
 thinning <- 10
 x <- seq(burnin,length(which(Prob!=0)),length.out = length(which(Prob!=0))/thinning)

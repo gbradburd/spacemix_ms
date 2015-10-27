@@ -1,4 +1,4 @@
-\begin{thebibliography}{80}
+\begin{thebibliography}{87}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -75,6 +75,13 @@ Abigail Bigham, Marc Bauchet, Dalila Pinto, Xianyun Mao, Joshua~M. Akey, Rui
   populations using dense genome scan data.
 \newblock \emph{PLoS Genet}, 6\penalty0 (9):\penalty0 e1001116, 09 2010.
 
+\bibitem[Bookstein(1989)]{Bookstein_1989}
+Fred~L. Bookstein.
+\newblock Principal warps: thin-plate splines and the decomposition of
+  deformations.
+\newblock \emph{Pattern Analysis and Machine Intelligence, IEEE Transactions
+  on}, 11\penalty0 (6):\penalty0 567--585, Jun 1989.
+
 \bibitem[Botigué et~al.(2013)Botigué, Henn, Gravel, Maples, Gignoux, Corona,
   Atzmon, Burns, Ostrer, Flores, Bertranpetit, Comas, and
   Bustamante]{botigue_gene_2013}
@@ -102,6 +109,12 @@ L.~L. Cavalli-Sforza and A.~Piazza.
 \newblock Analysis of evolution: Evolutionary rates, independence and treeness.
 \newblock \emph{Theoretical Population Biology}, 8\penalty0 (2):\penalty0 127
   -- 165, 1975.
+
+\bibitem[Cavalli-Sforza et~al.(1994)Cavalli-Sforza, Menozzi, and
+  Piazza]{cavallisforza1994}
+L.~Luca Cavalli-Sforza, Paolo Menozzi, and Alberto Piazza.
+\newblock \emph{The History and Geography of Human Genes}.
+\newblock Princeton University Press, Princeton, NJ, 1994.
 
 \bibitem[Chakraborty and Weiss(1988)]{chakraborty_admixture_1988}
 R~Chakraborty and K~M Weiss.
@@ -317,10 +330,11 @@ P.~R. Loh, M.~Lipson, N.~Patterson, P.~Moorjani, J.~K. Pickrell, D.~Reich, and
   disequilibrium}.
 \newblock \emph{Genetics}, 193\penalty0 (4):\penalty0 1233--1254, Apr 2013.
 
-\bibitem[Luca et~al.(1994)Luca, Menozzi, and Piazza]{cavallisforza1994}
-Luca, Paolo Menozzi, and Alberto Piazza.
-\newblock \emph{The History and Geography of Human Genes}.
-\newblock Princeton University Press, Princeton, NJ, 1994.
+\bibitem[Ma and Amos(2012)]{ma2012investigation}
+J~Ma and C~I Amos.
+\newblock Investigation of inversion polymorphisms in the human genome using
+  principal components analysis.
+\newblock \emph{PLoS One}, 7\penalty0 (7), 2012.
 
 \bibitem[Mal\'{e}cot(1975)]{Malecot1975}
 Gustave Mal\'{e}cot.
@@ -482,6 +496,21 @@ Franck Prugnolle, Andrea Manica, and Fran{\c c}ois Balloux.
 \newblock \emph{Current biology : {CB}}, 15\penalty0 (5):\penalty0 R159--R160,
   March 2005.
 
+\bibitem[Purcell(2009)]{plink}
+Shaun Purcell.
+\newblock {PLINK v1.07}.
+\newblock \url{http://pngu.mgh.harvard.edu/purcell/plink/}, 2009.
+
+\bibitem[Purcell et~al.(2007)Purcell, Neale, Todd-Brown, Thomas, Ferreira,
+  Bender, Maller, Sklar, de~Bakker, Daly, and Sham]{Purcell_etal_2007}
+Shaun Purcell, Benjamin Neale, Kathe Todd-Brown, Lori Thomas, Manuel~A.R.
+  Ferreira, David Bender, Julian Maller, Pamela Sklar, Paul~I.W. de~Bakker,
+  Mark~J. Daly, and Pak~C. Sham.
+\newblock Plink: A tool set for whole-genome association and population-based
+  linkage analyses.
+\newblock \emph{The American Journal of Human Genetics}, 81\penalty0
+  (3):\penalty0 559 -- 575, 2007.
+
 \bibitem[Ralph and Coop(2013)]{ralph2013geography}
 Peter Ralph and Graham Coop.
 \newblock The geography of recent genetic ancestry across {Europe}.
@@ -537,6 +566,19 @@ Jeffrey~S. Rosenthal.
   Modern Statistical Methods, chapter~4. Chapman \& Hall, CRC, Florida, USA,
   first edition, 2011.
 
+\bibitem[Sampson and Guttorp(1992)]{Sampson_Guttorp_1992}
+Paul~D. Sampson and Peter Guttorp.
+\newblock Nonparametric estimation of nonstationary spatial covariance
+  structure.
+\newblock \emph{Journal of the American Statistical Association}, 87\penalty0
+  (417):\penalty0 108--119, 1992.
+
+\bibitem[Schiffels and Durbin(2014)]{Schiffels_Durbin_2014}
+S.~Schiffels and R.~Durbin.
+\newblock Inferring human population size and separation history from multiple
+  genome sequences.
+\newblock \emph{Nat. Genet.}, 46\penalty0 (8):\penalty0 919--925, Aug 2014.
+
 \bibitem[Schlebusch et~al.(2012)Schlebusch, Skoglund, Sjödin, Gattepaille,
   Hernandez, Jay, Li, De~Jongh, Singleton, Blum, Soodyall, and
   Jakobsson]{Jakobsson_genomic_2012}
@@ -571,6 +613,11 @@ Pontus Skoglund, Per Sjödin, Tobias Skoglund, Martin Lascoux, and Mattias
 C.B. Ticehurst.
 \newblock \emph{A Systematic Review of the Genus Phylloscopus}.
 \newblock Trustees of the British Museum, London, 1938.
+
+\bibitem[Tukey(1977)]{Tukey1977}
+John~W. Tukey.
+\newblock \emph{Exploratory Data Analysis}.
+\newblock Addison Wesley, Massachusetts, 1 edition edition, 1977.
 
 \bibitem[Wake and Schneider(1998)]{wake_schneider1998}
 David~B. Wake and Christopher~J. Schneider.

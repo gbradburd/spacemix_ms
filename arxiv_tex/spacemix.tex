@@ -121,7 +121,7 @@ Other approaches are designed only to visualize patterns of genetic relatedness 
 without using a particular population genetic model.
 Such methods can deal with many populations or individuals as the unit of analysis. 
 Examples of this second set of methods include clustering methods \citep{STRUCTURE, ADMIXTURE, FINESTRUCTURE} 
-and reduced dimensionality representations of the data, such as Principal Components Analysis (PCA; e.g. \citep{cavallisforza1994, Patterson2006, price2006eigenstrat}).  
+and reduced dimensionality representations of the data (e.g. \citep{cavallisforza1994, Patterson2006, price2006eigenstrat}).  
 
 A third set of methods that describe relatedness between populations by constructing a ``population phylogeny''
 was pioneered by \cite{cavallisforza_edwards1967}, 
@@ -139,7 +139,7 @@ to explain excess covariance between groups of populations.
 
 There has also been renewed interest in methods for dimensionality reduction
 for the visualization of patterns of genetic variation \citep{Patterson2006},
-especially especially Principal Components Analysis (PCA; also pioneered by Cavalli-Sforza \citep{menozzi1978synthetic}). 
+especially Principal Components Analysis (PCA; also pioneered by Cavalli-Sforza \citep{menozzi1978synthetic}). 
 Examining such low-dimensional visual summaries has become an indispensable step in
 the analysis of modern genomic datasets of thousands of loci typed in tens or hundreds of samples.
 Generally, these visualizations are constructed by plotting the first few eigenvectors of the covariance matrix
@@ -351,7 +351,17 @@ In the expansion scenario, in which all populations in the last five columns of 
 the daughter populations of the expansion event cluster with their parent populations, reflecting the higher relatedness (per unit of geographic separation) between them.  
 
 In all scenarios, populations at the corners of the lattice are pulled in somewhat
-because these have the least amount of data informing their relative placements, and because, without nearest-neighbor migration from farther outside the lattice, they are in fact more closely related to their neighbors.  We also examined the effects of uneven sampling on inference by sampling random subsets of the simple lattice and barrier scenarios shown in Figs.\ \ref{sfig:lattice_scenarios}\subref{simple_lattice} and \ref{sfig:lattice_scenarios}\subref{barrier_lattice}.  The results of these analyses are given in Figs.\ \ref{sfig:uneven_sampling}\subref{lattice} and \ref{sfig:uneven_sampling}\subref{barrier}.
+because these have the least amount of data informing their relative placements, and because, without nearest-neighbor migration from farther outside the lattice, they are in fact more closely related to their neighbors.  
+
+We also examined the effects of uneven sampling on inference by simulating a 9 x 9 population grid, 
+and subsampling this total grid into a variety of subsets that had successfully greater `uneven-ness' of sampling.
+We then compared the performance of PCA and SpaceMix on these unevenly subsampled datasets.
+The results of these analyses are shown in Figs.\ \ref{sfig:uneven_sampling_total_grid} through 
+Figs.\ \ref{sfig:uneven_sampling_grid_subsamp_diag}.  As the number of samples removed from the total dataset increases, 
+the maps produced by plotting Principal Component axis 1 (PC1) against PC2 diverge more and more from 
+the true configuration of the samples (Fig.\ \ref{sfig:uneven_sampling_med_dist}).  The same is also true for SpaceMix, 
+but to a much smaller extent, and in all scenarios SpaceMix produces geogenetic maps that are more 
+faithful to the true configuration of the samples than those generated using PCA. 
 
 We next simulated a long-distance admixture event on the same grid,
 by sampling half of the alleles of each individual in the northeast corner population from the southwest corner population (Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}).  We then ran a SpaceMix analysis in which the locations of these populations were estimated (Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}).
@@ -551,7 +561,7 @@ Of course, human history at these geographic scales has many aspects that are no
 static maps with discrete ``arrows'' of admixture.
 Nonetheless, we talk about the locations of samples and their sources of admixture as if these are fixed,
 even though both reflect the compounding of drift and gene flow over many historical processes.  
-We therefore urge caution in the interpretation our results, 
+We therefore urge caution in the interpretation of our results, 
 and view them as a simplistic but rich visualization of patterns of population structure.
 
 We used the dataset of \citet{Hellenthal}, 
@@ -638,31 +648,51 @@ Furthermore, our ``admixture'' events are shorthands for demographic relationshi
 that occurred over possibly substantial lengths of time and regions of the globe;
 approximating this by a single arrow between two points on a map is certainly an oversimplification.
 Aspects of population history that are better described as a population phylogeny may be difficult to interpret using SpaceMix,
-and may be better suited to visualization with hierarchical clustering-based methods \citep{STRUCTURE} or TreeMix/MixMapper-like methods \citep{Treemix,lipson_mixmapper_2013}.  
+and may be better suited to visualization with model-based clustering-based methods \citep{STRUCTURE} or TreeMix/MixMapper-like methods \citep{Treemix,lipson_mixmapper_2013}.  
 There is obviously no one best approach to studying and visualizing population structure;
 investigators should employ a range of appropriate methods to identify those that provide useful insight. 
 
-SpaceMix offers much of the flexibility of PCA -- like PCA, it is well suited to describing population structure in a continuous fashion --
+\paragraph{Comparison to PCA}
+SpaceMix, like PCA, is well suited to describing population structure in a continuous fashion --
 but it also has a number of advantages over PCA. 
-When isolation by distance holds, the first (one or) two PCs often correspond reasonably well to some simple rotation of latitude and longitude; 
-however, these first two PCs explain a relatively small part of the total variance of the data. 
+PCA is an extremely helpful method for visualization of high-dimensional data used in exploratory data analysis \citep{Tukey1977}.
+In application to genetic data, PCA can quickly identify problematic samples and major axes of variation.  
+Since geography is a major cause of differentiation, the first one or two PC axes often correspond to geography \citep{novembre_interpreting_2008}.  
+However, other factors such as genome rearrangements \citep{ma2012investigation} 
+or other genealogical distortions \citep{mcvean_genealogical_2009} 
+can outweigh, or become mixed with, geographic structure in the results. 
 Furthermore, because PCs are linear functions of the genotypes,
 sometimes many PCs must be used to depict patterns produced by simple isolation by distance \citep{novembre_interpreting_2008}. 
+
 These higher order PCs can be hard to interpret in empirical data (see discussion in the warbler section).
 The recently introduced SPA approach \citep{yang_model-based_2012},
 which also assumes allele frequencies are monotonically increasing in a given direction,
 may suffer from the same problem
 (although we note that PCA and SPA both have significant speed advantages over SpaceMix).  
+Notably, the ``map'' obtained from PCA depends, sometimes dramatically, 
+on the choice of genomic region used and on the choice and distribution of samples. 
+When a large number of related samples are included, 
+the resulting PC axes display a combination of between-population and within-population structure, 
+resulting in the typical triangular shape of many PC plots.
+Similarly, unevenness of sampling can greatly distort PC maps, 
+as illustrated in the comparison of the uneven subsampling simulation scenarios 
+shown in Figs.\ \ref{sfig:uneven_sampling_grid_subsamp5} and \ref{sfig:uneven_sampling_grid_subsamp_diag}.
 
-In comparison, if isolation by distance holds, then the two dimensions in which SpaceMix infers geogenetic positions 
+In this way, the generality of PCA is also its weakness: 
+it displays any structure, not necessarily geographical structure. 
+SpaceMix, since it works explicitly with local correlations on maps, 
+is designed to visualize the relationships between samples induced by dispersal of ancestors across geography.  
+Our explicit modeling of admixture is also helpful: in PCA, admixed individuals appear in intermediate locations, but are not distinguished from an individual from an intermediate, more distantly related population.
+If isolation by distance holds, then the two dimensions in which SpaceMix infers geogenetic positions 
 for the samples will suffice to capture the geographic patterns of genetic differentiation 
 (to the extent to which the parametric form of the covariance is flexible enough to capture the empirical decay of covariance with distance). 
+
 The application of SpaceMix to humans nicely illustrates the utility of our approach: 
-the first two PCs of this dataset resemble a boomerang (Fig.\ \ref{sfig:globe_PCA_map}), 
+the first two PCs of this dataset resemble a triangle (Fig.\ \ref{sfig:globe_PCA_map}), 
 with its arms corresponding to the Africa/Non-Africa split and the spread of populations across Eurasia. 
 In contrast, while the SpaceMix geogenetic map is dominated by the genetic drift induced by migration out of Africa,
 it also captures much more detail than is contained in the first two PCs (e.g., Fig.\ \ref{sfig:globe_ad_maps}\subref{globe_eurasia_ad_map}).
-This comparison is also nicely illustrated by the example in Fig.\ \ref{sfig:line_scenario}.
+This comparison is also nicely illustrated by the example in Fig.\ \ref{sfig:line_scenario}, and in Fig.\ \ref{sfig:uneven_sampling_grid_subsamp_diag}.
 
 An advantage of PCA is that it can explain more complex patterns of population structure by allowing up to $K$ different axes.
 Although SpaceMix can easily be extended to more than two dimensions, 
@@ -680,7 +710,8 @@ it would be interesting to explore other methods of generating this geogenetic m
 Such methods may offer computational speedups 
 and also potentially help place SpaceMix within a broader statistical framework.
 
-Another strong advantage of SpaceMix over current methods is the introduction of admixture arrows. 
+\paragraph{Admixture Arrows}
+One of the greatest strengths of SpaceMix is the introduction of admixture arrows. 
 Although PCA can be interpreted in light of simple admixture events \citep{mcvean_genealogical_2009}, 
 and recent methods can locate the recent, spatially admixed ancestry of out-of-sample individuals \citep{yang_model-based_2012,yang_spatial_2014},
 neither approach explicitly models admixture between multiple geographically distant locations,
@@ -713,6 +744,7 @@ This suggests that geogenetic clustering (in lieu of drawing admixture) of popul
 The method could in theory be modified to allow geogenetically proximal populations to draw from the same admixture event;
 however, this may be difficult to make fully automated.
 
+\paragraph{Linkage Between Loci}
 In this paper, we have treated the loci in the dataset as independent, and,
 where necessary, we have thinned empirical datasets to decrease LD between loci.
 One possible approach that avoids the necessity of thinning the data would be to 
@@ -730,6 +762,7 @@ A null model inspired by models of LD under isolation by distance models \citep{
 allowing the covariance among alleles to decay with their geographic distance and the recombination distance between the loci. 
 In such a framework, sources and time-scales of admixture could be identified through unusually long-distance LD between geographically separated populations. 
 
+\paragraph{Future Work}
 The landscape of allele frequencies on which the location of populations that were the source of population's admixture
 are estimated is entirely informed by the placement of other modern samples,
 even though the admixture events may have occurred many generations ago.
@@ -851,7 +884,7 @@ The free parameters for each of options are given in Table \ref{tab:model_option
 \end{table}
 \end{centering}
 
-Although we anticipate most empirical researchers will be interested in the joint inference of a geogenetic map with admixture (Model 4), we have presented these models separately, as we believe each have their own utility.  Model 1 and Model 3 can each be used to infer landscapes of allele frequencies, upon which genotyped individuals can be probabilistically placed (following \citep{Wasser2004}).  This application may be useful to determine the geographic origin of potentially contraband biological samples (e.g., ivory), or the most likely source of museum specimens missing sampling metadata.  Model 3 has the potential to improve the performance of these spatial assignment methods over Model 1, as the inclusion of admixture in the model may allow for more accurate inference of allele frequency surfaces.  Model 2 directly parallels Principal Component Analysis, and can also be used in a model comparison framework with Model 4 to formally test for the presence of admixture in the sampled dataset.
+Although we anticipate most empirical researchers will be interested in the joint inference of a geogenetic map with admixture (Model 4), we have presented these models separately, as we believe each have their own utility.  Model 1 and Model 3 can each be used to infer landscapes of allele frequencies, upon which genotyped individuals can be probabilistically placed (following \citep{Wasser2004}).  This application may be useful to determine the geographic origin of potentially contraband biological samples (e.g., ivory), or the most likely source of museum specimens missing sampling metadata.  Model 3 has the potential to improve the performance of these spatial assignment methods over Model 1, as the inclusion of admixture in the model may allow for more accurate inference of allele frequency surfaces.  Model 2 directly parallels Principal Component Analysis.  Informally the visual comparison of Models 2 and 4 can allow investigators to understand how ignoring long distance admixture distorts relationships among populations. Formally, the fit of these various models could be compared by cross validation, but we do not implement that here.
 
 Below, we outline the inference procedure for the most parameter-rich model (inference on both population locations, their sources of admixture, and the proportions in which they draw admixture, in addition to inference of the parameters of the spatial covariance function).
 A table of all parameters, their descriptions, and their priors is given in Table \ref{tab:param_prior_tab}.
@@ -1155,11 +1188,99 @@ and the National Science Foundation under award numbers NSF \# 1148897 and \# 14
 
 \begin{figure}
 \centering
-	\subcaptionbox{\label{lattice}}
-		{\includegraphics[width=6in,height=2in]{../figs/sims/uneven_sampling_lattice.pdf}}
-	\subcaptionbox{\label{barrier}}
-			{\includegraphics[width=6in,height=2in]{../figs/sims/uneven_sampling_barrier.pdf}}
-	\caption{The effect of uneven sampling on inference of geogenetic maps. a) inference using a dataset with a random subsample of 12 populations from the simple lattice scenario with nearest neighbor migration; b) inference using a dataset with a random subsample of 12 populations from the barrier scenario with nearest neighbor migration and a barrier down the center line of longitude.}\label{sfig:uneven_sampling}
+	{\includegraphics[width=\textwidth]{../figs/sims/total_grid.pdf}}
+	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+			This figure shows the complete grid with corresponding PC map
+			and SpaceMix geogenetic map 
+			(ellipses denote 95\% credible intervals after a 50\% burn-in).  
+			This grid is successively subsampled with greater unevenness of
+			sampling across six subsampled scenarios.}\label{sfig:uneven_sampling_total_grid}
+\end{figure}
+
+\begin{figure}
+\centering
+	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp1.pdf}}
+	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+			This figure shows the subsampling Scenario 1, 
+			in which the lower left, top left, and top right squares are `protected,'
+			and 2 samples are randomly removed from all other squares.
+			Also shown are the corresponding PC map and 
+			SpaceMix geogenetic map 
+			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp1}
+\end{figure}
+
+\begin{figure}
+\centering
+	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp2.pdf}}
+	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+			This figure shows the subsampling Scenario 2, 
+			in which the lower left, top left, and top right squares are `protected,'
+			and 4 samples are randomly removed from all other squares.
+			Also shown are the corresponding PC map and 
+			SpaceMix geogenetic map 
+			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp2}
+\end{figure}
+
+\begin{figure}
+\centering
+	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp3.pdf}}
+	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+			This figure shows the subsampling Scenario 3, 
+			in which the lower left, top left, and top right squares are `protected,'
+			and 6 samples are randomly removed from all other squares.
+			Also shown are the corresponding PC map and 
+			SpaceMix geogenetic map 
+			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp3}
+\end{figure}
+
+\begin{figure}
+\centering
+	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp4.pdf}}
+	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+			This figure shows the subsampling Scenario 4, 
+			in which the lower left, top left, and top right squares are `protected,'
+			and 8 samples are randomly removed from all other squares.
+			Also shown are the corresponding PC map and 
+			SpaceMix geogenetic map 
+			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp4}
+\end{figure}
+
+\begin{figure}
+\centering
+	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp5.pdf}}
+	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+			This figure shows the subsampling Scenario 5, 
+			in which the lower left, top left, and top right squares are `protected,'
+			and all 9 samples are removed from all other squares.
+			Also shown are the corresponding PC map and 
+			SpaceMix geogenetic map 
+			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp5}
+\end{figure}
+
+\begin{figure}
+\centering
+	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp_diag.pdf}}
+	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+			This figure shows the subsampling Scenario 6, 
+			in which the lower left, middle, and bottom right squares are `protected,'
+			and all 9 samples are removed from all other squares, 
+			except for the bottom left and top right squares, which are each 
+			randomly subsampled down to one sample.
+			Also shown are the corresponding PC map and 
+			SpaceMix geogenetic map 
+			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp_diag}
+\end{figure}
+
+\begin{figure}
+\centering
+	{\includegraphics[width=\textwidth]{../figs/sims/median_dist_comp.pdf}}
+	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+			This figure shows, for each scenario, the median distance 
+			between the true sampling coordinates and the sample coordinates 
+			in PC-space and SpaceMix's geogenetic space.  For the SpaceMix 
+			analyses, the geogenetic coordinates used were chosen from the 
+			MCMC iteration with the highest posterior probability.}
+			\label{sfig:uneven_sampling_med_dist}
 \end{figure}
 
 \begin{figure}

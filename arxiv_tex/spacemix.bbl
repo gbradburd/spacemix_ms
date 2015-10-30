@@ -1,4 +1,4 @@
-\begin{thebibliography}{87}
+\begin{thebibliography}{85}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -330,12 +330,6 @@ P.~R. Loh, M.~Lipson, N.~Patterson, P.~Moorjani, J.~K. Pickrell, D.~Reich, and
   disequilibrium}.
 \newblock \emph{Genetics}, 193\penalty0 (4):\penalty0 1233--1254, Apr 2013.
 
-\bibitem[Ma and Amos(2012)]{ma2012investigation}
-J~Ma and C~I Amos.
-\newblock Investigation of inversion polymorphisms in the human genome using
-  principal components analysis.
-\newblock \emph{PLoS One}, 7\penalty0 (7), 2012.
-
 \bibitem[Mal\'{e}cot(1975)]{Malecot1975}
 Gustave Mal\'{e}cot.
 \newblock {Heterozygosity and relationship in regularly subdivided
@@ -613,11 +607,6 @@ Pontus Skoglund, Per Sjödin, Tobias Skoglund, Martin Lascoux, and Mattias
 C.B. Ticehurst.
 \newblock \emph{A Systematic Review of the Genus Phylloscopus}.
 \newblock Trustees of the British Museum, London, 1938.
-
-\bibitem[Tukey(1977)]{Tukey1977}
-John~W. Tukey.
-\newblock \emph{Exploratory Data Analysis}.
-\newblock Addison Wesley, Massachusetts, 1 edition edition, 1977.
 
 \bibitem[Wake and Schneider(1998)]{wake_schneider1998}
 David~B. Wake and Christopher~J. Schneider.

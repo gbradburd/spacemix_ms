@@ -1,7 +1,7 @@
 % Template for PLoS
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL /Users/gburd/Dropbox/space.mix/ms/submission2/spacemix_1st_resub.tex            Tue Oct 27 12:21:19 2015
-%DIF ADD /Users/gburd/Dropbox/space.mix/ms/submission2/spacemix_plos_template_sub2.tex   Tue Oct 27 12:06:43 2015
+%DIF ADD /Users/gburd/Dropbox/space.mix/ms/submission2/spacemix_plos_template_sub2.tex   Fri Oct 30 11:38:08 2015
 % Version 3.0 December 2014
 %
 % To compile to pdf, run:
@@ -481,20 +481,21 @@ In all scenarios, populations at the corners of the lattice are pulled in somewh
 because these have the least amount of data informing their relative placements, and because, without nearest-neighbor migration from farther outside the lattice, they are in fact more closely related to their neighbors.  
 \DIFaddbegin 
 
-\DIFaddend We also examined the effects of uneven sampling on inference by \DIFdelbegin \DIFdel{sampling random subsets of the simple lattice and barrier scenarios shown in Figs.
-\ \ref{sfig:lattice_scenarios}}%DIFDELCMD < \subref{simple_lattice} %%%
+\DIFaddend We also examined the effects of uneven sampling on inference by 
+\DIFdelbegin \DIFdel{sampling random subsets of the simple lattice and barrier scenarios shown in Figs.\ \ref{sfig:lattice_scenarios}}%DIFDELCMD < \subref{simple_lattice} %%%
 \DIFdel{and \ref{sfig:lattice_scenarios}}%DIFDELCMD < \subref{barrier_lattice}%%%
-\DIFdel{.  }\DIFdelend \DIFaddbegin \DIFadd{simulating a 9 x 9 population grid, 
-and subsampling this total grid into a variety of subsets that had successfully greater `uneven-ness' of sampling.
-We then compared the performance of PCA and SpaceMix on these unevenly subsampled datasets.
-}\DIFaddend The results of these analyses are \DIFdelbegin \DIFdel{given }\DIFdelend \DIFaddbegin \DIFadd{shown }\DIFaddend in Figs.\ \DIFdelbegin \DIFdel{\ref{sfig:uneven_sampling}}%DIFDELCMD < \subref{lattice} %%%
+\DIFdelend \DIFaddbegin \DIFadd{subsampling a $9\times9$ grid into a variety of subsets that had successfully greater `uneven-ness' of sampling,
+and comparing PCA and SpaceMix on these unevenly subsampled datasets}\DIFaddend .
+The results of these analyses are \DIFdelbegin \DIFdel{given }\DIFdelend \DIFaddbegin \DIFadd{shown }\DIFaddend in Figs.\ \DIFdelbegin \DIFdel{\ref{sfig:uneven_sampling}}%DIFDELCMD < \subref{lattice} %%%
 \DIFdel{and \ref{sfig:uneven_sampling}}%DIFDELCMD < \subref{barrier}%%%
-\DIFdel{.}\DIFdelend \DIFaddbegin \DIFadd{\ref{sfig:uneven_sampling_total_grid} through 
-Figs.\ \ref{sfig:uneven_sampling_grid_subsamp_diag}.  As the number of samples removed from the total dataset increases, 
+\DIFdel{.}\DIFdelend \DIFaddbegin \DIFadd{\ref{sfig:uneven_sampling_total_grid}--\ref{sfig:uneven_sampling_grid_subsamp_diag}.  
+As sampling becomes more uneven,
 the maps produced by plotting Principal Component axis 1 (PC1) against PC2 diverge more and more from 
-the true configuration of the samples (Fig.\ \ref{sfig:uneven_sampling_med_dist}).  The same is also true for SpaceMix, 
+the true geographic configuration of the samples (Fig.\ \ref{sfig:uneven_sampling_med_dist}),
+quickly resembling the triangular shape commonly seen in PCA plots of real datasets.
+Spacemix also becomes less certain about placement of some samples,
 but to a much smaller extent, and in all scenarios SpaceMix produces geogenetic maps that are more 
-faithful to the true configuration of the samples than those generated using PCA. 
+faithful to the true geographic configuration of the samples than those generated using PCA. 
 }\DIFaddend 
 
 We next simulated a long-distance admixture event on the same grid,
@@ -741,63 +742,51 @@ investigators should employ a range of appropriate methods to identify those tha
 \DIFadd{SpaceMix, }\DIFaddend like PCA, \DIFdelbegin \DIFdel{it }\DIFdelend is well suited to describing population structure in a continuous fashion --
 but it also has a number of advantages over PCA. 
 \DIFdelbegin \DIFdel{When isolation by distance holds, the first (one or ) two PCs often correspond reasonably well to some simple rotation of latitude and longitude; 
-however, these first two PCs explain a relatively small part of the total variance of the data}\DIFdelend \DIFaddbegin \DIFadd{PCA is an extremely helpful method for visualization of high-dimensional data used in exploratory data analysis \mbox{%DIFAUXCMD
-\cite{Tukey1977}}%DIFAUXCMD
-.
-In application to genetic data, PCA can quickly identify problematic samples and major axes of variation.  
+however, these first two PCs explain a relatively small part of the total variance of the data.  
+Furthermore}\DIFdelend \DIFaddbegin \DIFadd{PCA is a general-purpose tool for exploratory visualization of high-dimensional data;
+in application to genetic data, PCA can quickly identify problematic samples and major axes of variation.  
 Since geography is a major cause of differentiation, the first one or two PC axes often correspond to geography \mbox{%DIFAUXCMD
 \cite{novembre_interpreting_2008}}%DIFAUXCMD
 .  
-However, other factors such as genome rearrangements \mbox{%DIFAUXCMD
-\cite{ma2012investigation} 
-}%DIFAUXCMD
-or other genealogical distortions \mbox{%DIFAUXCMD
-\cite{mcvean_genealogical_2009} 
-}%DIFAUXCMD
-can outweigh, or become mixed with, geographic structure in the results}\DIFaddend . 
-Furthermore, because PCs are linear functions of the genotypes,
+However}\DIFaddend , because PCs are linear functions of the genotypes,
 sometimes many PCs must be used to depict patterns produced by simple isolation by distance \cite{novembre_interpreting_2008}. 
 \DIFaddbegin 
 
 \DIFaddend These higher order PCs can be hard to interpret in empirical data (see discussion in the warbler section).
 The recently introduced SPA approach \cite{yang_model-based_2012},
 which also assumes allele frequencies are monotonically increasing in a given direction,
-may suffer from the same problem
-(although we note that PCA and SPA both have significant speed advantages over SpaceMix).  
-\DIFaddbegin \DIFadd{Notably, the ``map'' obtained from PCA depends, sometimes dramatically, 
-on the choice of genomic region used and on the choice and distribution of samples. 
-When a large number of related samples are included, 
-the resulting PC axes display a combination of between-population and within-population structure, 
-resulting in the typical triangular shape of many PC plots.
-Similarly, unevenness of sampling can greatly distort PC maps, 
+may suffer from the same problem\DIFdelbegin \DIFdel{(although we note that }\DIFdelend \DIFaddbegin \DIFadd{, which SpaceMix avoids
+(although }\DIFaddend PCA and SPA \DIFdelbegin \DIFdel{both have significant speed advantages over }\DIFdelend \DIFaddbegin \DIFadd{are both significantly faster than }\DIFaddend SpaceMix).  
+\DIFaddbegin \DIFadd{Similarly, unevenness of sampling can greatly distort PC maps, 
 as illustrated in the comparison of the uneven subsampling simulation scenarios 
 shown in Figs.\ \ref{sfig:uneven_sampling_grid_subsamp5} and \ref{sfig:uneven_sampling_grid_subsamp_diag}.
 }\DIFaddend 
 
-In \DIFdelbegin \DIFdel{comparison, if }\DIFdelend \DIFaddbegin \DIFadd{this way, the generality of PCA is also its weakness: 
+\DIFdelbegin \DIFdel{In comparison, if isolation by distance holds, 
+then the two dimensions in which SpaceMix infers geogenetic positions 
+for the samples will suffice to capture the geographic patterns of genetic differentiation 
+(to the extent to which the parametric form of the covariance is flexible enough to capture the empirical decay of covariance with distance).
+}\DIFdelend \DIFaddbegin \DIFadd{In this way, the generality of PCA is also its weakness: 
 it displays any structure, not necessarily geographical structure. 
 SpaceMix, since it works explicitly with local correlations on maps, 
-is designed to visualize the relationships between samples induced by dispersal of ancestors across geography.  
-Our explicit modeling of admixture is also helpful: in PCA, admixed individuals appear in intermediate locations, but are not distinguished from an individual from an intermediate, more distantly related population.
-If }\DIFaddend isolation by distance holds, then the two dimensions in which SpaceMix infers geogenetic positions 
-for the samples will suffice to capture the geographic patterns of genetic differentiation 
-(to the extent to which the parametric form of the covariance is flexible enough to capture the empirical decay of covariance with distance). 
-\DIFaddbegin 
+is designed to visualize the relationships between samples induced by geographically limited dispersal,
+and so is less easily misled by other types of structure.
+Our explicit modeling of admixture is also helpful; in PCA, admixed individuals appear in intermediate locations in PC biplots, 
+but are not distinguished from individuals in intermediate populations.
+}
 
-\DIFaddend The application of SpaceMix to humans nicely illustrates the utility of our approach: 
+\DIFaddend The application of SpaceMix to humans \DIFdelbegin \DIFdel{nicely }\DIFdelend illustrates the utility of our approach: 
 the first two PCs of this dataset resemble a \DIFdelbegin \DIFdel{boomerang }\DIFdelend \DIFaddbegin \DIFadd{triangle }\DIFaddend (Fig.\ \ref{sfig:globe_PCA_map}), 
 with its arms corresponding to the Africa/Non-Africa split and the spread of populations across Eurasia. 
 In contrast, while the SpaceMix geogenetic map is dominated by the genetic drift induced by migration out of Africa,
 it also captures much more detail than is contained in the first two PCs (e.g., Fig.\ \ref{sfig:globe_ad_maps}\subref{globe_eurasia_ad_map}).
-This comparison is also nicely illustrated by the example in Fig.\ \ref{sfig:line_scenario}\DIFdelbegin \DIFdel{.
-}\DIFdelend \DIFaddbegin \DIFadd{, and in Fig.\ \ref{sfig:uneven_sampling_grid_subsamp_diag}.
-}\DIFaddend 
+This comparison is also \DIFdelbegin \DIFdel{nicely illustrated by the example in Fig}\DIFdelend \DIFaddbegin \DIFadd{illustrated in Figs}\DIFaddend .\ \ref{sfig:line_scenario} \DIFaddbegin \DIFadd{and \ref{sfig:uneven_sampling_grid_subsamp_diag}}\DIFaddend .
 
 An advantage of PCA is that it can explain more complex patterns of population structure by allowing up to $K$ different axes.
 Although SpaceMix can easily be extended to more than two dimensions, 
 simply by allowing $G_i$ to describe the location of a sample in $d$ dimensions, 
-the interpretation and visualization of these higher dimensions would prove difficult, 
-and so for the moment we stick with two dimensions.
+\DIFdelbegin \DIFdel{the }\DIFdelend interpretation and visualization of these higher dimensions \DIFdelbegin \DIFdel{would prove }\DIFdelend \DIFaddbegin \DIFadd{is more }\DIFaddend difficult,
+and so \DIFdelbegin \DIFdel{for the moment we stick with }\DIFdelend \DIFaddbegin \DIFadd{we have stuck to }\DIFaddend two dimensions.
 On the other hand, SpaceMix can describe in two dimensions patterns that PCA,
 due to the constraints of linearity, would need more to describe.
 Our method shows the utility of representing both isolation by distance and 
@@ -1522,7 +1511,9 @@ Heng Li and Richard Durbin.
 \newblock Inference of human population history from individual whole-genome
   sequences.
 \newblock \emph{Nature}, 475\penalty0 (7357):\penalty0 493--496, July 2011.
-\newblock \doi{10.1038/nature10231}.
+\DIFdelbegin %DIFDELCMD < \newblock \doi{10.1038/nature10231}%%%
+\DIFdel{.
+}\DIFdelend 
 
 \bibitem[Li et~al.(2008)]{li_worldwide_2008}
 Jun~Z. Li, Devin~M. Absher, Hua Tang, Audrey~M. Southwick, Amanda~M. Casto,
@@ -1553,14 +1544,7 @@ L. Luca Cavalli-Sforza, Paolo Menozzi, and Alberto Piazza.
 \newblock \emph{The History and Geography of Human Genes}.
 \newblock Princeton University Press, Princeton, NJ, 1994.
 
-\DIFaddbegin \bibitem[Ma and Amos (2012)]{ma2012investigation}
-\DIFadd{J~Ma and C~I Amos.
-}\newblock \DIFadd{Investigation of inversion polymorphisms in the human genome using
-  principal components analysis.
-}\newblock \emph{\DIFadd{PLoS One}}\DIFadd{, 7}\penalty0 \DIFadd{(7), 2012.
-}
-
-\DIFaddend \bibitem[Mal\'{e}cot(1975)]{Malecot1975}
+\bibitem[Mal\'{e}cot(1975)]{Malecot1975}
 Gustave Mal\'{e}cot.
 \newblock {Heterozygosity and relationship in regularly subdivided
   populations}.
@@ -1812,13 +1796,7 @@ C.B. Ticehurst.
 \newblock \emph{A Systematic Review of the Genus Phylloscopus}.
 \newblock Trustees of the British Museum, London, 1938.
 
-\DIFaddbegin \bibitem[Tukey (1977)]{Tukey1977}
-\DIFadd{John~W. Tukey.
-}\newblock \emph{\DIFadd{Exploratory Data Analysis}}\DIFadd{.
-}\newblock \DIFadd{Addison Wesley, Massachusetts, 1 edition edition, 1977.
-}
-
-\DIFaddend \bibitem[Wake and Schneider (1998)]{wake_schneider1998}
+\bibitem[Wake and Schneider (1998)]{wake_schneider1998}
 David~B. Wake and Christopher~J. Schneider.
 \newblock Taxonomy of the plethodontid salamander genus ensatina.
 \newblock \emph{Herpetologica}, 54\penalty0 (2):\penalty0 pp. 279--298, 1998.

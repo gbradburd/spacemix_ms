@@ -353,15 +353,17 @@ the daughter populations of the expansion event cluster with their parent popula
 In all scenarios, populations at the corners of the lattice are pulled in somewhat
 because these have the least amount of data informing their relative placements, and because, without nearest-neighbor migration from farther outside the lattice, they are in fact more closely related to their neighbors.  
 
-We also examined the effects of uneven sampling on inference by simulating a 9 x 9 population grid, 
-and subsampling this total grid into a variety of subsets that had successfully greater `uneven-ness' of sampling.
-We then compared the performance of PCA and SpaceMix on these unevenly subsampled datasets.
-The results of these analyses are shown in Figs.\ \ref{sfig:uneven_sampling_total_grid} through 
-Figs.\ \ref{sfig:uneven_sampling_grid_subsamp_diag}.  As the number of samples removed from the total dataset increases, 
+We also examined the effects of uneven sampling on inference by 
+subsampling a $9\times9$ grid into a variety of subsets that had successfully greater `uneven-ness' of sampling,
+and comparing PCA and SpaceMix on these unevenly subsampled datasets.
+The results of these analyses are shown in Figs.\ \ref{sfig:uneven_sampling_total_grid}--\ref{sfig:uneven_sampling_grid_subsamp_diag}.  
+As sampling becomes more uneven,
 the maps produced by plotting Principal Component axis 1 (PC1) against PC2 diverge more and more from 
-the true configuration of the samples (Fig.\ \ref{sfig:uneven_sampling_med_dist}).  The same is also true for SpaceMix, 
+the true geographic configuration of the samples (Fig.\ \ref{sfig:uneven_sampling_med_dist}),
+quickly resembling the triangular shape commonly seen in PCA plots of real datasets.
+Spacemix also becomes less certain about placement of some samples,
 but to a much smaller extent, and in all scenarios SpaceMix produces geogenetic maps that are more 
-faithful to the true configuration of the samples than those generated using PCA. 
+faithful to the true geographic configuration of the samples than those generated using PCA. 
 
 We next simulated a long-distance admixture event on the same grid,
 by sampling half of the alleles of each individual in the northeast corner population from the southwest corner population (Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}).  We then ran a SpaceMix analysis in which the locations of these populations were estimated (Fig.\ \ref{sfig:corner_admix_scenarios}\subref{corner_admix_inference_CYOL}).
@@ -655,25 +657,17 @@ investigators should employ a range of appropriate methods to identify those tha
 \paragraph{Comparison to PCA}
 SpaceMix, like PCA, is well suited to describing population structure in a continuous fashion --
 but it also has a number of advantages over PCA. 
-PCA is an extremely helpful method for visualization of high-dimensional data used in exploratory data analysis \citep{Tukey1977}.
-In application to genetic data, PCA can quickly identify problematic samples and major axes of variation.  
+PCA is a general-purpose tool for exploratory visualization of high-dimensional data;
+in application to genetic data, PCA can quickly identify problematic samples and major axes of variation.  
 Since geography is a major cause of differentiation, the first one or two PC axes often correspond to geography \citep{novembre_interpreting_2008}.  
-However, other factors such as genome rearrangements \citep{ma2012investigation} 
-or other genealogical distortions \citep{mcvean_genealogical_2009} 
-can outweigh, or become mixed with, geographic structure in the results. 
-Furthermore, because PCs are linear functions of the genotypes,
+However, because PCs are linear functions of the genotypes,
 sometimes many PCs must be used to depict patterns produced by simple isolation by distance \citep{novembre_interpreting_2008}. 
 
 These higher order PCs can be hard to interpret in empirical data (see discussion in the warbler section).
 The recently introduced SPA approach \citep{yang_model-based_2012},
 which also assumes allele frequencies are monotonically increasing in a given direction,
-may suffer from the same problem
-(although we note that PCA and SPA both have significant speed advantages over SpaceMix).  
-Notably, the ``map'' obtained from PCA depends, sometimes dramatically, 
-on the choice of genomic region used and on the choice and distribution of samples. 
-When a large number of related samples are included, 
-the resulting PC axes display a combination of between-population and within-population structure, 
-resulting in the typical triangular shape of many PC plots.
+may suffer from the same problem, which SpaceMix avoids
+(although PCA and SPA are both significantly faster than SpaceMix).  
 Similarly, unevenness of sampling can greatly distort PC maps, 
 as illustrated in the comparison of the uneven subsampling simulation scenarios 
 shown in Figs.\ \ref{sfig:uneven_sampling_grid_subsamp5} and \ref{sfig:uneven_sampling_grid_subsamp_diag}.
@@ -681,24 +675,23 @@ shown in Figs.\ \ref{sfig:uneven_sampling_grid_subsamp5} and \ref{sfig:uneven_sa
 In this way, the generality of PCA is also its weakness: 
 it displays any structure, not necessarily geographical structure. 
 SpaceMix, since it works explicitly with local correlations on maps, 
-is designed to visualize the relationships between samples induced by dispersal of ancestors across geography.  
-Our explicit modeling of admixture is also helpful: in PCA, admixed individuals appear in intermediate locations, but are not distinguished from an individual from an intermediate, more distantly related population.
-If isolation by distance holds, then the two dimensions in which SpaceMix infers geogenetic positions 
-for the samples will suffice to capture the geographic patterns of genetic differentiation 
-(to the extent to which the parametric form of the covariance is flexible enough to capture the empirical decay of covariance with distance). 
+is designed to visualize the relationships between samples induced by geographically limited dispersal,
+and so is less easily misled by other types of structure.
+Our explicit modeling of admixture is also helpful; in PCA, admixed individuals appear in intermediate locations in PC biplots, 
+but are not distinguished from individuals in intermediate populations.
 
-The application of SpaceMix to humans nicely illustrates the utility of our approach: 
+The application of SpaceMix to humans illustrates the utility of our approach: 
 the first two PCs of this dataset resemble a triangle (Fig.\ \ref{sfig:globe_PCA_map}), 
 with its arms corresponding to the Africa/Non-Africa split and the spread of populations across Eurasia. 
 In contrast, while the SpaceMix geogenetic map is dominated by the genetic drift induced by migration out of Africa,
 it also captures much more detail than is contained in the first two PCs (e.g., Fig.\ \ref{sfig:globe_ad_maps}\subref{globe_eurasia_ad_map}).
-This comparison is also nicely illustrated by the example in Fig.\ \ref{sfig:line_scenario}, and in Fig.\ \ref{sfig:uneven_sampling_grid_subsamp_diag}.
+This comparison is also illustrated in Figs.\ \ref{sfig:line_scenario} and \ref{sfig:uneven_sampling_grid_subsamp_diag}.
 
 An advantage of PCA is that it can explain more complex patterns of population structure by allowing up to $K$ different axes.
 Although SpaceMix can easily be extended to more than two dimensions, 
 simply by allowing $G_i$ to describe the location of a sample in $d$ dimensions, 
-the interpretation and visualization of these higher dimensions would prove difficult, 
-and so for the moment we stick with two dimensions.
+interpretation and visualization of these higher dimensions is more difficult,
+and so we have stuck to two dimensions.
 On the other hand, SpaceMix can describe in two dimensions patterns that PCA,
 due to the constraints of linearity, would need more to describe.
 Our method shows the utility of representing both isolation by distance and 

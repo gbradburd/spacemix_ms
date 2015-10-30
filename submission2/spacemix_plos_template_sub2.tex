@@ -465,7 +465,7 @@ and comparing PCA and SpaceMix on these unevenly subsampled datasets.
 The results of these analyses are shown in Figs.\ \ref{sfig:uneven_sampling_total_grid}--\ref{sfig:uneven_sampling_grid_subsamp_diag}.  
 As sampling becomes more uneven,
 the maps produced by plotting Principal Component axis 1 (PC1) against PC2 diverge more and more from 
-the true configuration of the samples (Fig.\ \ref{sfig:uneven_sampling_med_dist}),
+the true geographic configuration of the samples (Fig.\ \ref{sfig:uneven_sampling_med_dist}),
 quickly resembling the triangular shape commonly seen in PCA plots of real datasets.
 Spacemix also becomes less certain about placement of some samples,
 but to a much smaller extent, and in all scenarios SpaceMix produces geogenetic maps that are more 
@@ -708,12 +708,7 @@ but it also has a number of advantages over PCA.
 PCA is a general-purpose tool for exploratory visualization of high-dimensional data;
 in application to genetic data, PCA can quickly identify problematic samples and major axes of variation.  
 Since geography is a major cause of differentiation, the first one or two PC axes often correspond to geography \cite{novembre_interpreting_2008}.  
-However, 
-% other factors such as genome rearrangements \cite{ma2012investigation} 
-% or other genealogical distortions \cite{mcvean_genealogical_2009} 
-% can outweigh, or become mixed with, geographic structure in the results. 
-% Furthermore, 
-because PCs are linear functions of the genotypes,
+However, because PCs are linear functions of the genotypes,
 sometimes many PCs must be used to depict patterns produced by simple isolation by distance \cite{novembre_interpreting_2008}. 
 
 These higher order PCs can be hard to interpret in empirical data (see discussion in the warbler section).
@@ -721,11 +716,6 @@ The recently introduced SPA approach \cite{yang_model-based_2012},
 which also assumes allele frequencies are monotonically increasing in a given direction,
 may suffer from the same problem, which SpaceMix avoids
 (although PCA and SPA are both significantly faster than SpaceMix).  
-% Notably, the ``map'' obtained from PCA depends, sometimes dramatically, 
-% on the choice of genomic region used and on the choice and distribution of samples. 
-Furthermore, when a large number of samples from a few populations are included, 
-the resulting PC axes often display a combination of between-population and within-population structure, 
-resulting in the typical triangular shape of many PC plots.
 Similarly, unevenness of sampling can greatly distort PC maps, 
 as illustrated in the comparison of the uneven subsampling simulation scenarios 
 shown in Figs.\ \ref{sfig:uneven_sampling_grid_subsamp5} and \ref{sfig:uneven_sampling_grid_subsamp_diag}.
@@ -735,11 +725,8 @@ it displays any structure, not necessarily geographical structure.
 SpaceMix, since it works explicitly with local correlations on maps, 
 is designed to visualize the relationships between samples induced by geographically limited dispersal,
 and so is less easily misled by other types of structure.
-Our explicit modeling of admixture is also helpful: in PCA, admixed individuals appear in intermediate locations in PC biplots, 
+Our explicit modeling of admixture is also helpful; in PCA, admixed individuals appear in intermediate locations in PC biplots, 
 but are not distinguished from individuals in intermediate populations.
-% If isolation by distance holds, then the two dimensions in which SpaceMix infers geogenetic positions 
-% for the samples will suffice to capture the geographic patterns of genetic differentiation 
-% (to the extent to which the parametric form of the covariance is flexible enough to capture the empirical decay of covariance with distance). 
 
 The application of SpaceMix to humans illustrates the utility of our approach: 
 the first two PCs of this dataset resemble a triangle (Fig.\ \ref{sfig:globe_PCA_map}), 
@@ -1477,7 +1464,6 @@ Heng Li and Richard Durbin.
 \newblock Inference of human population history from individual whole-genome
   sequences.
 \newblock \emph{Nature}, 475\penalty0 (7357):\penalty0 493--496, July 2011.
-\newblock \doi{10.1038/nature10231}.
 
 \bibitem[Li et~al.(2008)]{li_worldwide_2008}
 Jun~Z. Li, Devin~M. Absher, Hua Tang, Audrey~M. Southwick, Amanda~M. Casto,
@@ -1507,12 +1493,6 @@ P.~R. Loh, M.~Lipson, N.~Patterson, P.~Moorjani, J.~K. Pickrell, D.~Reich, and
 L. Luca Cavalli-Sforza, Paolo Menozzi, and Alberto Piazza.
 \newblock \emph{The History and Geography of Human Genes}.
 \newblock Princeton University Press, Princeton, NJ, 1994.
-
-\bibitem[Ma and Amos (2012)]{ma2012investigation}
-J~Ma and C~I Amos.
-\newblock Investigation of inversion polymorphisms in the human genome using
-  principal components analysis.
-\newblock \emph{PLoS One}, 7\penalty0 (7), 2012.
 
 \bibitem[Mal\'{e}cot(1975)]{Malecot1975}
 Gustave Mal\'{e}cot.
@@ -1765,11 +1745,6 @@ Pontus Skoglund, Per Sjödin, Tobias Skoglund, Martin Lascoux, and Mattias
 C.B. Ticehurst.
 \newblock \emph{A Systematic Review of the Genus Phylloscopus}.
 \newblock Trustees of the British Museum, London, 1938.
-
-\bibitem[Tukey (1977)]{Tukey1977}
-John~W. Tukey.
-\newblock \emph{Exploratory Data Analysis}.
-\newblock Addison Wesley, Massachusetts, 1 edition edition, 1977.
 
 \bibitem[Wake and Schneider (1998)]{wake_schneider1998}
 David~B. Wake and Christopher~J. Schneider.

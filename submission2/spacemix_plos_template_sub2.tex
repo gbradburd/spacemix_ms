@@ -429,19 +429,26 @@ to the latitude or longitude of the original sampling locations.
 In Fig\ \ref{sfig:sim_covariance_decays}, we show the relationship between genetic covariance, 
 geographic distance, and inferred geogenetic distance for these simulations.
 %
-\newline\newline
-\begin{centering}
-{\bf{Fig 1.}}
-    Simulation scenarios and their corresponding geogenetic maps estimated with SpaceMix.  
+\begin{figure}[ht!]
+\begin{center}
+	%\includegraphics{Fig1.tif}
+\end{center}
+\caption{
+\textbf{Simulation scenarios and their corresponding geogenetic maps estimated with SpaceMix.}
     The smaller circles in the simulation scenarios represent unsampled populations.  
-    a) configuration of simulated populations on a simple lattice with spatially homogeneous migration rates (a plot showing the first two Principal Component axes for this simulation is given in \ref{sfig:sim_pc_maps}a); 
-    b) a lattice with a barrier along the center line of longitude, across which migration rates are reduced by a factor of 5; 
-    c) a lattice with recent expansion on the eastern margin; 
-    d) the maximum \textit{a posteriori} (MAP) estimate from the posterior distribution of population locations under the scenario in \ref{sfig:lattice_scenarios}a; 
-    e) MAP estimate of population locations under the scenario in \ref{sfig:lattice_scenarios}b;
-    f) MAP estimate of population locations under the scenario in \ref{sfig:lattice_scenarios}c.
-\end{centering}
-\newline\newline
+    \textbf{a)} 
+    the configuration of simulated populations on a simple lattice with spatially homogeneous migration rates 
+    (a plot showing the first two Principal Component axes for this simulation is given in \ref{sfig:sim_pc_maps}a); 
+    \textbf{b)} 
+    a lattice with a barrier along the center line of longitude, across which migration rates are reduced by a factor of 5; 
+    \textbf{c)} a lattice with recent expansion on the eastern margin; 
+    \textbf{d)} the maximum \textit{a posteriori} (MAP) estimate from the posterior distribution of population locations 
+    under the scenario in \ref{sfig:lattice_scenarios}a; 
+    \textbf{e)} MAP estimate of population locations under the scenario in \ref{sfig:lattice_scenarios}b;
+    \textbf{f)} MAP estimate of population locations under the scenario in \ref{sfig:lattice_scenarios}c.
+    }\label{sfig:lattice_scenarios}
+\end{figure}
+
 
 The lattice scenarios, illustrated in Fig\ \ref{sfig:lattice_scenarios} and Fig\ \ref{sfig:corner_admix_scenarios}, are: 
 homogeneous migration rates across the grid; a longitudinal barrier across the center of the grid; a series of recent expansion events; and an admixture event between opposite corners of the lattice.  In the simple lattice scenario with homogeneous migration rates (Fig\ \ref{sfig:lattice_scenarios}a and Fig\ \ref{sfig:lattice_scenarios}d), SpaceMix recovers the lattice structure used to simulate the data (i.e., populations correctly find their nearest neighbors).  
@@ -473,9 +480,20 @@ The admixture creates excess covariance over anomalously long distances, which i
 Figure \ref{sfig:corner_admix_scenarios}b shows the torturous lengths to which the method goes to fit a good geogenetic map: the admixed population 30 is between population 1, the source of its admixture, and populations 24, 25, and 29, the nearest neighbors to the location of its non-admixed portion.
 However, this warping of space is difficult to interpret, and would be even more so in empirical data for which a researcher does not know the true demographic history.  
 %
-\newline\newline
-{\bf{Fig 2.}} Simulation scenarios and SpaceMix inference.  a) a lattice with recent admixture event between population 1 in the southwest corner and population 30 in the northeast corner, so that population 30 is drawing half of its ancestry from population 1 (a plot showing the first two Principal Component axes for this simulation is given in \ref{sfig:sim_pc_maps}b); b) the estimate of population locations under this scenario; c) the estimate of population locations and their sources of admixture under this scenario.  The 95\% credible interval on $w_{30}$ is 0.36--0.40. In panel (c), the width and opacity of the admixture arrows are drawn proportional the admixture proportions.
-\newline\newline
+\begin{figure}[ht!]
+\begin{center}
+	%\includegraphics{Fig2.tif}
+\end{center}
+\caption{
+\textbf{Simulation scenarios and SpaceMix inference.}  
+	\textbf{a)} 
+	a lattice with recent admixture event between population 1 in the southwest corner and population 30 in the northeast corner, so that population 30 is drawing half of its ancestry from population 1 (a plot showing the first two Principal Component axes for this simulation is given in \ref{sfig:sim_pc_maps}b); 
+	\textbf{b)} 
+	the estimate of population locations under this scenario; 
+	\textbf{c)}
+	the estimate of population locations and their sources of admixture under this scenario.  The 95\% credible interval on $w_{30}$ is 0.36--0.40. In panel (c), the width and opacity of the admixture arrows are drawn proportional the admixture proportions.}\label{sfig:corner_admix_scenarios}
+\end{figure}
+
 
 \subsection*{Inference of Spatial Admixture}
 
@@ -504,9 +522,15 @@ where $D$ is the $2k \, \times \, 2k$ matrix of pairwise distances between all i
 and for readability, we denote, e.g., $F(D(G_i,\identifyadmixsource{G}_j))$, as $F(D_{i\;,\;\identifyadmixsource{j}})$.
 The spatial covariance, $F(D)$, is as given in equation \eqref{eq:spatial_covariance}, and we reintroduce the nugget, $\eta_k$, and the sample size effect, $1/\bar{S_k}$, for each population as above in Eqn. \eqref{eq:spatial_covariance2}.
 %
-\newline\newline
-{\bf{Fig 3.}} An illustration of the form of the admixed covariance given in Equation \eqref{eq:admixed_covariance_1}.  Populations $i$ and $j$ are drawing admixture in proportions $w_i$ and $w_j$ from their respective sources of admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$, and all pairwise spatial covariances (the $F$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $\identifyadmixsource{j}$ than $i$ is from its source $\identifyadmixsource{i}$ (i.e., $w_j > w_i$).
-\newline\newline
+\begin{figure}[ht!]
+\begin{center}
+	%\includegraphics{Fig3.tif}
+\end{center}
+\caption{
+\textbf{An illustration of the form of the admixed covariance.}
+Following Equation \eqref{eq:admixed_covariance_1}, populations $i$ and $j$ are drawing admixture in proportions $w_i$ and $w_j$ from their respective sources of admixture, $\identifyadmixsource{i}$ and $\identifyadmixsource{j}$, and all pairwise spatial covariances (the $F$'s) are shown.  In this cartoon example, population $j$ is drawing more admixture from its source $\identifyadmixsource{j}$ than $i$ is from its source $\identifyadmixsource{i}$ (i.e., $w_j > w_i$).
+}\label{sfig:admixed_cov_diagram}
+\end{figure}
 
 We proceed in our inference procedure as before, but now with the locations of the sources of admixture and the admixture proportions to infer.
 The likelihood of the sample covariance matrix is exactly as before in \eqref{eq:wishart_dist},
@@ -547,9 +571,25 @@ the model is able to explain population 18's its higher covariance with populati
 rather than via that of its source of admixture \kadmixsource{(18)}.  
 In each of these scenarios, the estimated admixture proportion is less than that used to simulate the data.  This is due to the stringent prior we place against admixture.  We discuss these examples further in the Methods.
 %
-\newline\newline
-{\bf{Fig 4.}}    Simulation scenarios and inferred population maps for two different admixture scenarios: a) lattice with a barrier and an admixture event (10\%) across the barrier to an `inland' population; b) the inferred population map for the scenario in (a), where the admixed population 23 is the only population drawing non-negligible admixture (95\% CI: 0.02-0.08); c) lattice with a barrier and an admixture event (40\%) across the barrier to a `neighbor' population on the border of the barrier; (d) the inferred population map for the scenario in (c), where the admixed population 18 is the only population drawing non-negligible admixture (95\% CI: 0.04--0.14).
-\newline\newline
+\begin{figure}[ht!]
+\begin{center}
+	%\includegraphics{Fig4.tif}
+\end{center}
+\caption{
+\textbf{Simulation scenarios and inferred population maps for two different admixture scenarios.}
+	\textbf{a)} 
+	lattice with a barrier and an admixture event (10\%) across the barrier to an `inland' population; 
+	\textbf{b)}
+	the inferred population map for the scenario in (a),
+	where the admixed population 23 is the only population drawing 
+	non-negligible admixture (95\% CI: 0.02-0.08); 
+	\textbf{c)} lattice with a barrier and an admixture event (40\%) across the barrier
+	 to a `neighbor' population on the border of the barrier; 
+	 \textbf{(d)} the inferred population map for the scenario in (c), 
+	 where the admixed population 18 is the only population drawing 
+	 non-negligible admixture (95\% CI: 0.04--0.14).
+}\label{sfig:barr_inland_ad}
+\end{figure}
 
 \subsection*{Empirical Applications}
 To demonstrate the applications of this novel method, we analyzed population genomic data from two systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.  Maps showing our sampling in these two systems are given in Fig\ \ref{sfig:empirical_maps}, and information on the specific samples included is given in the Supplementary Materials, Tables \ref{tab:warbler_data_table} and \ref{tab:globe_data_table}.  
@@ -562,9 +602,19 @@ to the observed latitude and longitudes (a full Procrustes transformation).
 As with the simulations described above, the axes of the geogenetic maps are presented
 in Eastings and Northings.
 %
-\newline\newline
-{\bf{Fig 5.}} Sampling maps of both empirical systems analyzed.  (a) greenish warbler subspecies distributions of all 22 sampled populations (breeding grounds), consisting of 95 individuals and colored by subspecies \cite{alcaide2014genomic}; (b) sampling map for human dataset, consisting of 1,490 individuals from 95 population samples \cite{Hellenthal}.
-\newline\newline
+\begin{figure}[ht!]
+\begin{center}
+	%\includegraphics{Fig5.tif}
+\end{center}
+\caption{
+\textbf{Sampling maps of both empirical systems analyzed.}  
+	\textbf{(a)}
+	greenish warbler subspecies distributions of all 22 sampled populations (breeding grounds), 
+	consisting of 95 individuals and colored by subspecies \cite{alcaide2014genomic}; 
+	\textbf{(b)}
+	sampling map for human dataset, consisting of 1,490 individuals from 95 population samples \cite{Hellenthal}.
+}\label{sfig:empirical_maps}
+\end{figure}
 
 \subsection*{Greenish Warblers}  
 
@@ -579,18 +629,37 @@ consisting of 95 individuals sampled at 22 distinct locations and sequenced at 2
 
 We first ran SpaceMix on the population dataset, with no admixture. The resulting inferred map (Fig\ \ref{sfig:warbler_pop}a) largely recapitulates the geography of the sampled populations around the ring.  The Turkish population (\textbf{TU}, \textit{Phylloscopus trochiloides} ssp.\ \textit{nitidus}) clusters with the populations in the subspecies \textit{ludlowi}, due to its recent expansion, but also has a relatively high nugget parameter (see Fig\ \ref{sfig:warb_pop_nugg}a), reflecting the population history it does not share with its \textit{ludlowi} neighbors.  In the north, where the twin waves of expansion around the Tibetan Plateau are hypothesized to meet, the inferred geogenetic distance between populations from opposite sides of the ring was much greater than their observed geographic separation, reflecting the reproductive isolation between these adjacent forms (see Fig\ \ref{sfig:warb_pop_distcomp}).  
 %
-\newline\newline
-{\bf{Fig 6.}} Inferred population maps with population labels colored as in Fig\ \ref{sfig:empirical_maps}a: a) the map inferred with no admixture inference; b) the map inferred with admixture inference.
-\newline\newline
+\begin{figure}[ht!]
+\begin{center}
+	%\includegraphics{Fig6.tif}
+\end{center}
+\caption{
+\textbf{Inferred maps for warbler populations.}
+Population labels are colored as in Fig\ \ref{sfig:empirical_maps}a. 
+	\textbf{a)} 
+	the map inferred with no admixture inference; 
+	\textbf{b)}
+	the map inferred with admixture inference.
+}\label{sfig:warbler_pop}
+\end{figure}
 
 We then ran the method allowing admixture (Fig\ \ref{sfig:warbler_pop}b). The only population sample with appreciable admixture is the Stolby sample (\textbf{ST}; $w=0.19$, 95\% credible interval: 0.146-0.238; Fig\ \ref{sfig:warb_pop_adprop}).  This sample is known to be composed of an equal mixture of eastern \textit{plumbeitarsus} and western \textit{viridanus} individuals \cite{alcaide2014genomic}. Multiple runs agreed well on the level of admixture of the Stolby sample (see Fig\ \ref{sfig:warbler_pop_compare}). What does vary across runs is whether the Stolby sample has an estimated location by the \textit{viridanus} cluster while drawing admixture from near the \textit{plumbeitarsus} cluster, or vise versa; however, this is to be expected given the 50/50 nature of the sample's makeup (Fig\ \ref{sfig:warbler_pop_compare}). The somewhat intermediate position of the Stolby sample, and its non-50/50 admixture proportion, likely partially reflect the influence of the priors (Fig\ \ref{sfig:admix_prop_func_loc}). 
 
 We repeated these analyses (with and without admixture) on an individual level (Fig\ \ref{sfig:warbler_ind_maps}).  
 No individual drew appreciable admixture (see Fig\ \ref{sfig:warb_ind_adprops} for admixture proportions), and so we discuss the results with admixture (those without admixture are nearly identical, see Fig\ \ref{sfig:warbler_ind_maps_compare}, Fig\ \ref{sfig:warb_ind_clouds}, and Fig\ \ref{sfig:warb_ind_nugg}).  As with the analysis on multi-sample populations, the results approximately mirror the geography of the individuals.
 %
-\newline\newline
-{\bf{Fig 7.}} Inferred maps for warbler individuals, colored by subspecies in an analysis with admixture inference.  a)map inferred with admixture; b) close-up of all non-\textit{nitidus} samples in the admixture map.
-\newline\newline
+\begin{figure}[ht!]
+\begin{center}
+	%\includegraphics{Fig7.tif}
+\end{center}
+\caption{
+\textbf{Inferred maps for warbler individuals with admixture inference.}
+Individual labels are colored by subspecies as in Fig\ \ref{sfig:empirical_maps}a.   
+	\textbf{a)}
+	map inferred with admixture; 
+	\textbf{b)} close-up of all non-\textit{nitidus} samples in the admixture map.
+}\label{sfig:warbler_ind_maps}
+\end{figure}
 
 There are, however, a number of obvious departures in the individual geogenetic map from the population map.  The most obvious is that the location of a pair of \textit{nitidus} samples (in purple) is very far from the rest of the samples.  
 These individuals appear to be fairly close relatives:
@@ -641,25 +710,44 @@ Geogenetic distances between samples within Africa are much greater than those b
 and the slope of the relationship between geographic and geogenetic distances between populations on each continent decays with distance from Africa.  
 This pattern is consistent with a history of human colonization events characterized by serial bottlenecks \cite{Harpending_Rogers_2000,prugnolle_geography_2005,Ramachandran:05} following an out-of-Africa expansion, and subsequent expansions into Western Eurasia, East Asia, the Americas, and Oceania (although see Pickrell and Reich \cite{pickrell_reich:14} for a discussion of other models). 
 %
-\newline\newline
-%
-{\bf{Fig 8.}} Map of human samples, inferred without admixture.\\ (a) complete map; (b) close-up of Eurasian samples.
-%
-\newline\newline
+\begin{figure}[ht!]
+\begin{center}
+	%\includegraphics{Fig8.tif}
+\end{center}
+\caption{
+\textbf{Geogenetic map of human samples, inferred without admixture.}
+	\textbf{a)} complete map; 
+	\textbf{b)} close-up of Eurasian samples.
+}\label{sfig:globe_noad_maps}
+\end{figure}
 
 To investigate possible patterns of admixture further, we ran a SpaceMix analysis with admixture (results shown in Fig\ \ref{sfig:globe_ad_maps} and Fig\ \ref{globe_ad_props}). The biggest change between the geogenetic map of human populations inferred with admixture and that without is the positioning of African samples with respect to the rest of the world.  The relatively large geogenetic distances between these groups reflects the fact that Eurasian, North African, Oceanian, and American populations all share relatively large amounts of population history (and hence genetic drift) not shared with the Sub-Saharan African samples. Relative to the geogenetic map inferred without admixture, the inclusion of admixture shifts the estimated locations of admixed samples intermediate between Sub-Saharan Africa and North Africa/the Middle East toward one cluster or the other, which, in turn, pushes each of those major clusters to move relatively farther apart.  The Ethiopian and Ethiopian Jewish samples have estimated locations closer to the Sub-Saharan samples than those of the North African samples, but draw substantial amounts of admixture ($\sim 40\%$) from close to where the Egyptian sample has positioned itself in the the Middle East cluster, as do the Sandawe \cite{hodgson_early_2014,Pickrell:12}. 
 The SanKhomani draw admixture from near Syria, which may reflect multiple distinct geographic sources of admixture as discussed by \cite{Hellenthal} and \cite{Pickrell:14}. 
 Interestingly the Bantu South African sample, though it has an estimated location near the other Bantu samples, draws admixture from close to the San populations. This is consistent with previous signals of the expansion of Bantu-speaking peoples into southern Africa  \cite{Pickrell:12,Jakobsson_genomic_2012,Pickrell:14,Hellenthal}.  The inferred sample-specific drift parameters (the nuggets) are similar between runs with and without admixture (Fig\ \ref{sfig:globe_nuggs}).
 %
-\newline\newline
-{\bf{Fig 9.}}	Map of human samples, inferred with admixture. (a) complete map; (b) close-up of Eurasian samples.
-    Italicized labels denote locations of admixture sources,
-    with darkness proportional to the amount of admixture.
-\newline\newline
+\begin{figure}[ht!]
+\begin{center}
+	%\includegraphics{Fig9.tif}
+\end{center}
+\caption{
+\textbf{Geogenetic map of human samples, inferred with admixture.} 
+Labels are colored as in as in Fig\ \ref{sfig:empirical_maps}b.
+Italicized labels denote locations of admixture sources, 
+with opacity proportional to the amount of admixture drawn by the sample.
+	\textbf{a)} complete map; 
+	\textbf{b)} close-up of Eurasian samples.
+}\label{sfig:globe_ad_maps}
+\end{figure}
 %
-\newline\newline
-{\bf{Fig 10.}}	Mean admixture proportions (and 95\% CIs) for each population sample.
-\newline\newline
+\begin{figure}[ht!]
+\begin{center}
+	%\includegraphics{Fig10.tif}
+\end{center}
+\caption{
+\textbf{Admixture proportions (95\% CIs) for each human population sample.}
+Labels are colored as in as in Fig\ \ref{sfig:empirical_maps}b.
+}\label{globe_ad_props}
+\end{figure}
 
 The majority of North African samples (Egyptian, Tunisian, Morocan, Mozabite) join the Middle Eastern samples (positioned in rough accord with their sampling location along North Africa), and draw admixture from near the Ethiopian samples. All of the Middle Eastern samples draw admixture from close to the geogenetic location of the Ethiopian samples and where most of the North African samples draw admixture from, representing the complex history of North African--Middle Eastern gene flow \cite{henn_genomic_2012,Hellenthal}. 
 
@@ -1076,13 +1164,21 @@ Consider the simple spatial admixture scenario shown in Fig\ \ref{sfig:toy_admix
 Populations $A$--$D$ are arrayed  along a line, but there is recent admixture from $D$ into $B$ (such that 40\% of the alleles assigned to B are sampled from location $D$).  
 The lines show the expected covariance under isolation by distance that each population ($A$, $C$, or $D$, as indicated by line color) has with a putative population at a given distance.  The dots show the admixed covariance between $B$ and the three other populations, as well as $B$'s variance with itself ($B$-$B$) as specified by equation \eqref{eq:admixed_covariance_1}, with no nugget or sampling effect.
 %
-\newline\newline
-{\bf{Fig 11.}}    Lines show the covariances populations $A$, $C$, and $D$ would have with population $B$ as a function of $B$'s location,
-    with no admixture,
-    under the parametric form of equation \eqref{eq:spatial_covariance}.
-    The colored dots above `$B$' show the covariances observed with $B$ at that location if $B$ has 40\% admixture from $D$.
-    There is no single spatial location with unadmixed covariances remotely similar to these.
-\newline\newline
+\begin{figure}[ht!]
+\begin{center}
+	%\includegraphics{Fig11.tif}
+\end{center}
+\caption{
+\textbf{Illustrated example of spatial covariance and the effects of admixture.}
+Lines show the covariances populations $A$, $C$, and $D$ 
+would have with population $B$ as a function of $B$'s location with no admixture,
+under the parametric form of equation \eqref{eq:spatial_covariance}.
+The colored dots above `$B$' show the covariances observed with 
+$B$ at that location given that $B$ has 40\% admixture from $D$.
+There is no spatial configuration that induces unadmixed covariances 
+remotely similar to those observed.
+} \label{sfig:toy_admixture}
+\end{figure}
 
 Due to its admixture from $D$, $B$ has lower covariance with $A$ than expected given its distance, somewhat higher covariance with $C$, and much higher covariance with $D$. In addition, the variance of $B$ is lower than that of the other three populations, which each have variance $1$: the value of the covariance when the distance is zero. This lower variance results from the fact that the frequencies at $B$ represent a mixture of the frequency at $D$ and the frequency at $B$ before the admixture. 
 
@@ -1701,112 +1797,113 @@ Roberts GO, Rosenthal JS.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}
-	\centering
-		\subcaptionbox{homogeneous scenario\label{simple_lattice}}
-			{\includegraphics[width=1.8in,height=1.5in]{../figs/sims/basic_lattice.pdf}}
-		\subcaptionbox{barrier scenario \label{barrier_lattice}}
-			{\includegraphics[width=1.8in,height=1.5in]{../figs/sims/barrier_lattice.pdf}}
-		\subcaptionbox{expansion scenario \label{expansion_lattice}}
-			{\includegraphics[width=1.8in,height=1.5in]{../figs/sims/expansion_lattice.pdf}}
-		\subcaptionbox{geogenetic map of \ref{sfig:lattice_scenarios}\subref{simple_lattice} \label{lattice_inference}}
-			{\includegraphics[width=1.8in,height=1.5in]{../figs/sims/GeoGenMap_lattice.pdf}}
-		\subcaptionbox{geogenetic map of \ref{sfig:lattice_scenarios}\subref{barrier_lattice}\label{barrier_inference}}
-			{\includegraphics[width=1.8in,height=1.5in]{../figs/sims/GeoGenMap_barrier.pdf}}
-		\subcaptionbox{geogenetic map of \ref{sfig:lattice_scenarios}\subref{expansion_lattice} \label{expansion_inference}}
-			{\includegraphics[width=1.8in,height=1.5in]{../figs/sims/GeoGenMap_expansion.pdf}}
-	\caption{}\label{sfig:lattice_scenarios}
-\end{figure}
 
-\begin{figure}
-	\centering
-		\subcaptionbox{simulated lattice with admixture \label{corner_admixture_lattice}}
-			{\includegraphics[width=2.8in,height=2.33in]{../figs/sims/corner_admixture_lattice.pdf}}
-		\subcaptionbox{geogenetic map without admixture inference \label{corner_admix_inference_CYOL}}
-			{\includegraphics[width=2.8in,height=2.33in]{../figs/sims/GeoGenMap_corner_admixture_CYOL.pdf}}
-		\subcaptionbox{geogenetic map with admixture inference \label{corner_admix_inference}}
-			{\includegraphics[width=2.8in,height=2.33in]{../figs/sims/GeoGenMap_corner_admixture.pdf}}
-	\caption{}\label{sfig:corner_admix_scenarios}
-\end{figure}
+%\begin{figure}
+%	\centering
+%		\subcaptionbox{homogeneous scenario\label{simple_lattice}}
+%			{\includegraphics[width=1.8in,height=1.5in]{../figs/sims/basic_lattice.pdf}}
+%		\subcaptionbox{barrier scenario \label{barrier_lattice}}
+%			{\includegraphics[width=1.8in,height=1.5in]{../figs/sims/barrier_lattice.pdf}}
+%		\subcaptionbox{expansion scenario \label{expansion_lattice}}
+%			{\includegraphics[width=1.8in,height=1.5in]{../figs/sims/expansion_lattice.pdf}}
+%		\subcaptionbox{geogenetic map of \ref{sfig:lattice_scenarios}\subref{simple_lattice} \label{lattice_inference}}
+%			{\includegraphics[width=1.8in,height=1.5in]{../figs/sims/GeoGenMap_lattice.pdf}}
+%		\subcaptionbox{geogenetic map of \ref{sfig:lattice_scenarios}\subref{barrier_lattice}\label{barrier_inference}}
+%			{\includegraphics[width=1.8in,height=1.5in]{../figs/sims/GeoGenMap_barrier.pdf}}
+%		\subcaptionbox{geogenetic map of \ref{sfig:lattice_scenarios}\subref{expansion_lattice} \label{expansion_inference}}
+%			{\includegraphics[width=1.8in,height=1.5in]{../figs/sims/GeoGenMap_expansion.pdf}}
+%	\caption{}\label{sfig:lattice_scenarios}
+%\end{figure}
 
-\begin{figure}[htp!]
-	\centering
-	\includegraphics[width=2in,height=2in]{../figs/admix_cov_Fig.pdf}
-	\caption{}
-\label{sfig:admixed_cov_diagram}
-\end{figure}
+%\begin{figure}
+%	\centering
+%		\subcaptionbox{simulated lattice with admixture \label{corner_admixture_lattice}}
+%			{\includegraphics[width=2.8in,height=2.33in]{../figs/sims/corner_admixture_lattice.pdf}}
+%		\subcaptionbox{geogenetic map without admixture inference \label{corner_admix_inference_CYOL}}
+%			{\includegraphics[width=2.8in,height=2.33in]{../figs/sims/GeoGenMap_corner_admixture_CYOL.pdf}}
+%		\subcaptionbox{geogenetic map with admixture inference \label{corner_admix_inference}}
+%			{\includegraphics[width=2.8in,height=2.33in]{../figs/sims/GeoGenMap_corner_admixture.pdf}}
+%	\caption{}\label{sfig:corner_admix_scenarios}
+%\end{figure}
 
-\begin{figure}[htp!]
-	\centering
-		\subcaptionbox{`inland' admixture\label{barr_inland_ad_scenario}}
-			{\includegraphics[width=2in,height=1.66in]{../figs/sims/barr_inland_ad_lattice.pdf}}
-		\subcaptionbox{`inland' geogenetic map \label{barr_inland_ad_inference}}
-			{\includegraphics[width=2in,height=1.66in]{../figs/sims/GeoGenMap_barr_inland_admixture_1.pdf}}
-		\subcaptionbox{`neighbor' admixture \label{big_barr_ad_scenario}}
-			{\includegraphics[width=2in,height=1.66in]{../figs/sims/big_barr_ad_lattice.pdf}}
-		\subcaptionbox{`neighbor' geogenetic map \label{big_barr_ad_inference}}
-			{\includegraphics[width=2in,height=1.66in]{../figs/sims/GeoGenMap_big_barr_ad_1.pdf}}
-	\caption{}\label{sfig:barr_inland_ad}
-\end{figure}
+%\begin{figure}[htp!]
+%	\centering
+%	\includegraphics[width=2in,height=2in]{../figs/admix_cov_Fig.pdf}
+%	\caption{}
+%\label{sfig:admixed_cov_diagram}
+%\end{figure}
+%
+%\begin{figure}[htp!]
+%	\centering
+%		\subcaptionbox{`inland' admixture\label{barr_inland_ad_scenario}}
+%			{\includegraphics[width=2in,height=1.66in]{../figs/sims/barr_inland_ad_lattice.pdf}}
+%		\subcaptionbox{`inland' geogenetic map \label{barr_inland_ad_inference}}
+%			{\includegraphics[width=2in,height=1.66in]{../figs/sims/GeoGenMap_barr_inland_admixture_1.pdf}}
+%		\subcaptionbox{`neighbor' admixture \label{big_barr_ad_scenario}}
+%			{\includegraphics[width=2in,height=1.66in]{../figs/sims/big_barr_ad_lattice.pdf}}
+%		\subcaptionbox{`neighbor' geogenetic map \label{big_barr_ad_inference}}
+%			{\includegraphics[width=2in,height=1.66in]{../figs/sims/GeoGenMap_big_barr_ad_1.pdf}}
+%	\caption{}\label{sfig:barr_inland_ad}
+%\end{figure}
 
-\begin{figure}
-	\centering
-		\subcaptionbox{Warbler subspecies distribution map \label{irwin_map}}
-			{\includegraphics[width=4in,height=2.67in]{../figs/warblers/warbler_sampling_map.pdf}}
-		\subcaptionbox{Human sample distribution map \label{human_map}}
-			{\includegraphics[width=\textwidth,height=0.6\textwidth]{../figs/globetrotter/globe_world_map_text.pdf}}
-            \caption{}
-\label{sfig:empirical_maps}
-\end{figure}
+%\begin{figure}
+%	\centering
+%		\subcaptionbox{Warbler subspecies distribution map \label{irwin_map}}
+%			{\includegraphics[width=4in,height=2.67in]{../figs/warblers/warbler_sampling_map.pdf}}
+%		\subcaptionbox{Human sample distribution map \label{human_map}}
+%			{\includegraphics[width=\textwidth,height=0.6\textwidth]{../figs/globetrotter/globe_world_map_text.pdf}}
+%            \caption{}
+%\label{sfig:empirical_maps}
+%\end{figure}
+%
+%\begin{figure}
+%	\centering
+%		\subcaptionbox{Warbler geogenetic map, no admixture \label{warb_pop_noad}}
+%			{\includegraphics[width=0.9\textwidth,height=0.75\textwidth]{../figs/warblers/warb_pop_noad.pdf}}
+%		\subcaptionbox{Warbler geogenetic map, with admixture \label{warb_pop_ad}}
+%			{\includegraphics[width=0.9\textwidth,height=0.75\textwidth]{../figs/warblers/population_warbler_ad_map_randpr1.pdf}}
+%\caption{}
+%\label{sfig:warbler_pop}
+%\end{figure}
 
-\begin{figure}
-	\centering
-		\subcaptionbox{Warbler geogenetic map, no admixture \label{warb_pop_noad}}
-			{\includegraphics[width=0.9\textwidth,height=0.75\textwidth]{../figs/warblers/warb_pop_noad.pdf}}
-		\subcaptionbox{Warbler geogenetic map, with admixture \label{warb_pop_ad}}
-			{\includegraphics[width=0.9\textwidth,height=0.75\textwidth]{../figs/warblers/population_warbler_ad_map_randpr1.pdf}}
-\caption{}
-\label{sfig:warbler_pop}
-\end{figure}
+%\begin{figure}
+%	\centering
+%		\subcaptionbox{Warbler individuals map, admixture \label{warb_ind_ad}}
+%			{\includegraphics[width=0.9\textwidth,height=0.75\textwidth]{../figs/warblers/individual_warbler_map_arrows_randpr2.pdf}}
+%		\subcaptionbox{Close-up of non-\textit{nitidus} samples \label{warb_ind_ad_closeup}}
+%			{\includegraphics[width=0.9\textwidth,height=0.75\textwidth]{../figs/warblers/individual_warbler_map_arrows_randpr2_closeup.pdf}}
+%	\caption{}\label{sfig:warbler_ind_maps}
+%\end{figure}
+%
+%\begin{figure}
+%	\centering
+%		\subcaptionbox{Inferred map of human samples \label{globe_all_noad_map}}
+%			{\includegraphics[width=0.9\textwidth,height=0.738\textwidth]{../figs/globetrotter/globe_NoAd_map.pdf}}
+%		\subcaptionbox{Close-up of Eurasian samples \label{globe_eurasia_noad_map}}
+%			{\includegraphics[width=0.9\textwidth,height=0.738\textwidth]{../figs/globetrotter/globe_Eurasia_NoAd_map_indproc.pdf}}
+%	\caption{}\label{sfig:globe_noad_maps}
+%\end{figure}
+%
+%\begin{figure}
+%	\centering
+%		\subcaptionbox{Inferred map of human samples \label{globe_all_ad_map}}
+%			{\includegraphics[width=\textwidth,height=0.71\textwidth]{../figs/globetrotter/globe_Ad_map_AfricaInset.pdf}}
+%		\subcaptionbox{Close-up of Eurasian samples \label{globe_eurasia_ad_map}}
+%			{\includegraphics[width=\textwidth,height=0.71\textwidth]{../figs/globetrotter/eurasia_Ad_map_indproc.pdf}}
+%	\caption{}\label{sfig:globe_ad_maps}
+%\end{figure}
+%
+%\begin{figure}
+%			{\includegraphics[width=\textwidth,height=0.45\textwidth]{../figs/globetrotter/globe_adprop.pdf}}
+%	\caption{}
+%	\label{globe_ad_props}
+%\end{figure}
 
-\begin{figure}
-	\centering
-		\subcaptionbox{Warbler individuals map, admixture \label{warb_ind_ad}}
-			{\includegraphics[width=0.9\textwidth,height=0.75\textwidth]{../figs/warblers/individual_warbler_map_arrows_randpr2.pdf}}
-		\subcaptionbox{Close-up of non-\textit{nitidus} samples \label{warb_ind_ad_closeup}}
-			{\includegraphics[width=0.9\textwidth,height=0.75\textwidth]{../figs/warblers/individual_warbler_map_arrows_randpr2_closeup.pdf}}
-	\caption{}\label{sfig:warbler_ind_maps}
-\end{figure}
-
-\begin{figure}
-	\centering
-		\subcaptionbox{Inferred map of human samples \label{globe_all_noad_map}}
-			{\includegraphics[width=0.9\textwidth,height=0.738\textwidth]{../figs/globetrotter/globe_NoAd_map.pdf}}
-		\subcaptionbox{Close-up of Eurasian samples \label{globe_eurasia_noad_map}}
-			{\includegraphics[width=0.9\textwidth,height=0.738\textwidth]{../figs/globetrotter/globe_Eurasia_NoAd_map_indproc.pdf}}
-	\caption{}\label{sfig:globe_noad_maps}
-\end{figure}
-
-\begin{figure}
-	\centering
-		\subcaptionbox{Inferred map of human samples \label{globe_all_ad_map}}
-			{\includegraphics[width=\textwidth,height=0.71\textwidth]{../figs/globetrotter/globe_Ad_map_AfricaInset.pdf}}
-		\subcaptionbox{Close-up of Eurasian samples \label{globe_eurasia_ad_map}}
-			{\includegraphics[width=\textwidth,height=0.71\textwidth]{../figs/globetrotter/eurasia_Ad_map_indproc.pdf}}
-	\caption{}\label{sfig:globe_ad_maps}
-\end{figure}
-
-\begin{figure}
-			{\includegraphics[width=\textwidth,height=0.45\textwidth]{../figs/globetrotter/globe_adprop.pdf}}
-	\caption{}
-	\label{globe_ad_props}
-\end{figure}
-
-\begin{figure}[htp!]
-	\centering
-	\includegraphics[width=\textwidth]{../figs/sims/Admix_covar_toy_Fig.pdf}
-	\caption{} \label{sfig:toy_admixture}
-\end{figure}
+%\begin{figure}[htp!]
+%	\centering
+%	\includegraphics[width=\textwidth]{../figs/sims/Admix_covar_toy_Fig.pdf}
+%	\caption{} \label{sfig:toy_admixture}
+%\end{figure}
 
 \clearpage
 \newpage

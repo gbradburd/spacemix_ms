@@ -2,6 +2,8 @@ library(igraph)
 iArrows <- igraph:::igraph.Arrows   #http://kbroman.wordpress.com/2012/10/11/curved-arrows-in-r/
 
 alpha=1
+
+tiff(file="~/Dropbox/space.mix/ms/figs/sims/Admix_covar_toy_fig.tiff",width=6,height=2.25,units="in",pointsize=9,res=480)
 par(mar=c(0,3.5,0.1,1))
 loc<-c(0,0.75,2.5,3.5)
 
@@ -26,8 +28,8 @@ Bs.covar<-c((1-w1)*covar.d(loc[1]-loc[2]) + w1*covar.d(loc[1]-loc[4]),  ##with B
 					(1-w1)*covar.d(loc[4]-loc[2]) + w1*covar.d(0)   ##B-D
 )
 
-text(x=rep(loc[2]-0.18,4),y=Bs.covar,col=cols[2],"B-",cex=1.5) 
-text(x=rep(loc[2]-0.09,4),y=Bs.covar,col=cols,c("A","B","C","D"),cex=1.5) 
+text(x=rep(loc[2]-0.25,4),y=Bs.covar,col=cols[2],"B-",cex=1.4) 
+text(x=rep(loc[2]-0.14,4),y=Bs.covar,col=cols,c("A","B","C","D"),cex=1.4) 
 
 #text(x=rep(loc[2]-0.05,4),y=Bs.covar,col=cols[2],"B",cex=1.5) 
 #text(x=rep(loc[2]+0.05,4),y=Bs.covar,col=cols,c("-A","-B","-C","-D"),cex=1.5) 
@@ -43,5 +45,6 @@ text(loc,rep(-0.1,4),c("A","B","C",'D'),col=cols,cex=1.5)
 iArrows(loc[4], -0.18, loc[2], -0.18,
           h.lwd=2, sh.lwd=2, sh.col="black",
           curve=0.15 , width=1, size=0.7)
-          dev.copy2pdf(file="~/Dropbox/Students/gideon/spacemix_ms/figs/sims/Admix_covar_toy_fig.pdf")
+dev.off()
+#          dev.copy2pdf(file="~/Desktop/Admix_covar_toy_fig.pdf")
           

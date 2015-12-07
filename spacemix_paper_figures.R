@@ -9,7 +9,7 @@ source("~/Dropbox/space.mix/ms/spacemix.viz.functions.R")
 ################################
 #	WARBLER POP FIGS
 ################################
-load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop_spaceruns/real_prior1/warbler_pop_dataset.Robj")
+load("~/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop_spaceruns/real_prior1/warbler_pop_dataset.Robj")
 	pops <- row.names(warbler.pop.coords)
 	k <- length(pops)
 	pop.col <- numeric(k)
@@ -68,7 +68,7 @@ dev.off()
 ################
 #	NO ADMIXTURE - RandPrior1
 ################
-load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop_spaceruns/warb_pop_no_admixture/rand_prior1/warb_pop_spaceruns_NoAd_randpr1_LongRun/warb_pop_spaceruns_NoAd_randpr1space_MCMC_output1.Robj")
+load("~/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop_spaceruns/warb_pop_no_admixture/rand_prior1/warb_pop_spaceruns_NoAd_randpr1_LongRun/warb_pop_spaceruns_NoAd_randpr1space_MCMC_output1.Robj")
 
 	pop.order <- c(22,1,3:5,6:21,2)
 	warb.pop.nugg.cred.sets <- get.credible.interval(nugget,pop.order)
@@ -117,7 +117,7 @@ load("~/Desktop/Dropbox/space.mix/data/warblers/warbler_spacemix/pop/warbler_pop
 	index.mat <- upper.tri(obs.D)
 	color.combos <- combn(unique(pop.col),2)
 
-pdf(file="~/Desktop/Dropbox/space.mix/ms/figs/warblers/warb_pop_dist_compare.pdf",width=10,height=5)
+tiff(file="~/Dropbox/space.mix/ms/figs/warblers/warb_pop_dist_compare.tiff",width=10*480,height=5*480,compression="lzw")
 #quartz(width=10,height=5)
 par(mfrow=c(1,2))
 	plot(warbler.pop.coords,pch=19,cex=2,col=pop.col,
@@ -126,6 +126,7 @@ par(mfrow=c(1,2))
 	box(lwd=2)
 	legend(x="bottomleft",col=legend.pop.cols,pch=19,
 			legend=subspp,cex=0.8,bg="white")
+	mtext("a)",side=3,adj=-0.05,padj=-2,font=2)
 	plot(obs.D[index.mat],par.D[index.mat],pch=20,col="gray",
 			xlab="Geographic Pairwise Distance",
 			ylab="Geogenetic Pairwise Distance")
@@ -149,6 +150,7 @@ if(FALSE){
 		}
 	}
 	box(lwd=2)
+	mtext("b)",side=3,adj=-0.05,padj=-2,font=2)
 dev.off()
 
 

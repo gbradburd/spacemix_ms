@@ -28,7 +28,7 @@ text(c(0,1,2,3),rep(-0.1,4),c("A","B","C",'D'),col=cols,cex=1.5)
 iArrows(loc[4], -0.18, loc[1], -0.18,
           h.lwd=2, sh.lwd=2, sh.col="black",
           curve=0.2 , width=1, size=0.7)
-          dev.copy2pdf(file="~/Dropbox/Students/gideon/spacemix_ms/figs/Admix_covar_toy_fig.pdf")
+          dev.copy2pdf(file="~/Desktop/Admix_covar_toy_fig.pdf")
           
 #          points(x=1, y = (1-w1)*covar.d(0-1) + w1*covar.d(0-3),col=cols[1],pch=19)
 #points(x=1, y = (1-w1)*covar.d(2-1) + w1*covar.d(3-2),col=cols[3],pch=19 )

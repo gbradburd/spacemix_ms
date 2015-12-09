@@ -241,7 +241,7 @@ Examples of this second set of methods include clustering methods \cite{STRUCTUR
 and reduced dimensionality representations of the data (e.g. \cite{cavallisforza1994, Patterson2006, price2006eigenstrat}).  
 
 A third set of methods that describe relatedness between populations by constructing a ``population phylogeny''
-was pioneered by \cite{cavallisforza_edwards1967}, 
+was pioneered by Cavalli-Sforza and Edwards \cite{cavallisforza_edwards1967}, 
 as were methods to test whether a tree is a good model of population history \cite{CavalliSforza1975} (see \cite{Felsenstein1982} for a review).
 Tree-based approaches are appealing because trees are easy to visualize and explain,
 but the underlying assumptions (unstructured populations that split at discrete points in time)
@@ -360,7 +360,7 @@ The distribution of the sample covariance matrix $\hat \Omega$ is not known in g
 but the central limit theorem implies that if the number of loci is large, it will be close to Wishart.
 Therefore, we assume that $\hat \Omega$ 
 is Wishart distributed with degrees of freedom equal to the number of loci ($L$) used
-and mean equal to the parametric form $\Omega$ given in equation \eqref{eq:spatial_covariance2}.
+and mean equal to the parametric form $\Omega$ given in Equation \eqref{eq:spatial_covariance2}.
 We denote this by
 \begin{equation}
 \label{eq:wishart_dist}
@@ -418,7 +418,7 @@ which is then embellished in various ways.
 In the SpaceMix analysis of each simulated dataset, 
 we treat population locations as unknown parameters to be estimated as part of the model, 
 and center the priors on each population's location at a random point.
-The resulting geogenetic maps are produced from the parameters having maximum posterior probability.
+The resulting geogenetic maps are generated using the parameters that have maximum posterior probability.
 Since overall translation, rotation, and scale are nuisance parameters,
 we present inferred locations after a Procrustes transformation
 (best-fit rotation, translation, and dilation) 	
@@ -487,7 +487,7 @@ However, this warping of space is difficult to interpret, and would be even more
 \caption{
 \textbf{Simulation scenarios and SpaceMix inference.}  
 	\textbf{a)} 
-	a lattice with recent admixture event between population 1 in the southwest corner and population 30 in the northeast corner, so that population 30 is drawing half of its ancestry from population 1 (a plot showing the first two Principal Component axes for this simulation is given in \ref{sfig:sim_pc_maps}b); 
+	a lattice with a recent admixture event between population 1 in the southwest corner and population 30 in the northeast corner, so that population 30 is drawing half of its ancestry from population 1 (a plot showing the first two Principal Component axes for this simulation is given in \ref{sfig:sim_pc_maps}b); 
 	\textbf{b)} 
 	the estimate of population locations under this scenario; 
 	\textbf{c)}
@@ -520,7 +520,7 @@ now, we model the covariance between $\hat X_{i,\ell}$ and $\hat X_{j,\ell}$, fo
 \end{align}
 where $D$ is the $2k \, \times \, 2k$ matrix of pairwise distances between all inferred locations and sources of admixture, 
 and for readability, we denote, e.g., $F(D(G_i,\identifyadmixsource{G}_j))$, as $F(D_{i\;,\;\identifyadmixsource{j}})$.
-The spatial covariance, $F(D)$, is as given in equation \eqref{eq:spatial_covariance}, and we reintroduce the nugget, $\eta_k$, and the sample size effect, $1/\bar{S_k}$, for each population as above in Eqn. \eqref{eq:spatial_covariance2}.
+The spatial covariance, $F(D)$, is as given in Equation \eqref{eq:spatial_covariance}, and we reintroduce the nugget, $\eta_k$, and the sample size effect, $1/\bar{S_k}$, for each population as above in Eqn. \eqref{eq:spatial_covariance2}.
 %
 \begin{figure}[ht!]
 \begin{center}
@@ -547,7 +547,7 @@ We place a weak spatial prior on the sources of admixture, $\identifyadmixsource
 and are heavily weighted towards small values to be conservative with respect to admixture inference.  
 These priors are detailed in Table \ref{tab:param_prior_tab}.
 
-The models described above may be used in various combinations.  In the simplest model, locations are not estimated for populations , nor do they draw admixture; the only parameters to be estimated are those of the spatial covariance function given in equation \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_i$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  We discuss the utility of these different models in the Appendix.
+The models described above may be used in various combinations.  In the simplest model, locations are not estimated for populations, nor do they draw admixture; the only parameters to be estimated are those of the spatial covariance function given in Equation \eqref{eq:spatial_covariance}, and the population-specific variance terms ($\eta_i$).  In the most complex model, population locations, the locations of their sources of admixture, and the proportions of admixture are all estimated jointly in addition to the parameters of the spatial covariance function and the population specific variances.  We discuss the utility of these different models in the Methods.
 
 Allowing admixture gives sensible results for the scenario of Fig\ \ref{sfig:corner_admix_scenarios}a;
 in the resulting map,
@@ -567,7 +567,7 @@ Here, the admixed population 18 is correctly identified as admixed (Fig\ \ref{sf
 however, its intermediate genetic relationships are explained through an estimated location close to its true admixture source (population 13)
 and source of admixture (95\% CI: 0.04--0.14) on the far margin of the half of the grid on its own side of the barrier.
 Because there is no sampled intervening population between admixed population 18 and its source of admixture 13, 
-the model is able to explain population 18's its higher covariance with population 13 via its estimated location $G_{(18)}$, 
+the model is able to explain population 18's higher covariance with population 13 via its estimated location $G_{(18)}$, 
 rather than via that of its source of admixture \kadmixsource{(18)}.  
 In each of these scenarios, the estimated admixture proportion is less than that used to simulate the data.  This is due to the stringent prior we place against admixture.  We discuss these examples further in the Methods.
 %
@@ -577,6 +577,7 @@ In each of these scenarios, the estimated admixture proportion is less than that
 \end{center}
 \caption{
 \textbf{Simulation scenarios and inferred population maps for two different admixture scenarios.}
+	Green arrows denote admixture from a source to a target population in the simulation.
 	\textbf{a)} 
 	lattice with a barrier and an admixture event (10\%) across the barrier to an `inland' population; 
 	\textbf{b)}
@@ -592,7 +593,7 @@ In each of these scenarios, the estimated admixture proportion is less than that
 \end{figure}
 
 \subsection*{Empirical Applications}
-To demonstrate the applications of this novel method, we analyzed population genomic data from two systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.  Maps showing our sampling in these two systems are given in Fig\ \ref{sfig:empirical_maps}, and information on the specific samples included is given in the Supplementary Materials, Tables \ref{tab:warbler_data_table} and \ref{tab:globe_data_table}.  
+To demonstrate the applications of this novel method, we analyzed population genomic data from two systems: the greenish warbler ring species complex, and a global sampling of contemporary human populations.  Maps showing our sampling in these two systems are given in Fig\ \ref{sfig:empirical_maps}, and information on the specific samples included is given in the Supplementary Materials, Tables S1 and S2.  
 For all analyses presented below, 
 we centered the priors on location parameters at randomly chosen locations
 rather than at the observed geographical locations.
@@ -625,7 +626,7 @@ The question of whether it fits the most strict definition of a ring species foc
 Alcaide \emph{et. al} \cite{alcaide2014genomic} have suggested that the greenish warbler species complex constitutes a `broken' ring species, in which historical discontinuities in gene flow have facilitated the evolution of reproductive isolation between adjacent forms.  
 
 To investigate this question, we applied SpaceMix to the dataset from Alcaide \emph{et. al}\cite{alcaide2014genomic}, 
-consisting of 95 individuals sampled at 22 distinct locations and sequenced at 2,334 SNPs, of which 2,247 were bi-allelic and retained for SpaceMix runs.  These loci were treated as independent (i.e., un-linked).  We discuss other ways to accommodate linkage disequilibrium further in the Discussion.
+consisting of 95 individuals sampled at 22 distinct locations and sequenced at 2,334 SNPs, of which 2,247 were bi-allelic and retained for SpaceMix runs.  These loci were treated as independent (i.e., un-linked).  We discuss ways to accommodate linkage disequilibrium further in the Discussion.
 
 We first ran SpaceMix on the population dataset, with no admixture. The resulting inferred map (Fig\ \ref{sfig:warbler_pop}a) largely recapitulates the geography of the sampled populations around the ring.  The Turkish population (\textbf{TU}, \textit{Phylloscopus trochiloides} ssp.\ \textit{nitidus}) clusters with the populations in the subspecies \textit{ludlowi}, due to its recent expansion, but also has a relatively high nugget parameter (see Fig\ \ref{sfig:warb_pop_nugg}a), reflecting the population history it does not share with its \textit{ludlowi} neighbors.  In the north, where the twin waves of expansion around the Tibetan Plateau are hypothesized to meet, the inferred geogenetic distance between populations from opposite sides of the ring was much greater than their observed geographic separation, reflecting the reproductive isolation between these adjacent forms (see Fig\ \ref{sfig:warb_pop_distcomp}).  
 %
@@ -645,8 +646,10 @@ Population labels are colored as in Fig\ \ref{sfig:empirical_maps}a.
 
 We then ran the method allowing admixture (Fig\ \ref{sfig:warbler_pop}b). The only population sample with appreciable admixture is the Stolby sample (\textbf{ST}; $w=0.19$, 95\% credible interval: 0.146-0.238; Fig\ \ref{sfig:warb_pop_adprop}).  This sample is known to be composed of an equal mixture of eastern \textit{plumbeitarsus} and western \textit{viridanus} individuals \cite{alcaide2014genomic}. Multiple runs agreed well on the level of admixture of the Stolby sample (see Fig\ \ref{sfig:warbler_pop_compare}). What does vary across runs is whether the Stolby sample has an estimated location by the \textit{viridanus} cluster while drawing admixture from near the \textit{plumbeitarsus} cluster, or vise versa; however, this is to be expected given the 50/50 nature of the sample's makeup (Fig\ \ref{sfig:warbler_pop_compare}). The somewhat intermediate position of the Stolby sample, and its non-50/50 admixture proportion, likely partially reflect the influence of the priors (Fig\ \ref{sfig:admix_prop_func_loc}). 
 
-We repeated these analyses (with and without admixture) on an individual level (Fig\ \ref{sfig:warbler_ind_maps}).  
-No individual drew appreciable admixture (see Fig\ \ref{sfig:warb_ind_adprops} for admixture proportions), and so we discuss the results with admixture (those without admixture are nearly identical, see Fig\ \ref{sfig:warbler_ind_maps_compare}, Fig\ \ref{sfig:warb_ind_clouds}, and Fig\ \ref{sfig:warb_ind_nugg}).  As with the analysis on multi-sample populations, the results approximately mirror the geography of the individuals.
+We repeated these analyses (with and without admixture) with a dataset 
+in which we treated each individual as the unit of analysis 
+(Fig\ \ref{sfig:warbler_ind_maps}).  
+No individual drew appreciable admixture (see Fig\ \ref{sfig:warb_ind_adprops} for admixture proportions), and so we discuss the results with admixture (those without admixture are nearly identical, see Figs\ \ref{sfig:warbler_ind_maps_compare}--\ref{sfig:warb_ind_nugg}).  As with the analysis on multi-sample populations, the results approximately mirror the geography of the individuals.
 %
 \begin{figure}[ht!]
 \begin{center}
@@ -662,9 +665,10 @@ Individual labels are colored by subspecies as in Fig\ \ref{sfig:empirical_maps}
 \end{figure}
 
 There are, however, a number of obvious departures in the individual geogenetic map from the population map.  The most obvious is that the location of a pair of \textit{nitidus} samples (in purple) is very far from the rest of the samples.  
-These individuals appear to be fairly close relatives:
-in the population-level analysis of Fig\ \ref{sfig:warb_pop_nugg}a,
-this increase in shared ancestry was accounted for by a large nugget for the \textit{nitidus} population.
+These individuals appear to be closely related, and
+in the population-level analysis,
+this increase in shared ancestry was accounted for by a large nugget for the \textit{nitidus} population 
+(Fig\ \ref{sfig:warb_pop_nugg}a).
 However, in the individual-level analysis, a nugget is estimated separately for each sample, 
 so, the model must accommodate the much higher relatedness between this pair of individuals
 through estimated locations that are close to each other and far from the rest of the samples.
@@ -722,7 +726,7 @@ This pattern is consistent with a history of human colonization events character
 \end{figure}
 
 To investigate possible patterns of admixture further, we ran a SpaceMix analysis with admixture (results shown in Fig\ \ref{sfig:globe_ad_maps} and Fig\ \ref{globe_ad_props}). The biggest change between the geogenetic map of human populations inferred with admixture and that without is the positioning of African samples with respect to the rest of the world.  The relatively large geogenetic distances between these groups reflects the fact that Eurasian, North African, Oceanian, and American populations all share relatively large amounts of population history (and hence genetic drift) not shared with the Sub-Saharan African samples. Relative to the geogenetic map inferred without admixture, the inclusion of admixture shifts the estimated locations of admixed samples intermediate between Sub-Saharan Africa and North Africa/the Middle East toward one cluster or the other, which, in turn, pushes each of those major clusters to move relatively farther apart.  The Ethiopian and Ethiopian Jewish samples have estimated locations closer to the Sub-Saharan samples than those of the North African samples, but draw substantial amounts of admixture ($\sim 40\%$) from close to where the Egyptian sample has positioned itself in the the Middle East cluster, as do the Sandawe \cite{hodgson_early_2014,Pickrell:12}. 
-The SanKhomani draw admixture from near Syria, which may reflect multiple distinct geographic sources of admixture as discussed by \cite{Hellenthal} and \cite{Pickrell:14}. 
+The SanKhomani draw admixture from near Syria, which may reflect multiple distinct geographic sources of admixture \cite{Hellenthal,Pickrell:14}. 
 Interestingly the Bantu South African sample, though it has an estimated location near the other Bantu samples, draws admixture from close to the San populations. This is consistent with previous signals of the expansion of Bantu-speaking peoples into southern Africa  \cite{Pickrell:12,Jakobsson_genomic_2012,Pickrell:14,Hellenthal}.  The inferred sample-specific drift parameters (the nuggets) are similar between runs with and without admixture (Fig\ \ref{sfig:globe_nuggs}).
 %
 \begin{figure}[ht!]
@@ -753,7 +757,7 @@ The majority of North African samples (Egyptian, Tunisian, Morocan, Mozabite) jo
 
 A number of other population samples draw admixture from Africa. The Sindhi, Makrani, and Brahui draw admixture from close to the location of the Bantu samples  \cite{Hellenthal}, and the Balochi and Kalash draw admixture from some distance away from African population samples.  Of the European samples, the Spanish and both East and West Sicilian samples draw small amounts of admixture from close to the Ethiopian samples, presumably reflecting a North African ancestry component  \cite{moorjani_history_2011,botigue_gene_2013}. 
 
-The other significant signal of admixture is between East and West Eurasia, a signal documented by many authors \cite{rosenberg_genetic_2002,li_worldwide_2008, xu_genome-wide_2008,Hellenthal}. The majority of samples maintain their relative positions within each of these groups; however, there are several samples that show admixture between eastern and western Eurasia.  The Uzbekistani and Hazara samples have estimated locations close to the East Asian samples and draw a substantial admixture proportion from close to where the Georgian and Armenian samples have located themselves.  Conversely, the Uygur sample has an estimated location close to the Burusho, Kalash, and Pathan samples, and draws admixture from near the Mongola and Hezhen samples. The Tu sample (with a geogenetic location in East Asia) draws a small amount of ancestry from close to the estimated location of the Uygur. The estimated location of the Chuvash sample is near the Russian and Lithuanian samples, and the Chuvash draw admixture from close to the Yakut (as do the Turkish, to a smaller extent). There are several other East-West connections: the Russian and Adygei samples have admixture from a location ``north'' of the East Asian samples, and the Cambodia sample draws admixture from close to the Eygptian sample \cite{Treemix, Hellenthal}. 
+The other significant signal of admixture is between East and West Eurasia, a signal documented by many authors \cite{rosenberg_genetic_2002,li_worldwide_2008, xu_genome-wide_2008,Hellenthal}. The majority of samples maintain their relative positions within each of these groups; however, there are several samples that show admixture between eastern and western Eurasia.  The Uzbekistani and Hazara samples have estimated locations close to the East Asian samples and draw a substantial admixture proportion from close to the Georgian and Armenian estimated locations.  Conversely, the Uygur sample has an estimated location close to the Burusho, Kalash, and Pathan samples, and draws admixture from near the Mongola and Hezhen samples. The Tu sample (with a geogenetic location in East Asia) draws a small amount of ancestry from close to the estimated location of the Uygur. The estimated location of the Chuvash sample is near the Russian and Lithuanian samples, and the Chuvash draw admixture from close to the Yakut (as do the Turkish, to a smaller extent). There are several other East-West connections: the Russian and Adygei samples have admixture from a location ``north'' of the East Asian samples, and the Cambodia sample draws admixture from close to the Eygptian sample \cite{Treemix, Hellenthal}. 
 
 There are also a number of samples that draw admixture from locations that are not immediately interpretable.  
 For example, the Hadza and Bantu Kenyan samples draw admixture from somewhat close to India, 
@@ -762,7 +766,7 @@ The Pathan samples draw admixture from a location far from any other samples' lo
 but close to where the India samples also draws admixture from. 
 The Myanmar and the Burusho samples both draw admixture far from the locations estimated for other samples as well.
 
-There are a number of possible explanations for these results. As we only allow a single admixture arrow for each sample, populations with multiple, geographically distinct sources of admixture may be have estimated admixture locations that average over those sources. This may be the case for the Hadza and Bantu Keynan samples \cite{Hellenthal}.  A second possibility is that the relatively steep prior on admixture proportion forces samples to draw lower proportions of admixture from locations that overshoot their true sources; this may explain the Xibo and Yakut admixture locations. A final explanation is that good proxies for the sources of admixture may not be included in our sampling, either because of of the limited geographic sampling of current day populations, or because of old admixture events from populations from which there are not other more directly descending modern populations. The admixture into the Indian and Pathan samples (whose admixture source also clusters with the Indian Jew samples in some MCMC runs) may be an example of this; Reich \emph{et al.} \cite{reich_india_2009} and Moorjani \emph{et al.} \cite{moorjani_india_2013} have hypothesized that many populations from the Indian subcontinent may be descended from an admixture event involving an ancestral Southern Indian population not otherwise represented in this dataset.
+There are a number of possible explanations for these results. As we only allow a single admixture arrow for each sample, populations with multiple, geographically distinct sources of admixture may have estimated admixture locations that average over those sources. This may be the case for the Hadza and Bantu Keynan samples \cite{Hellenthal}.  A second possibility is that the relatively steep prior on admixture proportion forces samples to draw lower proportions of admixture from locations that overshoot their true sources; this may explain the Xibo and Yakut admixture locations. A final explanation is that good proxies for the sources of admixture may not be included in our sampling, either because of of the limited geographic sampling of current day populations, or because of old admixture events from populations for which there are not other more direct modern descendant populations. The admixture into the Indian and Pathan samples (whose admixture source also clusters with the Indian Jew samples in some MCMC runs) may be an example of this; Reich \emph{et al.} \cite{reich_india_2009} and Moorjani \emph{et al.} \cite{moorjani_india_2013} have hypothesized that many populations from the Indian subcontinent may be descended from an admixture event involving an ancestral Southern Indian population not otherwise represented in this dataset.
 
 In Fig\ \ref{sfig:globe_ad_maps_realpr2} and Fig\ \ref{sfig:globe_ad_maps_realpr3}, we show the results of other independent MCMC analyses on these data. The broad-scale patterns and results discussed above are consistent across these runs. However, as is to be expected, there is significant heterogeneity in the exact layout of sample and admixture locations. For example, there is some play, among MCMC runs, in the internal orientation of the African locations with respect to the east-west axis within the Eurasian cluster.  For some samples that draw a significant amount of admixture, such as the central Asian populations (Uygur, Hazara and Uzbekistani), the estimated location switches with that of their source of admixture (as was also seen across MCMC runs in the warbler data analysis). Similarly the Ethiopian and Ethiopian Jew samples have estimated locations, in some MCMC runs, close to the other North African samples, and draw admixture from near the Sub-Saharan samples (as do the other North African samples).
 
@@ -804,7 +808,7 @@ Similarly, unevenness of sampling can greatly distort PC maps,
 as illustrated in the comparison of the uneven subsampling simulation scenarios 
 shown in Fig\ \ref{sfig:uneven_sampling_grid_subsamp5} and Fig\ \ref{sfig:uneven_sampling_grid_subsamp_diag}.
 
-In this way, the generality of PCA is also its weakness: 
+The generality of PCA is also its weakness: 
 it displays any structure, not necessarily geographical structure. 
 SpaceMix, since it works explicitly with local correlations on maps, 
 is designed to visualize the relationships between samples induced by geographically limited dispersal,
@@ -824,7 +828,7 @@ PCs (e.g., Fig\
 \ref{sfig:globe_ad_maps}b).
 SpaceMix's explicitly geographic model avoids the tendency of PC
 biplots towards triangular plots,
-as was also seen when applied to uneven sampling 
+as was also seen when applied to unevenly sampled datasets
 (Fig\ \ref{sfig:uneven_sampling_total_grid}-\ref{sfig:uneven_sampling_grid_subsamp_diag}).
 
 An advantage of PCA is that it can explain more complex patterns of population structure by allowing up to $K$ different axes.
@@ -834,11 +838,12 @@ interpretation and visualization of these higher dimensions is more difficult,
 and so we have stuck to two dimensions.
 On the other hand, SpaceMix can describe in two dimensions patterns that PCA,
 due to the constraints of linearity, would need more to describe.
+
 Our method shows the utility of representing both isolation by distance and 
 long-distance admixture on a 2-D geogenetic map.  
-While we perform inference of this map using likelihood-based inference 
+While we generate this map using likelihood-based inference 
 relating a parametric covariance matrix to the observed empirical matrix, 
-it would be interesting to explore other methods of generating this geogenetic map 
+it would be interesting to explore other methods of creating this geogenetic map 
 (e.g., \cite{Bookstein_1989,Sampson_Guttorp_1992,yang_model-based_2012,Petkova_2014_EEMS}).  
 Such methods may offer computational speedups 
 and also potentially help place SpaceMix within a broader statistical framework.
@@ -846,7 +851,7 @@ and also potentially help place SpaceMix within a broader statistical framework.
 \paragraph{Admixture Arrows}
 One of the greatest strengths of SpaceMix is the introduction of admixture arrows. 
 Although PCA can be interpreted in light of simple admixture events \cite{mcvean_genealogical_2009}, 
-and recent methods can locate the recent, spatially admixed ancestry of out-of-sample individuals \cite{yang_model-based_2012,yang_spatial_2014},
+and new methods can locate the recent, spatially admixed ancestry of out-of-sample individuals \cite{yang_model-based_2012,yang_spatial_2014},
 neither approach explicitly models admixture between multiple geographically distant locations,
 as SpaceMix does.
 Assignment methods are designed to deal with many admixed samples \cite{STRUCTURE}, 
@@ -857,7 +862,7 @@ SpaceMix offers a useful tool to understand and visualize spatial patterns of ge
 
 As currently implemented, SpaceMix allows each population to have only a single source of admixture, 
 but some modern populations draw substantial proportions of their ancestry from more than two geographically distant regions.
-In such cases the inferred source of admixture may fall between the true locations of the parental populations.  
+In such cases the inferred source of admixture in a SpaceMix analysis may fall between the true locations of the parental populations.  
 Although it is statistically and computationally feasible to allow each population to choose more than one source of admixture, 
 we were concerned about both the identifiability and the interpretability of such a model, and have not implemented it.
 However, there may be empirical datasets in which such a modeling scheme is required to effectively map patterns of population structure.
@@ -950,7 +955,7 @@ and mean determined by the pattern of migration.
 Although the conditions are not strictly met, 
 these theoretical considerations indicate that such a normalization may be a reasonable thing to do,
 even after substituting the empirical mean allele frequency $\bar f_\ell$ in place of $\epsilon_\ell$,
-which is what we do to define $\hat X_{k,\ell}$ in equation \eqref{eq:standardized_sample_freqs}.
+which is what we do to define $\hat X_{k,\ell}$ in Equation \eqref{eq:standardized_sample_freqs}.
 Recall that the sample allele frequency at locus $\ell$ in population $k$ is given by $\hat{f}_{k,\ell} = C_{k,\ell}/S_{k,\ell}$,  
 where $C_{k,\ell}$ is the number of (arbitrarily chosen) counted alleles,
 and $S_{k,\ell}$ is the total number of sampled alleles.
@@ -1023,7 +1028,7 @@ A table of all parameters, their descriptions, and their priors is given in Tabl
 
 \begin{centering}
 \begin{table}
-\begin{tabular}{| >{\centering\arraybackslash}m{2.0cm} | m{5.2cm} | >{\centering\arraybackslash}m{6.8cm} |}
+\begin{tabular}{| >{\centering\arraybackslash}m{1.7cm} | m{4.8cm} | >{\centering\arraybackslash}m{6.2cm} |}
 	\hline
 	\textbf{Parameter} & \centering{\textbf{Description}} & \textbf{Prior}\\ \hline
 	$\boldsymbol{\alpha_0}$ & 
@@ -1227,7 +1232,7 @@ To contrast our approach to tree-based approaches to admixture we
 applied \texttt{TreeMix} \cite{Treemix} to our spatial simulations.
 %
 We took the \texttt{ms} output on which we had also run Spacemix 
-(Fig\ \ref{sfig:lattice_scenarios},Fig\ \ref{sfig:corner_admix_scenarios},Fig\ \ref{sfig:barr_inland_ad}), 
+(Fig\ \ref{sfig:lattice_scenarios}, Fig\ \ref{sfig:corner_admix_scenarios}, Fig\ \ref{sfig:barr_inland_ad}), 
 and converted it into \texttt{TreeMix} format.  
 We also included an outgroup sequence for each dataset,
  which consisted of a single haploid individual who carried the $0$ (ancestral allele) at every locus. 
@@ -1249,7 +1254,7 @@ In Fig\ \ref{sfig:treemix_lattice} we show the tree and admixture graphs produce
 \texttt{TreeMix} is run on a lattice stepping stone model 
 (a smaller scale version of this exercise was previously done by Pickrell and Pritchard \cite{Treemix}). 
 The tree produced by running \texttt{TreeMix} is rake-like, showing the lack of deep shared sub-division. 
-However, while the tree captures some features of isolation by distance, 
+However, while the tree captures some features of isolation by distance 
 (e.g., neighboring samples are often sister to each other), 
 the tree structure forces many unnatural splits of geographically neighboring populations 
 (as was previously found \cite{Treemix}; see their Fig S14). 
@@ -1268,7 +1273,7 @@ For none of our scenarios was the true admixture the first migration edge added;
 in fact, only for the corner admixture scenario was the true admixture
 event in the first three edges added. 
 This reflects the fact that \texttt{TreeMix} has to add migration edges to cope with the residual
-covariance induced simply due to the poor fit of a tree to spatially simulated data,
+covariance induced by the poor fit of a tree to spatially simulated data,
 and so misses more subtle (but real) admixture events.
 The poor performance of \texttt{TreeMix} here is the result of the 
 spatially simulated data not conforming to the 
@@ -1909,54 +1914,69 @@ Roberts GO, Rosenthal JS.
 \newpage
 
 \section*{Supporting Information}
-
+\renewcommand{\thesubsection}{S\arabic{subsection}}
+\setcounter{secnumdepth}{2}
 % Include only the SI item label in the subsection heading. Use the \nameref{label} command to cite SI items in the text.
 
 %\subsection*{Simulated covariance decays}
-\label{sim_covariance_decays}
-{\bf{Fig\ \ref{sfig:sim_covariance_decays}. Decays in covariance for four different simulation scenarios (from top to bottom: simple lattice; lattice with barrier; lattice with expansion; lattice with admixture).} } Left column: sample covariance plotted against observed pairwise distance.  Right column: sample covariance plotted against inferred geogenetic distance.
+\subsection{Fig}
+\label{sfig:sim_covariance_decays}
+{\bf{
+%Fig\ \ref{sfig:sim_covariance_decays}. 
+Decays in covariance for four different simulation scenarios (from top to bottom: simple lattice; lattice with barrier; lattice with expansion; lattice with admixture).} } Left column: sample covariance plotted against observed pairwise distance.  Right column: sample covariance plotted against inferred geogenetic distance.
 
 %\subsection*{PCA maps of simulated datasets}
-\label{sim_pc_maps}
-{\bf{Fig\ \ref{sfig:sim_pc_maps}. Plots of the first two Principal Component axes (with variance explained labeled on the relevant axes)
-			of the mean-centered covariance matrix from simulated spatial scenarios.}}
-			a) the basic lattice scenario shown in \ref{sfig:lattice_scenarios}\subref{simple_lattice}.
-			b) the lattice scenario with admixture from Population 1 into Population 30, 
-				shown in \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}.
+\subsection{Fig}
+\label{sfig:sim_pc_maps}
+{\bf{
+%Fig\ \ref{sfig:sim_pc_maps}. 
+Plots of the first two Principal Component axes (with variance explained labeled on the relevant axes)
+of the mean-centered covariance matrix from simulated spatial scenarios.}}
+\textbf{a)} the basic lattice scenario shown in \ref{sfig:lattice_scenarios}a.
+\textbf{b)} the lattice scenario with admixture from Population 1 into Population 30, 
+				shown in \ref{sfig:corner_admix_scenarios}a.
 
 %\subsection*{The effects of uneven sampling}
+\subsection{Fig}
 \label{sfig:uneven_sampling_total_grid}
-{\bf{Fig\ \ref{sfig:uneven_sampling_total_grid}}
-	The effect of uneven sampling on inference of geogenetic maps.}
+{\bf{
+%Fig\ \ref{sfig:uneven_sampling_total_grid}}
+	The effect of uneven sampling on inference of geogenetic maps.}}
 	This figure shows the complete grid with corresponding PC map
 	and SpaceMix geogenetic map 
 	(ellipses denote 95\% credible intervals after a 50\% burn-in).  
 	This grid is successively subsampled with greater unevenness of
 	sampling across six subsampled scenarios.
 	
+\subsection{Fig}
 \label{sfig:uneven_sampling_grid_subsamp1}
-{\bf{Fig\ \ref{sfig:uneven_sampling_grid_subsamp1}}
-	The effect of uneven sampling on inference of geogenetic maps.}
+{\bf{
+%Fig\ \ref{sfig:uneven_sampling_grid_subsamp1}}
+	The effect of uneven sampling on inference of geogenetic maps.}}
 	This figure shows the subsampling Scenario 1, 
 	in which the lower left, top left, and top right squares are `protected,'
 	and 2 samples are randomly removed from all other squares.
 	Also shown are the corresponding PC map and 
 	SpaceMix geogenetic map 
 	(ellipses denote 95\% credible intervals after a 50\% burn-in).
-			
+
+\subsection{Fig}			
 \label{sfig:uneven_sampling_grid_subsamp2}
-{\bf{Fig\ \ref{sfig:uneven_sampling_grid_subsamp2}}
-	The effect of uneven sampling on inference of geogenetic maps.}
+{\bf{
+%Fig\ \ref{sfig:uneven_sampling_grid_subsamp2}}
+	The effect of uneven sampling on inference of geogenetic maps.}}
 	This figure shows the subsampling Scenario 2, 
 	in which the lower left, top left, and top right squares are `protected,'
 	and 4 samples are randomly removed from all other squares.
 	Also shown are the corresponding PC map and 
 	SpaceMix geogenetic map 
 	(ellipses denote 95\% credible intervals after a 50\% burn-in).
-			
+
+\subsection{Fig}			
 \label{sfig:uneven_sampling_grid_subsamp3}
-{\bf{Fig\ \ref{sfig:uneven_sampling_grid_subsamp3}}
-	The effect of uneven sampling on inference of geogenetic maps.}
+{\bf{
+%Fig\ \ref{sfig:uneven_sampling_grid_subsamp3}}
+	The effect of uneven sampling on inference of geogenetic maps.}}
 	The effect of uneven sampling on inference of geogenetic maps.  
 	This figure shows the subsampling Scenario 3, 
 	in which the lower left, top left, and top right squares are `protected,'
@@ -1964,10 +1984,12 @@ Roberts GO, Rosenthal JS.
 	Also shown are the corresponding PC map and 
 	SpaceMix geogenetic map 
 	(ellipses denote 95\% credible intervals after a 50\% burn-in).
-	
+
+\subsection{Fig}	
 \label{sfig:uneven_sampling_grid_subsamp4}
-{\bf{Fig\ \ref{sfig:uneven_sampling_grid_subsamp4}}
-	The effect of uneven sampling on inference of geogenetic maps.}
+{\bf{
+%Fig\ \ref{sfig:uneven_sampling_grid_subsamp4}}
+	The effect of uneven sampling on inference of geogenetic maps.}}
 	The effect of uneven sampling on inference of geogenetic maps.  
 	This figure shows the subsampling Scenario 4, 
 	in which the lower left, top left, and top right squares are `protected,'
@@ -1975,10 +1997,12 @@ Roberts GO, Rosenthal JS.
 	Also shown are the corresponding PC map and 
 	SpaceMix geogenetic map 
 	(ellipses denote 95\% credible intervals after a 50\% burn-in).
-			
+
+\subsection{Fig}			
 \label{sfig:uneven_sampling_grid_subsamp5}
-{\bf{Fig\ \ref{sfig:uneven_sampling_grid_subsamp5}}
-	The effect of uneven sampling on inference of geogenetic maps.}
+{\bf{
+%Fig\ \ref{sfig:uneven_sampling_grid_subsamp5}}
+	The effect of uneven sampling on inference of geogenetic maps.}}
 	The effect of uneven sampling on inference of geogenetic maps.  
 	This figure shows the subsampling Scenario 5, 
 	in which the lower left, top left, and top right squares are `protected,'
@@ -1986,10 +2010,12 @@ Roberts GO, Rosenthal JS.
 	Also shown are the corresponding PC map and 
 	SpaceMix geogenetic map 
 	(ellipses denote 95\% credible intervals after a 50\% burn-in).
-			
+
+\subsection{Fig}			
 \label{sfig:uneven_sampling_grid_subsamp_diag}
-{\bf{Fig\ \ref{sfig:uneven_sampling_grid_subsamp_diag}}
-	The effect of uneven sampling on inference of geogenetic maps.}
+{\bf{
+%Fig\ \ref{sfig:uneven_sampling_grid_subsamp_diag}}
+	The effect of uneven sampling on inference of geogenetic maps.}}
 	The effect of uneven sampling on inference of geogenetic maps.  
 	This figure shows the subsampling Scenario 6, 
 	in which the lower left, middle, and bottom right squares are `protected,'
@@ -1999,10 +2025,12 @@ Roberts GO, Rosenthal JS.
 	Also shown are the corresponding PC map and 
 	SpaceMix geogenetic map 
 	(ellipses denote 95\% credible intervals after a 50\% burn-in).
-			
+
+\subsection{Fig}			
 \label{sfig:uneven_sampling_grid_med_dist}
-{\bf{Fig\ \ref{sfig:uneven_sampling_grid_med_dist}}
-	The effect of uneven sampling on inference of geogenetic maps.}
+{\bf{
+%Fig\ \ref{sfig:uneven_sampling_grid_med_dist}}
+	The effect of uneven sampling on inference of geogenetic maps.}}
 	The effect of uneven sampling on inference of geogenetic maps.  
 	This figure shows, for each scenario, the median distance 
 	between the true sampling coordinates and the sample coordinates 
@@ -2010,801 +2038,962 @@ Roberts GO, Rosenthal JS.
 	analyses, the geogenetic coordinates used were chosen from the 
 	MCMC iteration with the highest posterior probability.
 
-%\subsection*{Warbler population nuggets}
-\label{warb_pop_nugg}
-{\bf{Fig\ \ref{sfig:warb_pop_nugg} Credible intervals on estimated warbler population nugget parameters.}} a) analysis without admixture; b) analysis with admixture.
+\subsection{Fig}
+\label{sfig:warb_pop_nugg}
+{\bf{
+%Fig\ \ref{sfig:warb_pop_nugg} 
+Credible intervals on estimated warbler population nugget parameters.}} 
+\textbf{a)} analysis without admixture
+\textbf{b)} analysis with admixture.
 
-%\subsection*{Warbler population geographic/geogenetic distance comparison}
-\label{warb_pop_distcomp}
-{\bf{Fig\ \ref{sfig:warb_pop_distcomp}. Comparing geographic to geogenetic pairwise distance between warbler populations: a) observed population coordinates; b) pairwise geographic (great-circle) distance between populations compared to that between their geogenetic locations.}} The highlighted points show distances between populations from the \textit{plumbeitarsus} and \textit{viridanus} subspecies.  Notice that, regardless of their observed distance, their geogenetic separations are roughly constant, and much larger than the geographic distance between them.
+\subsection{Fig}
+\label{sfig:warb_pop_distcomp}
+{\bf{
+%Fig\ \ref{sfig:warb_pop_distcomp}. 
+Comparing geographic to geogenetic pairwise distance between warbler populations.}} 
+\textbf{a)} 
+	observed population coordinates; 
+\textbf{b)} 
+	pairwise geographic (great-circle) distance between populations 
+	compared to that between their geogenetic locations.
+The highlighted points show distances between populations 
+from the \textit{plumbeitarsus} and \textit{viridanus} subspecies.  
+Notice that, regardless of their observed distance, 
+their geogenetic separations are roughly constant, 
+and much larger than the geographic distance between them.
 
 %\subsection*{Warbler population admixture proportions}
-\label{warb_pop_adprop}
-{\bf{Fig\ \ref{sfig:warb_pop_adprop}. Credible intervals on estimated warbler population admixture proportion parameters.}}
+\subsection{Fig}
+\label{sfig:warb_pop_adprop}
+{\bf{Warbler population admixture proportions}}
+%Fig\ \ref{sfig:warb_pop_adprop}. 
+Credible intervals on estimated warbler population admixture proportion parameters.
 
 %\subsection*{Warbler population geogenetic map comparison}
-\label{warbler_pop_compare}
-{\bf{Fig\ \ref{sfig:warbler_pop_compare}. Comparison of inferred maps from three independent analyses.	}} (a,b) Results from analysis using observed locations as priors on population locations.  (c) Results from analysis using random, uniformly distributed locations within the observed range of latitude and longitude as priors on population locations.
+\subsection{Fig}
+\label{sfig:warbler_pop_compare}
+{\bf{
+%Fig\ \ref{sfig:warbler_pop_compare}. 
+Comparison of inferred maps from three independent analyses.	}} 
+\textbf{(a,b)} 
+Results from analysis using observed locations as priors on population locations.  
+\textbf{c)} 
+Results from analysis using random, uniformly distributed locations 
+within the observed range of latitude and longitude as priors on population locations.
 
 %\subsection*{Admixture proportion and population location likelihood surfaces}
-\label{admix_prop_func_loc_lnl}
-{\bf{Fig\ \ref{sfig:admix_prop_func_loc}. Likelihood surfaces for different placements of population ST between \textit{plumbeitarsus} and \textit{viridanus} clusters: (a) log likelihood surface; (b) posterior probability surface, incorporating the priors.}}  The maximum a posteriori estimate (MAP) is shown as a star. 
+\subsection{Fig}
+\label{sfig:admix_prop_func_loc}
+{\bf{
+%Fig\ \ref{sfig:admix_prop_func_loc}. 
+Likelihood surfaces for different placements of population ST between \textit{plumbeitarsus} and \textit{viridanus} clusters.}}
+\textbf{a)} log likelihood surface; 
+\textbf{b)} posterior probability surface, incorporating the priors. 
+The maximum a posteriori estimate (MAP) is shown as a star. 
 
 %\subsection*{Warbler individual admixture proportions}
-\label{warb_ind_adprops}
-{\bf{Fig\ \ref{sfig:warb_ind_adprops}. Credible intervals on estimated warbler individual admixture proportion parameters.}}
+\subsection{Fig}
+\label{sfig:warb_ind_adprops}
+{\bf{Warbler individual admixture proportions}}
+%Fig\ \ref{sfig:warb_ind_adprops}. 
+Credible intervals on estimated warbler individual admixture proportion parameters.
 
 %\subsection*{Warbler individual geogenetic map comparison}
-\label{warbler_ind_maps_compare}
-{\bf{Fig\ \ref{sfig:warbler_ind_maps_compare}. Inferred maps for warbler individuals, colored by subspecies under analyses with and without admixture inference.}} a) map inferred without admixture; (b) close-up of all non-\textit{nitidus} samples in non-admixture map; c) map inferred with admixture; d) close-up of all non-\textit{nitidus} samples in the admixture map.
+\subsection{Fig}
+\label{sfig:warbler_ind_maps_compare}
+{\bf{Warbler individual geogenetic map comparison}}
+%Fig\ \ref{sfig:warbler_ind_maps_compare}.
+ Inferred maps for warbler individuals, colored by subspecies under analyses with and without admixture inference. 
+	\textbf{a)}
+	map inferred without admixture; 
+	\textbf{b)} 
+	close-up of all non-\textit{nitidus} samples in non-admixture map; 
+	\textbf{c)}
+	map inferred with admixture; 
+	\textbf{d)} 
+	close-up of all non-\textit{nitidus} samples in the admixture map.
 
 %\subsection*{Posterior distributions on locations of warbler individuals}
-\label{warb_ind_clouds}
-{\bf{Fig\ \ref{sfig:warb_ind_clouds}. Maps of the posterior distributions on population locations in three separate SpaceMix analyses on the warbler individual dataset. a) Analysis with randomly generated priors on geogenetic location parameters; b) one analysis with true geographic locations as priors on geogenetic location parameters; c) a second analysis with true geographic locations as priors on geogenetic location parameters.}}
+\subsection{Fig}
+\label{sfig:warb_ind_clouds}
+{\bf{
+%Fig\ \ref{sfig:warb_ind_clouds}. 
+Maps of the posterior distributions on population locations in three separate SpaceMix analyses on the warbler individual dataset.}} 
+	\textbf{a)}
+		analysis with randomly generated priors on geogenetic location parameters; 
+	\textbf{b)}
+		one analysis with true geographic locations as priors on geogenetic location parameters; 
+	\textbf{c)}
+		a second analysis with true geographic locations as priors on geogenetic location parameters.
 
 %\subsection*{Warbler individual nuggets}
-\label{warb_ind_nugg}
-{\bf{Fig\ \ref{sfig:warb_ind_nugg}. Credible intervals on estimated warbler individual nugget parameters. }} a) analysis without admixture; b) analysis with admixture.
+\subsection{Fig}
+\label{sfig:warb_ind_nugg}
+{\bf{
+%Fig\ \ref{sfig:warb_ind_nugg}. 
+Warbler individual nugget parameters}}
+Credible intervals on estimated warbler individual nugget parameters.
+\textbf{a)} analysis without admixture; 
+\textbf{b)} analysis with admixture.
 
 %\subsection*{Warbler individual pairwise-$\pi$}
-\label{warb_ind_pwp}
-{\bf{Fig\ \ref{sfig:warb_ind_pwp}. Mean pairwise sequence divergence at polymorphic sites calculated between all pairs of individuals from different subspecies, and colored by the subspecies to which each individual in the comparison is drawn.}} Note that individuals Tro-LN11 and Lud-MN3 have sequence divergence that is unusually low relative to that of other comparisons between individuals from the same two subspecies.
+\subsection{Fig}
+\label{sfig:warb_ind_pwp}
+{\bf{
+%Fig\ \ref{sfig:warb_ind_pwp}.
+Warbler individual pairwise-$\pi$.}}
+Mean pairwise sequence divergence at polymorphic sites 
+calculated between all pairs of individuals from different subspecies, 
+and colored by the subspecies to which each individual in the comparison is drawn.  
+Note that individuals Tro-LN11 and Lud-MN3 have sequence divergence 
+that is unusually low relative to that of other comparisons between individuals f
+rom the same two subspecies.
 
 %\subsection*{Warbler individual PCA map}
-\label{warb_ind_PC_map}
-{\bf{Fig\ \ref{sfig:warb_ind_PC_map}. The map of warbler individuals derived from a Principal Components analysis.}} The PC coordinates have undergone a full Procrustes transformation around the actual sampling coordinates.
+\subsection{Fig}
+\label{sfig:warb_ind_PC_map}
+{\bf{
+%Fig\ \ref{sfig:warb_ind_PC_map}. 
+PCA map of warbler individuals.}}
+The map of warbler individuals derived from a Principal Components analysis,
+plotting PC1 against PC2.
+The PC coordinates have undergone a full Procrustes transformation 
+around the actual sampling coordinates.
 
 %\subsection*{Simulation scenario of populations on a line}
-\label{line_scenario}
-{\bf{Fig\ \ref{sfig:line_scenario}. Simulation scenario of populations on a line, contrasting PCA-based inference and SpaceMix inference.}} a) Scenario used to simulate data in a spatial coalescent framework with nearest-neighbor migration; b) PCA map of allele frequencies, plotting PC axis 1 against PC axis 2, forming a `U' shape; c) Posterior distribution of SpaceMix location inference, forming a rough line; d) snapshot of the MAP draw from the posterior, again showing a rough line.
+\subsection{Fig}
+\label{sfig:line_scenario}
+{\bf{
+%Fig\ \ref{sfig:line_scenario}. 
+Simulation scenario of populations on a line.}}
+Simulation scenario of populations on a line, contrasting PCA-based inference and SpaceMix inference. 
+	\textbf{a)} 
+		Scenario used to simulate data in a spatial coalescent framework 
+		with nearest-neighbor migration;
+	\textbf{b)} 
+		PCA map of allele frequencies, plotting PC axis 1 against PC axis 2, forming a `U' shape; 
+	\textbf{c)}
+		Posterior distribution of SpaceMix location inference, forming a rough line; 
+	\textbf{d)}
+		Snapshot of the MAP draw from the posterior, again showing a rough line.
 
 %\subsection*{Warbler population geographic/geogenetic distance comparison}
-\label{warb_ind_distcomp}
-{\bf{Fig\ \ref{sfig:warb_ind_distcomp}. Comparing geographic pairwise distance to geogenetic pairwise distance between warbler individuals.}} 
-(a) between and (b) within subspecies populations.
+\subsection{Fig}
+\label{sfig:warb_ind_distcomp}
+{\bf{
+%Fig\ \ref{sfig:warb_ind_distcomp}. 
+Comparison of geographic and geogenetic pairwise distances for warbler individuals.}} 
+\textbf{a)} comparisons between populations in different subspecies.
+\textbf{b)} comparisons between populations in the same subspecies.
 
 %\subsection*{Human sample geographic/geogenetic distance comparison}
-\label{globe_noad_distcomp}
-{\bf{Fig\ \ref{sfig:globe_noad_distcomp}. Comparison of geographic pairwise distance to geogenetic pairwise distance between human populations, colored by continent from which populations were sampled (i.e., two populations sampled from Africa are green).}} Eurasia is divided into Western Eurasia and East Asia.
+\subsection{Fig}
+\label{sfig:globe_noad_distcomp}
+{\bf{
+%Fig\ \ref{sfig:globe_noad_distcomp}. 
+Comparison of geographic and geogenetic pairwise distances for human samples individuals.}} 
+Comparisons are colored by continent from which populations were sampled 
+(i.e., two populations sampled from Africa are green).
+Eurasia is divided into Western Eurasia and East Asia.
 
 %\subsection*{Human sample nuggets}
-\label{globe_nuggs}
-{\bf{Fig\ \ref{sfig:globe_nuggs}. Credible intervals on estimated human sample nugget parameters. a) analysis without admixture; a) analysis with admixture.}}
+\subsection{Fig}
+\label{sfig:globe_nuggs}
+{\bf{
+%Fig\ \ref{sfig:globe_nuggs}. 
+Credible intervals on estimated human sample nugget parameters.}}
+\textbf{a)} analysis without admixture; 
+\textbf{a)} analysis with admixture.
 
 %\subsection*{SpaceMix output from analysis of human samples}
-\label{globe_ad_maps_realpr2}
-{\bf{Fig\ \ref{sfig:globe_ad_maps_realpr2}. Map of human populations from a different SpaceMix analysis (``Real\_Prior1'' -- inferred with admixture), using real geographic coordinates as population location priors.}} a) complete map; b) close-up of Eurasian populations.
+\subsection{Fig}
+\label{sfig:globe_ad_maps_realpr2}
+{\bf{
+%Fig\ \ref{sfig:globe_ad_maps_realpr2}. 
+Geogenetic map of human samples.}}
+Map of human populations from a different SpaceMix analysis 
+than that reported in the main text
+(``Real\_Prior1'' -- inferred with admixture), 
+using real geographic coordinates as population location priors.
+\textbf{a)} complete map; 
+\textbf{b)} close-up of Eurasian populations.
 
 %\subsection*{SpaceMix output from analysis of human samples}
-\label{globe_ad_maps_realpr3}
-{\bf{Fig\ \ref{sfig:globe_ad_maps_realpr3}. Map of human populations from another SpaceMix analysis (``Real\_Prior2'',  inferred with admixture), using real geographic coordinates as population location priors.}}  a) complete map; b) close-up of Eurasian populations.
+\subsection{Fig}
+\label{sfig:globe_ad_maps_realpr3}
+{\bf{
+%Fig\ \ref{sfig:globe_ad_maps_realpr3}. 
+Geogenetic map of human samples.}}
+Map of human populations from another SpaceMix analysis 
+(``Real\_Prior2'',  inferred with admixture), 
+using real geographic coordinates as population location priors.
+\textbf{a)} complete map; 
+\textbf{b)} close-up of Eurasian populations.
+
 
 %\subsection*{PCA map of human samples}
-\label{globe_PCA_map}
-{\bf{Fig\ \ref{sfig:globe_PCA_map}. PCA map of human samples used in SpaceMix analyses.}} The PC coordinates have undergone a full Procrustes transformation around the actual sampling coordinates (shown in the inset map).
+\subsection{Fig}
+\label{sfig:globe_PCA_map}
+{\bf{
+%Fig\ \ref{sfig:globe_PCA_map}. 
+PCA map of human samples used in SpaceMix analyses.}} 
+The PC coordinates have undergone a full Procrustes transformation 
+around the actual sampling coordinates (shown in the inset map).
 
 %\subsection*{Example parameter acceptance rates}
-\label{example_acceptance_rates}
-{\bf{Fig\ \ref{sfig:example_acceptance_rates}. Example parameter acceptance proportions for the $\alpha_2$ parameter and the nugget parameter, $\eta$, using the adaptive Metropolis-within-Gibbs proposal mechanism.}}
+\subsection{Fig}
+\label{sfig:example_acceptance_rates}
+{\bf{
+%Fig\ \ref{sfig:example_acceptance_rates}. 
+Example parameter acceptance proportions.}}
+Example parameter acceptance proportions for the $\alpha_2$ parameter and the nugget parameter, 
+$\eta$, using the adaptive Metropolis-within-Gibbs proposal mechanism.
 
 %\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Lattice}
-\label{treemix_lattice}
-{\bf{Fig\ \ref{sfig:treemix_lattice}. \texttt{TreeMix} analysis of lattice spatial coalescent simulation.}}  
+\subsection{Fig}
+\label{sfig:treemix_lattice}
+{\bf{
+%Fig\ \ref{sfig:treemix_lattice}. 
+\texttt{TreeMix} analysis of lattice spatial coalescent simulation.}}  
 The tree, residual covariance matrix, and first three migration admixture arrows are shown.
 
 %\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Barrier}
-\label{treemix_barrier}
-{\bf{Fig\ \ref{sfig:treemix_barrier}. \texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier.}}
+\subsection{Fig}
+\label{sfig:treemix_barrier}
+{\bf{
+%Fig\ \ref{sfig:treemix_barrier}. 
+\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier.}}
 The tree, residual covariance matrix, and first three migration admixture arrows are shown.
 
 %\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Expansion}
-\label{treemix_expansion}
-{\bf{Fig\ \ref{sfig:treemix_expansion}. \texttt{TreeMix} analysis of lattice spatial coalescent simulation with an expansion event.}}
+\subsection{Fig}
+\label{sfig:treemix_expansion}
+{\bf{
+%Fig\ \ref{sfig:treemix_expansion}. 
+\texttt{TreeMix} analysis of lattice spatial coalescent simulation with an expansion event.}}
 The tree, residual covariance matrix, and first three migration admixture arrows are shown.
 
 %\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Admixture}
-\label{treemix_corneradmixture}
-{\bf{Fig\ \ref{sfig:treemix_corneradmixture}. \texttt{TreeMix} analysis of lattice spatial coalescent simulation with a long-range admixture event.}}
+\subsection{Fig}
+\label{sfig:treemix_corneradmixture}
+{\bf{
+%Fig\ \ref{sfig:treemix_corneradmixture}. 
+\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a long-range admixture event.}}
 The tree, residual covariance matrix, and first three migration admixture arrows are shown.
 
 %\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Barrier and Short-Range Admixture}
-\label{treemix_neighboradmixture}
-{\bf{Fig\ \ref{sfig:treemix_neighboradmixture}. \texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and short-range admixture event.}}  
+\subsection{Fig}
+\label{sfig:treemix_neighboradmixture}
+{\bf{
+%Fig\ \ref{sfig:treemix_neighboradmixture}. 
+\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and short-range admixture event.}}  
 The tree, residual covariance matrix, and first three migration admixture arrows are shown.
 
 %\subsection*{\texttt{TreeMix} analyses of Spatial Simulations: Barrier and Mid-Range Admixture}
-\label{treemix_inlandadmixture}
-{\bf{Fig\ \ref{sfig:treemix_inlandadmixture}. \texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and mid-range admixture event.}}  
+\subsection{Fig}
+\label{sfig:treemix_inlandadmixture}
+{\bf{
+%Fig\ \ref{sfig:treemix_inlandadmixture}. 
+\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and mid-range admixture event.}}  
 The tree, residual covariance matrix, and first three migration admixture arrows are shown.
 
 %\subsection*{Warbler Sample Metadata}
-\label{warbler_data_table}
-{\bf{Tab.\ \ref{tab:warbler_data_table}. Subspecies and geographic meta-data for greenish warbler individuals included in analysis.}}
+\subsection*{S1 Table}
+\label{stab:warbler_data_table}
+{\bf{
+%Tab.\ \ref{tab:warbler_data_table}. 
+Warbler sample metadata.}}
+Subspecies and geographic meta-data for greenish warbler individuals included in analysis.
 
 %\subsection*{Human Sample Metadata}
-\label{globe_data_table}
-{\bf{Tab.\ \ref{tab:globe_data_table}. sample size and geographic meta-data for human samples included in analysis}}
+\subsection*{S2 Table}
+\label{stab:globe_data_table}
+{\bf{
+%Tab.\ \ref{tab:globe_data_table}.
+Human sample metadata.}}
+Sample size and geographic meta-data for human samples included in analysis.
 
-\newpage
-\section*{Supplementary Materials}
-\renewcommand{\thefigure}{S\arabic{figure}}
-\setcounter{figure}{0}
-\renewcommand{\thetable}{S\arabic{table}}
-\setcounter{table}{0}
-\renewcommand{\theequation}{S\arabic{table}}
-\setcounter{equation}{0}
+%
+%\newpage
+%\section*{Supplementary Materials}
+%\renewcommand{\thefigure}{S\arabic{figure}}
+%\setcounter{figure}{0}
+%\renewcommand{\thetable}{S\arabic{table}}
+%\setcounter{table}{0}
+%\renewcommand{\theequation}{S\arabic{table}}
+%\setcounter{equation}{0}
 
 %%%%%%%%%
 %%% Make supplemental figure pages wider
 %%%%%%%%%
-\setlength{\textwidth}{450pt}
-\setlength{\oddsidemargin}{10pt}
-\setlength{\evensidemargin}{10pt}
-\lhead{}
+%\setlength{\textwidth}{450pt}
+%\setlength{\oddsidemargin}{10pt}
+%\setlength{\evensidemargin}{10pt}
+%\lhead{}
 
-\begin{figure}
-	\centering
-		{\includegraphics[height=.8\textheight]{../figs/sims/sim_covariance_decays.pdf}}
-		\caption{Decays in covariance for four different simulation scenarios (from top to bottom: simple lattice; lattice with barrier; lattice with expansion; lattice with admixture).  Left column: sample covariance plotted against observed pairwise distance.  Right column: sample covariance plotted against inferred geogenetic distance.}
-	\label{sfig:sim_covariance_decays}
-\end{figure}
+%\begin{figure}
+%	\centering
+%		{\includegraphics[height=.8\textheight]{../figs/sims/sim_covariance_decays.pdf}}
+%		\caption{Decays in covariance for four different simulation scenarios (from top to bottom: simple lattice; lattice with barrier; lattice with expansion; lattice with admixture).  Left column: sample covariance plotted against observed pairwise distance.  Right column: sample covariance plotted against inferred geogenetic distance.}
+%	\label{sfig:sim_covariance_decays}
+%\end{figure}
 
-\begin{figure}
-\centering
-	\subcaptionbox{\label{lattice_pc}}
-		{\includegraphics[height=.45\textheight]{../figs/sims/lattice_PC_map.pdf}}
-	\subcaptionbox{\label{cornerad_pc}}
-			{\includegraphics[height=.45\textheight]{../figs/sims/corneradmixture_PC_map.pdf}}
-	\caption{Plots of the first two Principal Component axes (with variance explained labeled on the relevant axes) 
-			of the mean-centered covariance matrix from simulated spatial scenarios.
-			a) the basic lattice scenario shown in \ref{sfig:lattice_scenarios}\subref{simple_lattice}.
-			b) the lattice scenario with admixture from Population 1 into Population 30, 
-				shown in \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}}.
-	\label{sfig:sim_pc_maps}
-\end{figure}
-
-\begin{figure}
-\centering
-	{\includegraphics[width=\textwidth]{../figs/sims/total_grid.pdf}}
-	\caption{The effect of uneven sampling on inference of geogenetic maps.  
-			This figure shows the complete grid with corresponding PC map
-			and SpaceMix geogenetic map 
-			(ellipses denote 95\% credible intervals after a 50\% burn-in).  
-			This grid is successively subsampled with greater unevenness of
-			sampling across six subsampled scenarios.}\label{sfig:uneven_sampling_total_grid}
-\end{figure}
-
-\begin{figure}
-\centering
-	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp1.pdf}}
-	\caption{The effect of uneven sampling on inference of geogenetic maps.  
-			This figure shows the subsampling Scenario 1, 
-			in which the lower left, top left, and top right squares are `protected,'
-			and 2 samples are randomly removed from all other squares.
-			Also shown are the corresponding PC map and 
-			SpaceMix geogenetic map 
-			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp1}
-\end{figure}
-
-\begin{figure}
-\centering
-	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp2.pdf}}
-	\caption{The effect of uneven sampling on inference of geogenetic maps.  
-			This figure shows the subsampling Scenario 2, 
-			in which the lower left, top left, and top right squares are `protected,'
-			and 4 samples are randomly removed from all other squares.
-			Also shown are the corresponding PC map and 
-			SpaceMix geogenetic map 
-			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp2}
-\end{figure}
-
-\begin{figure}
-\centering
-	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp3.pdf}}
-	\caption{The effect of uneven sampling on inference of geogenetic maps.  
-			This figure shows the subsampling Scenario 3, 
-			in which the lower left, top left, and top right squares are `protected,'
-			and 6 samples are randomly removed from all other squares.
-			Also shown are the corresponding PC map and 
-			SpaceMix geogenetic map 
-			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp3}
-\end{figure}
-
-\begin{figure}
-\centering
-	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp4.pdf}}
-	\caption{The effect of uneven sampling on inference of geogenetic maps.  
-			This figure shows the subsampling Scenario 4, 
-			in which the lower left, top left, and top right squares are `protected,'
-			and 8 samples are randomly removed from all other squares.
-			Also shown are the corresponding PC map and 
-			SpaceMix geogenetic map 
-			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp4}
-\end{figure}
-
-\begin{figure}
-\centering
-	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp5.pdf}}
-	\caption{The effect of uneven sampling on inference of geogenetic maps.  
-			This figure shows the subsampling Scenario 5, 
-			in which the lower left, top left, and top right squares are `protected,'
-			and all 9 samples are removed from all other squares.
-			Also shown are the corresponding PC map and 
-			SpaceMix geogenetic map 
-			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp5}
-\end{figure}
-
-\begin{figure}
-\centering
-	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp_diag.pdf}}
-	\caption{The effect of uneven sampling on inference of geogenetic maps.  
-			This figure shows the subsampling Scenario 6, 
-			in which the lower left, middle, and bottom right squares are `protected,'
-			and all 9 samples are removed from all other squares, 
-			except for the bottom left and top right squares, which are each 
-			randomly subsampled down to one sample.
-			Also shown are the corresponding PC map and 
-			SpaceMix geogenetic map 
-			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp_diag}
-\end{figure}
-
-\begin{figure}
-\centering
-	{\includegraphics[width=\textwidth]{../figs/sims/median_dist_comp.pdf}}
-	\caption{The effect of uneven sampling on inference of geogenetic maps.  
-			This figure shows, for each scenario, the median distance 
-			between the true sampling coordinates and the sample coordinates 
-			in PC-space and SpaceMix's geogenetic space.  For the SpaceMix 
-			analyses, the geogenetic coordinates used were chosen from the 
-			MCMC iteration with the highest posterior probability.}
-			\label{sfig:uneven_sampling_grid_med_dist}
-\end{figure}
-
-\begin{figure}
-\centering
-	\subcaptionbox{\label{warb_pop_noad_nugg}}
-		{\includegraphics[height=.45\textheight]{../figs/warblers/warb_pop_NoAd_nugget.pdf}}
-	\subcaptionbox{\label{warb_pop_ad_nugg}}
-			{\includegraphics[height=.45\textheight]{../figs/warblers/warb_pop_Ad_nugget.pdf}}
-	\caption{Credible intervals on estimated warbler population nugget parameters. a) analysis without admixture; b) analysis with admixture.}\label{sfig:warb_pop_nugg}
-\end{figure}
-
-\begin{figure}
-\centering
-	{\includegraphics[width=\textwidth]{../figs/warblers/warb_pop_dist_compare.pdf}}
-	\caption{
-    Comparing geographic to geogenetic pairwise distance between warbler populations: a) observed population coordinates; b) pairwise geographic (great-circle) distance between populations compared to that between their geogenetic locations.  The highlighted points show distances between populations from the \textit{plumbeitarsus} and \textit{viridanus} subspecies.  Notice that, regardless of their observed distance, their geogenetic separations are roughly constant, and much larger than the geographic distance between them.
-    }
-	\label{sfig:warb_pop_distcomp}
-\end{figure}
-
-\begin{figure}
-\centering
-	{\includegraphics[width=\textwidth]{../figs/warblers/warb_pop_adprop.pdf}}
-	\caption{Credible intervals on estimated warbler population admixture proportion parameters.}\label{sfig:warb_pop_adprop}
-\end{figure}
-
-\begin{figure}
-	\centering
-		\subcaptionbox{\label{warb_pop_realpr1}}
-			{\includegraphics[height=.3\textheight]{../figs/warblers/population_warbler_map_realpr1.pdf}}
-		\subcaptionbox{\label{warb_pop_realpr2}}			
-			{\includegraphics[height=.3\textheight]{../figs/warblers/population_warbler_map_realpr2.pdf}}
-		\subcaptionbox{\label{warb_pop_randpr1}}
-			{\includegraphics[height=.3\textheight]{../figs/warblers/population_warbler_map_randpr1.pdf}}
-	\caption{Comparison of inferred maps from three independent analyses.  (a,b) Results from analysis using observed locations as priors on population locations.  (c) Results from analysis using random, uniformly distributed locations within the observed range of latitude and longitude as priors on population locations.}\label{sfig:warbler_pop_compare}
-\end{figure}
-
-\begin{figure}
-	\centering
-		\subcaptionbox{Likelihood \label{admix_prop_func_loc_lnl}}
-			{\includegraphics[width=\textwidth]{../figs/warblers/admix_prop_func_loc_lnl.pdf}}
-		\subcaptionbox{Posterior probability \label{admix_prop_func_loc_prob}}
-			{\includegraphics[width=\textwidth]{../figs/warblers/admix_prop_func_loc_prob.pdf}}
-	\caption{Likelihood surfaces for different placements of population ST between \textit{plumbeitarsus} and \textit{viridanus} clusters: (a) log likelihood surface; (b) posterior probability surface, incorporating the priors. The maximum a posteriori estimate (MAP) is shown as a star. }\label{sfig:admix_prop_func_loc}
-\end{figure}
-
-\clearpage
-
-\begin{figure}
-\centering
-	{\includegraphics[width=\textwidth]{../figs/warblers/warb_ind_adprop.pdf}}
-	\caption{Credible intervals on estimated warbler individual admixture proportion parameters.}\label{sfig:warb_ind_adprops}
-\end{figure}
-
-\begin{figure}
-	\centering
-    \subcaptionbox{Warbler individuals map, no admixture} 
-			{\includegraphics[width=0.4\textwidth]{../figs/warblers/warb_ind_noad.pdf}}
-            \subcaptionbox{Close-up of non-\textit{nitidus} samples}
-			{\includegraphics[width=0.4\textwidth]{../figs/warblers/warb_ind_noad_closeup.pdf}}
-            \subcaptionbox{Warbler individuals map, admixture}
-			{\includegraphics[width=0.4\textwidth]{../figs/warblers/individual_warbler_map_arrows_randpr1.pdf}}
-            \subcaptionbox{Close-up of non-\textit{nitidus} samples}
-			{\includegraphics[width=0.4\textwidth]{../figs/warblers/individual_warbler_map_arrows_randpr1_closeup.pdf}}
-	\caption{
-    Inferred maps for warbler individuals, colored by subspecies under analyses with and without admixture inference. a) map inferred without admixture; (b) close-up of all non-\textit{nitidus} samples in non-admixture map; c) map inferred with admixture; d) close-up of all non-\textit{nitidus} samples in the admixture map.}\label{sfig:warbler_ind_maps_compare}
-\end{figure}
-
-\begin{figure}
-	\centering
-		\subcaptionbox{random location prior \label{post_map_randpr2}}
-			{\includegraphics[height=.3\textheight]{../figs/warblers/warb_inds_ad_post_map_randpr2.pdf}}
-		\subcaptionbox{geographic location prior \label{post_map_realpr1}}
-			{\includegraphics[height=.3\textheight]{../figs/warblers/warb_inds_ad_post_map_realpr1.pdf}}
-		\subcaptionbox{geographic location prior \label{post_map_realpr2}}
-			{\includegraphics[height=.3\textheight]{../figs/warblers/warb_inds_ad_post_map_realpr2.pdf}}
-	\caption{Maps of the posterior distributions on population locations in three separate SpaceMix analyses on the warbler individual dataset.}\label{sfig:warb_ind_clouds}
-\end{figure}
-
-\begin{figure}
-\centering
-	\subcaptionbox{\label{warb_ind_noad_nugg}}
-		{\includegraphics[width=\textwidth]{../figs/warblers/warb_ind_NoAd_nugget.pdf}}
-	\subcaptionbox{\label{warb_ind_ad_nugg}}
-		{\includegraphics[width=\textwidth]{../figs/warblers/warb_ind_Ad_nugget.pdf}}
-	\caption{Credible intervals on estimated warbler individual nugget parameters.  a) analysis without admixture; b) analysis with admixture.}\label{sfig:warb_ind_nugg}
-\end{figure}
-
-\begin{figure}
-\centering
-	{\includegraphics[width=\textwidth]{../figs/warblers/warb_ind_pairwise_pi.pdf}}
-	\caption{Mean pairwise sequence divergence at polymorphic sites calculated between all pairs of individuals from different subspecies, and colored by the subspecies to which each individual in the comparison is drawn.  Note that individuals Tro-LN11 and Lud-MN3 have sequence divergence that is unusually low relative to that of other comparisons between individuals from the same two subspecies.}\label{sfig:warb_ind_pwp}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\includegraphics[width=\textwidth]{../figs/warblers/warb_ind_PC_map.pdf}
-	\caption{The map of warbler individuals derived from a Principal Components analysis.  The PC coordinates have undergone a full Procrustes transformation around the actual sampling coordinates.}
-	\label{sfig:warb_ind_PC_map}
-\end{figure}
-
-\begin{figure}
-	\centering
-		\subcaptionbox{populations on a line \label{line_scenario}}
-			{\includegraphics[width=3in,height=1.5in]{../figs/sims/line_pops_scenario.pdf}}
-		\subcaptionbox{PCA map of line scenario \label{line_pops_pca}}
-			{\includegraphics[width=2.33in,height=2.33in]{../figs/sims/line_pops_PCA.pdf}}
-		\subcaptionbox{posterior from SpaceMix map of line scenario \label{line_pops_post}}
-			{\includegraphics[width=3in,height=1.5in]{../figs/sims/line_pops_inference_post.pdf}}
-		\subcaptionbox{MAP estimate from SpaceMix map of line scenario \label{line_pops_MAP}}
-			{\includegraphics[width=3in,height=1.5in]{../figs/sims/line_pops_inference_MAP.pdf}}
-	\caption{Simulation scenario of populations on a line, contrasting PCA-based inference and SpaceMix inference. a) Scenario used to simulate data in a spatial coalescent framework with nearest-neighbor migration; b) PCA map of allele frequencies, plotting PC axis 1 against PC axis 2, forming a `U' shape; c) Posterior distribution of SpaceMix location inference, forming a rough line; d) snapshot of the MAP draw from the posterior, again showing a rough line.}
-	\label{sfig:line_scenario}
-\end{figure}
-
-\clearpage
-
-\begin{figure}
-	\centering
-		\subcaptionbox{All population pairs \label{warb_ind_dist_compare_allpairs}}
-			{\includegraphics[width=\textwidth]{../figs/warblers/warb_ind_dist_compare_allpairs.pdf}}
-		\subcaptionbox{Just within population comparisons \label{warb_ind_dist_compare}}
-			{\includegraphics[width=\textwidth]{../figs/warblers/warb_ind_dist_compare.pdf}}
-	\caption{Comparing geographic pairwise distance to geogenetic pairwise distance between warbler individuals, (a) between and (b) within subspecies populations.}\label{sfig:warb_ind_distcomp}
-\end{figure}
-
-\clearpage
-
-\begin{figure}
-	\centering
-		{\includegraphics[width=\textwidth]{../figs/globetrotter/globe_NoAd_dist_decay.pdf}}
-	\caption{Comparison of geographic pairwise distance to geogenetic pairwise distance between human populations, colored by continent from which populations were sampled (i.e., two populations sampled from Africa are green).  Eurasia is divided into Western Eurasia and East Asia.}
-\label{sfig:globe_noad_distcomp}
-\end{figure}
-
-\clearpage
-
-\begin{figure}
-\centering
-	\subcaptionbox{\label{globe_noad_nugg}}
-		{\includegraphics[width=\textwidth]{../figs/globetrotter/globe_NoAd_nugget.pdf}}
-	\subcaptionbox{\label{globe_ad_nugg}}
-		{\includegraphics[width=\textwidth]{../figs/globetrotter/globe_Ad_nugget.pdf}}
-	\caption{Credible intervals on estimated human sample nugget parameters. a) analysis without admixture; a) analysis with admixture.}
-	\label{sfig:globe_nuggs}
-\end{figure}
-
-\clearpage
-
-\begin{figure}
-	\centering
-		\subcaptionbox{Inferred map of human populations \label{globe_all_ad_map_realpr2}}
-			{\includegraphics[height=.45\textheight]{../figs/globetrotter/globe_Ad_map_AfricaInset_realpr2.pdf}}
-		\subcaptionbox{Close-up of Eurasian populations \label{globe_eurasia_ad_map_realpr2}}
-			{\includegraphics[height=.45\textheight]{../figs/globetrotter/eurasia_Ad_map_indproc_realpr2.pdf}}
-	\caption{Map of human populations from a different SpaceMix analysis (``Real\_Prior1'' -- inferred with admixture), using real geographic coordinates as population location priors. a) complete map; b) close-up of Eurasian populations}
-	\label{sfig:globe_ad_maps_realpr2}
-\end{figure}
-
-\clearpage
-
-\begin{figure}
-	\centering
-		\subcaptionbox{Inferred map of human populations \label{globe_all_ad_map_realpr3}}
-			{\includegraphics[height=.45\textheight]{../figs/globetrotter/globe_Ad_map_AfricaInset_realpr3.pdf}}
-		\subcaptionbox{Close-up of Eurasian populations \label{globe_eurasia_ad_map_realpr3}}
-			{\includegraphics[height=.45\textheight]{../figs/globetrotter/eurasia_Ad_map_indproc_realpr3.pdf}}
-	\caption{Map of human populations from another SpaceMix analysis (``Real\_Prior2'',  inferred with admixture), 
-			using real geographic coordinates as population location priors. 
-			 a) complete map; b) close-up of Eurasian populations}
-	\label{sfig:globe_ad_maps_realpr3}
-\end{figure}
-
-\clearpage
-
-\begin{figure}
-	\centering
-		{\includegraphics[width=\textwidth]{../figs/globetrotter/globe_PCA_map.pdf}}
-	\caption{PCA map of human samples used in SpaceMix analyses.  The PC coordinates have undergone a full Procrustes transformation around the actual sampling coordinates (shown in the inset map).}
-\label{sfig:globe_PCA_map}
-\end{figure}
-
-\clearpage
-
-\begin{figure}
-	\centering
-		{\includegraphics[width=\textwidth]{../figs/sims/example_acceptance_rates.pdf}}
-	\caption{Example parameter acceptance proportions for the $\alpha_2$ parameter and the nugget parameter, $\eta$, using the adaptive Metropolis-within-Gibbs proposal mechanism.}\label{sfig:example_acceptance_rates}
-\end{figure}
-
-\clearpage
-
-\begin{figure}
-	\centering
-		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_stationary_popstreemix_fig_sequential.pdf}}
-	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_lattice}
-\end{figure}
-
-\begin{figure}
-	\centering
-		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_barriertreemix_fig_sequential.pdf}}
-	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier..  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_barrier}
-\end{figure}
-
-\begin{figure}
-	\centering
-		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_expansiontreemix_fig_sequential.pdf}}
-	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with an expansion event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_expansion}
-\end{figure}
-
-\begin{figure}
-	\centering
-		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_corner_admixturetreemix_fig_sequential.pdf}}
-	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a long-range admixture event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_corneradmixture}
-\end{figure}
-
-\begin{figure}
-	\centering
-		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_neighbor_admixturetreemix_fig_sequential.pdf}}
-	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and short-range admixture event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_neighboradmixture}
-\end{figure}
-
-\begin{figure}
-	\centering
-		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_barrier_and_inland_admixturetreemix_fig_sequential.pdf}}
-	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and mid-range admixture event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_inlandadmixture}
-\end{figure}
-
-
-\begin{table}
-\centering
-\tiny
-\begin{tabular}{rlrr}
-  \hline
-Sample & Subspecies & Longitude & Latitude \\ 
-  \hline
- Vir-YK1 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
-   Vir-YK11 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
-   Vir-YK3 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
-   Vir-YK4 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
-   Vir-YK5 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
-   Vir-YK6 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
-   Vir-YK7 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
-   Vir-YK9 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
-   Vir-AB1 & \textcolor{blue}{Viridanus} & 89.50 & 89.50 \\ 
-   Vir-AB2 & \textcolor{blue}{Viridanus} & 89.50 & 89.50 \\ 
-  Vir-STvi1 & \textcolor{blue}{Viridanus} & 92.60 & 92.60 \\ 
-  Vir-STvi2 & \textcolor{blue}{Viridanus} & 92.60 & 92.60 \\ 
-  Vir-STvi3 & \textcolor{blue}{Viridanus} & 92.60 & 92.60 \\ 
-   Vir-TL1 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
-   Vir-TL10 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
-   Vir-TL11 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
-   Vir-TL12 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
-   Vir-TL2 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
-   Vir-TL3 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
-   Vir-TL4 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
-   Vir-TL5 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
-   Vir-TL7 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
-   Vir-TL8 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
-   Vir-TL9 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
-   Vir-AA1 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
-   Vir-AA10 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
-   Vir-AA11 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
-   Vir-AA3 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
-   Vir-AA4 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
-   Vir-AA5 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
-   Vir-AA6 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
-   Vir-AA7 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
-   Vir-AA8 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
-   Vir-AA9 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
-   \hline
-   Ni-TU1 & \textcolor{BlueViolet}{Nitidus} & 42.00 & 42.00 \\ 
-   Ni-TU2 & \textcolor{BlueViolet}{Nitidus} & 42.00 & 42.00 \\ 
-      \hline
-   Lud-PKA8 & \textcolor{ForestGreen}{Ludlowi} & 73.69 & 73.69 \\ 
-   Lud-PKA10 & \textcolor{ForestGreen}{Ludlowi} & 73.69 & 73.69 \\ 
-   Lud-PKB1 & \textcolor{ForestGreen}{Ludlowi} & 73.61 & 73.61 \\ 
-   Lud-PKB2 & \textcolor{ForestGreen}{Ludlowi} & 73.61 & 73.61 \\ 
-   Lud-PKB4 & \textcolor{ForestGreen}{Ludlowi} & 73.61 & 73.61 \\ 
-   Lud-PKB5 & \textcolor{ForestGreen}{Ludlowi} & 73.61 & 73.61 \\ 
-   Lud-KS1 & \textcolor{ForestGreen}{Ludlowi} & 75.19 & 75.19 \\ 
-   Lud-KS2 & \textcolor{ForestGreen}{Ludlowi} & 75.19 & 75.19 \\ 
-   Lud-KL6 & \textcolor{ForestGreen}{Ludlowi} & 76.37 & 76.37 \\ 
-   Lud-KL7 & \textcolor{ForestGreen}{Ludlowi} & 76.37 & 76.37 \\ 
-   Lud-KL1 & \textcolor{ForestGreen}{Ludlowi} & 76.37 & 76.37 \\ 
-   Lud-PA1 & \textcolor{ForestGreen}{Ludlowi} & 76.97 & 76.97 \\ 
-   Lud-PA2 & \textcolor{ForestGreen}{Ludlowi} & 76.97 & 76.97 \\ 
-   Lud-ML2 & \textcolor{ForestGreen}{Ludlowi} & 76.43 & 76.43 \\ 
-   Lud-MN1 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
-   Lud-MN12 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
-   Lud-MN3 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
-   Lud-MN5 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
-   Lud-MN8 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
-   Lud-MN9 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
-      \hline
-   Tro-LN1 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
-   Tro-LN10 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
-   Tro-LN11 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
-   Tro-LN12 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
-   Tro-LN14 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
-   Tro-LN16 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
-   Tro-LN18 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
-   Tro-LN19 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
-   Tro-LN2 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
-   Tro-LN20 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
-   Tro-LN3 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
-   Tro-LN4 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
-   Tro-LN6 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
-   Tro-LN7 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
-   Tro-LN8 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
-      \hline
-   Obs-EM1 & \textcolor{BurntOrange}{Obscuratus} & 103.30 & 103.30 \\ 
-   Obs-XN1 & \textcolor{BurntOrange}{Obscuratus} & 102.00 & 102.00 \\ 
-   Obs-XN2 & \textcolor{BurntOrange}{Obscuratus} & 102.00 & 102.00 \\ 
-   Obs-XN3 & \textcolor{BurntOrange}{Obscuratus} & 102.00 & 102.00 \\ 
-   Obs-XN5 & \textcolor{BurntOrange}{Obscuratus} & 102.00 & 102.00 \\ 
-      \hline
-   Plu-BK2 & \textcolor{red}{Plumbeitarsus} & 104.90 & 104.90 \\ 
-   Plu-BK3 & \textcolor{red}{Plumbeitarsus} & 104.90 & 104.90 \\ 
-   Plu-AN1 & \textcolor{red}{Plumbeitarsus} & 102.50 & 102.50 \\ 
-   Plu-AN2  & \textcolor{red}{Plumbeitarsus} & 102.50 & 102.50 \\ 
-   Plu-IL1 & \textcolor{red}{Plumbeitarsus} & 95.50 & 95.50 \\ 
-   Plu-IL2 & \textcolor{red}{Plumbeitarsus} & 95.50 & 95.50 \\ 
-   Plu-IL4 & \textcolor{red}{Plumbeitarsus} & 95.50 & 95.50 \\ 
-   Plu-ST1 & \textcolor{red}{Plumbeitarsus} & 92.60 & 92.60 \\ 
-   Plu-ST12 & \textcolor{red}{Plumbeitarsus} & 92.60 & 92.60 \\ 
-   Plu-ST3 & \textcolor{red}{Plumbeitarsus} & 92.60 & 92.60 \\ 
-   Plu-UY1 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
-   Plu-UY2 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
-   Plu-UY3 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
-   Plu-UY4 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
-   Plu-UY5 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
-   Plu-UY6 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
-   Plu-SL1 & \textcolor{red}{Plumbeitarsus} & 91.00 & 91.00 \\ 
-   Plu-SL2 & \textcolor{red}{Plumbeitarsus} & 91.00 & 91.00 \\ 
-   Plu-TA1 & \textcolor{red}{Plumbeitarsus} & 92.00 & 92.00 \\ 
-   \hline
-   \end{tabular}
-   \caption{Subspecies and geographic meta-data for greenish warbler individuals included in analysis}
-   \label{tab:warbler_data_table}
-\end{table}
-
-
- \definecolor{Adygei}{HTML}{4B00FF} 
- \definecolor{Armenian}{HTML}{6200FF} 
- \definecolor{Balochi}{HTML}{B400FF} 
- \definecolor{BantuKenya}{HTML}{00FF12} 
- \definecolor{BantuSouthAfrica}{HTML}{ADFF00} 
- \definecolor{Basque}{HTML}{0047FF} 
- \definecolor{Bedouin}{HTML}{3600FF} 
- \definecolor{Belorussian}{HTML}{2200FF} 
- \definecolor{BiakaPygmy}{HTML}{00FF72} 
- \definecolor{Brahui}{HTML}{AD00FF} 
- \definecolor{Bulgarian}{HTML}{1800FF} 
- \definecolor{Burusho}{HTML}{CE00FF} 
- \definecolor{Cambodian}{HTML}{FF00BC} 
- \definecolor{Chuvash}{HTML}{7500FF} 
- \definecolor{Colombian}{HTML}{FF9800} 
- \definecolor{Cypriot}{HTML}{3600FF} 
- \definecolor{Dai}{HTML}{FF00D2} 
- \definecolor{Daur}{HTML}{FF0074} 
- \definecolor{Druze}{HTML}{4300FF} 
- \definecolor{EastSicilian}{HTML}{000BFF} 
- \definecolor{Egyptian}{HTML}{006CFF} 
- \definecolor{English}{HTML}{004AFF} 
- \definecolor{Ethiopian}{HTML}{00FCFF} 
- \definecolor{EthiopianJew}{HTML}{009CFF} 
- \definecolor{Finnish}{HTML}{1900FF} 
- \definecolor{French}{HTML}{0040FF} 
- \definecolor{Georgian}{HTML}{6000FF} 
- \definecolor{GermanyAustria}{HTML}{0020FF} 
- \definecolor{Greek}{HTML}{0A00FF} 
- \definecolor{Hadza}{HTML}{1EFF00} 
- \definecolor{Han}{HTML}{FF009A} 
- \definecolor{HanNchina}{HTML}{FF00B0} 
- \definecolor{Hazara}{HTML}{BD00FF} 
- \definecolor{Hezhen}{HTML}{FF0053} 
- \definecolor{Hungarian}{HTML}{0200FF} 
- \definecolor{IndianJew}{HTML}{CA00FF} 
- \definecolor{Indian}{HTML}{DC00FF} 
- \definecolor{Myanmar}{HTML}{FF00DD} 
- \definecolor{Iranian}{HTML}{8200FF} 
- \definecolor{Ireland}{HTML}{0066FF} 
- \definecolor{Japanese}{HTML}{FF0040} 
- \definecolor{Jordanian}{HTML}{4300FF} 
- \definecolor{Kalash}{HTML}{C300FF} 
- \definecolor{Karitiana}{HTML}{FFA600} 
- \definecolor{Lahu}{HTML}{FF00CA} 
- \definecolor{Lezgin}{HTML}{6B00FF} 
- \definecolor{Lithuanian}{HTML}{1200FF} 
- \definecolor{Makrani}{HTML}{A900FF} 
- \definecolor{Mandenka}{HTML}{00CCFF} 
- \definecolor{Maya}{HTML}{FF5B00} 
- \definecolor{MbutiPygmy}{HTML}{00FF42} 
- \definecolor{Melanesian}{HTML}{FF0000} 
- \definecolor{Miao}{HTML}{FF00B0} 
- \definecolor{Mongola}{HTML}{FF0087} 
- \definecolor{Moroccan}{HTML}{000CFF} 
- \definecolor{Mozabite}{HTML}{003CFF} 
- \definecolor{Naxi}{HTML}{FF00CE} 
- \definecolor{NorthItalian}{HTML}{0023FF} 
- \definecolor{Norwegian}{HTML}{0027FF} 
- \definecolor{Orcadian}{HTML}{0053FF} 
- \definecolor{Oroqen}{HTML}{FF006D} 
- \definecolor{Palestinian}{HTML}{3C00FF} 
- \definecolor{Papuan}{HTML}{FF002D} 
- \definecolor{Pathan}{HTML}{C900FF} 
- \definecolor{Pima}{HTML}{FF2E00} 
- \definecolor{Polish}{HTML}{0000FF} 
- \definecolor{Romanian}{HTML}{1600FF} 
- \definecolor{Russian}{HTML}{4F00FF} 
- \definecolor{Sandawe}{HTML}{00FFA2} 
- \definecolor{SanNamibia}{HTML}{4EFF00} 
- \definecolor{SanKhomani}{HTML}{7DFF00} 
- \definecolor{Sardinian}{HTML}{0026FF} 
- \definecolor{Saudi}{HTML}{6200FF} 
- \definecolor{Scottish}{HTML}{0057FF} 
- \definecolor{She}{HTML}{FF0087} 
- \definecolor{Sindhi}{HTML}{BC00FF} 
- \definecolor{SouthItalian}{HTML}{0008FF} 
- \definecolor{Spanish}{HTML}{0055FF} 
- \definecolor{Surui}{HTML}{FFA800} 
- \definecolor{Syrian}{HTML}{4B00FF} 
- \definecolor{Tu}{HTML}{FF00CA} 
- \definecolor{Tujia}{HTML}{FF00A9} 
- \definecolor{Tunisian}{HTML}{2400FF} 
- \definecolor{Turkish}{HTML}{3D00FF} 
- \definecolor{Tuscan}{HTML}{001EFF} 
- \definecolor{UAE}{HTML}{8500FF} 
- \definecolor{Uygur}{HTML}{E900FF} 
- \definecolor{Uzbekistani}{HTML}{AB00FF} 
- \definecolor{Welsh}{HTML}{0055FF} 
- \definecolor{WestSicilian}{HTML}{0018FF} 
- \definecolor{Xibo}{HTML}{E900FF} 
- \definecolor{Yakut}{HTML}{FF0062} 
- \definecolor{Yemeni}{HTML}{6F00FF} 
- \definecolor{Yi}{HTML}{FF00C3} 
- \definecolor{Yoruba}{HTML}{00FFD2}
- 
- 
- \begin{table}[ht]
- \tiny
-\centering
-\begin{tabular}{rlrrr}
-  \hline
- & Population & Longitude & Latitude & Mean Sample Size \\ 
-  \hline
-1 & \textcolor{BantuSouthAfrica}{BantuSouthAfrica} & 28.00 & -26.00 & 15.99 \\ 
-  2 & \textcolor{SanKhomani}{SanKhomani} & 18.10 & -24.60 & 59.96 \\ 
-  3 & \textcolor{SanNamibia}{SanNamibia} & 20.00 & -21.50 & 9.99 \\ 
-  4 & \textcolor{Hadza}{Hadza} & 33.10 & -4.50 & 5.93 \\ 
-  5 & \textcolor{BantuKenya}{BantuKenya} & 37.00 & -3.00 & 21.99 \\ 
-  6 & \textcolor{MbutiPygmy}{MbutiPygmy} & 29.00 & 1.00 & 25.98 \\ 
-  7 & \textcolor{BiakaPygmy}{BiakaPygmy} & 17.00 & 4.00 & 41.97 \\ 
-  8 & \textcolor{Sandawe}{Sandawe} & 35.70 & 6.20 & 55.94 \\ 
-  9 & \textcolor{Yoruba}{Yoruba} & 5.00 & 8.00 & 41.98 \\ 
-  10 & \textcolor{Ethiopian}{Ethiopian} & 38.70 & 9.00 & 37.70 \\ 
-  11 & \textcolor{Mandenka}{Mandenka} & -12.00 & 12.00 & 43.98 \\ 
-  12 & \textcolor{EthiopianJew}{EthiopianJew} & 38.70 & 14.10 & 22.00 \\ 
-  13 & \textcolor{Egyptian}{Egyptian} & 26.80 & 30.80 & 24.00 \\ 
-  14 & \textcolor{Mozabite}{Mozabite} & 3.00 & 32.00 & 57.98 \\ 
-  15 & \textcolor{Moroccan}{Moroccan} & -5.50 & 33.60 & 49.97 \\ 
-  16 & \textcolor{Tunisian}{Tunisian} & 9.80 & 35.60 & 24.00 \\ 
-  17 & \textcolor{Ireland}{Ireland} & -8.20 & 53.40 & 14.00 \\ 
-  18 & \textcolor{Scottish}{Scottish} & -4.20 & 56.50 & 12.00 \\ 
-  19 & \textcolor{Spanish}{Spanish} & -3.70 & 40.50 & 67.95 \\ 
-  20 & \textcolor{Welsh}{Welsh} & -3.70 & 52.60 & 8.00 \\ 
-  21 & \textcolor{Orcadian}{Orcadian} & -3.00 & 59.00 & 29.99 \\ 
-  22 & \textcolor{English}{English} & -0.80 & 52.00 & 12.00 \\ 
-  23 & \textcolor{Basque}{Basque} & 0.00 & 43.00 & 47.99 \\ 
-  24 & \textcolor{French}{French} & 2.00 & 46.00 & 55.97 \\ 
-  25 & \textcolor{Norwegian}{Norwegian} & 8.50 & 60.50 & 35.99 \\ 
-  26 & \textcolor{Sardinian}{Sardinian} & 9.00 & 40.00 & 55.98 \\ 
-  27 & \textcolor{NorthItalian}{NorthItalian} & 9.70 & 45.70 & 23.99 \\ 
-  28 & \textcolor{GermanyAustria}{GermanyAustria} & 10.50 & 51.20 & 8.00 \\ 
-  29 & \textcolor{Tuscan}{Tuscan} & 11.00 & 43.00 & 16.00 \\ 
-  30 & \textcolor{WestSicilian}{WestSicilian} & 12.50 & 38.00 & 20.00 \\ 
-  31 & \textcolor{EastSicilian}{EastSicilian} & 16.10 & 37.00 & 20.00 \\ 
-  32 & \textcolor{SouthItalian}{SouthItalian} & 16.90 & 39.50 & 35.96 \\ 
-  33 & \textcolor{Polish}{Polish} & 19.10 & 51.90 & 31.99 \\ 
-  34 & \textcolor{Hungarian}{Hungarian} & 19.50 & 47.20 & 40.00 \\ 
-  35 & \textcolor{Greek}{Greek} & 21.80 & 39.10 & 39.99 \\ 
-  36 & \textcolor{Lithuanian}{Lithuanian} & 23.90 & 55.20 & 20.00 \\ 
-  37 & \textcolor{Romanian}{Romanian} & 25.00 & 45.90 & 28.00 \\ 
-  38 & \textcolor{Bulgarian}{Bulgarian} & 25.50 & 42.70 & 35.99 \\ 
-  39 & \textcolor{Finnish}{Finnish} & 25.70 & 61.90 & 4.00 \\ 
-  40 & \textcolor{Belorussian}{Belorussian} & 28.00 & 53.70 & 16.00 \\ 
-  41 & \textcolor{Bedouin}{Bedouin} & 33.50 & 31.00 & 89.98 \\ 
-  42 & \textcolor{Cypriot}{Cypriot} & 33.50 & 35.50 & 24.00 \\ 
-  43 & \textcolor{Palestinian}{Palestinian} & 35.00 & 33.50 & 91.95 \\ 
-  44 & \textcolor{Turkish}{Turkish} & 35.20 & 39.00 & 34.00 \\ 
-  45 & \textcolor{Druze}{Druze} & 37.00 & 32.00 & 83.96 \\ 
-  46 & \textcolor{Jordanian}{Jordanian} & 37.00 & 30.00 & 40.00 \\ 
-  47 & \textcolor{Adygei}{Adygei} & 39.00 & 44.00 & 33.99 \\ 
-  48 & \textcolor{Syrian}{Syrian} & 39.00 & 34.80 & 32.00 \\ 
-  49 & \textcolor{Russian}{Russian} & 40.00 & 61.00 & 49.98 \\ 
-  50 & \textcolor{Georgian}{Georgian} & 44.60 & 41.80 & 39.99 \\ 
-  51 & \textcolor{Armenian}{Armenian} & 45.00 & 40.10 & 31.99 \\ 
-  52 & \textcolor{Saudi}{Saudi} & 45.10 & 23.90 & 20.00 \\ 
-  53 & \textcolor{Lezgin}{Lezgin} & 47.50 & 43.00 & 35.96 \\ 
-  54 & \textcolor{Yemeni}{Yemeni} & 48.50 & 15.60 & 13.99 \\ 
-  55 & \textcolor{Chuvash}{Chuvash} & 50.20 & 53.20 & 34.00 \\ 
-  56 & \textcolor{Iranian}{Iranian} & 53.70 & 32.40 & 39.99 \\ 
-  57 & \textcolor{UAE}{UAE} & 54.40 & 24.50 & 27.98 \\ 
-  58 & \textcolor{Makrani}{Makrani} & 64.00 & 26.00 & 49.99 \\ 
-  59 & \textcolor{Uzbekistani}{Uzbekistani} & 64.60 & 41.40 & 29.99 \\ 
-  60 & \textcolor{Brahui}{Brahui} & 65.00 & 29.00 & 49.98 \\ 
-  61 & \textcolor{Balochi}{Balochi} & 67.00 & 31.00 & 47.99 \\ 
-  62 & \textcolor{Sindhi}{Sindhi} & 69.00 & 25.00 & 47.99 \\ 
-  63 & \textcolor{Hazara}{Hazara} & 69.50 & 33.00 & 43.98 \\ 
-  64 & \textcolor{Kalash}{Kalash} & 71.00 & 36.00 & 45.99 \\ 
-  65 & \textcolor{Pathan}{Pathan} & 72.50 & 34.00 & 43.99 \\ 
-  66 & \textcolor{IndianJew}{IndianJew} & 72.90 & 19.00 & 16.00 \\ 
-  67 & \textcolor{Burusho}{Burusho} & 74.00 & 37.00 & 49.98 \\ 
-  68 & \textcolor{Indian}{Indian} & 77.60 & 13.00 & 25.97 \\ 
-  69 & \textcolor{Uygur}{Uygur} & 81.00 & 44.00 & 20.00 \\ 
-  70 & \textcolor{Xibo}{Xibo} & 81.00 & 43.00 & 17.99 \\ 
-  71 & \textcolor{Myanmar}{Myanmar} & 96.00 & 21.90 & 5.99 \\ 
-  72 & \textcolor{Dai}{Dai} & 99.00 & 21.00 & 19.98 \\ 
-  73 & \textcolor{Naxi}{Naxi} & 100.00 & 26.00 & 15.99 \\ 
-  74 & \textcolor{Lahu}{Lahu} & 101.00 & 22.00 & 16.00 \\ 
-  75 & \textcolor{Tu}{Tu} & 101.00 & 36.00 & 20.00 \\ 
-  76 & \textcolor{Yi}{Yi} & 103.00 & 28.00 & 20.00 \\ 
-  77 & \textcolor{Cambodian}{Cambodian} & 105.00 & 12.00 & 19.98 \\ 
-  78 & \textcolor{HanNchina}{HanNchina} & 108.00 & 39.00 & 20.00 \\ 
-  79 & \textcolor{Miao}{Miao} & 108.00 & 28.00 & 19.99 \\ 
-  80 & \textcolor{Tujia}{Tujia} & 110.00 & 29.00 & 20.00 \\ 
-  81 & \textcolor{Han}{Han} & 114.00 & 26.00 & 67.96 \\ 
-  82 & \textcolor{Mongola}{Mongola} & 119.00 & 48.00 & 20.00 \\ 
-  83 & \textcolor{She}{She} & 119.00 & 27.00 & 19.99 \\ 
-  84 & \textcolor{Daur}{Daur} & 124.00 & 49.00 & 17.99 \\ 
-  85 & \textcolor{Oroqen}{Oroqen} & 126.00 & 50.00 & 18.00 \\ 
-  86 & \textcolor{Yakut}{Yakut} & 129.00 & 63.00 & 49.98 \\ 
-  87 & \textcolor{Hezhen}{Hezhen} & 133.00 & 47.00 & 16.00 \\ 
-  88 & \textcolor{Japanese}{Japanese} & 138.00 & 38.00 & 55.97 \\ 
-  89 & \textcolor{Papuan}{Papuan} & 143.00 & -4.00 & 33.97 \\ 
-  90 & \textcolor{Melanesian}{Melanesian} & 155.00 & -6.00 & 19.99 \\ 
-  91 & \textcolor{Pima}{Pima} & -108.00 & 29.00 & 27.99 \\ 
-  92 & \textcolor{Maya}{Maya} & -91.00 & 19.00 & 41.97 \\ 
-  93 & \textcolor{Colombian}{Colombian} & -68.00 & 3.00 & 13.99 \\ 
-  94 & \textcolor{Karitiana}{Karitiana} & -63.00 & -10.00 & 27.99 \\ 
-  95 & \textcolor{Surui}{Surui} & -62.00 & -11.00 & 16.00 \\ 
-   \hline
-\end{tabular}
-   \caption{sample size and geographic meta-data for human samples included in analysis}
-   \label{tab:globe_data_table}
-\end{table}
+%\begin{figure}
+%\centering
+%	\subcaptionbox{\label{lattice_pc}}
+%		{\includegraphics[height=.45\textheight]{../figs/sims/lattice_PC_map.pdf}}
+%	\subcaptionbox{\label{cornerad_pc}}
+%			{\includegraphics[height=.45\textheight]{../figs/sims/corneradmixture_PC_map.pdf}}
+%	\caption{Plots of the first two Principal Component axes (with variance explained labeled on the relevant axes) 
+%			of the mean-centered covariance matrix from simulated spatial scenarios.
+%			a) the basic lattice scenario shown in \ref{sfig:lattice_scenarios}\subref{simple_lattice}.
+%			b) the lattice scenario with admixture from Population 1 into Population 30, 
+%				shown in \ref{sfig:corner_admix_scenarios}\subref{corner_admixture_lattice}}.
+%	\label{sfig:sim_pc_maps}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%	{\includegraphics[width=\textwidth]{../figs/sims/total_grid.pdf}}
+%	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+%			This figure shows the complete grid with corresponding PC map
+%			and SpaceMix geogenetic map 
+%			(ellipses denote 95\% credible intervals after a 50\% burn-in).  
+%			This grid is successively subsampled with greater unevenness of
+%			sampling across six subsampled scenarios.}\label{sfig:uneven_sampling_total_grid}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp1.pdf}}
+%	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+%			This figure shows the subsampling Scenario 1, 
+%			in which the lower left, top left, and top right squares are `protected,'
+%			and 2 samples are randomly removed from all other squares.
+%			Also shown are the corresponding PC map and 
+%			SpaceMix geogenetic map 
+%			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp1}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp2.pdf}}
+%	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+%			This figure shows the subsampling Scenario 2, 
+%			in which the lower left, top left, and top right squares are `protected,'
+%			and 4 samples are randomly removed from all other squares.
+%			Also shown are the corresponding PC map and 
+%			SpaceMix geogenetic map 
+%			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp2}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp3.pdf}}
+%	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+%			This figure shows the subsampling Scenario 3, 
+%			in which the lower left, top left, and top right squares are `protected,'
+%			and 6 samples are randomly removed from all other squares.
+%			Also shown are the corresponding PC map and 
+%			SpaceMix geogenetic map 
+%			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp3}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp4.pdf}}
+%	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+%			This figure shows the subsampling Scenario 4, 
+%			in which the lower left, top left, and top right squares are `protected,'
+%			and 8 samples are randomly removed from all other squares.
+%			Also shown are the corresponding PC map and 
+%			SpaceMix geogenetic map 
+%			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp4}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp5.pdf}}
+%	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+%			This figure shows the subsampling Scenario 5, 
+%			in which the lower left, top left, and top right squares are `protected,'
+%			and all 9 samples are removed from all other squares.
+%			Also shown are the corresponding PC map and 
+%			SpaceMix geogenetic map 
+%			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp5}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%	{\includegraphics[width=\textwidth]{../figs/sims/grid_subsamp_diag.pdf}}
+%	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+%			This figure shows the subsampling Scenario 6, 
+%			in which the lower left, middle, and bottom right squares are `protected,'
+%			and all 9 samples are removed from all other squares, 
+%			except for the bottom left and top right squares, which are each 
+%			randomly subsampled down to one sample.
+%			Also shown are the corresponding PC map and 
+%			SpaceMix geogenetic map 
+%			(ellipses denote 95\% credible intervals after a 50\% burn-in).}\label{sfig:uneven_sampling_grid_subsamp_diag}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%	{\includegraphics[width=\textwidth]{../figs/sims/median_dist_comp.pdf}}
+%	\caption{The effect of uneven sampling on inference of geogenetic maps.  
+%			This figure shows, for each scenario, the median distance 
+%			between the true sampling coordinates and the sample coordinates 
+%			in PC-space and SpaceMix's geogenetic space.  For the SpaceMix 
+%			analyses, the geogenetic coordinates used were chosen from the 
+%			MCMC iteration with the highest posterior probability.}
+%			\label{sfig:uneven_sampling_grid_med_dist}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%	\subcaptionbox{\label{warb_pop_noad_nugg}}
+%		{\includegraphics[height=.45\textheight]{../figs/warblers/warb_pop_NoAd_nugget.pdf}}
+%	\subcaptionbox{\label{warb_pop_ad_nugg}}
+%			{\includegraphics[height=.45\textheight]{../figs/warblers/warb_pop_Ad_nugget.pdf}}
+%	\caption{Credible intervals on estimated warbler population nugget parameters. a) analysis without admixture; b) analysis with admixture.}\label{sfig:warb_pop_nugg}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%	{\includegraphics[width=\textwidth]{../figs/warblers/warb_pop_dist_compare.pdf}}
+%	\caption{
+%    Comparing geographic to geogenetic pairwise distance between warbler populations: a) observed population coordinates; b) pairwise geographic (great-circle) distance between populations compared to that between their geogenetic locations.  The highlighted points show distances between populations from the \textit{plumbeitarsus} and \textit{viridanus} subspecies.  Notice that, regardless of their observed distance, their geogenetic separations are roughly constant, and much larger than the geographic distance between them.
+%    }
+%	\label{sfig:warb_pop_distcomp}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%	{\includegraphics[width=\textwidth]{../figs/warblers/warb_pop_adprop.pdf}}
+%	\caption{Credible intervals on estimated warbler population admixture proportion parameters.}\label{sfig:warb_pop_adprop}
+%\end{figure}
+%
+%\begin{figure}
+%	\centering
+%		\subcaptionbox{\label{warb_pop_realpr1}}
+%			{\includegraphics[height=.3\textheight]{../figs/warblers/population_warbler_map_realpr1.pdf}}
+%		\subcaptionbox{\label{warb_pop_realpr2}}			
+%			{\includegraphics[height=.3\textheight]{../figs/warblers/population_warbler_map_realpr2.pdf}}
+%		\subcaptionbox{\label{warb_pop_randpr1}}
+%			{\includegraphics[height=.3\textheight]{../figs/warblers/population_warbler_map_randpr1.pdf}}
+%	\caption{Comparison of inferred maps from three independent analyses.  (a,b) Results from analysis using observed locations as priors on population locations.  (c) Results from analysis using random, uniformly distributed locations within the observed range of latitude and longitude as priors on population locations.}\label{sfig:warbler_pop_compare}
+%\end{figure}
+%
+%\begin{figure}
+%	\centering
+%		\subcaptionbox{Likelihood \label{admix_prop_func_loc_lnl}}
+%			{\includegraphics[width=\textwidth]{../figs/warblers/admix_prop_func_loc_lnl.pdf}}
+%		\subcaptionbox{Posterior probability \label{admix_prop_func_loc_prob}}
+%			{\includegraphics[width=\textwidth]{../figs/warblers/admix_prop_func_loc_prob.pdf}}
+%	\caption{Likelihood surfaces for different placements of population ST between \textit{plumbeitarsus} and \textit{viridanus} clusters: (a) log likelihood surface; (b) posterior probability surface, incorporating the priors. The maximum a posteriori estimate (MAP) is shown as a star. }\label{sfig:admix_prop_func_loc}
+%\end{figure}
+%
+%\clearpage
+%
+%\begin{figure}
+%\centering
+%	{\includegraphics[width=\textwidth]{../figs/warblers/warb_ind_adprop.pdf}}
+%	\caption{Credible intervals on estimated warbler individual admixture proportion parameters.}\label{sfig:warb_ind_adprops}
+%\end{figure}
+%
+%\begin{figure}
+%	\centering
+%    \subcaptionbox{Warbler individuals map, no admixture} 
+%			{\includegraphics[width=0.4\textwidth]{../figs/warblers/warb_ind_noad.pdf}}
+%            \subcaptionbox{Close-up of non-\textit{nitidus} samples}
+%			{\includegraphics[width=0.4\textwidth]{../figs/warblers/warb_ind_noad_closeup.pdf}}
+%            \subcaptionbox{Warbler individuals map, admixture}
+%			{\includegraphics[width=0.4\textwidth]{../figs/warblers/individual_warbler_map_arrows_randpr1.pdf}}
+%            \subcaptionbox{Close-up of non-\textit{nitidus} samples}
+%			{\includegraphics[width=0.4\textwidth]{../figs/warblers/individual_warbler_map_arrows_randpr1_closeup.pdf}}
+%	\caption{
+%    Inferred maps for warbler individuals, colored by subspecies under analyses with and without admixture inference. a) map inferred without admixture; (b) close-up of all non-\textit{nitidus} samples in non-admixture map; c) map inferred with admixture; d) close-up of all non-\textit{nitidus} samples in the admixture map.}\label{sfig:warbler_ind_maps_compare}
+%\end{figure}
+%
+%\begin{figure}
+%	\centering
+%		\subcaptionbox{random location prior \label{post_map_randpr2}}
+%			{\includegraphics[height=.3\textheight]{../figs/warblers/warb_inds_ad_post_map_randpr2.pdf}}
+%		\subcaptionbox{geographic location prior \label{post_map_realpr1}}
+%			{\includegraphics[height=.3\textheight]{../figs/warblers/warb_inds_ad_post_map_realpr1.pdf}}
+%		\subcaptionbox{geographic location prior \label{post_map_realpr2}}
+%			{\includegraphics[height=.3\textheight]{../figs/warblers/warb_inds_ad_post_map_realpr2.pdf}}
+%	\caption{Maps of the posterior distributions on population locations in three separate SpaceMix analyses on the warbler individual dataset.}\label{sfig:warb_ind_clouds}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%	\subcaptionbox{\label{warb_ind_noad_nugg}}
+%		{\includegraphics[width=\textwidth]{../figs/warblers/warb_ind_NoAd_nugget.pdf}}
+%	\subcaptionbox{\label{warb_ind_ad_nugg}}
+%		{\includegraphics[width=\textwidth]{../figs/warblers/warb_ind_Ad_nugget.pdf}}
+%	\caption{Credible intervals on estimated warbler individual nugget parameters.  a) analysis without admixture; b) analysis with admixture.}\label{sfig:warb_ind_nugg}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%	{\includegraphics[width=\textwidth]{../figs/warblers/warb_ind_pairwise_pi.pdf}}
+%	\caption{Mean pairwise sequence divergence at polymorphic sites calculated between all pairs of individuals from different subspecies, and colored by the subspecies to which each individual in the comparison is drawn.  Note that individuals Tro-LN11 and Lud-MN3 have sequence divergence that is unusually low relative to that of other comparisons between individuals from the same two subspecies.}\label{sfig:warb_ind_pwp}
+%\end{figure}
+%
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=\textwidth]{../figs/warblers/warb_ind_PC_map.pdf}
+%	\caption{The map of warbler individuals derived from a Principal Components analysis.  The PC coordinates have undergone a full Procrustes transformation around the actual sampling coordinates.}
+%	\label{sfig:warb_ind_PC_map}
+%\end{figure}
+%
+%\begin{figure}
+%	\centering
+%		\subcaptionbox{populations on a line \label{line_scenario}}
+%			{\includegraphics[width=3in,height=1.5in]{../figs/sims/line_pops_scenario.pdf}}
+%		\subcaptionbox{PCA map of line scenario \label{line_pops_pca}}
+%			{\includegraphics[width=2.33in,height=2.33in]{../figs/sims/line_pops_PCA.pdf}}
+%		\subcaptionbox{posterior from SpaceMix map of line scenario \label{line_pops_post}}
+%			{\includegraphics[width=3in,height=1.5in]{../figs/sims/line_pops_inference_post.pdf}}
+%		\subcaptionbox{MAP estimate from SpaceMix map of line scenario \label{line_pops_MAP}}
+%			{\includegraphics[width=3in,height=1.5in]{../figs/sims/line_pops_inference_MAP.pdf}}
+%	\caption{Simulation scenario of populations on a line, contrasting PCA-based inference and SpaceMix inference. a) Scenario used to simulate data in a spatial coalescent framework with nearest-neighbor migration; b) PCA map of allele frequencies, plotting PC axis 1 against PC axis 2, forming a `U' shape; c) Posterior distribution of SpaceMix location inference, forming a rough line; d) snapshot of the MAP draw from the posterior, again showing a rough line.}
+%	\label{sfig:line_scenario}
+%\end{figure}
+%
+%\clearpage
+%
+%\begin{figure}
+%	\centering
+%		\subcaptionbox{All population pairs \label{warb_ind_dist_compare_allpairs}}
+%			{\includegraphics[width=\textwidth]{../figs/warblers/warb_ind_dist_compare_allpairs.pdf}}
+%		\subcaptionbox{Just within population comparisons \label{warb_ind_dist_compare}}
+%			{\includegraphics[width=\textwidth]{../figs/warblers/warb_ind_dist_compare.pdf}}
+%	\caption{Comparing geographic pairwise distance to geogenetic pairwise distance between warbler individuals, (a) between and (b) within subspecies populations.}\label{sfig:warb_ind_distcomp}
+%\end{figure}
+%
+%\clearpage
+%
+%\begin{figure}
+%	\centering
+%		{\includegraphics[width=\textwidth]{../figs/globetrotter/globe_NoAd_dist_decay.pdf}}
+%	\caption{Comparison of geographic pairwise distance to geogenetic pairwise distance between human populations, colored by continent from which populations were sampled (i.e., two populations sampled from Africa are green).  Eurasia is divided into Western Eurasia and East Asia.}
+%\label{sfig:globe_noad_distcomp}
+%\end{figure}
+%
+%\clearpage
+%
+%\begin{figure}
+%\centering
+%	\subcaptionbox{\label{globe_noad_nugg}}
+%		{\includegraphics[width=\textwidth]{../figs/globetrotter/globe_NoAd_nugget.pdf}}
+%	\subcaptionbox{\label{globe_ad_nugg}}
+%		{\includegraphics[width=\textwidth]{../figs/globetrotter/globe_Ad_nugget.pdf}}
+%	\caption{Credible intervals on estimated human sample nugget parameters. a) analysis without admixture; a) analysis with admixture.}
+%	\label{sfig:globe_nuggs}
+%\end{figure}
+%
+%\clearpage
+%
+%\begin{figure}
+%	\centering
+%		\subcaptionbox{Inferred map of human populations \label{globe_all_ad_map_realpr2}}
+%			{\includegraphics[height=.45\textheight]{../figs/globetrotter/globe_Ad_map_AfricaInset_realpr2.pdf}}
+%		\subcaptionbox{Close-up of Eurasian populations \label{globe_eurasia_ad_map_realpr2}}
+%			{\includegraphics[height=.45\textheight]{../figs/globetrotter/eurasia_Ad_map_indproc_realpr2.pdf}}
+%	\caption{Map of human populations from a different SpaceMix analysis (``Real\_Prior1'' -- inferred with admixture), using real geographic coordinates as population location priors. a) complete map; b) close-up of Eurasian populations}
+%	\label{sfig:globe_ad_maps_realpr2}
+%\end{figure}
+%
+%\clearpage
+%
+%\begin{figure}
+%	\centering
+%		\subcaptionbox{Inferred map of human populations \label{globe_all_ad_map_realpr3}}
+%			{\includegraphics[height=.45\textheight]{../figs/globetrotter/globe_Ad_map_AfricaInset_realpr3.pdf}}
+%		\subcaptionbox{Close-up of Eurasian populations \label{globe_eurasia_ad_map_realpr3}}
+%			{\includegraphics[height=.45\textheight]{../figs/globetrotter/eurasia_Ad_map_indproc_realpr3.pdf}}
+%	\caption{Map of human populations from another SpaceMix analysis (``Real\_Prior2'',  inferred with admixture), 
+%			using real geographic coordinates as population location priors. 
+%			 a) complete map; b) close-up of Eurasian populations}
+%	\label{sfig:globe_ad_maps_realpr3}
+%\end{figure}
+%
+%\clearpage
+%
+%\begin{figure}
+%	\centering
+%		{\includegraphics[width=\textwidth]{../figs/globetrotter/globe_PCA_map.pdf}}
+%	\caption{PCA map of human samples used in SpaceMix analyses.  The PC coordinates have undergone a full Procrustes transformation around the actual sampling coordinates (shown in the inset map).}
+%\label{sfig:globe_PCA_map}
+%\end{figure}
+%
+%\clearpage
+%
+%\begin{figure}
+%	\centering
+%		{\includegraphics[width=\textwidth]{../figs/sims/example_acceptance_rates.pdf}}
+%	\caption{Example parameter acceptance proportions for the $\alpha_2$ parameter and the nugget parameter, $\eta$, using the adaptive Metropolis-within-Gibbs proposal mechanism.}\label{sfig:example_acceptance_rates}
+%\end{figure}
+%
+%\clearpage
+%
+%\begin{figure}
+%	\centering
+%		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_stationary_popstreemix_fig_sequential.pdf}}
+%	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_lattice}
+%\end{figure}
+%
+%\begin{figure}
+%	\centering
+%		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_barriertreemix_fig_sequential.pdf}}
+%	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier..  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_barrier}
+%\end{figure}
+%
+%\begin{figure}
+%	\centering
+%		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_expansiontreemix_fig_sequential.pdf}}
+%	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with an expansion event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_expansion}
+%\end{figure}
+%
+%\begin{figure}
+%	\centering
+%		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_corner_admixturetreemix_fig_sequential.pdf}}
+%	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a long-range admixture event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_corneradmixture}
+%\end{figure}
+%
+%\begin{figure}
+%	\centering
+%		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_neighbor_admixturetreemix_fig_sequential.pdf}}
+%	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and short-range admixture event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_neighboradmixture}
+%\end{figure}
+%
+%\begin{figure}
+%	\centering
+%		{\includegraphics[width=\textwidth]{../figs/sims/Treemix_comparison/ms_dataset_barrier_and_inland_admixturetreemix_fig_sequential.pdf}}
+%	\caption{\texttt{TreeMix} analysis of lattice spatial coalescent simulation with a barrier and mid-range admixture event.  The tree, residual covariance matrix, and first three migration admixture arrows are shown}\label{sfig:treemix_inlandadmixture}
+%\end{figure}
+%
+%
+%\begin{table}
+%\centering
+%\tiny
+%\begin{tabular}{rlrr}
+%  \hline
+%Sample & Subspecies & Longitude & Latitude \\ 
+%  \hline
+% Vir-YK1 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+%   Vir-YK11 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+%   Vir-YK3 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+%   Vir-YK4 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+%   Vir-YK5 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+%   Vir-YK6 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+%   Vir-YK7 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+%   Vir-YK9 & \textcolor{blue}{Viridanus} & 60.60 & 60.60 \\ 
+%   Vir-AB1 & \textcolor{blue}{Viridanus} & 89.50 & 89.50 \\ 
+%   Vir-AB2 & \textcolor{blue}{Viridanus} & 89.50 & 89.50 \\ 
+%  Vir-STvi1 & \textcolor{blue}{Viridanus} & 92.60 & 92.60 \\ 
+%  Vir-STvi2 & \textcolor{blue}{Viridanus} & 92.60 & 92.60 \\ 
+%  Vir-STvi3 & \textcolor{blue}{Viridanus} & 92.60 & 92.60 \\ 
+%   Vir-TL1 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+%   Vir-TL10 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+%   Vir-TL11 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+%   Vir-TL12 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+%   Vir-TL2 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+%   Vir-TL3 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+%   Vir-TL4 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+%   Vir-TL5 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+%   Vir-TL7 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+%   Vir-TL8 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+%   Vir-TL9 & \textcolor{blue}{Viridanus} & 87.60 & 87.60 \\ 
+%   Vir-AA1 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+%   Vir-AA10 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+%   Vir-AA11 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+%   Vir-AA3 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+%   Vir-AA4 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+%   Vir-AA5 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+%   Vir-AA6 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+%   Vir-AA7 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+%   Vir-AA8 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+%   Vir-AA9 & \textcolor{blue}{Viridanus} & 74.48 & 74.48 \\ 
+%   \hline
+%   Ni-TU1 & \textcolor{BlueViolet}{Nitidus} & 42.00 & 42.00 \\ 
+%   Ni-TU2 & \textcolor{BlueViolet}{Nitidus} & 42.00 & 42.00 \\ 
+%      \hline
+%   Lud-PKA8 & \textcolor{ForestGreen}{Ludlowi} & 73.69 & 73.69 \\ 
+%   Lud-PKA10 & \textcolor{ForestGreen}{Ludlowi} & 73.69 & 73.69 \\ 
+%   Lud-PKB1 & \textcolor{ForestGreen}{Ludlowi} & 73.61 & 73.61 \\ 
+%   Lud-PKB2 & \textcolor{ForestGreen}{Ludlowi} & 73.61 & 73.61 \\ 
+%   Lud-PKB4 & \textcolor{ForestGreen}{Ludlowi} & 73.61 & 73.61 \\ 
+%   Lud-PKB5 & \textcolor{ForestGreen}{Ludlowi} & 73.61 & 73.61 \\ 
+%   Lud-KS1 & \textcolor{ForestGreen}{Ludlowi} & 75.19 & 75.19 \\ 
+%   Lud-KS2 & \textcolor{ForestGreen}{Ludlowi} & 75.19 & 75.19 \\ 
+%   Lud-KL6 & \textcolor{ForestGreen}{Ludlowi} & 76.37 & 76.37 \\ 
+%   Lud-KL7 & \textcolor{ForestGreen}{Ludlowi} & 76.37 & 76.37 \\ 
+%   Lud-KL1 & \textcolor{ForestGreen}{Ludlowi} & 76.37 & 76.37 \\ 
+%   Lud-PA1 & \textcolor{ForestGreen}{Ludlowi} & 76.97 & 76.97 \\ 
+%   Lud-PA2 & \textcolor{ForestGreen}{Ludlowi} & 76.97 & 76.97 \\ 
+%   Lud-ML2 & \textcolor{ForestGreen}{Ludlowi} & 76.43 & 76.43 \\ 
+%   Lud-MN1 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
+%   Lud-MN12 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
+%   Lud-MN3 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
+%   Lud-MN5 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
+%   Lud-MN8 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
+%   Lud-MN9 & \textcolor{ForestGreen}{Ludlowi} & 77.16 & 77.16 \\ 
+%      \hline
+%   Tro-LN1 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+%   Tro-LN10 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+%   Tro-LN11 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+%   Tro-LN12 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+%   Tro-LN14 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+%   Tro-LN16 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+%   Tro-LN18 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+%   Tro-LN19 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+%   Tro-LN2 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+%   Tro-LN20 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+%   Tro-LN3 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+%   Tro-LN4 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+%   Tro-LN6 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+%   Tro-LN7 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+%   Tro-LN8 & \textcolor{Goldenrod}{Trochiloides} & 85.50 & 85.50 \\ 
+%      \hline
+%   Obs-EM1 & \textcolor{BurntOrange}{Obscuratus} & 103.30 & 103.30 \\ 
+%   Obs-XN1 & \textcolor{BurntOrange}{Obscuratus} & 102.00 & 102.00 \\ 
+%   Obs-XN2 & \textcolor{BurntOrange}{Obscuratus} & 102.00 & 102.00 \\ 
+%   Obs-XN3 & \textcolor{BurntOrange}{Obscuratus} & 102.00 & 102.00 \\ 
+%   Obs-XN5 & \textcolor{BurntOrange}{Obscuratus} & 102.00 & 102.00 \\ 
+%      \hline
+%   Plu-BK2 & \textcolor{red}{Plumbeitarsus} & 104.90 & 104.90 \\ 
+%   Plu-BK3 & \textcolor{red}{Plumbeitarsus} & 104.90 & 104.90 \\ 
+%   Plu-AN1 & \textcolor{red}{Plumbeitarsus} & 102.50 & 102.50 \\ 
+%   Plu-AN2  & \textcolor{red}{Plumbeitarsus} & 102.50 & 102.50 \\ 
+%   Plu-IL1 & \textcolor{red}{Plumbeitarsus} & 95.50 & 95.50 \\ 
+%   Plu-IL2 & \textcolor{red}{Plumbeitarsus} & 95.50 & 95.50 \\ 
+%   Plu-IL4 & \textcolor{red}{Plumbeitarsus} & 95.50 & 95.50 \\ 
+%   Plu-ST1 & \textcolor{red}{Plumbeitarsus} & 92.60 & 92.60 \\ 
+%   Plu-ST12 & \textcolor{red}{Plumbeitarsus} & 92.60 & 92.60 \\ 
+%   Plu-ST3 & \textcolor{red}{Plumbeitarsus} & 92.60 & 92.60 \\ 
+%   Plu-UY1 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
+%   Plu-UY2 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
+%   Plu-UY3 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
+%   Plu-UY4 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
+%   Plu-UY5 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
+%   Plu-UY6 & \textcolor{red}{Plumbeitarsus} & 94.10 & 94.10 \\ 
+%   Plu-SL1 & \textcolor{red}{Plumbeitarsus} & 91.00 & 91.00 \\ 
+%   Plu-SL2 & \textcolor{red}{Plumbeitarsus} & 91.00 & 91.00 \\ 
+%   Plu-TA1 & \textcolor{red}{Plumbeitarsus} & 92.00 & 92.00 \\ 
+%   \hline
+%   \end{tabular}
+%   \caption{Subspecies and geographic meta-data for greenish warbler individuals included in analysis}
+%   \label{tab:warbler_data_table}
+%\end{table}
+%
+%
+% \definecolor{Adygei}{HTML}{4B00FF} 
+% \definecolor{Armenian}{HTML}{6200FF} 
+% \definecolor{Balochi}{HTML}{B400FF} 
+% \definecolor{BantuKenya}{HTML}{00FF12} 
+% \definecolor{BantuSouthAfrica}{HTML}{ADFF00} 
+% \definecolor{Basque}{HTML}{0047FF} 
+% \definecolor{Bedouin}{HTML}{3600FF} 
+% \definecolor{Belorussian}{HTML}{2200FF} 
+% \definecolor{BiakaPygmy}{HTML}{00FF72} 
+% \definecolor{Brahui}{HTML}{AD00FF} 
+% \definecolor{Bulgarian}{HTML}{1800FF} 
+% \definecolor{Burusho}{HTML}{CE00FF} 
+% \definecolor{Cambodian}{HTML}{FF00BC} 
+% \definecolor{Chuvash}{HTML}{7500FF} 
+% \definecolor{Colombian}{HTML}{FF9800} 
+% \definecolor{Cypriot}{HTML}{3600FF} 
+% \definecolor{Dai}{HTML}{FF00D2} 
+% \definecolor{Daur}{HTML}{FF0074} 
+% \definecolor{Druze}{HTML}{4300FF} 
+% \definecolor{EastSicilian}{HTML}{000BFF} 
+% \definecolor{Egyptian}{HTML}{006CFF} 
+% \definecolor{English}{HTML}{004AFF} 
+% \definecolor{Ethiopian}{HTML}{00FCFF} 
+% \definecolor{EthiopianJew}{HTML}{009CFF} 
+% \definecolor{Finnish}{HTML}{1900FF} 
+% \definecolor{French}{HTML}{0040FF} 
+% \definecolor{Georgian}{HTML}{6000FF} 
+% \definecolor{GermanyAustria}{HTML}{0020FF} 
+% \definecolor{Greek}{HTML}{0A00FF} 
+% \definecolor{Hadza}{HTML}{1EFF00} 
+% \definecolor{Han}{HTML}{FF009A} 
+% \definecolor{HanNchina}{HTML}{FF00B0} 
+% \definecolor{Hazara}{HTML}{BD00FF} 
+% \definecolor{Hezhen}{HTML}{FF0053} 
+% \definecolor{Hungarian}{HTML}{0200FF} 
+% \definecolor{IndianJew}{HTML}{CA00FF} 
+% \definecolor{Indian}{HTML}{DC00FF} 
+% \definecolor{Myanmar}{HTML}{FF00DD} 
+% \definecolor{Iranian}{HTML}{8200FF} 
+% \definecolor{Ireland}{HTML}{0066FF} 
+% \definecolor{Japanese}{HTML}{FF0040} 
+% \definecolor{Jordanian}{HTML}{4300FF} 
+% \definecolor{Kalash}{HTML}{C300FF} 
+% \definecolor{Karitiana}{HTML}{FFA600} 
+% \definecolor{Lahu}{HTML}{FF00CA} 
+% \definecolor{Lezgin}{HTML}{6B00FF} 
+% \definecolor{Lithuanian}{HTML}{1200FF} 
+% \definecolor{Makrani}{HTML}{A900FF} 
+% \definecolor{Mandenka}{HTML}{00CCFF} 
+% \definecolor{Maya}{HTML}{FF5B00} 
+% \definecolor{MbutiPygmy}{HTML}{00FF42} 
+% \definecolor{Melanesian}{HTML}{FF0000} 
+% \definecolor{Miao}{HTML}{FF00B0} 
+% \definecolor{Mongola}{HTML}{FF0087} 
+% \definecolor{Moroccan}{HTML}{000CFF} 
+% \definecolor{Mozabite}{HTML}{003CFF} 
+% \definecolor{Naxi}{HTML}{FF00CE} 
+% \definecolor{NorthItalian}{HTML}{0023FF} 
+% \definecolor{Norwegian}{HTML}{0027FF} 
+% \definecolor{Orcadian}{HTML}{0053FF} 
+% \definecolor{Oroqen}{HTML}{FF006D} 
+% \definecolor{Palestinian}{HTML}{3C00FF} 
+% \definecolor{Papuan}{HTML}{FF002D} 
+% \definecolor{Pathan}{HTML}{C900FF} 
+% \definecolor{Pima}{HTML}{FF2E00} 
+% \definecolor{Polish}{HTML}{0000FF} 
+% \definecolor{Romanian}{HTML}{1600FF} 
+% \definecolor{Russian}{HTML}{4F00FF} 
+% \definecolor{Sandawe}{HTML}{00FFA2} 
+% \definecolor{SanNamibia}{HTML}{4EFF00} 
+% \definecolor{SanKhomani}{HTML}{7DFF00} 
+% \definecolor{Sardinian}{HTML}{0026FF} 
+% \definecolor{Saudi}{HTML}{6200FF} 
+% \definecolor{Scottish}{HTML}{0057FF} 
+% \definecolor{She}{HTML}{FF0087} 
+% \definecolor{Sindhi}{HTML}{BC00FF} 
+% \definecolor{SouthItalian}{HTML}{0008FF} 
+% \definecolor{Spanish}{HTML}{0055FF} 
+% \definecolor{Surui}{HTML}{FFA800} 
+% \definecolor{Syrian}{HTML}{4B00FF} 
+% \definecolor{Tu}{HTML}{FF00CA} 
+% \definecolor{Tujia}{HTML}{FF00A9} 
+% \definecolor{Tunisian}{HTML}{2400FF} 
+% \definecolor{Turkish}{HTML}{3D00FF} 
+% \definecolor{Tuscan}{HTML}{001EFF} 
+% \definecolor{UAE}{HTML}{8500FF} 
+% \definecolor{Uygur}{HTML}{E900FF} 
+% \definecolor{Uzbekistani}{HTML}{AB00FF} 
+% \definecolor{Welsh}{HTML}{0055FF} 
+% \definecolor{WestSicilian}{HTML}{0018FF} 
+% \definecolor{Xibo}{HTML}{E900FF} 
+% \definecolor{Yakut}{HTML}{FF0062} 
+% \definecolor{Yemeni}{HTML}{6F00FF} 
+% \definecolor{Yi}{HTML}{FF00C3} 
+% \definecolor{Yoruba}{HTML}{00FFD2}
+% 
+% 
+% \begin{table}[ht]
+% \tiny
+%\centering
+%\begin{tabular}{rlrrr}
+%  \hline
+% & Population & Longitude & Latitude & Mean Sample Size \\ 
+%  \hline
+%1 & \textcolor{BantuSouthAfrica}{BantuSouthAfrica} & 28.00 & -26.00 & 15.99 \\ 
+%  2 & \textcolor{SanKhomani}{SanKhomani} & 18.10 & -24.60 & 59.96 \\ 
+%  3 & \textcolor{SanNamibia}{SanNamibia} & 20.00 & -21.50 & 9.99 \\ 
+%  4 & \textcolor{Hadza}{Hadza} & 33.10 & -4.50 & 5.93 \\ 
+%  5 & \textcolor{BantuKenya}{BantuKenya} & 37.00 & -3.00 & 21.99 \\ 
+%  6 & \textcolor{MbutiPygmy}{MbutiPygmy} & 29.00 & 1.00 & 25.98 \\ 
+%  7 & \textcolor{BiakaPygmy}{BiakaPygmy} & 17.00 & 4.00 & 41.97 \\ 
+%  8 & \textcolor{Sandawe}{Sandawe} & 35.70 & 6.20 & 55.94 \\ 
+%  9 & \textcolor{Yoruba}{Yoruba} & 5.00 & 8.00 & 41.98 \\ 
+%  10 & \textcolor{Ethiopian}{Ethiopian} & 38.70 & 9.00 & 37.70 \\ 
+%  11 & \textcolor{Mandenka}{Mandenka} & -12.00 & 12.00 & 43.98 \\ 
+%  12 & \textcolor{EthiopianJew}{EthiopianJew} & 38.70 & 14.10 & 22.00 \\ 
+%  13 & \textcolor{Egyptian}{Egyptian} & 26.80 & 30.80 & 24.00 \\ 
+%  14 & \textcolor{Mozabite}{Mozabite} & 3.00 & 32.00 & 57.98 \\ 
+%  15 & \textcolor{Moroccan}{Moroccan} & -5.50 & 33.60 & 49.97 \\ 
+%  16 & \textcolor{Tunisian}{Tunisian} & 9.80 & 35.60 & 24.00 \\ 
+%  17 & \textcolor{Ireland}{Ireland} & -8.20 & 53.40 & 14.00 \\ 
+%  18 & \textcolor{Scottish}{Scottish} & -4.20 & 56.50 & 12.00 \\ 
+%  19 & \textcolor{Spanish}{Spanish} & -3.70 & 40.50 & 67.95 \\ 
+%  20 & \textcolor{Welsh}{Welsh} & -3.70 & 52.60 & 8.00 \\ 
+%  21 & \textcolor{Orcadian}{Orcadian} & -3.00 & 59.00 & 29.99 \\ 
+%  22 & \textcolor{English}{English} & -0.80 & 52.00 & 12.00 \\ 
+%  23 & \textcolor{Basque}{Basque} & 0.00 & 43.00 & 47.99 \\ 
+%  24 & \textcolor{French}{French} & 2.00 & 46.00 & 55.97 \\ 
+%  25 & \textcolor{Norwegian}{Norwegian} & 8.50 & 60.50 & 35.99 \\ 
+%  26 & \textcolor{Sardinian}{Sardinian} & 9.00 & 40.00 & 55.98 \\ 
+%  27 & \textcolor{NorthItalian}{NorthItalian} & 9.70 & 45.70 & 23.99 \\ 
+%  28 & \textcolor{GermanyAustria}{GermanyAustria} & 10.50 & 51.20 & 8.00 \\ 
+%  29 & \textcolor{Tuscan}{Tuscan} & 11.00 & 43.00 & 16.00 \\ 
+%  30 & \textcolor{WestSicilian}{WestSicilian} & 12.50 & 38.00 & 20.00 \\ 
+%  31 & \textcolor{EastSicilian}{EastSicilian} & 16.10 & 37.00 & 20.00 \\ 
+%  32 & \textcolor{SouthItalian}{SouthItalian} & 16.90 & 39.50 & 35.96 \\ 
+%  33 & \textcolor{Polish}{Polish} & 19.10 & 51.90 & 31.99 \\ 
+%  34 & \textcolor{Hungarian}{Hungarian} & 19.50 & 47.20 & 40.00 \\ 
+%  35 & \textcolor{Greek}{Greek} & 21.80 & 39.10 & 39.99 \\ 
+%  36 & \textcolor{Lithuanian}{Lithuanian} & 23.90 & 55.20 & 20.00 \\ 
+%  37 & \textcolor{Romanian}{Romanian} & 25.00 & 45.90 & 28.00 \\ 
+%  38 & \textcolor{Bulgarian}{Bulgarian} & 25.50 & 42.70 & 35.99 \\ 
+%  39 & \textcolor{Finnish}{Finnish} & 25.70 & 61.90 & 4.00 \\ 
+%  40 & \textcolor{Belorussian}{Belorussian} & 28.00 & 53.70 & 16.00 \\ 
+%  41 & \textcolor{Bedouin}{Bedouin} & 33.50 & 31.00 & 89.98 \\ 
+%  42 & \textcolor{Cypriot}{Cypriot} & 33.50 & 35.50 & 24.00 \\ 
+%  43 & \textcolor{Palestinian}{Palestinian} & 35.00 & 33.50 & 91.95 \\ 
+%  44 & \textcolor{Turkish}{Turkish} & 35.20 & 39.00 & 34.00 \\ 
+%  45 & \textcolor{Druze}{Druze} & 37.00 & 32.00 & 83.96 \\ 
+%  46 & \textcolor{Jordanian}{Jordanian} & 37.00 & 30.00 & 40.00 \\ 
+%  47 & \textcolor{Adygei}{Adygei} & 39.00 & 44.00 & 33.99 \\ 
+%  48 & \textcolor{Syrian}{Syrian} & 39.00 & 34.80 & 32.00 \\ 
+%  49 & \textcolor{Russian}{Russian} & 40.00 & 61.00 & 49.98 \\ 
+%  50 & \textcolor{Georgian}{Georgian} & 44.60 & 41.80 & 39.99 \\ 
+%  51 & \textcolor{Armenian}{Armenian} & 45.00 & 40.10 & 31.99 \\ 
+%  52 & \textcolor{Saudi}{Saudi} & 45.10 & 23.90 & 20.00 \\ 
+%  53 & \textcolor{Lezgin}{Lezgin} & 47.50 & 43.00 & 35.96 \\ 
+%  54 & \textcolor{Yemeni}{Yemeni} & 48.50 & 15.60 & 13.99 \\ 
+%  55 & \textcolor{Chuvash}{Chuvash} & 50.20 & 53.20 & 34.00 \\ 
+%  56 & \textcolor{Iranian}{Iranian} & 53.70 & 32.40 & 39.99 \\ 
+%  57 & \textcolor{UAE}{UAE} & 54.40 & 24.50 & 27.98 \\ 
+%  58 & \textcolor{Makrani}{Makrani} & 64.00 & 26.00 & 49.99 \\ 
+%  59 & \textcolor{Uzbekistani}{Uzbekistani} & 64.60 & 41.40 & 29.99 \\ 
+%  60 & \textcolor{Brahui}{Brahui} & 65.00 & 29.00 & 49.98 \\ 
+%  61 & \textcolor{Balochi}{Balochi} & 67.00 & 31.00 & 47.99 \\ 
+%  62 & \textcolor{Sindhi}{Sindhi} & 69.00 & 25.00 & 47.99 \\ 
+%  63 & \textcolor{Hazara}{Hazara} & 69.50 & 33.00 & 43.98 \\ 
+%  64 & \textcolor{Kalash}{Kalash} & 71.00 & 36.00 & 45.99 \\ 
+%  65 & \textcolor{Pathan}{Pathan} & 72.50 & 34.00 & 43.99 \\ 
+%  66 & \textcolor{IndianJew}{IndianJew} & 72.90 & 19.00 & 16.00 \\ 
+%  67 & \textcolor{Burusho}{Burusho} & 74.00 & 37.00 & 49.98 \\ 
+%  68 & \textcolor{Indian}{Indian} & 77.60 & 13.00 & 25.97 \\ 
+%  69 & \textcolor{Uygur}{Uygur} & 81.00 & 44.00 & 20.00 \\ 
+%  70 & \textcolor{Xibo}{Xibo} & 81.00 & 43.00 & 17.99 \\ 
+%  71 & \textcolor{Myanmar}{Myanmar} & 96.00 & 21.90 & 5.99 \\ 
+%  72 & \textcolor{Dai}{Dai} & 99.00 & 21.00 & 19.98 \\ 
+%  73 & \textcolor{Naxi}{Naxi} & 100.00 & 26.00 & 15.99 \\ 
+%  74 & \textcolor{Lahu}{Lahu} & 101.00 & 22.00 & 16.00 \\ 
+%  75 & \textcolor{Tu}{Tu} & 101.00 & 36.00 & 20.00 \\ 
+%  76 & \textcolor{Yi}{Yi} & 103.00 & 28.00 & 20.00 \\ 
+%  77 & \textcolor{Cambodian}{Cambodian} & 105.00 & 12.00 & 19.98 \\ 
+%  78 & \textcolor{HanNchina}{HanNchina} & 108.00 & 39.00 & 20.00 \\ 
+%  79 & \textcolor{Miao}{Miao} & 108.00 & 28.00 & 19.99 \\ 
+%  80 & \textcolor{Tujia}{Tujia} & 110.00 & 29.00 & 20.00 \\ 
+%  81 & \textcolor{Han}{Han} & 114.00 & 26.00 & 67.96 \\ 
+%  82 & \textcolor{Mongola}{Mongola} & 119.00 & 48.00 & 20.00 \\ 
+%  83 & \textcolor{She}{She} & 119.00 & 27.00 & 19.99 \\ 
+%  84 & \textcolor{Daur}{Daur} & 124.00 & 49.00 & 17.99 \\ 
+%  85 & \textcolor{Oroqen}{Oroqen} & 126.00 & 50.00 & 18.00 \\ 
+%  86 & \textcolor{Yakut}{Yakut} & 129.00 & 63.00 & 49.98 \\ 
+%  87 & \textcolor{Hezhen}{Hezhen} & 133.00 & 47.00 & 16.00 \\ 
+%  88 & \textcolor{Japanese}{Japanese} & 138.00 & 38.00 & 55.97 \\ 
+%  89 & \textcolor{Papuan}{Papuan} & 143.00 & -4.00 & 33.97 \\ 
+%  90 & \textcolor{Melanesian}{Melanesian} & 155.00 & -6.00 & 19.99 \\ 
+%  91 & \textcolor{Pima}{Pima} & -108.00 & 29.00 & 27.99 \\ 
+%  92 & \textcolor{Maya}{Maya} & -91.00 & 19.00 & 41.97 \\ 
+%  93 & \textcolor{Colombian}{Colombian} & -68.00 & 3.00 & 13.99 \\ 
+%  94 & \textcolor{Karitiana}{Karitiana} & -63.00 & -10.00 & 27.99 \\ 
+%  95 & \textcolor{Surui}{Surui} & -62.00 & -11.00 & 16.00 \\ 
+%   \hline
+%\end{tabular}
+%   \caption{sample size and geographic meta-data for human samples included in analysis}
+%   \label{tab:globe_data_table}
+%\end{table}
 
 
 \end{document}
